@@ -367,3 +367,24 @@ def optimization_multiperiod(
         "weights": weights.value.copy(),
     }
     return allocations, diagnostics
+
+
+def crra_scaled_tolerance(base_tolerance: float, surplus_ratio: float, reference_ratio: float,
+                          floor: float = 1e-3) -> float:
+    """CRRA-on-surplus risk tolerance (Kallberg-Ziemba construction).
+
+    CARA's absolute risk tolerance is independent of wealth - the property
+    the external review criticizes: a family's risk capacity should fall as
+    its funding ratio falls.  CRRA has relative risk aversion constant, so
+    absolute tolerance is proportional to surplus.  The standard surrogate
+    keeps the tractable CARA solve but scales its tolerance by the surplus
+    ratio relative to a reference point: zeta * (f / f0), floored away from
+    zero so the solve stays finite.  Exact power utility over unbounded
+    scenario sets is not DCP-robust (there is always a scenario with
+    negative surplus); this surrogate keeps the convex machinery and the
+    comparative statics the review asked for.
+    """
+    if base_tolerance <= 0 or reference_ratio <= 0:
+        raise ValueError("tolerance and reference ratio must be positive")
+    ratio = max(surplus_ratio, floor) / reference_ratio
+    return base_tolerance * ratio

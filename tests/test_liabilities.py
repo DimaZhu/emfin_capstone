@@ -226,3 +226,16 @@ def test_money_market_handles_short_series():
     mm = moneymarket.money_market_weekly_returns(pd.Series([0.04, 0.05]))
     assert len(mm) == 1
     np.testing.assert_allclose(mm.iloc[0], 0.04 / 52.0 - 0.25 * 0.01, rtol=1e-12)
+
+
+def test_crra_tolerance_tracks_surplus_ratio():
+    from emfin_capstone.toolbox.liabilities import crra_scaled_tolerance
+
+    base, f0 = 2_500_000.0, 0.10
+    assert crra_scaled_tolerance(base, f0, f0) == base  # reference point is identity
+    richer = crra_scaled_tolerance(base, 0.20, f0)
+    poorer = crra_scaled_tolerance(base, 0.05, f0)
+    assert poorer < base < richer  # risk capacity falls with the funding ratio
+    assert richer == 2 * base and poorer == 0.5 * base  # proportional, like CRRA
+    # negative surplus floors instead of producing a negative tolerance
+    assert crra_scaled_tolerance(base, -0.5, f0) > 0
