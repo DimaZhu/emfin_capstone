@@ -24,7 +24,8 @@ import yfinance as yf
 
 TICKERS = ["DFUS", "DFAI", "DFAE", "^TNX"]
 START = "2021-06-15"
-OUT_DIR = Path(__file__).resolve().parent.parent / "data" / "snapshot"
+from emfin_v2.config import DATA_DIR
+OUT_DIR = DATA_DIR / "snapshot"
 
 
 def main() -> None:

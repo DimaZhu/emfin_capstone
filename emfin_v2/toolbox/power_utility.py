@@ -7,7 +7,7 @@ is a different economic model from CARA with an allowed funding-gap budget.
 """
 import numpy as np
 import cvxpy as cp
-from emfin_capstone.toolbox import solvers
+from emfin_v2.toolbox import solvers
 
 
 def allocate_positive_surplus(market_samples,prices,wealth,liability_due,

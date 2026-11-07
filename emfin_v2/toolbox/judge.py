@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from emfin_capstone.toolbox import tsdr
+from emfin_v2.toolbox import tsdr
 
 FLAT_HALF_LIFE = 1e12  # effectively no time decay: judge = empirical process
 

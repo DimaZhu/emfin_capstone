@@ -39,8 +39,8 @@ from typing import Optional
 
 import numpy as np
 
-from emfin_capstone.toolbox import entropy_pooling as ep
-from emfin_capstone.toolbox import seqep
+from emfin_v2.toolbox import entropy_pooling as ep
+from emfin_v2.toolbox import seqep
 
 CML_LEVEL = 99  # V-bar: processed together with all views in the final pass
 

@@ -3,7 +3,7 @@ import sys,json
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
-from emfin_capstone.toolbox import dataset,shrinkage,liabilities,risk_stats
+from emfin_v2.toolbox import dataset,shrinkage,liabilities,risk_stats
 
 def run():
     data=dataset.weekly_dataset();x=data[dataset.COLUMNS].to_numpy()

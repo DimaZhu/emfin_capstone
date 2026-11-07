@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from emfin_capstone.toolbox import bonds
+from emfin_v2.toolbox import bonds
 
 
 def test_par_bond_prices_at_face():
@@ -56,7 +56,7 @@ def test_projection_scales_moments():
 
 class TestCreditSleeve:
     def test_spread_widening_lowers_price(self):
-        from emfin_capstone.toolbox import bonds
+        from emfin_v2.toolbox import bonds
         bond = bonds.Bond("USIG", 100.0, 0.05, 10.0, 0.06)
         tsy = np.array([0.048, 0.048])
         spr = np.array([0.01, 0.03])
@@ -64,7 +64,7 @@ class TestCreditSleeve:
         assert prices[1] < prices[0]
 
     def test_carry_exceeds_treasury(self):
-        from emfin_capstone.toolbox import bonds
+        from emfin_v2.toolbox import bonds
         # same yield curve, zero rate/spread change over a quarter: the
         # credit bond's total return must beat the treasury's by roughly
         # the spread (carry), both earning roll-down identically
@@ -78,7 +78,7 @@ class TestCreditSleeve:
         assert (ig_px / p0_ig) > (tsy_px / p0_tsy)
 
     def test_misaligned_scenarios_raise(self):
-        from emfin_capstone.toolbox import bonds
+        from emfin_v2.toolbox import bonds
         bond = bonds.Bond("USIG", 100.0, 0.05, 10.0, 0.06)
         with pytest.raises(ValueError):
             bonds.credit_price_scenarios(bond, np.array([0.05, 0.05]), np.array([0.01]), 13)
@@ -86,7 +86,7 @@ class TestCreditSleeve:
 
 def test_money_market_carry_only_when_rate_constant():
     import pandas as pd
-    from emfin_capstone.toolbox import moneymarket
+    from emfin_v2.toolbox import moneymarket
 
     rate = pd.Series([0.05] * 10)
     mm = moneymarket.money_market_weekly_returns(rate)
@@ -96,7 +96,7 @@ def test_money_market_carry_only_when_rate_constant():
 
 def test_money_market_rate_shock_hits_with_duration():
     import pandas as pd
-    from emfin_capstone.toolbox import moneymarket
+    from emfin_v2.toolbox import moneymarket
 
     # one 100bp step up at t=1: that week loses duration * 1%, then carry resumes
     rate = pd.Series([0.02, 0.03, 0.03, 0.03])

@@ -23,3 +23,8 @@ __pycache__/
 
 # Generated model output is local, not versioned evidence.
 artifacts/
+
+.venv/
+dist/
+build/
+*.egg-info/

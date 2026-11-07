@@ -3,7 +3,7 @@ import sys,json
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
-from emfin_capstone.toolbox.power_utility import allocate_positive_surplus
+from emfin_v2.toolbox.power_utility import allocate_positive_surplus
 rng=np.random.default_rng(123)
 market=np.column_stack([np.exp(rng.normal(.02,.06,1000)),np.full(1000,1.005)])
 rows=[]

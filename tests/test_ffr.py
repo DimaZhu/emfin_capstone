@@ -3,8 +3,8 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import entropy_pooling as ep
-from emfin_capstone.toolbox import ffr
+from emfin_v2.toolbox import entropy_pooling as ep
+from emfin_v2.toolbox import ffr
 
 
 class TestTimeDecayWeights:

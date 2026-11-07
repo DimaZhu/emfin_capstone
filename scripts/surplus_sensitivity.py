@@ -3,7 +3,7 @@ import sys,csv
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
-from emfin_capstone.toolbox import liabilities as l
+from emfin_v2.toolbox import liabilities as l
 rng=np.random.default_rng(81)
 market=np.column_stack([np.exp(rng.normal(.012,.08,2000)),np.full(2000,1.005)])
 rows=[]

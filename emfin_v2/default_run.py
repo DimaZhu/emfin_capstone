@@ -8,9 +8,10 @@ from pathlib import Path
 import json,time
 import numpy as np
 from scipy.stats import t as student
-from emfin_capstone.toolbox import dataset,shrinkage,liabilities,entropy_pooling as ep,benchmark,risk_stats,mpep,seqep
+from emfin_v2.toolbox import dataset,shrinkage,liabilities,entropy_pooling as ep,benchmark,risk_stats,mpep,seqep
 
-DEFAULT_CONFIG=Path(__file__).resolve().parents[1]/'configs/default.json'
+from emfin_v2.config import CONFIG_DIR
+DEFAULT_CONFIG=CONFIG_DIR/'default.json'
 
 
 def load_config(path=DEFAULT_CONFIG):
@@ -249,7 +250,7 @@ def run(c,output='artifacts/default'):
             paid[:,step-1:]+=v[1][:,j,None]*v[4][:,step-1:]/v[4][:,[step-1]]
         fan[name]=np.quantile((values-paid)/c['wealth'],[.05,.25,.5,.75,.95],axis=0).tolist()
     gross_common=draw[0][:,-1]
-    from emfin_capstone.toolbox.reporting import efficient_frontier
+    from emfin_v2.toolbox.reporting import efficient_frontier
     common_mu=(gross_common-1).mean(0);common_cov=np.cov(gross_common,rowvar=False)
     frontier=efficient_frontier(gross_common)
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
@@ -281,7 +282,7 @@ def run(c,output='artifacts/default'):
         w=csv.writer(f);w.writerow(['method','net_ce_mean','net_ce_low','net_ce_high','date_gap_means','date_gap_CI_upper','stressed_gap_CI_upper','budgets','pass'])
         for r in rows:w.writerow([r['method'],r['net_ce']['mean'][0],r['net_ce']['low'][0],r['net_ce']['high'][0],json.dumps(r['gap_cvar']['mean']),json.dumps(r['gap_cvar']['high']),json.dumps(r['stressed_gap_cvar']['high']),json.dumps(r['budgets']),r['evaluation_pass']])
     # Shared chart renderer; exported HTML never pretends static controls run Python.
-    from emfin_capstone.explorer import from_default,template
+    from emfin_v2.explorer import from_default,template
     (out/'report.html').write_text(template(from_default(result),True))
     print(out/'report.md',status['kind'],f"{result['seconds']:.2f}s",flush=True)
     return result
@@ -291,13 +292,13 @@ def main(argv=None):
     import argparse,sys
     argv=list(sys.argv[1:] if argv is None else argv)
     if '--research' in argv and ('--help' in argv or '-h' in argv):
-        from emfin_capstone.engine import main as research
+        from emfin_v2.engine import main as research
         research([a for a in argv if a!='--research'])
         return
     p=argparse.ArgumentParser();p.add_argument('--config',default=str(DEFAULT_CONFIG));p.add_argument('--output',default='artifacts/default');p.add_argument('--research',action='store_true')
     args,extra=p.parse_known_args(argv)
     if args.research:
-        from emfin_capstone.engine import main as research
+        from emfin_v2.engine import main as research
         try:
             research(extra)
         except (ValueError,RuntimeError) as error:

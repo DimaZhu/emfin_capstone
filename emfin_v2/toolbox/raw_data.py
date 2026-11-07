@@ -1,7 +1,7 @@
 """Manifest-resolved, hash-verified raw data, independent of dated paths."""
 from pathlib import Path
 import hashlib,json
-from emfin_capstone import config
+from emfin_v2 import config
 
 
 def series_file(series_id,root=None):

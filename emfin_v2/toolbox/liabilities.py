@@ -32,7 +32,7 @@ from dataclasses import dataclass
 import cvxpy as cp
 import numpy as np
 
-from emfin_capstone.toolbox import risk_stats, solvers
+from emfin_v2.toolbox import risk_stats, solvers
 
 
 @dataclass(frozen=True)

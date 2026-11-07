@@ -1,0 +1,62 @@
+{
+  "source": "original main tree in this fork",
+  "commit": "e80e6c33a57d43d22fc93a72940267b9a1142d24",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "ebace176c2679d7fc150699d83810a0c7ea78f6dd6619e9db65f022a03afa292"
+    },
+    {
+      "path": "README.md",
+      "sha256": "40193e831dd2d5f1d3f32e6416a4169786e4fa2fdd136d01661d298c61f01dcd"
+    },
+    {
+      "path": "emfin_capstone/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "emfin_capstone/config.py",
+      "sha256": "67066a23688aa99bc71dbdf15a8721b4bb1da75c5b66bc697a1b52eae7a786ec"
+    },
+    {
+      "path": "emfin_capstone/data_types.py",
+      "sha256": "9608fb1beea49684dfa1fdda02227ee6a38f7920443f0cca4ead3d8705acc920"
+    },
+    {
+      "path": "emfin_capstone/toolbox/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "emfin_capstone/toolbox/cache.py",
+      "sha256": "9c681ddbe74e1c47a618f04d350ad2016cf43f12d311ff0b038f2cebe31355ee"
+    },
+    {
+      "path": "emfin_capstone/toolbox/normal_market.py",
+      "sha256": "e65745cdab65daac1970a173e19998cdc913668811592ecea9ff682d8fa60a96"
+    },
+    {
+      "path": "emfin_capstone/toolbox/price.py",
+      "sha256": "8471203c2cb0212af1a1df60a0db32068e3ede05989997e19126439ed5f2cbf8"
+    },
+    {
+      "path": "emfin_capstone/toolbox/returns.py",
+      "sha256": "f7cdaf91af1a6e9abdeb04cbfdfb1a5a9841c4d8b92aaf8647a5b4d89728c2ec"
+    },
+    {
+      "path": "emfin_capstone/toolbox/scenario_market.py",
+      "sha256": "a1dbebdf7e6fdc32c5743fb1ebeb3ca29abb17ac2ec55a307b8fde0bf9fbd556"
+    },
+    {
+      "path": "notebooks/portfolio_optimization.ipynb",
+      "sha256": "aac7dc5a65a691bfa2a8db305c11de25d2fa686a07fec5353d8bf4b3c6063f51"
+    },
+    {
+      "path": "poetry.lock",
+      "sha256": "87cc42fc82a209683a3e5086b6a6767fa2ec4450e0c5bd03d409630110d43d0f"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "f45060e7d2de469cb74c381def334b5509579860460650380cc2e3c2cdf0ba14"
+    }
+  ]
+}

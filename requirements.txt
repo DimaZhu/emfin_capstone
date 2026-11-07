@@ -1,5 +1,5 @@
 # Runtime dependencies, pinned to the versions the engine is tested against
-# (Python 3.10-3.12). Install: pip install -r requirements.txt
+# (Python >=3.10,<3.14; tested here on 3.10). Install: pip install -r requirements.txt
 numpy==2.2.6
 pandas==2.3.3
 scipy==1.15.3

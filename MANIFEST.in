@@ -1,0 +1,3 @@
+include NOTICE.md
+recursive-include emfin_v2/resources *.json *.csv
+recursive-include emfin_v2/web *.html

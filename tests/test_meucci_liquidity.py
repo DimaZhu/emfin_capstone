@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from scipy import stats
 
-from emfin_capstone.toolbox import meucci_liquidity as ml
+from emfin_v2.toolbox import meucci_liquidity as ml
 
 PARAMS = [
     ml.MeucciLiquidityParams(alpha=0.001, beta=0.5, delta=1e-4, ann_vol=0.20, adv=1e6),

@@ -1,5 +1,5 @@
 import json
-from emfin_capstone.toolbox.reporting import write_report
+from emfin_v2.toolbox.reporting import write_report
 
 
 def test_export_has_machine_readable_tables_and_caveats(tmp_path):

@@ -5,7 +5,7 @@ netting, weighted atom boundaries, path probability identity and optimizer domai
 """
 import numpy as np
 import pytest
-from emfin_capstone.toolbox import liabilities,entropy_pooling as ep,mpep,tsdr,risk_stats
+from emfin_v2.toolbox import liabilities,entropy_pooling as ep,mpep,tsdr,risk_stats
 
 
 def test_hand_balance_sheet_one_and_multi_period_agree():
@@ -62,7 +62,7 @@ def test_mpep_cml_optimizer_does_not_spend_same_cash_twice():
 
 
 def test_private_archive_adapter_preserves_prices_and_netting(tmp_path):
-    from emfin_capstone.default_run import load_archive,load_config
+    from emfin_v2.default_run import load_archive,load_config
     c=load_config();c['horizon_weeks']=2;c['cash_index']=1
     p=tmp_path/'case.npz'
     np.savez(p,market_paths=np.array([[[20.,50.],[22.,50.]],[[20.,50.],[18.,50.]]]),

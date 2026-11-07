@@ -8,7 +8,7 @@ constraints, and the tail-count search.
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import mpep
+from emfin_v2.toolbox import mpep
 
 
 def _paths(n=3000, steps=6, assets=2, seed=7):

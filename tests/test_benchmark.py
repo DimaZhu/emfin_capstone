@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import benchmark
+from emfin_v2.toolbox import benchmark
 
 
 def test_mv_picks_dominant_asset_long_only():
