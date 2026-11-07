@@ -163,3 +163,68 @@ def optimization_liability_aware(
         "weights": weights.value.copy(),
     }
     return allocations, diagnostics
+
+
+@dataclass(frozen=True)
+class TailBudgetCalibration:
+    """Result of calibrating the in-solver shortfall budget against OOS reality."""
+
+    best_multiplier: float  # in-solver gamma_shortfall = multiplier * nominal budget
+    best_allocation: np.ndarray
+    history: tuple[tuple[float, float], ...]  # (multiplier, realized OOS gap CVaR $) probes
+    target: float  # the OOS budget the calibration was aiming at ($)
+
+
+def calibrate_shortfall_budget(
+    solve_fn,
+    evaluate_fn,
+    target: float,
+    lo: float = 0.1,
+    hi: float = 1.0,
+    tol: float = 0.05,
+    max_iter: int = 6,
+) -> TailBudgetCalibration:
+    """Tighten the in-solver shortfall budget until it holds out-of-sample.
+
+    SAA tail noise: a CVaR constraint that binds in-solver on N scenarios
+    realizes looser on fresh draws (~2x at 10k scenarios in this engine).
+    So the nominal budget cannot be trusted directly.  This binary-searches
+    the multiplier applied to the nominal in-solver budget for the LARGEST
+    multiplier whose realized out-of-sample funding-gap CVaR still respects
+    the target - the loosest in-solver budget that is honest out-of-sample,
+    i.e. maximum CE subject to the OOS constraint.
+
+    ``solve_fn(mult)`` returns the allocation solved with
+    ``gamma_shortfall = mult * nominal``; ``evaluate_fn(alloc)`` returns the
+    realized OOS gap CVaR in dollars (paired seeds kill most of the noise).
+    Monotonicity assumed: tighter in-solver budget -> lower realized CVaR.
+
+    Edge cases are honest: if the nominal budget (mult = hi) already passes
+    OOS, keep it; if even the tightest probe (mult = lo) fails, return lo
+    and the history shows the failure.
+    """
+    cache: dict[float, tuple[np.ndarray, float]] = {}
+
+    def probe(m: float) -> float:
+        if m not in cache:
+            alloc = np.asarray(solve_fn(m), dtype=float)
+            cache[m] = (alloc, float(evaluate_fn(alloc)))
+        return cache[m][1]
+
+    history: list[tuple[float, float]] = []
+    if probe(hi) <= target:
+        history = [(m, cache[m][1]) for m in sorted(cache)]
+        return TailBudgetCalibration(hi, cache[hi][0], tuple(history), target)
+    probe(lo)
+    best = lo
+    l, h = lo, hi
+    for _ in range(max_iter):
+        mid = 0.5 * (l + h)
+        if probe(mid) <= target:
+            best, l = mid, mid
+        else:
+            h = mid
+        if (h - l) <= tol:
+            break
+    history = [(m, cache[m][1]) for m in sorted(cache)]
+    return TailBudgetCalibration(best, cache[best][0], tuple(history), target)

@@ -87,3 +87,54 @@ def test_shortfall_budget_binds_and_tightens_monotonically():
         wealth_samples = samples @ alloc
         m = liab.funding_gap_metrics(wealth_samples, 980_000, 0.95)
         assert m.shortfall_cvar <= gs * 980_000 * 1.05
+
+
+def _linear_calibration_problem(crossing: float):
+    """Synthetic monotone problem: realized OOS CVaR = mult * 2 * target,
+    so the constraint realized <= target holds exactly for mult <= crossing
+    with crossing = 0.5.  solve_fn records the multipliers it saw."""
+    seen = []
+
+    def solve(mult):
+        seen.append(mult)
+        return np.array([mult, 1.0 - mult])
+
+    def evaluate(alloc):
+        return alloc[0] * 2.0 * 100.0  # target = 100 -> crossing at 0.5
+
+    return solve, evaluate, seen
+
+
+def test_calibration_keeps_nominal_when_it_passes_oos():
+    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+
+    solve, evaluate, seen = _linear_calibration_problem(0.5)
+    # target above anything hi can realize -> nominal passes immediately
+    cal = calibrate_shortfall_budget(solve, evaluate, target=500.0)
+    assert cal.best_multiplier == 1.0
+    assert seen == [1.0]  # one probe only, no wasted solves
+    np.testing.assert_allclose(cal.best_allocation, [1.0, 0.0])
+
+
+def test_calibration_finds_largest_feasible_multiplier():
+    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+
+    solve, evaluate, _ = _linear_calibration_problem(0.5)
+    cal = calibrate_shortfall_budget(solve, evaluate, target=100.0, tol=0.05)
+    # crossing is at mult = 0.5: best must be feasible and within tol of it
+    assert cal.best_multiplier <= 0.5 + 1e-9
+    assert cal.best_multiplier >= 0.5 - 0.05 - 1e-9
+    assert evaluate(cal.best_allocation) <= 100.0 + 1e-9
+    # history is sorted by multiplier and records every probe
+    mults = [m for m, _ in cal.history]
+    assert mults == sorted(mults) and len(mults) >= 3
+
+
+def test_calibration_reports_failure_when_even_tightest_fails():
+    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+
+    solve, evaluate, _ = _linear_calibration_problem(0.5)
+    # target below what lo = 0.1 realizes (20) is fine; use target 10 -> fail
+    cal = calibrate_shortfall_budget(solve, evaluate, target=10.0, lo=0.1)
+    assert cal.best_multiplier == 0.1
+    assert evaluate(cal.best_allocation) > 10.0  # honest failure, visible in history
