@@ -326,7 +326,13 @@ def _kl_project_mixed(
 
     log_p = np.log(p)
     if d_eq == zs.shape[1]:
-        lam = _solve_dual_newton(zs, vs, log_p, zs.shape[1])
+        try:
+            lam = _solve_dual_newton(zs, vs, log_p, zs.shape[1])
+        except RuntimeError:
+            # Near-converged Newton steps can stall at floating-point objective
+            # precision on correlated multi-asset views. Same KL dual, same
+            # independent residual check below, no target relaxation.
+            lam = _solve_dual_bounded(zs, vs, log_p, d_eq)
     else:
         lam = _solve_dual_bounded(zs, vs, log_p, d_eq)
     tilt = zs @ lam

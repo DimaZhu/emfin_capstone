@@ -40,6 +40,8 @@ class Controls:
     re_haircut: float=10.
     re_forward_drift: float=4.
     re_forward_mode: str='view'
+    asset_views: tuple | None=None
+    stress_increment: float=1.
 
 
 
@@ -55,6 +57,8 @@ class Controls:
         validate(dict(smoothing_alpha=self.re_alpha,net_rental_yield=self.re_rent/100,sale_week=self.re_sale_week,sale_delay_weeks=self.re_sale_delay,history_case=self.re_history,forward_mode=self.re_forward_mode,forward_log_drift=self.re_forward_drift/100))
         if not np.isfinite(self.re_correlation) or not -1<=self.re_correlation<=1:raise ValueError('RE dependence must be -1 to 1')
         if not np.isfinite(self.re_haircut) or not 0<=self.re_haircut<100:raise ValueError('RE sale haircut must be 0 to below 100%')
+        if not np.isfinite(self.stress_increment) or not 0<=self.stress_increment<=10:raise ValueError('stress increment must be 0-10 percentage points')
+        if self.asset_views is not None and (len(self.asset_views)!=5 or any(not np.isfinite(v) or not -50<=v<=50 for v in self.asset_views)):raise ValueError('five expected horizon returns must be -50% to 50%')
         if not 1<=self.cml<=40:raise ValueError('path-loss tail budget must be 1-40%')
         if self.payouts is not None:
             if not 1<=len(self.payouts)<=6:raise ValueError('provide one to six payouts')
@@ -91,7 +95,8 @@ def compute(c=Controls()):
         config['funding_budget_fraction']=c.budget/100
         config['view_spread']=.005*c.view/50
         config['sequential_ep']=c.sequential
-        config['stress_mean_path_loss_increment']=.01 if c.stress else 0.
+        config['stress_mean_path_loss_increment']=c.stress_increment/100 if c.stress else 0.
+        config['market_return_views']={str(i):v/100 for i,v in enumerate(c.asset_views)} if c.asset_views is not None else {}
         config['student_nu']=8. if c.student else None
         config['real_estate']['enabled']=c.real_estate
         config['real_estate']['source']=c.re_source
@@ -162,7 +167,7 @@ def from_default(result):
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,
         re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
-        re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100),
+        re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in range(5)) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; drops at weeks 10 and 13.',
@@ -205,6 +210,7 @@ def main():
                         result=from_default(run(load_config(config_file),folder))
                 else:
                     if data.get('payouts') is not None:data['payouts']=tuple(tuple(row) for row in data['payouts'])
+                    if data.get('asset_views') is not None:data['asset_views']=tuple(data['asset_views'])
                     result=compute(Controls(**data))
                 body=json.dumps(result).encode()
                 self.send_response(200)
