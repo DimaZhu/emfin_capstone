@@ -31,7 +31,10 @@ def test_dashboard_funding_and_stress_are_generated(tmp_path):
     assert len(d['payouts'])==12 and d['horizon_weeks']==52
     assert all(p['shortfall']>=0 for shock in d['shocks'] for p in shock['payouts'])
     assert all(row['wasserstein_buffer']>=0 for row in r['rows'])
-    assert next(row for row in r['rows'] if row['method']=='proposed')['evaluation_pass']
+    row=next(row for row in r['rows'] if row['method']=='proposed')
+    assert d['overall_pass']==row['evaluation_pass']==row['overall_pass']
+    assert len([g for g in d['guardrails'] if g.get('scope')=='Evaluation'])==14
+    assert all(g['state']==('Met' if z['passed'] else 'Breached') for g,z in zip([g for g in d['guardrails'] if g.get('scope')=='Evaluation'],row['evaluation']['checks']))
 
 
 def test_config_placeholder_fails_helpfully(tmp_path):

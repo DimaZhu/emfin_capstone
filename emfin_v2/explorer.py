@@ -8,9 +8,24 @@ from dataclasses import dataclass, asdict
 from functools import lru_cache
 from pathlib import Path
 import json,time
+from threading import BoundedSemaphore
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 import numpy as np
 from emfin_v2.toolbox import dataset,shrinkage,entropy_pooling as ep,seqep,liabilities,benchmark,risk_stats,reporting,scenario_market,mpep
+
+
+# One local solve at a time, no unbounded request queue. A disconnected browser
+# does not kill a running solver; the slot remains occupied until it finishes.
+COMPUTE_SLOT=BoundedSemaphore(1)
+MAX_INTERACTIVE_WORK=100_000
+
+
+def validate_server_work(config):
+    keys=('train_scenarios','validation_scenarios','evaluation_scenarios','validation_seeds','evaluation_seeds','horizon_weeks')
+    if any(type(config.get(k)) is not int or config[k]<1 for k in keys):raise ValueError('positive whole scenario counts, seeds and horizon required')
+    work=(config['train_scenarios']+config['validation_scenarios']*config['validation_seeds']+config['evaluation_scenarios']*config['evaluation_seeds'])*config['horizon_weeks']
+    if work>MAX_INTERACTIVE_WORK:raise ValueError('Run exceeds the interactive work cap. Use the CLI for a measured research run; this server will not queue it.')
+    return work
 
 @dataclass(frozen=True)
 class Controls:
@@ -180,8 +195,10 @@ def from_default(result):
     """Same data for CLI static export and the live multi-period panel."""
     cfg=result['config'];rows=[]
     for r in result['rows']:
-        rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][-1],
-            gap_upper=r['wasserstein_gap_upper'][-1],stress_gap=r['stressed_gap_cvar']['mean'][-1],nominal_gap=r['training_gap'][-1],budget=r['budgets'][-1]))
+        judge=r.get('evaluation',{});i=judge.get('worst_funding_index',len(r['budgets'])-1)
+        check=next((z for z in judge.get('checks',[]) if z.get('payout_index')==i),None)
+        rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][i],
+            gap_upper=check['upper'] if check else r['wasserstein_gap_upper'][i],stress_gap=r['stressed_gap_cvar']['mean'][i],nominal_gap=r['training_gap'][i],budget=r['budgets'][i],week=int(cfg['liabilities'][i]['week']),overall_pass=r.get('overall_pass',False),verified=bool(judge)))
     selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
     return dict(controls=dict(scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
@@ -222,17 +239,24 @@ def main():
             if self.path not in ('/compute','/run-config'):self.send_error(404);return
             if self.headers.get('Origin') not in (None,f'http://127.0.0.1:{args.port}',f'http://localhost:{args.port}'):
                 self.send_error(403);return
+            acquired=False
             try:
                 length=int(self.headers.get('Content-Length','0'))
-                if length>262144:raise ValueError('request too large')
+                if not 0<length<=262144:raise ValueError('request too large')
                 data=json.loads(self.rfile.read(length))
+                acquired=COMPUTE_SLOT.acquire(blocking=False)
+                if not acquired:
+                    body=json.dumps({'error':'A calculation is already running. No extra work was queued. Try again after it finishes.'}).encode();self.send_response(429);self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(body);return
                 if self.path=='/run-config':
                     from tempfile import TemporaryDirectory
                     from emfin_v2.default_run import load_config,run
                     with TemporaryDirectory() as folder:
                         config_file=Path(folder)/'config.json';config_file.write_text(json.dumps(data))
-                        result=from_default(run(load_config(config_file),folder))
+                        config=load_config(config_file);validate_server_work(config)
+                        result=from_default(run(config,folder))
                 else:
+                    if data.get('multiperiod',True) is not True:raise ValueError('Legacy single-date companion is not supported by this multi-period UI')
+                    if data.get('scenario_tier','interactive')!='interactive':raise ValueError('Full research tier is CLI-only; obtain a measured compute estimate first')
                     if data.get('payouts') is not None:data['payouts']=tuple(tuple(row) for row in data['payouts'])
                     if data.get('asset_views') is not None:data['asset_views']=tuple(data['asset_views'])
                     result=compute(Controls(**data),args.config)
@@ -240,6 +264,8 @@ def main():
                 self.send_response(200)
             except Exception as e:
                 body=json.dumps({'error':str(e)}).encode();self.send_response(400)
+            finally:
+                if acquired:COMPUTE_SLOT.release()
             self.send_header('Content-Type','application/json');self.end_headers();self.wfile.write(body)
     print(f'Local explorer: http://127.0.0.1:{args.port}',flush=True)
     ThreadingHTTPServer(('127.0.0.1',args.port),Handler).serve_forever()

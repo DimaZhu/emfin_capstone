@@ -361,14 +361,19 @@ def run(c,output='artifacts/default'):
     evaluation=[load_archive(p,c) for p in archive['evaluation']] if archive else [draw_paths(c,fit,c['evaluation_scenarios'],c['seed']+10000+j) for j in range(c['evaluation_seeds'])]
     for v in validation+evaluation:
         if v[0].shape[1:]!=draw[0].shape[1:] or not np.array_equal(v[2],draw[2]) or not np.array_equal(v[3],draw[3]):raise ValueError('all split archives must share asset/horizon dimensions, payout weeks and liability bases')
-    evaluation_stress=[probabilities(c,v[0],getattr(v,'re_price_logs',None))[1] for v in evaluation]
+    evaluation_measures=[probabilities(c,v[0],getattr(v,'re_price_logs',None)) for v in evaluation]
+    evaluation_nominal=[p[0] for p in evaluation_measures]
+    evaluation_stress=[p[1] for p in evaluation_measures]
+    from emfin_v2.evaluation import evaluate
     rows=[];fan={}
     for name,a in allocations.items():
+        verdict=evaluate(c,evaluation,a,evaluation_nominal,evaluation_stress)
         scores=[metrics(c,v,a) for v in evaluation]
         gap_ci=interval([s[0] for s in scores]);ce_ci=interval([s[1] for s in scores])
         stress_gap_ci=interval([metrics(c,v,a,ps)[0] for v,ps in zip(evaluation,evaluation_stress)])
         rows.append(dict(method=name,net_ce=ce_ci,gap_cvar=gap_ci,stressed_gap_cvar=stress_gap_ci,training_gap=metrics(c,draw,a)[0].tolist(),wasserstein_buffer=dro_buffer(c,a),wasserstein_gap_upper=(np.maximum(gap_ci['high'],stress_gap_ci['high'])+dro_buffer(c,a)).tolist(),budgets=(draw[3]*c['funding_budget_fraction']).tolist(),
-                         evaluation_pass=bool(np.all(np.maximum(gap_ci['high'],stress_gap_ci['high'])+dro_buffer(c,a)<=draw[3]*c['funding_budget_fraction']))))
+                         funding_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
+                         evaluation_pass=verdict['overall_pass']))
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
         v=evaluation[0];values=v[0]@a
         paid=np.zeros_like(values)
@@ -385,7 +390,8 @@ def run(c,output='artifacts/default'):
         assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['Singapore URA private residential price index'] if d==7 and c['real_estate'].get('source')=='singapore_ura' else ['RE synthetic'] if d==7 else [])),
         net_wealth_fan=fan, supersedes='All earlier multi-period figures before cumulative payout correction.',
         caveats=['Wasserstein risk bounds use an explicit L1 transport metric on normalized path prices and cumulative payout requirements, unrestricted support and a development-selected radius, not a confidence-calibrated ambiguity set. Utility remains nominal.',
-                 'Monte Carlo t intervals describe batch estimates conditional on the fitted model, not economic forecast uncertainty. Zero observed losses yield zero-width intervals, not a bound on unseen tails.',
+                 'Final all-risk verdict uses separate Bonferroni-adjusted one-sided conditional batch bounds for every payment, path/terminal loss and holdings. Reference, nominal and stress measures plus their common-threshold convex-hull envelope are checked. These are Monte Carlo diagnostics, not economic forecast coverage. Zero observed losses do not bound unseen tails.',
+                 'Funding-selected candidates remain frozen when final all-risk evaluation fails. Final results never tune or repair them. Passing a coarse model check is not an investment recommendation.',
                  'Archive split independence is the input provider responsibility; generated mode uses disjoint calibration/evaluation seeds. Final failures are never recalibrated away.',
                  'Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.',
                  'Liabilities and views are illustrative; Student-t nu=8 is development-selected, not client evidence.',
@@ -402,14 +408,15 @@ def run(c,output='artifacts/default'):
     out=Path(output);out.mkdir(parents=True,exist_ok=True)
     (out/'results.json').write_text(json.dumps(result,indent=2,default=convert,allow_nan=False)+'\n')
     lines=['# Default funding-risk comparison',c['label'],f"Snapshot {result['snapshot']}; status: {status['kind']}",
-           '|Method|Net CE mean ($)|Per-date nominal/stressed gap CVaR upper CI ($)|W1 buffer ($)|Upper bounds incl. W1 ($)|Pass risk budgets?|' ,'|---|---:|---|---:|---|---|']
+           '|Method|Net CE mean ($)|Per-date nominal/stressed gap CVaR upper CI ($)|W1 buffer ($)|Upper bounds incl. W1 ($)|Pass all risk budgets?|' ,'|---|---:|---|---:|---|---|']
     for row in rows:lines.append(f"|{row['method']}|{row['net_ce']['mean'][0]:,.0f}|{', '.join(f'{g:,.0f}/{s:,.0f}' for g,s in zip(row['gap_cvar']['high'],row['stressed_gap_cvar']['high']))}|{row['wasserstein_buffer']:,.0f}|{', '.join(f'{v:,.0f}' for v in row['wasserstein_gap_upper'])}|{row['evaluation_pass']}|")
+    lines+=['## Independent final all-risk verdicts']+[f"{r['method']}: funding={r['funding_pass']}; overall={r['overall_pass']}; breaches={', '.join(r['evaluation']['breaches']) or 'none'}. Conditional diagnostics only, not economic coverage." for r in rows]
     lines+=['## Qualifications']+['- '+c for c in result['caveats']]
     (out/'report.md').write_text('\n\n'.join(lines)+'\n')
     import csv
     with (out/'benchmarks.csv').open('w',newline='') as f:
-        w=csv.writer(f);w.writerow(['method','net_ce_mean','net_ce_low','net_ce_high','date_gap_means','date_gap_CI_upper','stressed_gap_CI_upper','budgets','wasserstein_buffer','wasserstein_gap_upper','pass'])
-        for r in rows:w.writerow([r['method'],r['net_ce']['mean'][0],r['net_ce']['low'][0],r['net_ce']['high'][0],json.dumps(r['gap_cvar']['mean']),json.dumps(r['gap_cvar']['high']),json.dumps(r['stressed_gap_cvar']['high']),json.dumps(r['budgets']),r['wasserstein_buffer'],json.dumps(r['wasserstein_gap_upper']),r['evaluation_pass']])
+        w=csv.writer(f);w.writerow(['method','net_ce_mean','net_ce_low','net_ce_high','date_gap_means','date_gap_CI_upper','stressed_gap_CI_upper','budgets','wasserstein_buffer','wasserstein_gap_upper','funding_pass','overall_pass','breaches'])
+        for r in rows:w.writerow([r['method'],r['net_ce']['mean'][0],r['net_ce']['low'][0],r['net_ce']['high'][0],json.dumps(r['gap_cvar']['mean']),json.dumps(r['gap_cvar']['high']),json.dumps(r['stressed_gap_cvar']['high']),json.dumps(r['budgets']),r['wasserstein_buffer'],json.dumps(r['wasserstein_gap_upper']),r['funding_pass'],r['overall_pass'],json.dumps(r['evaluation']['breaches'])])
     # Shared chart renderer; exported HTML never pretends static controls run Python.
     from emfin_v2.explorer import from_default,template
     (out/'report.html').write_text(template(from_default(result),True))

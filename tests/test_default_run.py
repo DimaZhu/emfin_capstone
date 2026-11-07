@@ -9,7 +9,9 @@ def test_default_end_to_end_calibration_and_heldout_report(tmp_path):
     c=load_config(LEGACY_CONFIG);c.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.]);result=run(c,tmp_path)
     assert result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture','verified pointwise fixed-holdings fallback')
     proposed=next(row for row in result['rows'] if row['method']=='proposed')
-    assert proposed['evaluation_pass']
+    assert proposed['evaluation_pass']==proposed['overall_pass']
+    assert proposed['evaluation']['breaches'] or proposed['overall_pass']
+    assert proposed['funding_pass']
     assert np.array(proposed['gap_cvar']['high'])[-1] <= proposed['budgets'][-1]
     assert (tmp_path/'report.html').exists()
     assert 'Net wealth after cumulative payouts' in (tmp_path/'report.html').read_text()
