@@ -20,7 +20,7 @@ def benchmark_evidence(config,result):
     batches=[]
     for j in range(c['evaluation_seeds']):
         draw=draw_paths(c,fit,c['evaluation_scenarios'],c['seed']+10000+j)
-        q,qs=probabilities(c,draw[0])
+        q,qs=probabilities(c,draw[0],getattr(draw,'re_price_logs',None))
         for name,a in allocations.items():
             gap,ce=metrics(c,draw,a);stress_gap,_=metrics(c,draw,a,qs)
             returns=draw[0][:,-1]@a/wealth-1

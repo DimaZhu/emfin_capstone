@@ -17,12 +17,28 @@ def build(out,plt):
     if names:
         fig,axes=plt.subplots((len(names)+2)//3,3,figsize=(11,3*((len(names)+2)//3)),squeeze=False)
         for ax,name in zip(axes.flat,names):
-            points=sorted([r for r in items if r['study']==name],key=lambda r:r['value']);valid=[r for r in points if r['ce'] is not None]
+            points=sorted([r for r in items if r['study']==name],key=lambda r:r['value']);low=min(r['value'] for r in points);high=max(r['value'] for r in points);pad=max((high-low)*.1,abs(low)*1e-8,1e-8);ax.set_xlim(low-pad,high+pad);valid=[r for r in points if r['ce'] is not None]
             ax.plot([r['value'] for r in valid],[r['ce'] for r in valid],'o-',color='#527d70');ax.set(title=name,xlabel='Configured value (see study manifest)',ylabel='Net CE (USD millions)');ax.ticklabel_format(useOffset=False,style='plain',axis='x');ax.tick_params(axis='x',rotation=25)
             for r in points:
                 if r['ce'] is None:ax.annotate(r['verdict'],(r['value'],.05),xycoords=('data','axes fraction'),rotation=90,fontsize=8)
         for ax in list(axes.flat)[len(names):]:ax.set_visible(False)
         save(fig,'sensitivity_curves')
+        # Single-panel versions remain readable on phones; the montage is
+        # supplemental, not the only way to read a sensitivity result.
+        for index,name in enumerate(names):
+            points=sorted([r for r in items if r['study']==name],key=lambda r:r['value']);valid=[r for r in points if r['ce'] is not None]
+            fig,ax=plt.subplots(figsize=(6.8,3.8));x=np.arange(len(points))
+            percent=any(k in name for k in ['drift','vol','yield','haircut','radius','budget'])
+            labels=[f"{r['value']*100:g}%" if percent else str(r['value']) for r in points]
+            if name=='Forward vs boom sample':labels=['4% forward view','12.6% sample scenario']
+            for j,r in enumerate(points):
+                if r['ce'] is not None:ax.plot(j,r['ce'],'o',color='#527d70' if r['verdict']=='pass' else '#c0393b')
+                else:ax.annotate(r['verdict'],(j,.1),xycoords=('data','axes fraction'),rotation=90)
+            if len(valid)>1:
+                indices=[points.index(r) for r in valid];ax.plot(indices,[r['ce'] for r in valid],color='#527d70',alpha=.5)
+                if max(r['ce'] for r in valid)-min(r['ce'] for r in valid)<1e-6:
+                    mid=np.mean([r['ce'] for r in valid]);ax.set_ylim(mid-.000001,mid+.000001);ax.text(.02,.92,'Variation below $1',transform=ax.transAxes)
+            ax.set_xticks(x,labels);ax.set_xlim(-.3,len(points)-.7);ax.ticklabel_format(axis='y',style='plain',useOffset=False);ax.set(title=name.replace('_',' '),xlabel='Explicit sampled assumption',ylabel='Net certainty equivalent (USD millions)');ax.grid(alpha=.15);save(fig,'study_'+str(index))
         # Tornado uses lower/upper sampled CE minus central sampled CE only
         # when all three values are available, and never ranks an unavailable as zero.
         changes=[]
@@ -52,4 +68,14 @@ def build(out,plt):
             residual.append(dict(n=n,seed=seed,residual=float(abs(x@q-target)),normalization=float(abs(q.sum()-1))))
     (out/'ep_residual_sweep.json').write_text(json.dumps(residual,indent=2)+'\n')
     fig,ax=plt.subplots(figsize=(6.8,3.5));ax.scatter([r['n'] for r in residual],[max(r['residual'],1e-16) for r in residual],color='#527d70');ax.set_yscale('log');ax.set(xlabel='Number of scenarios in a one-view constructed problem',ylabel='Absolute mean-view residual',title='Entropy-pooling numerical residual sweep, four seeds');save(fig,'ep_residual_sweep')
+    # Solver tolerance study is a known analytic problem, not a claim about
+    # tolerances on the full stochastic optimization pipeline.
+    import cvxpy as cp,time
+    convergence=[]
+    for tolerance in [1e-4,1e-6,1e-8]:
+        w=cp.Variable(2);problem=cp.Problem(cp.Maximize(w@np.array([1.,1.2])),[cp.sum(w)==1,w>=0,w[0]>=.75])
+        start=time.perf_counter();problem.solve(solver='CLARABEL',tol_gap_abs=tolerance,tol_gap_rel=tolerance,tol_feas=tolerance)
+        convergence.append(dict(tolerance=tolerance,weight_error=float(abs(w.value[1]-.25)),seconds=time.perf_counter()-start,status=problem.status,max_constraint_residual=max(float(np.max(c.violation())) for c in problem.constraints)))
+    (out/'solver_tolerance.json').write_text(json.dumps(convergence,indent=2)+'\n')
+    fig,ax=plt.subplots(figsize=(6.8,3.5));ax.loglog([r['tolerance'] for r in convergence],[max(r['weight_error'],1e-16) for r in convergence],'o-',color='#527d70');ax.set(xlabel='Configured feasibility/gap tolerance',ylabel='Absolute weight error vs analytic optimum',title='Tiny deterministic solver-tolerance study');save(fig,'solver_tolerance')
     return items

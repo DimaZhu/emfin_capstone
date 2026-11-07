@@ -2,7 +2,7 @@
 import os
 for name in ['OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS']:
     os.environ[name]='1'
-import argparse,concurrent.futures,contextlib,csv,fcntl,hashlib,itertools,json,sqlite3,subprocess,time
+import argparse,concurrent.futures,contextlib,csv,fcntl,hashlib,itertools,json,sqlite3,subprocess,time,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -13,14 +13,14 @@ def digest(x):return hashlib.sha256(canonical(x).encode()).hexdigest()
 
 def provenance():
     code={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
-          for folder in ['emfin_v2','experiments'] for p in sorted((ROOT/folder).rglob('*.py'))}
+          for folder in ['emfin_v2','experiments'] for p in sorted((ROOT/folder).rglob('*.py')) if folder=='emfin_v2' or p.name in ['grid.py','cell.py','evidence.py']}
     data={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
           for p in sorted((ROOT/'emfin_v2/resources/data').rglob('*')) if p.is_file()}
     import importlib.metadata as metadata
     versions={k:metadata.version(k) for k in ['numpy','pandas','scipy','cvxpy','clarabel','scs']}
     return dict(code_sha256=digest(dict(code=code,versions=versions)),data_sha256=digest(data),versions=versions,
                 git_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-                source='synthetic RE; bundled market snapshot',schema_version=1)
+                source='synthetic RE; bundled market snapshot',schema_version=1,cell_timeout_seconds=80,report_code_sha256=digest({str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'experiments').glob('*.py'))}))
 
 
 def configs(spec):
@@ -60,7 +60,7 @@ def initialize(db,spec,prov):
     db.commit()
 
 
-def worker(job):
+def run_cell(job):
     key,c,path=job;started=time.perf_counter()
     try:
         from emfin_v2.default_run import run
@@ -74,6 +74,21 @@ def worker(job):
         return key,'complete',time.perf_counter()-started,None,str(Path(path)/'results.json')
     except Exception as error:
         return key,'error',time.perf_counter()-started,type(error).__name__+': '+str(error),None
+
+
+def worker(job):
+    folder=Path(job[2]).resolve();folder.mkdir(parents=True,exist_ok=True)
+    jobfile=folder/'job.json';jobfile.write_text(json.dumps(job))
+    started=time.perf_counter()
+    with (folder/'cell.log').open('w') as log:
+        try:
+            process=subprocess.run([sys.executable,'-m','experiments.cell','--job',str(jobfile)],cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,timeout=80)
+        except subprocess.TimeoutExpired:
+            return job[0],'error',time.perf_counter()-started,'Cell time limit 80s exceeded; not an infeasibility verdict. Retry with a changed explicit compute budget or smaller experiment.',None
+    result=folder/'cell_result.json'
+    if process.returncode or not result.exists():
+        return job[0],'error',time.perf_counter()-started,'Worker exited without a result (exit '+str(process.returncode)+'); see cell.log',None
+    return tuple(json.loads(result.read_text()))
 
 
 def execute(out,spec,workers=1,max_jobs=None,retry_errors=False):

@@ -41,24 +41,24 @@
   },
   "cases": [
     {
-      "study": "RE annual_drift",
+      "study": "RE forward_log_drift",
       "value": -0.02,
       "overrides": {
-        "real_estate.annual_drift": -0.02
+        "real_estate.forward_log_drift": -0.02
       }
     },
     {
-      "study": "RE annual_drift",
+      "study": "RE forward_log_drift",
       "value": 0.04,
       "overrides": {
-        "real_estate.annual_drift": 0.04
+        "real_estate.forward_log_drift": 0.04
       }
     },
     {
-      "study": "RE annual_drift",
+      "study": "RE forward_log_drift",
       "value": 0.1,
       "overrides": {
-        "real_estate.annual_drift": 0.1
+        "real_estate.forward_log_drift": 0.1
       }
     },
     {
@@ -251,6 +251,24 @@
       "value": 400,
       "overrides": {
         "train_scenarios": 400
+      }
+    },
+    {
+      "study": "Forward vs boom sample",
+      "value": 0,
+      "overrides": {
+        "real_estate.annual_drift": 0.126,
+        "real_estate.forward_log_drift": 0.04,
+        "real_estate.forward_mode": "view"
+      }
+    },
+    {
+      "study": "Forward vs boom sample",
+      "value": 1,
+      "overrides": {
+        "real_estate.annual_drift": 0.126,
+        "real_estate.forward_log_drift": 0.04,
+        "real_estate.forward_mode": "sample"
       }
     }
   ]
