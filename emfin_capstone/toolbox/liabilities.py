@@ -141,18 +141,24 @@ def optimization_liability_aware(
         constraints.append(cvar_gap <= gamma_shortfall * rel_liability)
 
     problem = cp.Problem(cp.Maximize(ce_rel), constraints)
+    used_solver = "CLARABEL"
     try:
-        problem.solve(solver="CLARABEL")
+        # generous iteration budget + a hard time cap: the weighted CE with
+        # two CVaR epigraphs is the pipeline's dominant solve
+        problem.solve(solver="CLARABEL", max_iter=400, time_limit=60.0)
     except cp.SolverError:
-        # weighted CE + two CVaR epigraphs can strain CLARABEL; SCS is the
-        # slower but sturdier fallback for this cone shape
-        problem.solve(solver="SCS", eps_abs=1e-7, eps_rel=1e-7, max_iters=100_000)
+        # SCS is the sturdier fallback for this cone shape, but capped: an
+        # uncapped SCS run is minutes-slow and reads as a hang
+        used_solver = "SCS"
+        problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6, max_iters=10_000,
+                      time_limit_secs=60.0)
     if weights.value is None:
         raise RuntimeError(f"liability-aware optimization failed: {problem.status}")
 
     allocations = weights.value * wealth / prices_vector.ravel()
     diagnostics = {
         "status": problem.status,
+        "solver": used_solver,
         "ce_in_solver": float(problem.value) * wealth,
         "weights": weights.value.copy(),
     }
