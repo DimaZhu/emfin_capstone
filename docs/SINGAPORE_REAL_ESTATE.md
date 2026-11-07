@@ -17,3 +17,19 @@ The forward annual price-log view stays an editable, explicitly illustrative4%, 
 URA describes stratified hedonic estimation using caveat, stamp-duty and developer information, with transaction weighting. An aggregate price index need not reflect one property's sale price or time to sell. This is a current data vintage; earlier quarters may be revised, so a historical strategy backtest must not claim it had today's revised index values at past decisions. No SGD/USD FX adjustment has been added: price-index returns are local-currency economics while the existing funding model's reporting currency is USD. Cross-currency wealth requires an explicit FX model or a consistently SGD balance sheet before client use.
 
 The Abu Dhabi loader remains optional and private for legacy reproduction, behind the explicit legacy-source selection. It is no longer the active default. Its original import is not committed or included in public data. The RE sleeve is still off unless enabled; changing the data source does not silently add a property holding.
+
+## Fixed initial holding (current scenario)
+
+The owner selected a fixed10% initial RE allocation, no sale and zero rent.
+Its initial weight is an equality in the optimizer and both allocation
+comparators, not a minimum allowing the optimizer to buy more. The percentage
+and holding mode remain editable for later scenarios. The property is held
+through the horizon; its economic portfolio weight can drift with prices.
+This is not ongoing rebalancing. SGD/USD risk is approved but still pending.
+
+The earlier RE unavailable result was a numerical rejection, not a proof of
+economic infeasibility. When both solvers fail residual checks, a separately
+labelled fixed/minimum-holdings plus cash fallback may be returned only after
+pointwise training funding checks including W1 and observed path-loss checks.
+It then passes the same fresh-seed calibration as every other candidate.
+No optimality claim is made. Failed residual checks are never ignored.

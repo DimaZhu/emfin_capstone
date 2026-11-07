@@ -67,7 +67,12 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     # Equality constraints are met, not economically binding inequality budgets.
     for g in guards[-2:]:
         if g['state']!='Breached':g['state']='Met'
-    if len(w)>6:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[6],0.,'Minimum holding, NOT an illiquid-asset cap'))
+    if len(w)>6:
+        if c['real_estate'].get('holding_mode')=='fixed':
+            g=guard('Fixed RE holding',abs(c['real_estate']['fixed_weight']-w[6]),0.,'Fixed initial capital fraction, not an optimized RE weight or ongoing rebalancing')
+            if g['state']!='Breached':g['state']='Met'
+            guards.append(g)
+        else:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[6],0.,'Minimum holding, NOT an illiquid-asset cap'))
     for i in range(len(c['liabilities'])):
         current=row['wasserstein_gap_upper'][i]
         g=guard('Held-out funding: week '+str(c['liabilities'][i]['week']),current,row['budgets'][i],'Conditional batch-mean upper interval plus W1 buffer; no distribution-coverage guarantee','usd')

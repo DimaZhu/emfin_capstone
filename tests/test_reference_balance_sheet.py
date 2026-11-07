@@ -63,7 +63,7 @@ def test_mpep_cml_optimizer_does_not_spend_same_cash_twice():
 
 def test_private_archive_adapter_preserves_prices_and_netting(tmp_path):
     from emfin_v2.default_run import load_archive,load_config
-    c=load_config();c['horizon_weeks']=2;c['cash_index']=1
+    c=load_config();c['real_estate']['enabled']=False;c['horizon_weeks']=2;c['cash_index']=1
     p=tmp_path/'case.npz'
     np.savez(p,market_paths=np.array([[[20.,50.],[22.,50.]],[[20.,50.],[18.,50.]]]),
        prices_vector=np.array([20.,50.]),liability_scenarios=np.array([[40.,50.],[40.,50.]]),
