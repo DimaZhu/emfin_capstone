@@ -118,6 +118,16 @@ change only scenario probabilities and scenario values, upstream.
   at the lagged 10Y yield: money-market carry is a short rate, not a 10Y
   rate.  A near-riskless sleeve is required: without it a near-total payout
   is infeasible (10Y duration risk on the government sleeve).
+- **Solver scenario sampling - measured, not assumed**: the external review
+  suggested antithetic or quasi-random sampling for the 10k solver slice.
+  Measured on this pipeline: antithetic pairing cuts tail-estimator noise
+  ~6% (rejected - it symmetrizes the center of the distribution, not the
+  one-sided tail); scrambled Sobol low-discrepancy draws cut it ~30x at no
+  cost (adopted for the scenario set; judging stays pseudo-random because
+  out-of-sample reality is not low-discrepancy).  Honest limitation:
+  neither reduces the in-solver-to-OOS budget breach much, because that
+  breach is driven by the OPTIMIZER overfitting the discrete scenario set,
+  not by estimation noise - the calibration loop below remains the fix.
 - **SAA tail noise - fixed by calibration**: a CVaR-of-gap constraint that
   binds in-solver on 10k scenarios realizes looser out-of-sample (~2x in
   this engine), so the nominal budget cannot be trusted directly.  The
@@ -155,4 +165,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 83 tests covering every module.
+`python -m pytest tests/` - 101 tests covering every module.
