@@ -1,0 +1,12 @@
+# Development and data-regeneration tooling on top of the runtime pins.
+# Install: pip install -r requirements-dev.txt
+-r requirements.txt
+pytest==9.2.0
+# BSD-3-Clause reference EP implementation (Fortitudo Technologies), used by
+# tests/test_entropy_pooling.py to cross-check our solver. Test-only: the
+# GPL-3.0 fortitudo.tech package must NOT be added here (copyleft).
+entropy-pooling==1.0.11
+# Live data regeneration (scripts/pin_data_snapshot.py) and the notebook.
+yfinance==1.8.0
+plotly==7.1.0
+notebook==7.6.3

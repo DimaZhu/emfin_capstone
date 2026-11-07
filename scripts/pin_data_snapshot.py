@@ -4,7 +4,16 @@ Deliberate, manual step: run this, eyeball the result, commit.  Analysis
 code never calls it — it reads the committed CSVs via toolbox.snapshot.
 """
 
+
+
 from __future__ import annotations
+
+# Run from a fresh clone without installing the package:
+# scripts/ resolves imports against the repo root directly.
+import sys as _sys
+from pathlib import Path as _Path
+
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 
 import datetime as dt
 import json
