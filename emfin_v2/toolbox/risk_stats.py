@@ -15,13 +15,20 @@ from __future__ import annotations
 import numpy as np
 
 
+def _losses_and_level(loss_samples, confidence_level):
+    losses=np.asarray(loss_samples,dtype=float).ravel()
+    if not len(losses) or not np.isfinite(losses).all() or not np.isscalar(confidence_level) or not np.isfinite(confidence_level) or not 0<=confidence_level<1:
+        raise ValueError('finite nonempty losses and confidence in [0,1) required')
+    return np.sort(losses)
+
+
 def empirical_cvar(loss_samples: np.ndarray, confidence_level: float) -> float:
     """CVaR (expected shortfall) of the empirical loss distribution at level c.
 
     Exact for any sample count: sorts the losses, takes the worst
     ceil((1-c)N) atoms, and gives the straddling atom its fractional weight.
     """
-    losses = np.sort(np.asarray(loss_samples, dtype=float).ravel())
+    losses = _losses_and_level(loss_samples, confidence_level)
     n = len(losses)
     tail_mass = (1 - confidence_level) * n
     if tail_mass <= 0:
@@ -36,12 +43,12 @@ def empirical_cvar(loss_samples: np.ndarray, confidence_level: float) -> float:
 
 
 def empirical_var(loss_samples: np.ndarray, confidence_level: float) -> float:
-    """VaR as the quantile of the loss distribution (upper linear interpolation)."""
-    losses = np.sort(np.asarray(loss_samples, dtype=float).ravel())
-    n = len(losses)
-    pos = confidence_level * (n - 1)
-    lo = int(np.floor(pos))
-    frac = pos - lo
-    if lo + 1 >= n:
-        return float(losses[-1])
-    return float(losses[lo] * (1 - frac) + losses[lo + 1] * frac)
+    """Generalized inverse empirical CDF, not an interpolated artificial loss.
+
+    VaR_c = inf{x: F_n(x)>=c}; use the minimum observed loss at c=0.
+    Meucci (2005), section5.5, defines quantiles through the inverse CDF.
+    This convention preserves probability atoms used by the ES evaluator.
+    """
+    losses = _losses_and_level(loss_samples, confidence_level)
+    index=max(0,int(np.searchsorted(np.arange(1,len(losses)+1)/len(losses),confidence_level,side='left')))
+    return float(losses[index])
