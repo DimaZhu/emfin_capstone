@@ -36,3 +36,19 @@ def test_sobol_cuts_cvar_estimator_noise():
     assert np.std(sobol) < 0.2 * np.std(plain)
     # and no bias: same expectation as the pseudo-random estimator
     assert abs(np.mean(sobol) - np.mean(plain)) < 0.2 * np.std(plain)
+
+
+def test_student_t_scenarios_fat_tails_matched_covariance():
+    nu = 8.0
+    rng = np.random.default_rng(9)
+    cov = np.array([[0.04, 0.01], [0.01, 0.09]])
+    chol = np.linalg.cholesky(cov)
+    z = rng.standard_normal((200_000, 2)) @ chol.T
+    chi2 = rng.chisquare(nu, size=(200_000, 1))
+    t = z / np.sqrt(chi2 / nu) * np.sqrt((nu - 2.0) / nu)
+    # covariance preserved by the scaling
+    np.testing.assert_allclose(np.cov(t.T), cov, atol=2e-3)
+    # excess kurtosis of a t_nu is 6/(nu-4); marginals show it
+    from scipy.stats import kurtosis
+    k = kurtosis(t[:, 0])
+    assert abs(k - 6.0 / (nu - 4.0)) < 0.4

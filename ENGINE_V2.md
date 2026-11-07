@@ -86,6 +86,15 @@ change only scenario probabilities and scenario values, upstream.
   every optimized allocation - equity + Treasury barbells dominate it on a
   CE basis.  That is a property of the premia, not a bug; the paper should
   say so.
+- **Heavy tails (Student-t option)**: invariant scenarios are Gaussian by
+  default (documented limitation).  `--student-t=NU` switches scenario
+  generation AND the judge to a variance-matched multivariate Student-t, so
+  the paper can show allocation sensitivity to tail thickness.  Measured at
+  nu=8 (excess kurtosis 1.5): certainty equivalents drop ~$0.1-0.3M across
+  methods, and the nominal gap budget passes out-of-sample without
+  tightening - fatter-tailed scenarios make the solver internalize the
+  tail, so the SAA optimism the calibration corrects largely disappears.
+  The EP layer is distribution-agnostic and untouched.
 - **Liquidity**: Meucci (2012, FAJ 68(6), doi:10.2469/faj.v68.n6.6)
   integrated liquidity+market risk overlay (`toolbox/meucci_liquidity.py`):
   per-scenario liquidity adjustment ~ N(mu(j), sigma(j)^2) with VWAP
@@ -174,4 +183,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 105 tests covering every module.
+`python -m pytest tests/` - 106 tests covering every module.
