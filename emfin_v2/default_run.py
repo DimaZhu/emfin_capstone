@@ -41,8 +41,8 @@ def load_config(path=DEFAULT_CONFIG):
     if not c['liabilities']:raise ValueError('provide at least one payout row; use amount zero for no obligation')
     if any(i['amount']<0 or not 1<=i['week']<=c['horizon_weeks'] for i in c['liabilities']):
         raise ValueError('liabilities must have nonnegative amounts and valid due weeks')
-    if len(c['liquidity_haircuts'])!=6 or any(not 0<=h<1 for h in c['liquidity_haircuts']):
-        raise ValueError('six liquidity haircuts in [0,1) required')
+    if (not c.get('asset_registry') and len(c['liquidity_haircuts'])!=6) or any(not isinstance(h,(int,float)) or not np.isfinite(h) or not 0<=h<1 for h in c['liquidity_haircuts']):
+        raise ValueError('valid liquidity haircuts required (six in legacy mode)')
     if c['evaluation_seeds']<2 or c['validation_seeds']<2:
         raise ValueError('at least two independent seeds per interval')
     c.setdefault('wasserstein_radius',0.)
@@ -70,7 +70,11 @@ def load_config(path=DEFAULT_CONFIG):
         raise ValueError('invalid RE assumptions')
     from emfin_v2.real_estate import validate
     from emfin_v2.market_views import validate_views
-    validate_views(c.get('market_return_views',{}))
+    allowed=None
+    if c.get('asset_registry'):
+        from emfin_v2.registry_runtime import configure
+        c=configure(c,c['asset_registry']);allowed=c['asset_layout']['view_indices']
+    validate_views(c.get('market_return_views',{}),allowed)
     if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)
     return c
@@ -109,6 +113,9 @@ def interval(values):
 
 
 def setup(c):
+    if c.get('asset_registry'):
+        from emfin_v2.registry_runtime import fit
+        return fit(c)
     frame=dataset.weekly_dataset();x=frame[dataset.COLUMNS].to_numpy()
     cov,_=shrinkage.ledoit_wolf_cov(x);mu=x.mean(0)
     mu,_=shrinkage.shrink_mean(mu,np.r_[[mu[:3].mean()]*3,0.,0.,mu[5]],len(x),156.)
@@ -116,6 +123,9 @@ def setup(c):
 
 
 def draw_paths(c,fit,n,seed,stressed=False):
+    if c.get('asset_registry'):
+        from emfin_v2.registry_runtime import draw
+        return draw(c,fit,n,seed)
     frame,mu,cov=fit;h=c['horizon_weeks'];rng=np.random.default_rng(seed)
     z=rng.normal(size=(n,h,6))@np.linalg.cholesky(cov+1e-12*np.eye(6)).T
     equity_gaussian=z[:,:,:3].mean(2)/max(np.sqrt(cov[:3,:3].sum()/9),1e-12)
@@ -149,14 +159,15 @@ def draw_paths(c,fit,n,seed,stressed=False):
 def probabilities(c,paths,re_price_logs=None):
     n=len(paths);uniform=np.full(n,1/n)
     # Views and stress belong to these exact path rows.
-    i,j=c['view_instruments']
-    if not 0<=i<paths.shape[2] or not 0<=j<paths.shape[2]:raise ValueError('view instrument index outside scenario archive')
+    members=c['view_instruments']
+    if not members or any(not 0<=i<paths.shape[2] for i in members):raise ValueError('view instrument index outside scenario archive')
+    i,j=(members+[members[0]])[:2]
     terminal=paths[:,-1]-1.
     uniform=np.full(n,1/n)
     views=[];fixed_views=[]
     requested=c.get('market_return_views',{})
     from emfin_v2.market_views import validate_views
-    validate_views(requested)
+    validate_views(requested,c.get('asset_layout',{}).get('view_indices'))
     if c['view_spread']!=0 and not requested:
         views.append(seqep.SeqView(0,lambda p: ep.relative_mean_view(terminal,i,j,c['view_spread'])))
     if terminal.shape[1]>2 and c.get('view_vol_cap') is not None:
@@ -181,7 +192,7 @@ def probabilities(c,paths,re_price_logs=None):
         q=ep.joint_entropy_pooling(n,[v.build(pins) for v in views]).posterior_probs
     if fixed_views:
         q=ep.joint_entropy_pooling(n,fixed_views,prior_probs=q).posterior_probs
-    loss=np.maximum(0,1-paths[:,:,[i,j]].mean(2)).max(1)
+    loss=np.maximum(0,1-paths[:,:,members].mean(2)).max(1)
     target=float(loss@q+c['stress_mean_path_loss_increment'])
     try:
         qs=ep.joint_entropy_pooling(n,[ep.View(loss,[target],sense='ge')]+fixed_views,prior_probs=q).posterior_probs
@@ -215,8 +226,9 @@ def holding_bounds(c,d):
     if mins.shape!=(d,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:raise ValueError('invalid minimum holdings')
     fixed=dict(c.get('fixed_weights') or {})
     if c['real_estate']['enabled'] and c['real_estate'].get('holding_mode','minimum')=='fixed':
-        if d!=7:raise ValueError('legacy property adapter requires seven assets')
-        fixed['6']=c['real_estate'].get('fixed_weight',.1)
+        index=c.get('asset_layout',{}).get('property_indices',[6])
+        if len(index)!=1 or index[0]>=d:raise ValueError('one property index required for fixed property holding')
+        fixed[str(index[0])]=c['real_estate'].get('fixed_weight',.1)
     from emfin_v2.toolbox.holdings import validate_fixed
     return mins,validate_fixed(fixed,d,mins)
 
@@ -263,6 +275,9 @@ def solve(c,draw,q,qs,mult):
 
 def run(c,output='artifacts/default'):
     started=time.perf_counter()
+    if c.get('asset_registry'):
+        from emfin_v2.registry_runtime import configure
+        c=configure(c,c['asset_registry'])
     archive=c.get('scenario_archives')
     fit=None if archive else setup(c)
     draw=load_archive(archive['training'],c) if archive else draw_paths(c,fit,c['train_scenarios'],c['seed'])
@@ -353,7 +368,7 @@ def run(c,output='artifacts/default'):
     gross_common=draw[0][:,-1]
     from emfin_v2.toolbox.reporting import efficient_frontier
     common_mu=(gross_common-1).mean(0);common_cov=np.cov(gross_common,rowvar=False)
-    frontier=efficient_frontier(gross_common)
+    frontier=efficient_frontier(gross_common,minimum_weights=mins,fixed_weights=fixed)
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
     result=dict(frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
         status=status,calibration=calibration,rows=rows,weights={k:(a/c['wealth']).tolist() for k,a in allocations.items()},
@@ -367,7 +382,7 @@ def run(c,output='artifacts/default'):
                  'Default weekly t shocks aggregate by summation; quarterly shocks are not assumed to preserve t degrees of freedom.',
                  'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
-                 'With minimum holdings, 1/N is equal-weighted over the remaining free budget; all methods honor the same minima.'])
+                 '1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings.'])
     from emfin_v2.dashboard import summarize
     result['dashboard']=summarize(c,draw,q,qs,evaluation,allocations,rows,status,result['assets'])
     def convert(x):
