@@ -46,7 +46,9 @@ from dataclasses import dataclass
 
 import cvxpy as cp
 import numpy as np
-from scipy import special
+from scipy import sparse, special
+
+from emfin_capstone.toolbox import liquidity
 
 # CLARABEL settings, tried in order until one certifies "optimal".  With default
 # settings (max_step_fraction 0.99) the 1-year problem — CE exponents spread over
@@ -378,6 +380,7 @@ def optimization_with_cvar_constrain(
     gamma: float = 0.041,
     n_optimization_scenarios: int = 10_000,
     probabilities: np.ndarray | None = None,
+    max_weights: np.ndarray | None = None,
 ) -> np.ndarray:
     """Maximize the probability-weighted CARA CE subject to a weighted CVaR budget (SAA).
 
@@ -389,7 +392,8 @@ def optimization_with_cvar_constrain(
     allocation on the full sample set and a fresh seed (``evaluate_allocation``).
 
     Portfolio constraints (on weights, unlike view constraints, which act on
-    probabilities): full investment and long-only.
+    probabilities): full investment, long-only, and optional per-asset caps
+    ``max_weights`` (fractions of wealth, shape (n_assets,)).
     ``probabilities``: scenario probabilities p (uniform if None — Meucci's
     "historical simulation" special case, which reproduces the unweighted SAA).
     """
@@ -420,6 +424,8 @@ def optimization_with_cvar_constrain(
         cvar_rel <= gamma,  # risk budget
         weights >= 0,  # portfolio constraint: long-only
     ]
+    if max_weights is not None:
+        constraints.append(weights[:, 0] <= max_weights)  # portfolio constraint: caps
     problem = cp.Problem(cp.Maximize(ce_rel), constraints)
     _solve_with_clarabel(problem)
     if weights.value is None:
@@ -431,6 +437,149 @@ def optimization_with_cvar_constrain(
     print(f"CE (in-solver, optimistically biased): {problem.value * wealth:,.0f}")
     print(f"VaR proxy t*: {var_proxy.value * wealth:,.0f}")  # argmin is an interval on discrete data
     return alpha_scenario
+
+
+@dataclass(frozen=True)
+class LiquidityAwareAllocation:
+    """Result of ``optimization_with_cvar_and_liquidity``; dollars at the horizon."""
+
+    allocation: np.ndarray  # (n_assets, 1) units, as ``optimization_with_cvar_constrain`` returns
+    status: str  # final CLARABEL status (see ``_solve_with_clarabel``)
+    # (J_solver, n_assets) dollars sold per solver scenario.  Sales of costless assets
+    # (cash) beyond the need are free, hence not unique: the costs are, the cash column is not
+    solver_sales: np.ndarray
+    solver_expected_cost: np.ndarray  # (J_solver,) -mu_j of eq. (6) at those sales, >= 0
+    solver_cost_std: np.ndarray  # (J_solver,) sigma_j of eqs. (7)-(9) at those sales
+
+
+def optimization_with_cvar_and_liquidity(
+    market_samples: np.ndarray,
+    prices_vector: np.ndarray,
+    wealth: float,
+    risk_tolerance: float,
+    confidence_level: float,
+    gamma: float,
+    funding_threshold: float,
+    liquidity_parameters: liquidity.LiquidityParameters,
+    n_optimization_scenarios: int = 10_000,
+    probabilities: np.ndarray | None = None,
+    max_weights: np.ndarray | None = None,
+) -> LiquidityAwareAllocation:
+    """``optimization_with_cvar_constrain`` with Meucci's (2012) liquidity model inside: two-stage SAA.
+
+    First stage: weights h (fractions of wealth, sum 1, long-only, optional caps
+    ``max_weights`` as there).  Recourse, per
+    scenario j: the funding need of ``liquidity.cost_minimizing_liquidation_policy``,
+    need_j = (T/w - Pi_bar_j(h)/w)+ with T = ``funding_threshold`` (dollars, the same
+    policy number the evaluator uses), met by sales s_j >= 0 (fractions of wealth)
+    out of the scenario's positions.  In relative units, with g_j the gross returns:
+
+        s_jn <= g_jn h_n,     sum_n (s_jn - c_jn(s_jn)) >= (T/w + 1 - g_j'h)+          (net proceeds)
+        c_jn(s) = alpha_n s + k_jn sqrt(w) s^(3/2)                                       (eq. 6, mu = -sum_n c_jn)
+        sigma_j / w = ||s_j M||                                                          (eqs. 7-9)
+        wealth_j / w = g_j'h - sum_n c_jn(s_jn)
+
+    k and M come from ``liquidity.sale_impact_coefficients`` / ``liquidity_std_factor``
+    — one parameter set, one formula, shared with the evaluator.  The CE is the
+    closed form of the conditional convolution (``liquidity.total_pnl_certainty_equivalent``):
+    -zeta' log sum_j p_j exp(-wealth_j/(w zeta') + sigma_j^2/(2 w^2 zeta'^2)) — DCP: the
+    exponent is convex (affine + power + sum of squares) inside an increasing
+    log-sum-exp.  The CVaR budget is on the loss net of the *expected* cost; sigma_j
+    is left out of it (the evaluator's conditional convolution measures it exactly).
+
+    The sales are recourse variables: for fixed h the solver picks, per scenario,
+    the cheapest feasible sales, which is the evaluator's cost-minimizing policy
+    (up to sigma_j's tiny weight in the CE, which the policy ignores).  The need
+    constraint is hard: a portfolio whose need exceeds its maximal net proceeds in
+    some solver scenario is infeasible (all cash is always feasible).
+
+    Exact pre-screen: since g_j'h >= min_n g_jn on the simplex, a scenario with
+    min_n g_jn >= 1 + T/w never has a need, for any h — it gets no sale variables
+    (its optimal sales are zero).  Same solver-scenario rule and settings ladder as
+    ``optimization_with_cvar_constrain``; with costless parameters, or a threshold
+    no scenario can reach, it reproduces that optimizer.
+    """
+    solver_samples, solver_probabilities = _solver_scenarios(market_samples, probabilities, n_optimization_scenarios)
+    n_scenarios, n_assets = solver_samples.shape
+
+    gross_return_scenarios = solver_samples / prices_vector.ravel()
+    relative_risk_tolerance = risk_tolerance / wealth
+    relative_threshold = funding_threshold / wealth
+
+    weights = cp.Variable(n_assets)
+    relative_market_wealth = gross_return_scenarios @ weights  # psi_j / w before liquidity
+
+    may_need_funding = gross_return_scenarios.min(axis=1) < 1 + relative_threshold  # exact pre-screen
+    funded_returns = gross_return_scenarios[may_need_funding]
+    n_funded = len(funded_returns)
+    impact = liquidity.sale_impact_coefficients(solver_samples[may_need_funding], liquidity_parameters) * np.sqrt(
+        wealth
+    )  # k sqrt(w): cost per unit of wealth sold
+    std_factor = liquidity.liquidity_std_factor(liquidity_parameters)  # sigma/w = ||s M||, s relative
+
+    constraints = [
+        cp.sum(weights) == 1,  # budget
+        weights >= 0,  # portfolio constraint: long-only
+    ]
+    if max_weights is not None:
+        constraints.append(weights <= max_weights)  # portfolio constraint: caps
+    relative_cost = np.zeros(n_scenarios)  # expected cost / w; stays 0 in screened-out scenarios
+    relative_variance_charge = np.zeros(n_scenarios)
+    sales = None
+    if n_funded > 0:
+        sales = cp.Variable((n_funded, n_assets), nonneg=True)
+        funded_cost = sales @ liquidity_parameters.spread + cp.sum(cp.multiply(impact, cp.power(sales, 1.5)), axis=1)
+        funding_need = cp.pos(1 + relative_threshold - funded_returns @ weights)
+        constraints += [
+            sales <= cp.multiply(funded_returns, cp.reshape(weights, (1, n_assets), order="C")),  # own positions only
+            cp.sum(sales, axis=1) - funded_cost >= funding_need,  # net proceeds cover the need
+        ]
+        funded_variance = cp.sum(cp.square(sales @ std_factor), axis=1)  # (sigma_j / w)^2
+        # scatter the funded rows back into all solver scenarios (zeros elsewhere)
+        selector = sparse.csr_matrix(
+            (np.ones(n_funded), (np.flatnonzero(may_need_funding), np.arange(n_funded))), shape=(n_scenarios, n_funded)
+        )
+        relative_cost = selector @ funded_cost
+        relative_variance_charge = selector @ funded_variance / (2 * relative_risk_tolerance**2)
+
+    relative_wealth_goal = relative_market_wealth - relative_cost
+    ce_rel = -relative_risk_tolerance * cp.log_sum_exp(
+        -relative_wealth_goal / relative_risk_tolerance + relative_variance_charge + np.log(solver_probabilities)
+    )
+    var_proxy = cp.Variable()
+    cvar_rel = var_proxy + solver_probabilities @ cp.pos(1 - relative_wealth_goal - var_proxy) / (1 - confidence_level)
+    constraints.append(cvar_rel <= gamma)  # risk budget, net of expected liquidity cost
+
+    problem = cp.Problem(cp.Maximize(ce_rel), constraints)
+    _solve_with_clarabel(problem)
+    if weights.value is None:
+        raise RuntimeError(f"no solution: solver status {problem.status}")
+
+    alpha_scenario = weights.value.reshape((-1, 1)) * wealth / prices_vector.reshape((-1, 1))  # back to shares
+    solver_sales = np.zeros((n_scenarios, n_assets))
+    if sales is not None:
+        solver_sales[may_need_funding] = np.clip(sales.value, 0, None) * wealth
+    expected_cost = solver_sales @ liquidity_parameters.spread + (
+        liquidity.sale_impact_coefficients(solver_samples, liquidity_parameters) * solver_sales**1.5
+    ).sum(axis=1)
+    cost_std = np.linalg.norm(solver_sales @ std_factor, axis=1)
+    need_triggered = gross_return_scenarios @ weights.value < 1 + relative_threshold
+    print(f"status: {problem.status}")
+    print(f"Allocations: {alpha_scenario.ravel().round()}")
+    print(f"CE (in-solver, optimistically biased): {problem.value * wealth:,.0f}")
+    print(f"VaR proxy t*: {var_proxy.value * wealth:,.0f}")
+    print(
+        f"funding need: possible in {n_funded:,} of {n_scenarios:,} solver scenarios, "
+        f"triggered with probability {solver_probabilities @ need_triggered:.2%}; "
+        f"E[liquidity cost] {solver_probabilities @ expected_cost:,.0f}"
+    )
+    return LiquidityAwareAllocation(
+        allocation=alpha_scenario,
+        status=problem.status,
+        solver_sales=solver_sales,
+        solver_expected_cost=expected_cost,
+        solver_cost_std=cost_std,
+    )
 
 
 @dataclass(frozen=True)

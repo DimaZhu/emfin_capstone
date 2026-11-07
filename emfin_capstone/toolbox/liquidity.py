@@ -1,7 +1,12 @@
-"""Meucci (2012) liquidity evaluator: market-plus-liquidity P&L of a fixed allocation.
+"""Meucci (2012) liquidity model: market-plus-liquidity P&L of a fixed allocation.
 
-The "Evaluator" box of the architecture and the pipeline's only liquidity
-model: it grades a chosen allocation after the optimizer.  Given scenarios x_j with probabilities p_j (Fully
+The "Illiquidity model" box of the architecture and the pipeline's only
+liquidity model.  It feeds two consumers with one ``LiquidityParameters`` set:
+the liquidity-aware optimizer (``scenario_market.optimization_with_cvar_and_liquidity``,
+which uses the expected cost (6), the cost std (7)-(9) and the funding need of
+``cost_minimizing_liquidation_policy``, via ``sale_impact_coefficients`` and
+``liquidity_std_factor``), and the evaluator below, which grades the chosen
+allocation exactly.  Given scenarios x_j with probabilities p_j (Fully
 Flexible Probabilities), a liquidation policy decides per scenario what is
 sold at the horizon; the sale's liquidity adjustment dPi | j is normal,
 N(mu_j, sigma_j^2), with VWAP moments eqs. (6)-(9).  The total P&L
@@ -51,6 +56,10 @@ LIQUIDITY_CORRELATION_SHRINKAGE = 0.9
 # near-degenerate component (tiny sigma_j) is not straddled by the search error
 _ATOM_TOLERANCE = 1e-9
 _QUANTILE_TOLERANCE = 1e-12
+
+# bisection on the marginal cost kappa in [0, 1) of the cost-minimizing policy:
+# 2^-60 ~ 1e-18, i.e. sales exact to rounding
+_BISECTION_STEPS = 60
 
 
 @dataclass(frozen=True)
@@ -120,6 +129,36 @@ def liquidity_adjustment_moments(
     return position_mean.sum(axis=1), np.sqrt(np.clip(variance, 0, None))
 
 
+def sale_impact_coefficients(horizon_prices: np.ndarray, parameters: LiquidityParameters) -> np.ndarray:
+    """k_{j,n} such that eq. (6) in dollars sold S = e |dh| reads  -mu_n = alpha_n S + k_{j,n} S^(3/2).
+
+    Substituting |dh| = S / e into (6): k = beta_n sigma_bar_n / sqrt(e_{j,n} v_n), the
+    square-root law against the *dollar* volume e v of the execution period at the
+    scenario's price.  The single source of the cost numbers shared by
+    ``cost_minimizing_liquidation_policy`` and the liquidity-aware optimizer (which
+    rescales to fractions of wealth w: s = S / w gives k sqrt(w) s^(3/2)); it
+    reproduces ``liquidity_adjustment_moments`` exactly.  Shape (J, n_assets).
+    """
+    return parameters.impact * parameters.volatility / np.sqrt(np.asarray(horizon_prices) * parameters.volume)
+
+
+def liquidity_std_factor(parameters: LiquidityParameters) -> np.ndarray:
+    """M (n_assets, n_assets) with sigma_j = ||S_j M|| for dollar sales S_j, eqs. (7)-(9).
+
+    (7) in dollars sold is sigma_n = delta_n sqrt(v_n) S_n (scenario-independent per
+    dollar), so sigma_j^2 = S_j' D rho D S_j with D = diag(delta sqrt(v)) and rho the
+    shrunk correlation (8).  M = D V diag(sqrt(lambda)) from the eigendecomposition
+    rho = V diag(lambda) V' (lambda clipped at 0: rho is PSD by construction, the
+    clip only removes rounding), so the quadratic form is a sum of squares — the
+    shape a convex solver accepts.
+    """
+    shrinkage = parameters.correlation_shrinkage
+    liquidity_correlation = shrinkage + (1 - shrinkage) * parameters.market_correlation  # (8)
+    eigenvalues, eigenvectors = np.linalg.eigh(liquidity_correlation)
+    per_dollar_std = parameters.uncertainty * np.sqrt(parameters.volume)  # (7) per dollar sold
+    return per_dollar_std[:, None] * eigenvectors * np.sqrt(np.clip(eigenvalues, 0, None))[None, :]
+
+
 # (market_pnl (J,), holdings (n_assets,), horizon_prices (J, n_assets)) -> units sold (J, n_assets), >= 0
 LiquidationPolicy = Callable[[np.ndarray, np.ndarray, np.ndarray], np.ndarray]
 
@@ -134,7 +173,9 @@ def funding_liquidation_policy(pnl_threshold: float) -> LiquidationPolicy:
     an unlevered long-only book are the prices).  theta_j is capped at 1: a
     need larger than the whole book is met only in part.  Elsewhere nothing
     is sold (sigma_j = 0, a point mass).  Proportional selling includes any
-    cash holding — a cash-first waterfall is a different policy.
+    cash holding — a cash-first waterfall is a different policy
+    (``cost_minimizing_liquidation_policy``, the one the optimizer uses; this
+    one is kept as a stress case).
     """
 
     def policy(market_pnl: np.ndarray, holdings: np.ndarray, horizon_prices: np.ndarray) -> np.ndarray:
@@ -142,6 +183,80 @@ def funding_liquidation_policy(pnl_threshold: float) -> LiquidationPolicy:
         funding_need = np.clip(pnl_threshold - market_pnl, 0, None)
         liquidated_fraction = np.minimum(funding_need / book_value, 1)
         return liquidated_fraction[:, None] * np.abs(holdings)[None, :]
+
+    return policy
+
+
+def cost_minimizing_liquidation_policy(pnl_threshold: float, parameters: LiquidityParameters) -> LiquidationPolicy:
+    """Funding need as in Example 4, met by the sales of least expected cost (cash first).
+
+    Same trigger as ``funding_liquidation_policy``: in scenario j the need is
+    (pnl_threshold - Pi_bar_j)+ dollars.  What is sold is the cheapest way to raise
+    it — the paper's own rule (Section 2.3: liquidate "those securities with the
+    smallest marginal cost of liquidation") and exactly the recourse the
+    liquidity-aware optimizer chooses, so optimizer and evaluator share one policy:
+
+        min_S  sum_n f_n(S_n)   s.t.  sum_n (S_n - f_n(S_n)) >= need,   0 <= S_n <= h_n e_{j,n},
+        f_n(S) = alpha_n S + k_{j,n} S^(3/2)     (expected cost, eq. 6; k from ``sale_impact_coefficients``)
+
+    — the need is met by *net* proceeds: spread and impact are paid out of the sale.
+    Costless assets (alpha = k = 0: cash) are used first.  Beyond them, the KKT
+    conditions equalize marginal costs, f_n'(S_n) = kappa with kappa = lambda / (1 + lambda)
+    in [0, 1) (lambda the multiplier of the need): S_n(kappa) = ((kappa - alpha_n) / (1.5 k_n))^2
+    clipped to the position.  Net proceeds increase in kappa, so kappa is found by
+    bisection, per scenario, vectorized — exact up to the bisection tolerance, no
+    solver.  A need above the maximal net proceeds (kappa -> 1: every position sold
+    up to where its marginal net proceeds vanish) is met only in part, as the
+    proportional policy caps theta at 1.  The variance of the cost does not enter
+    the choice (it is measured exactly by the conditional convolution).
+
+    Every asset must be either costless (alpha = k = 0) or have k > 0 (impact and
+    volatility positive): a linear-cost asset would make S(kappa) a step.
+    """
+
+    def policy(market_pnl: np.ndarray, holdings: np.ndarray, horizon_prices: np.ndarray) -> np.ndarray:
+        position_values = horizon_prices * np.abs(np.asarray(holdings, dtype=float).ravel())[None, :]
+        impact_coefficients = sale_impact_coefficients(horizon_prices, parameters)
+        costless = (parameters.spread == 0) & (parameters.impact * parameters.volatility == 0)
+        if np.any(~costless & ~(impact_coefficients > 0).all(axis=0)):
+            raise ValueError("each asset must be costless (spread = impact = 0) or have positive impact and volatility")
+
+        sales = np.zeros_like(position_values)
+        funding_need = np.clip(pnl_threshold - market_pnl, 0, None)
+        # costless assets first, in column order (they are interchangeable)
+        for asset in np.flatnonzero(costless):
+            sales[:, asset] = np.minimum(funding_need, position_values[:, asset])
+            funding_need = funding_need - sales[:, asset]
+
+        costly = ~costless
+        spread = parameters.spread[costly]
+        coefficients = impact_coefficients[:, costly]
+        values = position_values[:, costly]
+
+        def sales_at(marginal_cost: np.ndarray) -> np.ndarray:
+            unclipped = (np.clip(marginal_cost[:, None] - spread, 0, None) / (1.5 * coefficients)) ** 2
+            return np.minimum(unclipped, values)
+
+        def net_proceeds(costly_sales: np.ndarray) -> np.ndarray:
+            return (costly_sales * (1 - spread) - coefficients * costly_sales**1.5).sum(axis=1)
+
+        to_raise = funding_need > 0
+        lower = np.zeros(to_raise.sum())
+        upper = np.ones(to_raise.sum())
+        need = funding_need[to_raise]
+        coefficients, values = coefficients[to_raise], values[to_raise]
+        # all-in at kappa = 1 is the maximal net proceeds; where even that falls short, sell it
+        shortfall = net_proceeds(sales_at(upper)) < need
+        lower[shortfall] = 1.0
+        for _ in range(_BISECTION_STEPS):
+            middle = (lower + upper) / 2
+            enough = net_proceeds(sales_at(middle)) >= need
+            upper = np.where(enough, middle, upper)
+            lower = np.where(enough, lower, middle)
+        costly_sales = np.zeros((len(sales), costly.sum()))
+        costly_sales[to_raise] = sales_at(upper)
+        sales[:, costly] = costly_sales
+        return sales / horizon_prices  # dollars -> units
 
     return policy
 
