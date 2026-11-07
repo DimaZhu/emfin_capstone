@@ -74,7 +74,8 @@ def main():
     adverse=[];epsilon=c['wasserstein_radius']
     altered=[]
     for d in ds:
-        dd=copy.deepcopy(d);risky=[i for i in range(d[0].shape[2]) if i!=c['cash_index'] and i not in c['asset_layout']['property_indices']];dd[0][:,:,risky]=np.maximum(0,dd[0][:,:,risky]-epsilon);altered.append(dd)
+        from emfin_v2.real_estate import ScenarioDraw
+        dd=ScenarioDraw(tuple(np.array(v,copy=True) for v in d),np.array(d.funding_paths,copy=True),np.array(d.re_price_logs,copy=True));risky=[i for i in range(d[0].shape[2]) if i!=c['cash_index'] and i not in c['asset_layout']['property_indices']];dd[0][:,:,risky]=np.maximum(0,dd[0][:,:,risky]-epsilon);altered.append(dd)
     for policy in policies:adverse.append(dict(name='fixed_max_path_epsilon_downshift',radius=epsilon,policy=policy['name'],judge=evaluate_policy(c,altered,ps,initial,policy)[0],scope='One chosen adverse perturbation within declared price sup-norm radius; NOT full Wasserstein robust optimization/certification. EPweights kept frozen.'))
     output=dict(**meta,seconds=time.perf_counter()-started,search_seconds=time.perf_counter()-searchstart,evaluations=len(trials),feasible_training=len(candidates),unique_validation_candidates=len(unique),selected=selected,initial_allocation=initial.tolist(),rows=rows,sensitivity=sensitivity,w1_diagnostic=adverse,validation_trials=validation_trials,search_trials=trials,lock_sha256=hashlib.sha256((ROOT/'selection_lock.json').read_bytes()).hexdigest(),scope='Causal bounded-class training search, conditional simulation evidence only; no global policy optimum or nonlinear W1certificate. Same initial holdings/paths/costs/judge for every policy;confirmed250k/month only.');save(output,ROOT/'summary.json');print(json.dumps(dict(seconds=output['seconds'],evaluations=len(trials),selected=selected,rows=[dict(model=z['model'],policy=z['policy'],pass_all=z['judge']['overall_pass'],ce=z['judge']['common_cara_ledger_ce']) for z in rows]),indent=2))
 
