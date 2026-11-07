@@ -123,10 +123,12 @@ def optimization_liability_aware(
     if long_only:
         constraints.append(weights >= 0)
 
-    # funding-gap budget (only binds when there is a liability)
-    t_gap = cp.Variable()
+    # funding-gap budget (only binds when there is a liability).  The gap is
+    # one-sided — a surplus does not offset a shortfall in the tail — so the
+    # loss variable is max(0, L - W), matching funding_gap_metrics.
     if liability_due > 0:
-        gap = rel_liability - rel_wealth  # negative gap = surplus
+        gap = cp.pos(rel_liability - rel_wealth)
+        t_gap = cp.Variable()
         cvar_gap = t_gap + cp.sum(cp.pos(gap - t_gap)) / ((1 - confidence_level) * n_scenarios)
         constraints.append(cvar_gap <= gamma_shortfall * rel_liability)
 
