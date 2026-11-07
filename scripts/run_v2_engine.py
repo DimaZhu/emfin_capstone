@@ -514,6 +514,28 @@ def main() -> None:
 
     _tick("optimize: EP + liabilities (tail-budget calibrated)")
 
+    # 4b. CRRA-on-surplus (external review, point 2): CARA's absolute risk
+    #     tolerance ignores the funding ratio.  The Kallberg-Ziemba
+    #     surrogate keeps the convex CARA solve but rescales the tolerance
+    #     by the surplus ratio relative to its pre-solve reference, so risk
+    #     capacity falls as the funding ratio falls.  One rescale iteration
+    #     captures most of the effect; --no-crra skips it.
+    alloc_crra = None
+    if "--no-crra" not in sys.argv:
+        f0 = max((WEALTH - liability_due) / WEALTH, 1e-3)
+        w_mean_crra = float((market_net @ alloc_lace).mean())
+        f1 = max((w_mean_crra - liability_due) / WEALTH, 1e-3)
+        zeta_crra = liab.crra_scaled_tolerance(RISK_TOLERANCE, f1, f0)
+        alloc_crra, _ = liab.optimization_liability_aware(
+            market_samples=market_net, prices_vector=prices_vector, wealth=WEALTH,
+            liability_due=liability_due, risk_tolerance=zeta_crra,
+            confidence_level=CONFIDENCE, gamma_loss=GAMMA_LOSS,
+            gamma_shortfall=GAMMA_SHORTFALL * (calibration.best_multiplier if calibration else 1.0),
+            scenario_probs=q)
+        print(f"CRRA-on-surplus: surplus ratio {f0:.1%} -> {f1:.1%} at the CARA optimum; "
+              f"tolerance rescaled to {zeta_crra / RISK_TOLERANCE:.0%} of base")
+        _tick("optimize: EP + liabilities (CRRA-on-surplus)")
+
     # 5. stochastic + multi-period liabilities: the same liability plan, but
     #    amounts are scenario-dependent (grow in drawdowns) and each payout
     #    must be funded AT ITS DUE DATE on the wealth path, not just at the
@@ -558,6 +580,8 @@ def main() -> None:
         "EP + liabilities": alloc_lace,
         "EP+liab (multi-per)": alloc_mp,
     }
+    if alloc_crra is not None:
+        allocations["EP+liab (CRRA)"] = alloc_crra
     if calibration is not None and calibration.best_multiplier < 1.0:
         # honest contrast: what the un-calibrated (nominal-budget) allocation
         # costs and buys - its OOS breach is visible in the judge table
@@ -660,6 +684,7 @@ def main() -> None:
         "EP (views)": "optimize: EP (views)",
         "EP + liabilities": "optimize: EP + liabilities (tail-budget calibrated)",
         "EP+liab (multi-per)": "optimize: EP + liabilities (multi-period, stochastic)",
+        "EP+liab (CRRA)": "optimize: EP + liabilities (CRRA-on-surplus)",
         "EP+liab (nominal)": "optimize: EP + liabilities (tail-budget calibrated)",
     }
     print(f"{'method':>22} {'solve(s)':>9} {'CE($)':>15} {'shortfall':>10} {'gapCVaR($)':>12}")
