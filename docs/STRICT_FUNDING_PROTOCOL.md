@@ -1,5 +1,5 @@
 # Strict all-payments mode and past-only radius calibration
-7 November2026. Approved research priorities#2/#5. Default remains tail allowance
+7 November2026. Research specification for priorities#2/#5. Default remains tail allowance
 and manual radius. Fixed property/sale policy unchanged; optimizer still uses
 provisioning. No dynamic or cash-ledger optimizer added (#1parked).
 

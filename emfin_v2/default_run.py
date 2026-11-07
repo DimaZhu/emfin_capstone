@@ -72,6 +72,11 @@ def validate_config(config):
     validate(c['wasserstein_radius'],c['wasserstein_liability_scale'])
     from emfin_v2.innovations import validate as validate_innovations
     validate_innovations(c)
+    c.setdefault('funding_mode','tail_allowance')
+    if c['funding_mode'] not in ('tail_allowance','pay_all_99'):raise ValueError('unknown funding mode')
+    c.setdefault('radius_calibration_mode','manual')
+    if c['radius_calibration_mode'] not in ('manual','past_empirical'):raise ValueError('unknown radius calibration mode')
+    if c['funding_mode']=='pay_all_99' and c.get('scenario_archives'):raise ValueError('99%generated-path check cannot certify imported archive path independence')
     c.setdefault('sequential_ep',True)
     c.setdefault('cash_index',5)
     c.setdefault('view_instruments',[1,0])
@@ -305,6 +310,12 @@ def run(c,output='artifacts/default'):
         c=configure(c,c['asset_registry'])
     archive=c.get('scenario_archives')
     fit=None if archive else setup(c)
+    if c['radius_calibration_mode']=='past_empirical':
+        if archive:raise ValueError('past empirical radius needs observed chronological histories, not scenario archives')
+        from emfin_v2.radius_calibration import calibrate
+        c['radius_calibration']=calibrate(c,fit[0])
+        if not c['radius_calibration']['available']:raise ValueError(c['radius_calibration']['reason'])
+        c['wasserstein_radius']=c['radius_calibration']['radius']
     draw=load_archive(archive['training'],c) if archive else draw_paths(c,fit,c['train_scenarios'],c['seed'])
     if archive:
         import copy
@@ -328,7 +339,10 @@ def run(c,output='artifacts/default'):
     baseline={'1/N':equal*c['wealth']}
     baseline['shrunk MV']=benchmark.mean_variance_allocation(draw[0][:,-1].mean(0),np.cov(draw[0][:,-1].T),np.ones(d),c['wealth'],c['risk_tolerance'],minimum_weights=mins,fixed_weights=fixed)
     validation=[load_archive(p,c) for p in archive['validation']] if archive else [draw_paths(c,fit,c['validation_scenarios'],c['seed']+1000+j) for j in range(c['validation_seeds'])]
-    validation_stress=[probabilities(c,v[0],getattr(v,'re_price_logs',None))[1] for v in validation]
+    validation_measures=[probabilities(c,v[0],getattr(v,'re_price_logs',None)) for v in validation]
+    validation_nominal=[p[0] for p in validation_measures]
+    validation_stress=[p[1] for p in validation_measures]
+    strict_tradeoff=[]
     calibration=[];chosen=None;status={}
     for mult in sorted(c['multiplier_grid'],reverse=True):
         a,diag=solve(c,draw,q,qs,mult)
@@ -346,21 +360,36 @@ def run(c,output='artifacts/default'):
             cash_safe &= bool(np.maximum(need-funding_paths(draw)[:,step-1]@cash,0).max()+dro_buffer(c,cash) <= c['funding_budget_fraction']*mult*draw[3][k])
         cash_safe &= bool(np.maximum(0,1-draw[0]@cash/c['wealth']).max()+dro_buffer(c,cash,False)/c['wealth']<=min(c['cml_budget'],c['loss_budget']))
         if np.any(mins[np.arange(d)!=c['cash_index']]>0) or any(i!=c['cash_index'] and v>0 for i,v in fixed.items()):cash_safe=False
-        grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
+        if c['funding_mode']=='pay_all_99':
+            # Fixed-property anchor honors holdings, but is NOT presumed safe.
+            cash=mins*c['wealth']
+            for i,v in fixed.items():cash[i]=v*c['wealth']
+            cash[c['cash_index']]+=c['wealth']-cash.sum()
+            grid=[1.,.75,.5,.25,0.]
+        else:grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
         for risky_fraction in grid:
             candidate=risky_fraction*a+(1-risky_fraction)*cash
             ci=interval([metrics(c,v,candidate)[0] for v in validation])
             stress_ci=interval([metrics(c,v,candidate,ps)[0] for v,ps in zip(validation,validation_stress)])
             budgets=draw[3]*c['funding_budget_fraction']
             passed=bool(np.all(np.maximum(ci['high'],stress_ci['high'])+dro_buffer(c,candidate)<=budgets))
-            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,passed=passed))
-            if passed:
-                chosen=candidate;status=dict(diag)
+            strict=None
+            if c['funding_mode']=='pay_all_99':
+                from emfin_v2.strict_funding import check
+                strict=check(c,validation,candidate,validation_nominal,validation_stress);passed &= strict['passed']
+                from scipy.special import logsumexp
+                from emfin_v2.ledger import cash_first
+                terminal=np.concatenate([cash_first(c,v,candidate)['terminal_net'] for v in validation]);ce=float(-c['risk_tolerance']*(logsumexp(-terminal/c['risk_tolerance'])-np.log(len(terminal))))
+                strict_tradeoff.append(dict(multiplier=mult,candidate_fraction=risky_fraction,cash_weight=float(candidate[c['cash_index']]/c['wealth']),net_ce=ce,strict_check=strict,validation_budget_passed=bool(np.all(np.maximum(ci['high'],stress_ci['high'])+dro_buffer(c,candidate)<=budgets)),weights=(candidate/c['wealth']).tolist(),selected=False))
+            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,strict_check=strict,passed=passed))
+            if passed and chosen is None:
+                chosen=candidate.copy();status=dict(diag)
+                if strict_tradeoff:strict_tradeoff[-1]['selected']=True
                 if risky_fraction<1:
                     status['kind']='calibrated optimizer/cash mixture'
                     status['risky_fraction']=risky_fraction
                     status['optimality_claim']=False
-                break
+                if c['funding_mode']!='pay_all_99':break
         if chosen is not None:break
     allocations=dict(baseline)
     if chosen is not None:allocations['proposed']=chosen
@@ -369,10 +398,19 @@ def run(c,output='artifacts/default'):
     # same training scenarios and all other parameters fixed.
     nominal,nomdiag=solve(c,draw,q,q,calibration[-1]['multiplier'])
     if nominal is not None and chosen is not None:
-        alpha=calibration[-1].get('risky_fraction',1.)
-        cash=np.zeros(d);cash[c['cash_index']]=c['wealth']
+        alpha=status.get('risky_fraction',calibration[-1].get('risky_fraction',1.))
+        if c['funding_mode']=='pay_all_99':
+            cash=mins*c['wealth']
+            for i,v in fixed.items():cash[i]=v*c['wealth']
+            cash[c['cash_index']]+=c['wealth']-cash.sum()
+        else:cash=np.zeros(d);cash[c['cash_index']]=c['wealth']
         nominal=alpha*nominal+(1-alpha)*cash
     if nominal is not None:allocations['without posterior stress']=nominal
+    # Persist frozen selection before any independent final draw.
+    from pathlib import Path
+    import json
+    Path(output).mkdir(parents=True,exist_ok=True)
+    (Path(output)/'selection_lock.json').write_text(json.dumps(dict(config=c,status=status,allocations={k:v.tolist() for k,v in allocations.items()},calibration=calibration),default=lambda v:v.tolist() if hasattr(v,'tolist') else str(v),indent=2))
     evaluation=[load_archive(p,c) for p in archive['evaluation']] if archive else [draw_paths(c,fit,c['evaluation_scenarios'],c['seed']+10000+j) for j in range(c['evaluation_seeds'])]
     for v in validation+evaluation:
         if v[0].shape[1:]!=draw[0].shape[1:] or not np.array_equal(v[2],draw[2]) or not np.array_equal(v[3],draw[3]):raise ValueError('all split archives must share asset/horizon dimensions, payout weeks and liability bases')
@@ -387,7 +425,7 @@ def run(c,output='artifacts/default'):
         gap_ci=interval([s[0] for s in scores]);ce_ci=interval([s[1] for s in scores])
         stress_gap_ci=interval([metrics(c,v,a,ps)[0] for v,ps in zip(evaluation,evaluation_stress)])
         rows.append(dict(method=name,net_ce=ce_ci,gap_cvar=gap_ci,stressed_gap_cvar=stress_gap_ci,training_gap=metrics(c,draw,a)[0].tolist(),wasserstein_buffer=dro_buffer(c,a),wasserstein_gap_upper=(np.maximum(gap_ci['high'],stress_gap_ci['high'])+dro_buffer(c,a)).tolist(),budgets=(draw[3]*c['funding_budget_fraction']).tolist(),
-                         funding_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
+                         funding_pass=verdict['funding_rule_pass'],tail_budget_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
                          evaluation_pass=verdict['overall_pass']))
         # Separate executable-policy audit, not a relabel of optimizer accounting.
         from emfin_v2.ledger import summarize_execution
@@ -406,7 +444,7 @@ def run(c,output='artifacts/default'):
     common_mu=(gross_common-1).mean(0);common_cov=np.cov(gross_common,rowvar=False)
     frontier=efficient_frontier(gross_common,minimum_weights=mins,fixed_weights=fixed)
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
-    result=dict(innovation_evidence=innovation_evidence,frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
+    result=dict(strict_tradeoff=strict_tradeoff,innovation_evidence=innovation_evidence,frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
         status=status,calibration=calibration,rows=rows,weights={k:(a/c['wealth']).tolist() for k,a in allocations.items()},
         assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['Singapore URA private residential price index'] if d==7 and c['real_estate'].get('source')=='singapore_ura' else ['RE synthetic'] if d==7 else [])),
         net_wealth_fan=fan, supersedes='All earlier multi-period figures before cumulative payout correction.',
