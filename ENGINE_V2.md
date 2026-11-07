@@ -90,12 +90,26 @@ change only scenario probabilities and scenario values, upstream.
   calibrate with volume data.  The earlier state-independent beta-cost
   convolution and the illiquid time-to-cash haircut remain in
   `toolbox/liquidity.py` (tests + illiquid holdings).
-- **Liabilities**: deterministic schedule, aggregated to one outflow at the
-  horizon. Key finding: with translation-invariant preferences (CARA, CVaR),
-  deterministic liabilities change the optimal mix ONLY through
-  shortfall-type constraints - or via stochastic amounts / multi-period
-  funding (both future work). The funding-gap constraint uses the one-sided
-  gap max(0, L - W); a surplus never offsets a shortfall.
+- **Liabilities**: a schedule of named payouts with amounts and due weeks,
+  in two formulations side by side.  *Aggregated*: payouts due within the
+  horizon collapse to one outflow L at tau (the classic single-period
+  treatment).  *Multi-period + stochastic*: amounts are scenario-dependent
+  - lognormal, correlated with the scenario's equity drawdown at the due
+  date (the PE denominator effect; vols/correlations are communicable
+  placeholders, stress measured vs the EXPECTED cumulative return) - and
+  each payout carries its own funding-gap constraint evaluated on the
+  wealth path AT ITS DUE DATE: a payout due in week 10 cannot be funded by
+  week-13 gains.  Provisioning is LDI-style at the money-market rate, which
+  keeps the problem convex.  Honest finding on the placeholder schedule:
+  interim payouts are small relative to interim wealth, so the per-date
+  constraints are SLACK out-of-sample - the feature binds when an interim
+  payout is a large fraction of wealth, and the funding check reports it
+  either way.  Key finding (paper material): with translation-invariant
+  preferences (CARA, CVaR), deterministic liabilities change the optimal
+  mix ONLY through shortfall-type constraints; stochastic amounts and
+  multi-period funding are what make liabilities bite in the objective
+  itself.  The gap is one-sided: max(0, L - W); a surplus never offsets a
+  shortfall.
 - **Money-market sleeve (`MMKT`)**: a rolling 3-month T-bill position on the
   FRED DGS3MO short rate (open data, manifest entry).  Weekly carry
   (rate/52) minus 0.25y duration times the weekly rate change - small but
@@ -127,4 +141,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 73 tests covering every module.
+`python -m pytest tests/` - 81 tests covering every module.
