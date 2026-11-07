@@ -1,0 +1,27 @@
+{
+  "test_count": 324,
+  "seconds": 15.27,
+  "warnings": [
+    "Extended-registry CVXPY solution-may-be-inaccurate warning, subject to unchanged residual acceptance",
+    "Existing test-only entropy log runtime warning"
+  ],
+  "installed_wheel_smoke": {
+    "seconds": 0.5127458449999835,
+    "status": "optimized",
+    "outside_checkout": true,
+    "invariance_rows": 6
+  },
+  "changes": [
+    "Inverse empirical-CDF VaR convention and finite-input/confidence validation",
+    "One-column covariance matrix shape",
+    "Invariance/volatility/shape diagnostics with no automatic model switch",
+    "Current documentation reconciled; old text preserved as archive",
+    "Normal prices versus lognormal prices analytical distinction"
+  ],
+  "limits": [
+    "Not a line-by-line audit of all547 book pages",
+    "Diagnostics do not prove stationarity, independence or economic coverage",
+    "Existing historical science evidence remains unchanged",
+    "No risk budgets, final judge or default scenario law changed"
+  ]
+}
