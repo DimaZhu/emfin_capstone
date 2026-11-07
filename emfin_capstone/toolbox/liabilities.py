@@ -32,7 +32,7 @@ from dataclasses import dataclass
 import cvxpy as cp
 import numpy as np
 
-from emfin_capstone.toolbox import risk_stats
+from emfin_capstone.toolbox import risk_stats, solvers
 
 
 @dataclass(frozen=True)
@@ -141,19 +141,7 @@ def optimization_liability_aware(
         constraints.append(cvar_gap <= gamma_shortfall * rel_liability)
 
     problem = cp.Problem(cp.Maximize(ce_rel), constraints)
-    used_solver = "CLARABEL"
-    try:
-        # generous iteration budget + a hard time cap: the weighted CE with
-        # two CVaR epigraphs is the pipeline's dominant solve
-        problem.solve(solver="CLARABEL", max_iter=400, time_limit=60.0)
-    except cp.SolverError:
-        # SCS is the sturdier fallback for this cone shape, but capped: an
-        # uncapped SCS run is minutes-slow and reads as a hang
-        used_solver = "SCS"
-        problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6, max_iters=10_000,
-                      time_limit_secs=60.0)
-    if weights.value is None:
-        raise RuntimeError(f"liability-aware optimization failed: {problem.status}")
+    used_solver = solvers.solve_capped(problem, name="liability-aware optimization")
 
     allocations = weights.value * wealth / prices_vector.ravel()
     diagnostics = {
@@ -329,6 +317,8 @@ def optimization_multiperiod(
         raise ValueError("liability scenarios, bases and payout steps must align")
     if growth.shape != (n_scenarios, n_steps):
         raise ValueError("MM growth must be (n_scenarios, n_steps)")
+    if np.any(steps < 1) or np.any(steps > n_steps):
+        raise ValueError("payout steps must index into the path")
     if scenario_probs is None:
         log_probs = np.full(n_scenarios, -np.log(n_scenarios))
         probs = np.full(n_scenarios, 1.0 / n_scenarios)
@@ -367,15 +357,7 @@ def optimization_multiperiod(
         constraints.append(cvar_gap <= gamma_shortfall * base[i] / wealth)
 
     problem = cp.Problem(cp.Maximize(ce_rel), constraints)
-    used_solver = "CLARABEL"
-    try:
-        problem.solve(solver="CLARABEL", max_iter=400, time_limit=60.0)
-    except cp.SolverError:
-        used_solver = "SCS"
-        problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6, max_iters=10_000,
-                      time_limit_secs=60.0)
-    if weights.value is None:
-        raise RuntimeError(f"multi-period optimization failed: {problem.status}")
+    used_solver = solvers.solve_capped(problem, name="multi-period optimization")
 
     allocations = weights.value * wealth / prices
     diagnostics = {

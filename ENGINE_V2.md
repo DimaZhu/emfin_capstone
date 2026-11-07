@@ -139,6 +139,20 @@ change only scenario probabilities and scenario values, upstream.
 - Liquidity cost parameters; quarterly CVaR budget (0.15) and gap budget
   (0.2% of liability; in-solver value, OOS-calibrated at runtime)
 
+## Simplification and robustness pass
+
+- One solver policy: `toolbox/solvers.py` holds the single capped
+  CLARABEL-then-SCS policy all three optimizers share (was three copies).
+- One master seed: every random stream (scenarios, overlay, paths,
+  liability shocks, judge) spawns from `MASTER_SEED` via SeedSequence -
+  one knob, same reproducibility.
+- Input validation at the seam: invariants are checked finite,
+  non-degenerate and long enough before any moments are estimated;
+  optimizer rejects payout steps outside the path.
+- Deliberately kept: the legacy liquidity convolution (tests + illiquid
+  holdings), the live-pull cache (snapshot regeneration), the analytic
+  normal-market benchmark (test oracle).  Nothing was dead code.
+
 ## Tests
 
-`python -m pytest tests/` - 81 tests covering every module.
+`python -m pytest tests/` - 83 tests covering every module.

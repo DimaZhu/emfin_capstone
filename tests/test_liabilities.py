@@ -199,3 +199,30 @@ def test_multiperiod_metrics_per_date():
     assert m.shortfall_cvar[0] > 0 and m.shortfall_cvar[1] == 0.0
     # terminal net = final value minus each payout (growth factors are 1)
     np.testing.assert_allclose(m.terminal_net, [120.0 - 200.0, 130.0 - 200.0])
+
+
+def test_multiperiod_rejects_misaligned_inputs():
+    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+
+    paths, prices = _steady_paths()
+    n_scen, n_steps, _ = paths.shape
+    mm_growth = np.tile(1.001 ** np.arange(1, n_steps + 1), (n_scen, 1))
+    with np.testing.assert_raises(ValueError):
+        # payout step beyond the path length
+        optimization_multiperiod(
+            paths, prices, wealth=1e6,
+            liability_scenarios=np.ones((n_scen, 1)), payout_steps=np.array([n_steps + 5]),
+            liability_base=np.array([1.0]), mm_growth_paths=mm_growth,
+            risk_tolerance=5e4, confidence_level=0.95, gamma_loss=0.5, gamma_shortfall=1.0,
+            n_optimization_scenarios=n_scen,
+        )
+
+
+def test_money_market_handles_short_series():
+    import pandas as pd
+    from emfin_capstone.toolbox import moneymarket
+
+    # two observations -> one return; the diff alignment must not crash
+    mm = moneymarket.money_market_weekly_returns(pd.Series([0.04, 0.05]))
+    assert len(mm) == 1
+    np.testing.assert_allclose(mm.iloc[0], 0.04 / 52.0 - 0.25 * 0.01, rtol=1e-12)

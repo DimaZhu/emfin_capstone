@@ -61,12 +61,13 @@ from emfin_capstone.toolbox import (
 # --------------------------------------------------------------------------
 HORIZON_WEEKS = 13  # one quarter
 N_SCENARIOS = 100_000
-SCENARIO_SEED = 42
-COST_SEED = 43
-PATH_SEED = 2026_11_07_3
-LIAB_SEED = 2026_11_07_4
+# One master seed spawns every stream (fewer knobs, same reproducibility):
+# scenario draws, liquidity overlay, path building, liability shocks, judge.
+MASTER_SEED = 2026_11_07
+_s = np.random.SeedSequence(MASTER_SEED).spawn(5)
+SCENARIO_SEED, COST_SEED, PATH_SEED, LIAB_SEED, JUDGE_SEED_BASE = (
+    int(x.generate_state(1)[0]) for x in _s)
 N_JUDGE_SEEDS = 5
-JUDGE_SEED_BASE = 1000
 
 WEALTH = 100e6
 RISK_TOLERANCE = 10e6
@@ -154,6 +155,15 @@ def main() -> None:
     joint = joint.dropna()
     print(f"snapshot: {snap.manifest['rows']} daily rows through {snap.manifest['end']}; "
           f"{len(joint)} aligned weekly observations (common window incl. OAS)")
+    # input validation: invariants must be finite, non-degenerate columns
+    inv_cols = joint[["DFUS", "DFAI", "DFAE", snapshot.YIELD_TICKER, "DSPREAD", "MMKT"]]
+    if not np.isfinite(inv_cols.to_numpy()).all():
+        raise ValueError("non-finite invariant observations - check the pinned inputs")
+    degenerate = [c for c in inv_cols.columns if inv_cols[c].std() <= 0]
+    if degenerate:
+        raise ValueError(f"degenerate invariant columns (zero variance): {degenerate}")
+    if len(joint) < 52:
+        raise ValueError(f"only {len(joint)} weekly observations; moments would be noise")
 
     _tick("snapshot + weekly invariants")
     invariants = joint[["DFUS", "DFAI", "DFAE", snapshot.YIELD_TICKER, "DSPREAD", "MMKT"]].to_numpy()
