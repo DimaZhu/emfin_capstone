@@ -112,3 +112,36 @@ TSDR update: a path entering a later state could previously be advanced twice
 within a single week. Transitions are now simultaneous. Earlier TSDR performance
 numbers should be rerun, not reused. Stationarity requires invariant initialization;
 convergence from a chosen initial state is not the same as strict stationarity.
+
+## CML budgets and finite-posterior robustness
+
+`optimization_multiperiod(..., cml_budget=..., stress_probabilities=[...])`
+constrains the tail mean of maximum loss from **initial wealth** across a path,
+not peak-to-trough drawdown. The nominal and stressed EP measures share one
+Rockafellar-Uryasev threshold and excess vector. Thus the same upper bound holds
+for every convex mixture of these measures, not only their listed endpoints.
+This is a finite-measure robust CML constraint, not an unrestricted KL ball or
+Wasserstein DRO model, and the objective remains nominal CARA utility.
+
+The reference comparison uses a 6% placeholder CML budget and 500 path scenarios.
+The 2,000/10,000-scenario formulations failed solver residual checks here, so no
+claim of large-N readiness is made. The 500-path row is explicitly an SAA example,
+not a funding guarantee: its fresh parametric funding-gap CVaR is ~$644k against
+the separate $190k funding target. A CML constraint cannot replace funding-budget
+calibration. The baseline multi-period row likewise has no OOS-calibrated budget.
+
+MPEP now supports multiple CML views with an approximate coordinate search over
+tail counts on the full path set. It skips infeasible candidates and makes no
+global-optimality claim. Unknown views/invalid weights fail loudly. Rank/vol
+view senses are honored; ML diagnostics now report ML, not CML by mistake.
+
+A probability-alignment correction: multi-period allocations previously reused
+probabilities from an independently generated one-period scenario set by row
+number. They now pool views on their actual path scenarios. TSDR's liabilities
+and money-market provisioning now also follow its own resampled paths. These
+fixes change earlier multi-period and TSDR headline numbers; rerun, do not reuse.
+
+Solver policy checks status, finite variables/objective and maximum constraint
+residual <=1e-5 in normalized units. Failed or materially infeasible approximate
+solutions are rejected, never presented as allocations. A shorter interior-point
+step and centered disutility improve stability; they do not solve every case.

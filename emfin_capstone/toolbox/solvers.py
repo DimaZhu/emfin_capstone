@@ -18,6 +18,7 @@ place it lives now:
 from __future__ import annotations
 
 import cvxpy as cp
+import numpy as np
 
 CLARABEL_TIME_LIMIT_SECS = 60.0
 CLARABEL_MAX_ITER = 400
@@ -30,15 +31,26 @@ def solve_capped(problem: cp.Problem, name: str = "optimization") -> str:
 
     Raises RuntimeError if neither solver produces a solution.
     """
-    used_solver = "CLARABEL"
-    try:
-        problem.solve(solver="CLARABEL", max_iter=CLARABEL_MAX_ITER,
-                      time_limit=CLARABEL_TIME_LIMIT_SECS, max_threads=1,
-                      tol_gap_abs=1e-7, tol_gap_rel=1e-7, tol_feas=1e-7)
-    except cp.SolverError:
-        used_solver = "SCS"
-        problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6,
-                      max_iters=SCS_MAX_ITERS, time_limit_secs=SCS_TIME_LIMIT_SECS)
-    if problem.value is None or problem.value == float("inf"):
-        raise RuntimeError(f"{name} failed: {problem.status}")
-    return used_solver
+    attempts = []
+    for solver in ("CLARABEL", "SCS"):
+        try:
+            if solver == "CLARABEL":
+                problem.solve(solver=solver, max_iter=CLARABEL_MAX_ITER,
+                              time_limit=CLARABEL_TIME_LIMIT_SECS, max_threads=1, max_step_fraction=.95,
+                              tol_gap_abs=1e-6, tol_gap_rel=1e-6, tol_feas=1e-6)
+            else:
+                problem.solve(solver=solver, eps_abs=1e-6, eps_rel=1e-6,
+                              max_iters=SCS_MAX_ITERS, time_limit_secs=SCS_TIME_LIMIT_SECS)
+            status_ok = problem.status in (cp.OPTIMAL, cp.OPTIMAL_INACCURATE)
+            value_ok = problem.value is not None and np.isfinite(problem.value)
+            variables_ok = all(v.value is not None and np.isfinite(v.value).all() for v in problem.variables())
+            if status_ok and value_ok and variables_ok:
+                residual = max((float(np.max(c.violation())) for c in problem.constraints), default=0.)
+                if residual <= 1e-5:
+                    return solver
+                attempts.append(f"{solver}: constraint residual {residual:.3g}")
+            else:
+                attempts.append(f"{solver}: {problem.status}")
+        except cp.SolverError as exc:
+            attempts.append(f"{solver}: {exc}")
+    raise RuntimeError(f"{name} failed validation: {'; '.join(attempts)}")

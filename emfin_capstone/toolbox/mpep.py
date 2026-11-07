@@ -101,6 +101,8 @@ def cml_of_paths(losses: np.ndarray, probs: np.ndarray, alpha: float) -> float:
     """Probability-weighted mean of the worst (1 - alpha) path losses."""
     l = np.asarray(losses, dtype=float)
     q = np.asarray(probs, dtype=float)
+    if l.ndim != 1 or q.shape != l.shape or not len(l) or not np.isfinite(l).all() or not np.isfinite(q).all() or (q<0).any() or q.sum()<=0 or not 0<=alpha<1:
+        raise ValueError("finite aligned losses, nonnegative weights and alpha in [0,1) required")
     order = np.argsort(-l)
     l_sorted, q_sorted = l[order], q[order]
     budget = (1.0 - alpha) * q.sum()
@@ -134,16 +136,17 @@ def _moment_seq_views(x: np.ndarray, n_steps: int, views: list[MPView]) -> list[
             out.append(seqep.SeqView(
                 level=0,
                 build=lambda params, c1=c1, c2=c2, v=v: ep.View(
-                    features=x[:, [c1]] - v.scale * x[:, [c2]], target=[0.0], sense="ge",
+                    features=x[:, [c1]] - v.scale * x[:, [c2]], target=[v.value], sense=v.sense,
                     name=v.name or "multi-period rank view"),
                 name=v.name))
         elif v.kind == "vol":
             c = _col(v.instrument, v.horizon, n_steps)
             out.append(seqep.SeqView(
                 level=1,
-                build=lambda params, c=c, v=v: ep.volatility_view(
-                    x, c, v.value, pin_mean=params[("mean", c)],
-                    name=v.name or f"std(x_{v.instrument},h={v.horizon}) = {v.value}"),
+                build=lambda params, c=c, v=v: ep.View(
+                    features=(x[:,[c]]-params[("mean",c)])**2,
+                    target=[v.value**2], sense=v.sense,
+                    name=v.name or f"std(x_{v.instrument},h={v.horizon}) {v.sense} {v.value}"),
                 name=v.name))
     return out
 
@@ -194,41 +197,43 @@ def _solve(paths: np.ndarray, views: list[MPView], prior: np.ndarray, heuristic:
                                             heuristic=heuristic, sweeps=1)
 
 
-def find_cml_tail_count(paths: np.ndarray, views: list[MPView], view_index: int,
-                        prior: np.ndarray, initial_prices: np.ndarray,
-                        heuristic: str = "H1", n_search: int = 2000) -> int:
-    """Coarse-to-fine search for the entropy-minimizing CML tail count l.
+def find_cml_tail_counts(paths, views, prior, initial_prices, heuristic="H1"):
+    """Coordinate coarse-to-fine search on FULL paths, not rescaled subsamples.
 
-    Our own substitute for the article's proprietary algorithm: score
-    candidate l values by the posterior relative entropy on a coarse grid
-    (computed on a subsample of paths for speed), then refine twice around
-    the best grid point.  Returns l on the FULL path set, rescaled from the
-    subsample ratio.
+    This is our approximate discrete search, not a global optimality claim.
+    All active CML views are solved jointly at every candidate. Infeasible
+    candidates are skipped; if none is feasible, fail rather than invent l.
     """
-    v = views[view_index]
-    s = paths.shape[0]
-    if s > n_search:
-        idx = np.linspace(0, s - 1, n_search).astype(int)
-        sub_paths, sub_prior = paths[idx], prior[idx] / prior[idx].sum()
-    else:
-        sub_paths, sub_prior = paths, prior
-    sn = sub_paths.shape[0]
-    lo, hi = 2, max(3, min(sn - 1, int(3 * (1 - v.alpha) * sn)))
-
-    def score(l_count: int) -> float:
-        return _solve(sub_paths, views, sub_prior, heuristic, initial_prices,
-                      {view_index: l_count}).relative_entropy
-
-    grid = np.unique(np.linspace(lo, hi, 7).astype(int))
-    best_l = min(((int(l), score(int(l))) for l in grid), key=lambda t: t[1])[0]
-    step = max(1, (hi - lo) // 6)
+    indices = [i for i,v in enumerate(views) if v.kind == "cml"]
+    n = len(paths)
+    counts = {i: max(1,min(n-1,int(round((1-views[i].alpha)*n)))) for i in indices}
+    cache = {}
+    def score(trial):
+        key = tuple(trial[i] for i in indices)
+        if key not in cache:
+            try:
+                value = _solve(paths,views,prior,heuristic,initial_prices,trial).relative_entropy
+                cache[key] = float(value) if np.isfinite(value) else float("inf")
+            except (ValueError,RuntimeError):
+                cache[key] = float("inf")
+        return cache[key]
     for _ in range(2):
-        cands = [l for l in (best_l - step, best_l + step) if lo <= l <= hi]
-        for l in cands:
-            if score(l) < score(best_l):
-                best_l = l
-        step = max(1, step // 3)
-    return max(2, int(round(best_l * s / sn)))
+        for i in indices:
+            lo,hi=1,n-1
+            best=counts[i]
+            for refinement in range(3):
+                candidates=np.unique(np.r_[np.linspace(lo,hi,9).astype(int),best])
+                trials=[]
+                for count in candidates:
+                    trial=dict(counts);trial[i]=int(count)
+                    trials.append((score(trial),int(count)))
+                best_value,best=min(trials)
+                width=max(1,(hi-lo)//8)
+                lo,hi=max(1,best-width),min(n-1,best+width)
+            counts[i]=best
+    if not np.isfinite(score(counts)):
+        raise ValueError("no feasible CML tail-count combination found by approximate coordinate search")
+    return counts
 
 
 def mpep(paths: np.ndarray, views: list[MPView], initial_prices: np.ndarray,
@@ -248,13 +253,27 @@ def mpep(paths: np.ndarray, views: list[MPView], initial_prices: np.ndarray,
         raise ValueError("initial_prices must have one entry per asset")
     s = p_arr.shape[0]
     prior = np.full(s, 1.0 / s) if prior_probs is None else np.asarray(prior_probs, float)
+    if prior.shape != (s,) or not np.isfinite(prior).all() or (prior <= 0).any():
+        raise ValueError("prior probabilities must be positive, finite and align with paths")
+    if s < 3 or not np.isfinite(p_arr).all() or not np.isfinite(init).all():
+        raise ValueError("need at least three finite paths and finite initial prices")
+    for v in views:
+        if v.kind not in ("mean","rank","vol","ml","cml") or v.sense not in ("eq","ge","le"):
+            raise ValueError("unknown view kind or sense")
+        if not 0 <= v.instrument < p_arr.shape[2] or not 0 <= v.horizon < p_arr.shape[1]:
+            raise ValueError("view instrument/horizon out of range")
+        if v.kind == "rank" and (not 0 <= v.instrument2 < p_arr.shape[2] or not 0 <= v.horizon2 < p_arr.shape[1]):
+            raise ValueError("rank comparison out of range")
+        if v.kind in ("ml","cml") and not 0 <= v.alpha < 1:
+            raise ValueError("alpha must be in [0,1)")
     prior = prior / prior.sum()
 
     cml_l: dict[int, int] = {}
     if cml_search:
         for vi, v in enumerate(views):
             if v.kind == "cml":
-                cml_l[vi] = find_cml_tail_count(p_arr, views, vi, prior, init, heuristic)
+                cml_l = find_cml_tail_counts(p_arr, views, prior, init, heuristic)
+                break
     res = _solve(p_arr, views, prior, heuristic, init, cml_l)
 
     q = res.posterior_probs
@@ -274,7 +293,11 @@ def mpep(paths: np.ndarray, views: list[MPView], initial_prices: np.ndarray,
             achieved[label] = float(np.sqrt(((col - col @ q) ** 2) @ q))
         elif v.kind in ("ml", "cml"):
             losses = max_path_loss(p_arr[:, :, v.instrument], init[v.instrument])
-            achieved[label] = cml_of_paths(losses, q, v.alpha)
+            if v.kind == "cml":
+                achieved[label] = cml_of_paths(losses, q, v.alpha)
+            else:
+                order = np.argsort(losses)
+                achieved[label] = float(losses[order[min(len(q)-1, np.searchsorted(np.cumsum(q[order]),v.alpha))]])
             if v.kind == "cml":
                 counts[label] = cml_l.get(vi, 0)
     return MPEPResult(posterior_probs=q, relative_entropy=res.relative_entropy,
