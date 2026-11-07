@@ -66,3 +66,12 @@ def test_conditional_covariance_scaling_independent_sample():
     rng=np.random.default_rng(16);base=np.array([.04,.09]);R=np.array([[1,.4],[.4,1]]);cov=np.diag(np.sqrt(base))@R@np.diag(np.sqrt(base));past=rng.multivariate_normal([0,0],cov,100)
     h,_=initial_state(past,[0,0],base);z=rng.multivariate_normal([0,0],cov,size=(80000,1));v=rng.choice([.75,3.25],(80000,1,1),p=[.9,.1]);out=transform(z*np.sqrt(v),past,[0,0],base)
     expected=np.diag(np.sqrt(h))@R@np.diag(np.sqrt(h));np.testing.assert_allclose(np.cov(out[:,0].T),expected,rtol=.04,atol=.0005)
+
+
+def test_selected_bounded_model_has_finite_dashboard_domain_flag():
+    from emfin_v2.dashboard import summarize
+    c=load_config();c['scenario_model']='bounded_ewma_mixture';c=validate_config(c)
+    f=setup(c);dr=draw_paths(c,f,30,4);q=np.ones(30)/30
+    d=summarize(c,dr,q,q,[dr,dr],{},[],dict(kind='unavailable'),c['asset_names'])
+    assert d['price_moments_finite']
+    assert d['innovation_evidence']['model']=='bounded_ewma_mixture'

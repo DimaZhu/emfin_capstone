@@ -416,7 +416,7 @@ def run(c,output='artifacts/default'):
                  'Archive split independence is the input provider responsibility; generated mode uses disjoint calibration/evaluation seeds. Final failures are never recalibrated away.',
                  'Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.',
                  'Liabilities, views and innovation-law parameters are illustrative/development-selected, not client evidence. Scenario law: '+c['scenario_model'],
-                 'Weekly log shocks aggregate by summation. Read innovation_law for the selected iid, conditional or legacy model domain. Legacy t cannot support population price means/variances; iid exact formulas do not apply to recursive conditional variance.',
+                 'Weekly log shocks aggregate by summation. Read innovation_evidence for the selected iid, conditional or legacy model domain. Legacy t cannot support population price means/variances; iid exact formulas do not apply to recursive conditional variance.',
                  'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
                  '1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings.'])
