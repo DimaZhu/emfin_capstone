@@ -43,7 +43,7 @@ def ledoit_wolf_cov(samples: np.ndarray, ess: float | None = None) -> tuple[np.n
     if not np.isfinite(x).all() or np.any(scales <= 0):
         raise ValueError("finite nondegenerate columns required")
     x = (x - x.mean(0)) / scales
-    s = np.cov(x, rowvar=False, ddof=1)
+    s = np.atleast_2d(np.cov(x, rowvar=False, ddof=1))
     m = float(np.trace(s) / n)
     f = m * np.eye(n)
     d2 = float(((s - f) ** 2).sum() / n)
