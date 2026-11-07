@@ -1,0 +1,62 @@
+{
+  "label": "Illustrative implementation, not client-calibrated",
+  "seed": 20261107,
+  "wealth": 100000000,
+  "horizon_weeks": 13,
+  "liabilities": [
+    {
+      "name": "Illustrative capital call",
+      "week": 10,
+      "amount": 35000000
+    },
+    {
+      "name": "Illustrative property payout",
+      "week": 13,
+      "amount": 60000000
+    }
+  ],
+  "liability_vol": 0.0,
+  "risk_tolerance": 10000000,
+  "confidence": 0.95,
+  "funding_budget_fraction": 0.002,
+  "loss_budget": 0.15,
+  "cml_budget": 0.06,
+  "student_nu": 8.0,
+  "train_scenarios": 1000,
+  "validation_scenarios": 4000,
+  "evaluation_scenarios": 8000,
+  "validation_seeds": 3,
+  "evaluation_seeds": 8,
+  "multiplier_grid": [
+    1.0,
+    0.5,
+    0.25,
+    0.1
+  ],
+  "view_spread": 0.005,
+  "stress_mean_path_loss_increment": 0.01,
+  "liquidity_haircuts": [
+    0.001,
+    0.0015,
+    0.002,
+    0.0005,
+    0.001,
+    0.0
+  ],
+  "real_estate": {
+    "enabled": false,
+    "minimum_weight": 0.0,
+    "annual_drift": 0.04,
+    "annual_vol": 0.12,
+    "equity_correlation": 0.3,
+    "liquidation_haircut": 0.1
+  },
+  "client_evidence": {
+    "status": "illustrative",
+    "holdings": null,
+    "family_company": null,
+    "sources": []
+  },
+  "sequential_ep": true,
+  "view_vol_cap": null
+}

@@ -266,7 +266,13 @@ def multiperiod_gap_metrics(
     probs, cvars = [], []
     terminal_net = values[:, -1].copy()
     for i, step in enumerate(steps):
-        gap = np.maximum(0.0, liabilities[:, i] - values[:, step - 1])
+        # Earlier payouts have already left the portfolio. Their accumulated
+        # opportunity cost must be deducted before funding today's payout.
+        required = liabilities[:, i].copy()
+        for j, previous_step in enumerate(steps):
+            if previous_step < step or (previous_step == step and j < i):
+                required += liabilities[:, j] * growth[:, step-1] / growth[:, previous_step-1]
+        gap = np.maximum(0.0, required - values[:, step - 1])
         probs.append(float((gap > 0).mean()))
         cvars.append(risk_stats.empirical_cvar(gap, confidence_level))
         terminal_net -= liabilities[:, i] * growth[:, -1] / growth[:, step - 1]
@@ -294,6 +300,8 @@ def optimization_multiperiod(
     scenario_probs: np.ndarray | None = None,
     cml_budget: float | None = None,
     stress_probabilities: list[np.ndarray] | None = None,
+    funding_stress_probabilities: list[np.ndarray] | None = None,
+    minimum_weights: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
     """Multi-period, stochastic-liability allocation.
 
@@ -360,13 +368,33 @@ def optimization_multiperiod(
     if long_only:
         constraints.append(weights >= 0)
 
-    # one funding-gap epigraph per payout date, on the wealth path at that date
+    if minimum_weights is not None:
+        mins=np.asarray(minimum_weights,float).ravel()
+        if mins.shape!=(n_assets,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:
+            raise ValueError("invalid minimum holdings")
+        constraints.append(weights>=mins)
+
+    # Scale each funding budget to one. A nonnegative threshold makes the
+    # extra positive-part layer on the gap redundant, reducing cone size.
     for i, step in enumerate(steps):
         value_at_step = (paths[:, step - 1, :] / prices) @ weights
-        gap = cp.pos(liabilities[:, i] / wealth - value_at_step)
-        t_gap = cp.Variable()
-        cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
-        constraints.append(cvar_gap <= gamma_shortfall * base[i] / wealth)
+        required = liabilities[:, i].copy()
+        for j, previous_step in enumerate(steps):
+            if previous_step < step or (previous_step == step and j < i):
+                required += liabilities[:, j] * growth[:, step-1] / growth[:, previous_step-1]
+        budget_rel = gamma_shortfall * base[i] / wealth
+        if budget_rel == 0:
+            constraints.append(value_at_step >= required/wealth)
+            continue
+        scaled_gap = (required/wealth - value_at_step) / budget_rel
+        t_gap = cp.Variable(nonneg=True)
+        excess = cp.pos(scaled_gap-t_gap)
+        constraints.append(t_gap + probs @ excess/(1-confidence_level) <= 1.)
+        for stress in funding_stress_probabilities or []:
+            ps = np.asarray(stress,float).ravel()[:n_scenarios]
+            if ps.shape != probs.shape or not np.isfinite(ps).all() or (ps<0).any() or ps.sum()<=0:
+                raise ValueError("invalid funding-stress probabilities")
+            constraints.append(t_gap + (ps/ps.sum()) @ excess/(1-confidence_level) <= 1.)
 
     # CML: CVaR of maximum initial-value loss over each entire path.
     # Enforce for every supplied posterior and the nominal measure. Because
