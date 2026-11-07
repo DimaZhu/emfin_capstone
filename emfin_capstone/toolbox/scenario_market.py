@@ -445,9 +445,7 @@ class LiquidityAwareAllocation:
 
     allocation: np.ndarray  # (n_assets, 1) units, as ``optimization_with_cvar_constrain`` returns
     status: str  # final CLARABEL status (see ``_solve_with_clarabel``)
-    # (J_solver, n_assets) dollars sold per solver scenario.  Sales of costless assets
-    # (cash) beyond the need are free, hence not unique: the costs are, the cash column is not
-    solver_sales: np.ndarray
+    solver_sales: np.ndarray  # (J_solver, n_assets) dollars sold per solver scenario, cash first
     solver_expected_cost: np.ndarray  # (J_solver,) -mu_j of eq. (6) at those sales, >= 0
     solver_cost_std: np.ndarray  # (J_solver,) sigma_j of eqs. (7)-(9) at those sales
 
@@ -493,9 +491,16 @@ def optimization_with_cvar_and_liquidity(
     constraint is hard: a portfolio whose need exceeds its maximal net proceeds in
     some solver scenario is infeasible (all cash is always feasible).
 
-    Exact pre-screen: since g_j'h >= min_n g_jn on the simplex, a scenario with
-    min_n g_jn >= 1 + T/w never has a need, for any h — it gets no sale variables
-    (its optimal sales are zero).  Same solver-scenario rule and settings ladder as
+    Two exact reductions keep the program small and well-posed.  Pre-screen: since
+    g_j'h >= min_n g_jn on the simplex, a scenario with min_n g_jn >= 1 + T/w never
+    has a need, for any h — it gets no sale variables (its optimal sales are zero).
+    Costless assets (alpha = k = 0: cash) are sold first, in full if needed: their
+    sale variables are eliminated (Fourier-Motzkin), leaving
+    sum_costly (s_jn - c_jn(s_jn)) >= need_j - (costless value)_j, still convex
+    (pos(affine) - affine).  Without it the solver must also pin down free, non-unique
+    cash sales, and the equity sale boxes 0 <= s <= g h collapse when h -> 0 —
+    interior-point CLARABEL stalls on exactly those (a mostly-cash replica of the
+    history failed every settings rung).  Same solver-scenario rule and settings ladder as
     ``optimization_with_cvar_constrain``; with costless parameters, or a threshold
     no scenario can reach, it reproduces that optimizer.
     """
@@ -512,8 +517,11 @@ def optimization_with_cvar_and_liquidity(
     may_need_funding = gross_return_scenarios.min(axis=1) < 1 + relative_threshold  # exact pre-screen
     funded_returns = gross_return_scenarios[may_need_funding]
     n_funded = len(funded_returns)
-    impact = liquidity.sale_impact_coefficients(solver_samples[may_need_funding], liquidity_parameters) * np.sqrt(
-        wealth
+    # costless assets (cash) are sold first and need no sale variables (see docstring)
+    costless = (liquidity_parameters.spread == 0) & (liquidity_parameters.impact * liquidity_parameters.volatility == 0)
+    costless_assets, costly = np.flatnonzero(costless), np.flatnonzero(~costless)
+    impact = liquidity.sale_impact_coefficients(solver_samples[may_need_funding], liquidity_parameters)[:, costly] * (
+        np.sqrt(wealth)
     )  # k sqrt(w): cost per unit of wealth sold
     std_factor = liquidity.liquidity_std_factor(liquidity_parameters)  # sigma/w = ||s M||, s relative
 
@@ -527,14 +535,23 @@ def optimization_with_cvar_and_liquidity(
     relative_variance_charge = np.zeros(n_scenarios)
     sales = None
     if n_funded > 0:
-        sales = cp.Variable((n_funded, n_assets), nonneg=True)
-        funded_cost = sales @ liquidity_parameters.spread + cp.sum(cp.multiply(impact, cp.power(sales, 1.5)), axis=1)
         funding_need = cp.pos(1 + relative_threshold - funded_returns @ weights)
+        costless_value = (
+            funded_returns[:, costless_assets] @ weights[costless_assets] if len(costless_assets) else np.zeros(n_funded)
+        )
+        if len(costly) == 0:
+            constraints.append(costless_value >= funding_need)  # nothing costly to sell
+    if n_funded > 0 and len(costly) > 0:
+        sales = cp.Variable((n_funded, len(costly)), nonneg=True)
+        funded_cost = sales @ liquidity_parameters.spread[costly] + cp.sum(
+            cp.multiply(impact, cp.power(sales, 1.5)), axis=1
+        )
+        positions = cp.multiply(funded_returns[:, costly], cp.reshape(weights[costly], (1, len(costly)), order="C"))
         constraints += [
-            sales <= cp.multiply(funded_returns, cp.reshape(weights, (1, n_assets), order="C")),  # own positions only
-            cp.sum(sales, axis=1) - funded_cost >= funding_need,  # net proceeds cover the need
+            sales <= positions,  # own positions only
+            cp.sum(sales, axis=1) - funded_cost >= funding_need - costless_value,  # net proceeds cover the rest
         ]
-        funded_variance = cp.sum(cp.square(sales @ std_factor), axis=1)  # (sigma_j / w)^2
+        funded_variance = cp.sum(cp.square(sales @ std_factor[costly]), axis=1)  # (sigma_j / w)^2
         # scatter the funded rows back into all solver scenarios (zeros elsewhere)
         selector = sparse.csr_matrix(
             (np.ones(n_funded), (np.flatnonzero(may_need_funding), np.arange(n_funded))), shape=(n_scenarios, n_funded)
@@ -556,9 +573,14 @@ def optimization_with_cvar_and_liquidity(
         raise RuntimeError(f"no solution: solver status {problem.status}")
 
     alpha_scenario = weights.value.reshape((-1, 1)) * wealth / prices_vector.reshape((-1, 1))  # back to shares
+    # dollars sold: costless assets first, in column order (as the policy), then the solver's costly sales
     solver_sales = np.zeros((n_scenarios, n_assets))
+    remaining_need = np.clip(1 + relative_threshold - gross_return_scenarios @ weights.value, 0, None) * wealth
+    for asset in costless_assets:
+        solver_sales[:, asset] = np.minimum(remaining_need, gross_return_scenarios[:, asset] * weights.value[asset] * wealth)
+        remaining_need -= solver_sales[:, asset]
     if sales is not None:
-        solver_sales[may_need_funding] = np.clip(sales.value, 0, None) * wealth
+        solver_sales[np.ix_(may_need_funding, costly)] = np.clip(sales.value, 0, None) * wealth
     expected_cost = solver_sales @ liquidity_parameters.spread + (
         liquidity.sale_impact_coefficients(solver_samples, liquidity_parameters) * solver_sales**1.5
     ).sum(axis=1)
