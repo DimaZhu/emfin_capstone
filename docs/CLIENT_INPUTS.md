@@ -68,3 +68,18 @@ valuation assumptions remain the provider's responsibility.
 No new optimizer code is required for additional property/company columns.
 Calendar mapping, FX, taxes, mortgages and asset-specific sale scheduling still
 need explicit model choices before a real client file is economically meaningful.
+
+## Dashboard path
+
+Section 06, SFO client inputs, shows the current placeholder capital/payout
+schedule and missing evidence. Download its checklist/template for collection;
+that small template is not a complete runnable config. Copy the bundled full
+default config for actual model settings, replace inputs using the format above,
+and select that JSON under "My private full model config" in the local app.
+The local server accepts it at Recompute/Run, not GitHub or a public service.
+Paths in scenario_archives must exist on the same computer as the local server.
+Static exports disable that input runner. Private files must not be committed.
+
+Market series do not prove family holdings. Unknown company value is displayed
+as not provided/excluded, not a factual zero. No family-company or property
+valuation has been invented to fill the default.

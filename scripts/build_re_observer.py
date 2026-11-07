@@ -23,6 +23,14 @@ RAW = series_file("QAEN628BIS")
 
 
 def main() -> None:
+    from emfin_v2.abu_dhabi import local_calibration
+    observed=local_calibration()
+    if observed is not None:
+        import json
+        print(json.dumps(observed,indent=2))
+        print('Current Abu Dhabi marginal calibration. No latent unsmoothing/dependence/rent/liquidity inference claimed.')
+        return
+    print('Private Abu Dhabi sheet unavailable. Falling back to legacy UAE-wide BIS observer, not Abu Dhabi-specific.')
     adapter = re_.CsvIndexAdapter(RAW)
     series = adapter.observer_series()[adapter.name]
     print(f"observer '{adapter.name}': {len(series)} quarterly log returns, "

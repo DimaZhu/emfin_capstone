@@ -23,11 +23,29 @@ class Controls:
     multiperiod: bool=True
     real_estate: bool=False
     re_min: float=0.
+    wealth: float=100.
+    horizon: int=13
+    profile: str='Balanced'
+    payouts: tuple | None=None
+    cml: float=6.
+    re_source: str='abu_dhabi_private'
+    dro: bool=True
+    dro_radius: float=.00002
+
 
     def validate(self):
         if not 0<=self.liability<=105 or not .01<=self.budget<=5 or not 0<=self.view<=100:
             raise ValueError('controls outside supported range')
         if not 0<=self.re_min<=30:raise ValueError('RE minimum must be 0-30%')
+        if not np.isfinite(self.wealth) or not 1<=self.wealth<=1000 or type(self.horizon) is not int or not 1<=self.horizon<=52:raise ValueError('capital $1-1000M; horizon 1-52 whole weeks')
+        if self.profile not in ('Preserve','Balanced','Growth','Aggressive'):raise ValueError('unknown risk profile')
+        if self.re_source not in ('abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
+        if not np.isfinite(self.dro_radius) or not 0<=self.dro_radius<=.001:raise ValueError('Wasserstein radius must be 0-.001')
+        if not 1<=self.cml<=40:raise ValueError('path-loss tail budget must be 1-40%')
+        if self.payouts is not None:
+            if not 1<=len(self.payouts)<=6:raise ValueError('provide one to six payouts')
+            for name,week,amount in self.payouts:
+                if not isinstance(name,str) or len(name)>80 or type(week) is not int or not 1<=week<=self.horizon or not np.isfinite(amount) or not 0<=amount<=2000:raise ValueError('invalid payout name, week or amount')
 
 @lru_cache(maxsize=1)
 def base_inputs():
@@ -46,12 +64,23 @@ def compute(c=Controls()):
         config=load_config()
         ratio=c.liability/95
         for payout in config['liabilities']:payout['amount']*=ratio
+        config['wealth']=c.wealth*1e6
+        config['horizon_weeks']=c.horizon
+        config['risk_profile']=c.profile
+        config['risk_tolerance']=config['wealth']*dict(Preserve=.05,Balanced=.1,Growth=.2,Aggressive=.4)[c.profile]
+        config['cml_budget']=c.cml/100
+        config['wasserstein_radius']=c.dro_radius if c.dro else 0.
+        if c.payouts is not None:
+            config['liabilities']=[dict(name=name,week=week,amount=amount*1e6) for name,week,amount in c.payouts]
+        elif c.horizon!=13:
+            for payout in config['liabilities']:payout['week']=max(1,round(payout['week']*c.horizon/13))
         config['funding_budget_fraction']=c.budget/100
         config['view_spread']=.005*c.view/50
         config['sequential_ep']=c.sequential
         config['stress_mean_path_loss_increment']=.01 if c.stress else 0.
         config['student_nu']=8. if c.student else None
         config['real_estate']['enabled']=c.real_estate
+        config['real_estate']['source']=c.re_source
         config['real_estate']['minimum_weight']=c.re_min/100 if c.real_estate else 0.
         with TemporaryDirectory() as folder:
             result=run(config,folder)
@@ -110,13 +139,13 @@ def from_default(result):
     cfg=result['config'];rows=[]
     for r in result['rows']:
         rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][-1],
-            gap_upper=max(r['gap_cvar']['high'][-1],r['stressed_gap_cvar']['high'][-1]),stress_gap=r['stressed_gap_cvar']['mean'][-1],nominal_gap=r['training_gap'][-1],budget=r['budgets'][-1]))
+            gap_upper=r['wasserstein_gap_upper'][-1],stress_gap=r['stressed_gap_cvar']['mean'][-1],nominal_gap=r['training_gap'][-1],budget=r['budgets'][-1]))
     selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
     return dict(controls=dict(liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100),
-        assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
+        dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; drops at weeks 10 and 13.',
         seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture') else {'proposed':result['status']['kind']},
@@ -143,13 +172,23 @@ def main():
                 self.send_error(404);return
             body=template(first).encode();self.send_response(200);self.send_header('Content-Type','text/html; charset=utf-8');self.end_headers();self.wfile.write(body)
         def do_POST(self):
-            if self.path!='/compute':self.send_error(404);return
+            if self.path not in ('/compute','/run-config'):self.send_error(404);return
             if self.headers.get('Origin') not in (None,f'http://127.0.0.1:{args.port}',f'http://localhost:{args.port}'):
                 self.send_error(403);return
             try:
                 length=int(self.headers.get('Content-Length','0'))
-                if length>4096:raise ValueError('request too large')
-                data=json.loads(self.rfile.read(length));result=compute(Controls(**data));body=json.dumps(result).encode()
+                if length>262144:raise ValueError('request too large')
+                data=json.loads(self.rfile.read(length))
+                if self.path=='/run-config':
+                    from tempfile import TemporaryDirectory
+                    from emfin_v2.default_run import load_config,run
+                    with TemporaryDirectory() as folder:
+                        config_file=Path(folder)/'config.json';config_file.write_text(json.dumps(data))
+                        result=from_default(run(load_config(config_file),folder))
+                else:
+                    if data.get('payouts') is not None:data['payouts']=tuple(tuple(row) for row in data['payouts'])
+                    result=compute(Controls(**data))
+                body=json.dumps(result).encode()
                 self.send_response(200)
             except Exception as e:
                 body=json.dumps({'error':str(e)}).encode();self.send_response(400)

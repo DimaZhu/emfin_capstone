@@ -1,6 +1,6 @@
 # EMFin V2
 
-Tijs de Boer's standalone funding-risk engine, version 2.0.0.
+Tijs de Boer's standalone funding-risk engine, version 2.1.0.
 It compares 1/N, shrunk mean-variance and a funding-aware model using cumulative
 payout accounting, Student-t paths and nominal/stressed posterior risk checks.
 
@@ -32,7 +32,7 @@ needs a package index or predownloaded wheels. The explorer binds only to your
 own machine. Its synthetic RE controls do not connect to any property service.
 
 Reports go to `artifacts/default/` in your current directory, not site-packages.
-The default took about 2.2 seconds in this environment; RE exploration can take
+The Wasserstein-enabled default took about 9 seconds in this environment; RE exploration can take
 longer. Results include JSON, CSV, Markdown and self-contained HTML. For a custom
 config, copy the bundled example before editing:
 
@@ -84,3 +84,25 @@ and [legacy attribution](legacy/ATTRIBUTION.md). No new open-source licence is
 granted here. This local/fork version is for Tijs's environment; licensing and
 data redistribution should be settled before a separate public release. The
 `v2.0` tag identifies a reproducible code state, not a licence grant.
+
+## Ballast dashboard and new risk/data controls
+
+The dashboard follows the Ballast design reference: situation, plain-language
+brief, allocation buckets, expected outcome, risk/stress, guardrails and SFO
+inputs. Values come from the engine, not the reference's toy numbers. It has
+explicit Recompute, expandable evidence and baseline overlays; static exports
+disable model inputs. Fonts fall back to local system fonts, with no CDN.
+
+Wasserstein W1 risk bounds are enabled at an illustrative radius in the default;
+see [metric, derivation and limits](docs/WASSERSTEIN.md). This is not a robust
+exponential-utility objective or a statistical coverage guarantee.
+
+The RE source picker defaults to a local private Abu Dhabi sheet import when RE
+is enabled. No REIDIN/ValuStrat data are shipped in the public wheel. The RE sleeve
+is off in the ordinary default, so the default runs without that import. See
+[private import instructions](docs/ABU_DHABI_PRIVATE_INPUT.md). Missing imports
+are reported, not replaced silently by synthetic data.
+
+The SFO section contains a default placeholder and evidence checklist, template
+download, and a live-local full JSON config runner. Real client evidence remains
+absent until supplied. The small public synthetic fixture is only for testing.

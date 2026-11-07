@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from emfin_v2.toolbox import liquidity as liq
+from legacy.research import liquidity_time_to_cash as inactive
 
 
 def test_zero_cost_returns_input_unchanged():
@@ -27,16 +28,16 @@ def test_param_validation():
 
 
 def test_time_to_cash_full_beyond_orderly_sale():
-    h = liq.IlliquidHolding("villa", 1_000_000, time_to_cash_weeks=13, fire_sale_haircut=0.08)
-    assert liq.time_to_cash_multiplier(13, h) == 1.0
-    assert liq.time_to_cash_multiplier(52, h) == 1.0
+    h = inactive.IlliquidHolding("villa", 1_000_000, time_to_cash_weeks=13, fire_sale_haircut=0.08)
+    assert inactive.time_to_cash_multiplier(13, h) == 1.0
+    assert inactive.time_to_cash_multiplier(52, h) == 1.0
 
 
 def test_time_to_cash_ramp():
-    h = liq.IlliquidHolding("villa", 1_000_000, time_to_cash_weeks=10, fire_sale_haircut=0.10)
-    assert liq.time_to_cash_multiplier(0, h) == pytest.approx(0.90)
-    assert liq.time_to_cash_multiplier(5, h) == pytest.approx(0.95)
-    assert liq.funding_value(5, h) == pytest.approx(950_000)
+    h = inactive.IlliquidHolding("villa", 1_000_000, time_to_cash_weeks=10, fire_sale_haircut=0.10)
+    assert inactive.time_to_cash_multiplier(0, h) == pytest.approx(0.90)
+    assert inactive.time_to_cash_multiplier(5, h) == pytest.approx(0.95)
+    assert inactive.funding_value(5, h) == pytest.approx(950_000)
 
 
 def test_cost_column_count_must_match():
