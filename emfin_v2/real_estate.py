@@ -89,28 +89,33 @@ def calibration(re):
     return result
 
 
-def cash_and_mark(price_paths,growth,re):
+def cash_and_mark(price_paths,growth,re,fx_paths=None):
     """Per-dollar property mark and spendable cash for a fixed planned sale.
 
     sale_week=0 means no sale. Contract price is the scenario mark at sale_week,
     less the transaction haircut; proceeds settle after sale_delay_weeks. Rent
     stops at agreement. Pending proceeds have contractual value but are not cash.
+    FX paths, when supplied, are local-to-reporting relative spot values. Rent
+    converts at receipt; pending local sale proceeds keep FX risk until
+    settlement and only then become reporting-currency cash.
     No reinvestment in property, repeated full sales, or dynamic selling policy.
     """
     r=assumptions(re);validate(r)
     price=np.asarray(price_paths,float);g=np.asarray(growth,float)
     if price.shape!=g.shape or price.ndim!=2 or not np.isfinite(price).all() or (price<0).any() or not np.isfinite(g).all() or (g<=0).any():raise ValueError('RE price and money-market paths must align')
+    fx=np.ones_like(price) if fx_paths is None else np.asarray(fx_paths,float)
+    if fx.shape!=price.shape or not np.isfinite(fx).all() or (fx<=0).any():raise ValueError('positive aligned local-to-reporting FX paths required')
     n,h=price.shape;week=r['sale_week'];settle=week+r['sale_delay_weeks']
     rent=np.zeros_like(price)
     for t in range(h):
         rent[:,t]=(rent[:,t-1]*g[:,t]/g[:,t-1] if t else 0.)
-        if week==0 or t+1<=week:rent[:,t]+=r['net_rental_yield']/52
-    mark=price+rent;cash=rent.copy()
+        if week==0 or t+1<=week:rent[:,t]+=r['net_rental_yield']/52*fx[:,t]
+    mark=price*fx+rent;cash=rent.copy()
     if 1<=week<=h:
         proceeds=price[:,week-1]*(1-r['liquidation_haircut'])
         for t in range(week-1,h):
             available=t+1>=settle
-            value=proceeds*(g[:,t]/g[:,settle-1] if available else 1.)
+            value=proceeds*(fx[:,settle-1]*g[:,t]/g[:,settle-1] if available else fx[:,t])
             mark[:,t]=rent[:,t]+value
             if available:cash[:,t]+=value
     return mark,cash

@@ -21,4 +21,4 @@ include = ["emfin_v2*", "emfin_capstone*"]
 exclude = ["legacy*", "tests*"]
 
 [tool.setuptools.package-data]
-emfin_v2 = ["resources/configs/*.json", "resources/data/snapshot/*", "resources/data/singapore/*", "resources/data/raw/*.json", "resources/data/raw/fred/*/*.csv", "web/*.html"]
+emfin_v2 = ["resources/configs/*.json", "resources/data/snapshot/*", "resources/data/singapore/*", "resources/data/fx/*", "resources/data/raw/*.json", "resources/data/raw/fred/*/*.csv", "web/*.html"]

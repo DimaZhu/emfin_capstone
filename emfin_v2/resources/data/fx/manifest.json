@@ -1,0 +1,16 @@
+{
+  "series": "RXI_N.B.SI",
+  "currency_pair": "SGD_per_USD",
+  "source_url": "https://www.federalreserve.gov/releases/h10/data/FRB_h10_xml.zip",
+  "release_page": "https://www.federalreserve.gov/releases/h10/hist/dat00_si.htm",
+  "terms_url": "https://www.federalreserve.gov/disclaimer.htm",
+  "attribution": "Source: Board of Governors of the Federal Reserve System (US), H.10 Foreign Exchange Rates.",
+  "use_terms": "Federal Reserve Board website information is public domain unless otherwise indicated. No exception marked for this series. Attribution requested. No logo or seal used.",
+  "prepared": "2026-11-02T16:52:42",
+  "first_date": "1981-01-02",
+  "last_date": "2026-10-30",
+  "observations": 11499,
+  "file": "sgd-per-usd.csv",
+  "sha256": "7597bf52e44fd46304d7556f24c0313b0750cc3833217a6ecee4acc41a8b2fd2",
+  "limitations": "SGD per USD noon New York buying rate for cable transfers. Reference rate, not executable spot or FX total return. Latest vintage, not point-in-time revision-safe data. FX return uses inverse quote: USD per SGD. No FX hedge, rate differential or conversion fee model."
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "target universe; generic runtime adapter in progress",
+  "status": "target universe; runtime supports private histories, default cutover blocked on VTI/VWO data",
   "assets": [
     {
       "enabled": true,
@@ -132,7 +132,7 @@
         "property_type": "All Residential",
         "redistribution": "Singapore Open Data Licence with attribution"
       },
-      "limitations": "Price index only, not rent/total return. FX to USD is not yet modeled."
+      "limitations": "Price index only, not rent/total return. Registry adapter converts SGD marks/rent/sale proceeds using the explicit SGD/USD factor. Legacy default is separately labelled if no FX model runs."
     }
   ],
   "relative_mean_view": null,

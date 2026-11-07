@@ -35,7 +35,9 @@ def test_runtime_add_remove_paths_holdings_and_views_follow_registry():
     d=load_registry();dummy=copy.deepcopy(d['assets'][0]);dummy.update(id='dummy',ticker='DUMMY',name='Dummy test equity');d['assets'].insert(0,dummy)
     for doc in [d,load_registry()]:
         c=configure(load_config(),doc);n=len(c['asset_names'])-1
-        mu=np.full(n,.0003);cov=np.eye(n)*.00005;cov[c['cash_index'],:]=0;cov[:,c['cash_index']]=0
+        dims=n+int(c['fx']['enabled']);mu=np.full(dims,.0003);cov=np.eye(dims)*.00005;
+        if c['fx']['enabled']:mu[-1]=0.
+        cov[c['cash_index'],:]=0;cov[:,c['cash_index']]=0
         f=pd.DataFrame(np.zeros((60,n)),index=pd.date_range('2020-01-03',periods=60,freq='W-FRI'))
         paths=draw(c,(f,mu,cov),100,42)
         assert paths[0].shape==(100,52,n+1)

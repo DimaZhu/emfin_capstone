@@ -25,9 +25,9 @@ are not total returns. Keep restricted data and manifests in .private/, never gi
 Cash remains a cash-account model, not a silently substituted SHV ETF. Its
 zero annual rate is an explicit uncalibrated placeholder in the target registry.
 IEF is the candidate actual7-10y Treasury ETF and differs from the old synthetic
-fixed10y bond. Its history is still pending. Property remains quarterly price
-history, not a fabricated observed weekly tradable series. The approved SGD/USD
-risk-factor extension is queued after the registry adapter.
+fixed10y bond. Its issuer NAV history and matched distributions have been privately verified. Property remains quarterly price
+history, not a fabricated observed weekly tradable series. The SGD/USD factor now converts local property marks, rent and sale cash flows.
+See FX_MODEL.md for its scope and limits.
 
 Source rights: URA data are attributed under the Singapore Open Data Licence.
 GLD's issuer offers a full XLSX archive but restricts reproduction/redistribution;
