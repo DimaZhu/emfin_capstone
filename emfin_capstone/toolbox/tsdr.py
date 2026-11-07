@@ -18,9 +18,9 @@ Construction (all from public sources):
 * path generation: conditional on the current state k, draw a historical
   time t ~ p_k, emit the FOLLOWING week's invariant, and move to the
   state realized at t+1 - the empirical successor.  The chain on
-  (state, invariant) is Markov by construction and its long-run marginal
-  is the empirical distribution, the stationarity property the article
-  proves for the class.
+  (state, invariant) is Markov by construction with a stationary distribution when initialized in an invariant
+  state distribution. An arbitrary initial state is not strictly stationary;
+  decay-weighted transitions need not preserve the raw empirical marginal.
 
 Contrast with toolbox/ffr.py: FFR computes ONE state-conditioned weight
 vector for moment estimation / one-shot bootstrap.  TSDR generates PATHS
@@ -87,8 +87,9 @@ def resample_invariant_paths(invariants: np.ndarray, states: np.ndarray,
     state_paths = np.empty((s, n_steps), dtype=int)
     current = np.full(s, int(initial_state), dtype=int)
     for h in range(n_steps):
-        for k in np.unique(current):
-            rows = np.where(current == k)[0]
+        previous = current.copy()
+        for k in np.unique(previous):
+            rows = np.where(previous == k)[0]
             p_k = pv[k][valid]
             p_k = p_k / p_k.sum()
             draws = rng.choice(valid, size=len(rows), p=p_k)

@@ -60,6 +60,7 @@ from emfin_capstone.toolbox import (
     scenario_market,
     seqep,
     shrinkage,
+    validation,
     snapshot,
 )
 
@@ -123,8 +124,9 @@ SHRINK_T0 = 156  # mean-shrinkage prior strength in weeks (~3 years); placeholde
 # degrees of freedom (variance-matched), so the paper can show allocation
 # sensitivity to tail thickness.  Default: Gaussian.
 STUDENT_T_NU = None
+STUDENT_T_AUTO = "--student-t=auto" in sys.argv
 for arg in sys.argv:
-    if arg.startswith("--student-t="):
+    if arg.startswith("--student-t=") and not arg.endswith("=auto"):
         STUDENT_T_NU = float(arg.split("=", 1)[1])
         if STUDENT_T_NU <= 4:
             raise ValueError("Student-t nu must be > 4 for finite skew/kurtosis")
@@ -138,6 +140,7 @@ VIEWS = [
 
 
 def main() -> None:
+    global STUDENT_T_NU
     _tick("start")
     snap = snapshot.load_snapshot()
     weekly_eq = snapshot.weekly_log_returns(snap)  # DFUS, DFAI, DFAE
@@ -236,6 +239,15 @@ def main() -> None:
     print(f"shrinkage: LW covariance intensity {lw_delta:.1%} (ESS {ffr_prior.ess:.0f}); "
           f"mean shrinkage weight {mean_w:.1%} toward structural targets "
           f"(T0={SHRINK_T0}w). MV benchmark uses the same shrunk moments.")
+
+    if STUDENT_T_AUTO:
+        # Fit on the development prefix, leaving the last 26 weeks out of nu
+        # estimation. The full current-allocation runner is NOT a sealed
+        # historical backtest; use validate_chronological.py for that protocol.
+        dev = invariants[:-26]
+        dev_cov, _ = shrinkage.ledoit_wolf_cov(dev)
+        STUDENT_T_NU = validation.fit_student_nu(dev, dev.mean(0), dev_cov, bounds=(4.1, 200.))
+        print(f"Conditional t nu MLE (development prefix; constrained [4.1,200]): {STUDENT_T_NU:.3f}")
 
     drift = inv_mean - uniform_mean
     print("FFR vs uniform weekly mean drift (DFUS, DFAI, DFAE, dY, dSpread, MMKT):",
