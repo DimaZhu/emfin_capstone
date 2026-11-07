@@ -99,9 +99,15 @@ change only scenario probabilities and scenario values, upstream.
 - **Cash sleeve is required**: without a riskless asset, a near-total payout
   is infeasible (10Y duration risk). Cash is a T-bill proxy accruing at the
   lagged 10Y yield.
-- **SAA tail noise**: CVaR-of-gap constraints bind in-solver but realize
-  looser out-of-sample (~2x on 10k solver scenarios). Use a buffer or more
-  solver scenarios - open calibration decision.
+- **SAA tail noise - fixed by calibration**: a CVaR-of-gap constraint that
+  binds in-solver on 10k scenarios realizes looser out-of-sample (~2x in
+  this engine), so the nominal budget cannot be trusted directly.  The
+  runner calibrates it (`liabilities.calibrate_shortfall_budget`):
+  binary-search the budget multiplier for the loosest in-solver budget
+  whose realized out-of-sample gap CVaR (paired fresh judge seeds) still
+  respects the target, printing every probe.  When tightening was needed,
+  the nominal-budget allocation stays in the benchmark table so the cost of
+  the fix is visible.  `--no-tail-calibration` skips the loop.
 - **Judging framing**: grading view-based allocations under the no-view
   prior measures the cost of wrong views by construction. The paper should
   discuss this rather than hide it.
@@ -112,7 +118,7 @@ change only scenario probabilities and scenario values, upstream.
 - Liability schedule (currently an example $95M funding event)
 - BL market weights (6-sleeve, illustrative), risk aversion 2.5, tau 0.05
 - Liquidity cost parameters; quarterly CVaR budget (0.15) and gap budget
-  (0.2% of liability)
+  (0.2% of liability; in-solver value, OOS-calibrated at runtime)
 
 ## Tests
 
