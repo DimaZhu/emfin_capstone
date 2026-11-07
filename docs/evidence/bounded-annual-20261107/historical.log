@@ -1,0 +1,32 @@
+2006-12-29 seconds 1.4257542660000126 error None
+2007-12-28 seconds 1.2344640100000106 error None
+2008-12-26 seconds 1.386421806000044 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2009-12-25 seconds 4.713992306000023 error None
+2010-12-31 seconds 1.4561949300000379 error None
+2011-12-30 seconds 3.3047577419999925 error None
+2012-12-28 seconds 3.559285007000028 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2013-12-27 seconds 2.9289722629999915 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2014-12-26 seconds 2.949508418999983 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2015-12-25 seconds 3.1573407180000004 error None
+2016-12-30 seconds 2.7521859670000026 error None
+2017-12-29 seconds 1.3518846099999564 error None
+2018-12-28 seconds 1.3169119429999796 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2019-12-27 seconds 3.1092501210000023 error None
+/home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+  warnings.warn(
+2020-12-25 seconds 2.932092804999968 error None
+2021-12-31 seconds 2.3919133300000226 error None
+2022-12-30 seconds 1.3760973280000144 error None
+2023-12-29 seconds 1.3389848499999744 error None
+2024-12-27 seconds 1.7464957440000148 error None
+historical 44.47046197399999

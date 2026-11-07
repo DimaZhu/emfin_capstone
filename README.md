@@ -135,3 +135,8 @@ due obligation. See [assumptions, equations and limits](docs/REAL_ESTATE.md).
 - `python -m experiments.robustness --help`: bounded private research studies from a clone, not an installed runtime requirement. Annual episodes use latest data vintages and an assumed property publication lag; they are not revision-safe point-in-time backtests.
 
 See the [conditional-volatility forecast study](docs/MODEL_ADEQUACY_RESULTS.md) for the fixed retrospective one-week comparison and multistep price-moment blocker. No production model was promoted.
+
+The [bounded annual volatility research model](docs/BOUNDED_VOLATILITY.md) adds
+conditional variance with a declared finite-moment cap. It does not replace
+the default or change funding limits. Its annual and cross-law failures are
+part of the evidence, not hidden by a model switch.

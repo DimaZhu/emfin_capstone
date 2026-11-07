@@ -1,0 +1,642 @@
+{
+  "code_commit": "b687d2397bc5aa213f8840bb59dc784adbfe7a87",
+  "code_dirty": false,
+  "source_sha256": "952416f9d26883e7e65c05a74e2d174330410a09a2205f8a6916c162e05d33cb",
+  "protocol_sha256": "27ad62f4961c46afb92a250364a0d46ea9ca6252a5ed589b48cfa027d08b2b93",
+  "config_sha256": "d97796cbb26479389f704963e9055d3faab05d731634f38f4e3c974ee348a95d",
+  "fit_last": "2026-10-30",
+  "selection_time_utc": "2026-11-07T14:36:50.931720+00:00",
+  "final_scored": false,
+  "portfolios": [
+    {
+      "method": "equal_weight:raw",
+      "weights": [
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "equal_weight:cross_validated",
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.0
+    },
+    {
+      "method": "raw_mean_variance:raw",
+      "weights": [
+        0.22270823869419218,
+        1.045345372196896e-09,
+        0.1560367858942551,
+        0.5212549736904561,
+        6.757512287536391e-10,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "raw_mean_variance:cross_validated",
+      "weights": [
+        0.055677059673548045,
+        2.61336343049224e-10,
+        0.039009196473563774,
+        0.13031374342261404,
+        0.6750000001689378,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.25
+    },
+    {
+      "method": "cash_reserve:raw",
+      "weights": [
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "cash_reserve:cross_validated",
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.0
+    },
+    {
+      "method": "cash_fixed_property:raw",
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "cash_fixed_property:cross_validated",
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 1.0
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:raw",
+      "weights": [
+        0.09535935197392385,
+        1.551411334230174e-11,
+        0.03793522346941684,
+        0.3576362588710319,
+        0.4090691656371438,
+        0.09999999999633676
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:cross_validated",
+      "weights": [
+        0.04767967598696193,
+        7.75705667115087e-12,
+        0.01896761173470842,
+        0.17881812943551595,
+        0.6545345828185719,
+        0.09999999999816839
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.5
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:raw",
+      "weights": [
+        0.09369593743131122,
+        1.2840086255700656e-10,
+        0.04129480408384678,
+        0.35317772550583065,
+        0.4118315328506105,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:cross_validated",
+      "weights": [
+        0.04684796871565561,
+        6.420043127850328e-11,
+        0.02064740204192339,
+        0.17658886275291533,
+        0.6559157664253054,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.5
+    },
+    {
+      "method": "bounded_ewma_mixture:cara:raw",
+      "weights": [
+        0.14425034609628282,
+        1.8984037925873234e-11,
+        9.286018719643691e-11,
+        0.49504073095255313,
+        0.2607089227994373,
+        0.09999999999556868
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "bounded_ewma_mixture:cara:cross_validated",
+      "weights": [
+        0.036062586524070704,
+        4.7460094814683084e-12,
+        2.321504679910923e-11,
+        0.12376018273813828,
+        0.7401772306998593,
+        0.09999999999889217
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.25
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:raw",
+      "weights": [
+        0.1442503416900561,
+        1.8174254172810676e-10,
+        7.379346406147832e-10,
+        0.4950406935587085,
+        0.26070896383155817,
+        0.10000000000000006
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:cross_validated",
+      "weights": [
+        0.036062585422514025,
+        4.543563543202669e-11,
+        1.844836601536958e-10,
+        0.12376017338967712,
+        0.7401772409578895,
+        0.10000000000000002
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": true
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": true,
+            "bounded_ewma_mixture": true
+          }
+        }
+      ],
+      "calibrated_fraction": 0.25
+    }
+  ]
+}

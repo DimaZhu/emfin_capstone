@@ -1,0 +1,404 @@
+{
+  "code_commit": "b687d2397bc5aa213f8840bb59dc784adbfe7a87",
+  "code_dirty": false,
+  "source_sha256": "952416f9d26883e7e65c05a74e2d174330410a09a2205f8a6916c162e05d33cb",
+  "protocol_sha256": "27ad62f4961c46afb92a250364a0d46ea9ca6252a5ed589b48cfa027d08b2b93",
+  "config_sha256": "0515ba39654d5f12f33d7bcad2cfeaf664e5d73ad421c3d168155c14a5e43cc6",
+  "fit_last": "2021-12-31",
+  "selection_time_utc": "2026-11-07T14:37:42.293991+00:00",
+  "final_scored": false,
+  "portfolios": [
+    {
+      "method": "equal_weight:raw",
+      "weights": [
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "raw_mean_variance:raw",
+      "weights": [
+        0.29394311146941043,
+        7.270670122858036e-10,
+        0.048299708580034656,
+        0.5577571778785917,
+        1.3448962901569935e-09,
+        0.10000000000000002
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "cash_reserve:raw",
+      "weights": [
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.18,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "cash_fixed_property:raw",
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:raw",
+      "weights": [
+        0.1930644306134441,
+        1.4185311396343755e-11,
+        3.9287634365007616e-11,
+        0.4268889993526813,
+        0.2800465699379597,
+        0.09999999999528429
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:raw",
+      "weights": [
+        0.18209874824147687,
+        2.1292557319603431e-10,
+        6.586633594147588e-10,
+        0.45239050671223235,
+        0.2655107441747044,
+        0.09999999999999944
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "bounded_ewma_mixture:cara:raw",
+      "weights": [
+        0.27315400581393984,
+        2.107038613282128e-11,
+        7.179819966221092e-11,
+        0.6122628410225617,
+        0.014583153009116279,
+        0.09999999999316497
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:raw",
+      "weights": [
+        0.2731539965256681,
+        1.1659153414829306e-10,
+        2.525528764518372e-10,
+        0.6122628315134656,
+        0.014583171591727092,
+        0.09999999999999955
+      ],
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.75,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.5,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.25,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        },
+        {
+          "fraction": 0.0,
+          "passed": {
+            "gaussian_scale_mixture": false,
+            "bounded_ewma_mixture": false
+          }
+        }
+      ],
+      "calibrated_fraction": null
+    }
+  ]
+}
