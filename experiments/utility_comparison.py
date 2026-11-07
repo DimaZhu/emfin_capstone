@@ -13,11 +13,11 @@ ROOT=Path('artifacts/utility-comparison-20261107');KINDS=['cara','crra_gross','h
 def provision(draw):return sum(draw[1][:,i]*draw[4][:,-1]/draw[4][:,step-1] for i,step in enumerate(draw[2]))
 
 
-def main():
+def main(schedules=None):
     started=time.perf_counter();ROOT.mkdir(parents=True,exist_ok=True);meta=dict(commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),dirty=bool(subprocess.check_output(['git','status','--porcelain'],text=True).strip()),source_sha256=source_tree_hash(),protocol_sha256=hashlib.sha256(Path('docs/UTILITY_COMPARISON_PROTOCOL.md').read_bytes()).hexdigest());studies=[]
     base=config(100,200,400,4);base['funding_mode']='pay_all_99';base=validate_config(base);fit=setup(base)
     for model in ['gaussian_scale_mixture','bounded_ewma_mixture']:
-      for name,schedule in [('3M-monthly',None),('60M-early-30M-final',[dict(name='Counterfactual60M',week=13,amount=60e6),dict(name='Counterfactual30M',week=52,amount=30e6)]),('95M-final',[dict(name='Counterfactual95M',week=52,amount=95e6)])]:
+      for name,schedule in (schedules or [('3M-monthly',None),('60M-early-30M-final',[dict(name='Counterfactual60M',week=13,amount=60e6),dict(name='Counterfactual30M',week=52,amount=30e6)]),('95M-final',[dict(name='Counterfactual95M',week=52,amount=95e6)])]):
         c=copy.deepcopy(base);c['scenario_model']=model
         if schedule is not None:c['recurring_payout']=None;c.pop('one_off_liabilities',None);c['liabilities']=schedule
         c=validate_config(c);dr=draw_paths(c,fit,100,c['seed']);p,ps=probabilities(c,dr[0],dr.re_price_logs);validation=[draw_paths(c,fit,200,c['seed']+1000+j) for j in range(4)];vp=[probabilities(c,v[0],v.re_price_logs) for v in validation];_,anchor=simple_allocations(c,dr);specs=[];frozen=[]

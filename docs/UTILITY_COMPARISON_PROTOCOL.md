@@ -73,3 +73,12 @@ refusal, kink slopes/concavity and a brute-force2asset oracle. Defaults and
 CARA results preserved. Whole study wall budget300s checked between solves;
 existing per-solver60s caps. Estimate before batch. No batch>30minutes,
 public sharing, client data, spending or third-party contact.
+
+##23:01 scope clarification, before sensitivity outcomes
+User confirmed23:00:49: only250k/month is his payment amount. Lead every
+findings/dashboard view with250k/month for12months; monthly week rounding
+remains a modeling approximation.95M and60M+30Mare CHECK STRESS TESTS, not
+his payment scenarios, and move to secondary source-check material.
+Add separately labelled2x/4x/10x monthly-payment sensitivity (500k/1M/2.5M,
+6M/12M/30Mtotal), not assumed obligations. Same frozen parameters/matching
+formula, seeds, two laws and judge; no parameter selection or default change.
