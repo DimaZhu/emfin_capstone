@@ -62,7 +62,7 @@ virtualenv in step 3 differs.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/DimaZhu/emfin_capstone.git
+git clone https://github.com/TijsdeBoer/emfin_capstone.git
 cd emfin_capstone
 
 # 2. Install the required Python version and select it for this shell
@@ -81,7 +81,7 @@ poetry install
 
 ```powershell
 # 1. Clone the repository
-git clone https://github.com/DimaZhu/emfin_capstone.git
+git clone https://github.com/TijsdeBoer/emfin_capstone.git
 cd emfin_capstone
 
 # 2. Install the required Python version and select it for this shell
