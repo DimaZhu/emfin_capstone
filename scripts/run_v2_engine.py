@@ -114,6 +114,16 @@ FFR_STATE_WINDOW = 13
 FFR_BANDWIDTH_SCALE = 0.5
 FFR_MIN_ESS = 60  # robustness floor: widen the kernel until this many effective weeks remain
 SHRINK_T0 = 156  # mean-shrinkage prior strength in weeks (~3 years); placeholder, communicable
+# Fat tails (external review, point 8): --student-t=NU switches invariant
+# scenario generation AND the judge to a multivariate Student-t with NU
+# degrees of freedom (variance-matched), so the paper can show allocation
+# sensitivity to tail thickness.  Default: Gaussian.
+STUDENT_T_NU = None
+for arg in sys.argv:
+    if arg.startswith("--student-t="):
+        STUDENT_T_NU = float(arg.split("=", 1)[1])
+        if STUDENT_T_NU <= 4:
+            raise ValueError("Student-t nu must be > 4 for finite skew/kurtosis")
 
 # Illustrative committee views (NOT research-backed):
 VIEWS = [
@@ -242,7 +252,16 @@ def main() -> None:
     # low-discrepancy, so OOS evaluation must not be either.
     sob = qmc.Sobol(len(mu_tau), scramble=True, seed=SCENARIO_SEED)
     u = np.clip(sob.random_base2(17)[:N_SCENARIOS], 1e-12, 1 - 1e-12)
-    inv_scen = mu_tau + norm.ppf(u) @ chol.T
+    z_scen = norm.ppf(u) @ chol.T
+    if STUDENT_T_NU is not None:
+        # multivariate Student-t invariants: normal / sqrt(chi2/nu), scaled
+        # to keep the target covariance (t with nu df has var nu/(nu-2)).
+        # The EP layer is distribution-agnostic, so views, judge and
+        # optimizer are untouched - only the scenario tails thicken.
+        rng_t = np.random.default_rng(SCENARIO_SEED + 1)
+        chi2 = rng_t.chisquare(STUDENT_T_NU, size=(N_SCENARIOS, 1))
+        z_scen = z_scen / np.sqrt(chi2 / STUDENT_T_NU) * np.sqrt((STUDENT_T_NU - 2.0) / STUDENT_T_NU)
+    inv_scen = mu_tau + z_scen
 
     # Market map: equities lognormal, bond exact repricing with roll-down
     prices_eq = snap.closes[EQUITY_TICKERS].iloc[-1].to_numpy()
@@ -318,6 +337,9 @@ def main() -> None:
     prices_vector = np.concatenate([prices_eq, [bond_p0, ig_p0, 1.0]])
     names = EQUITY_TICKERS + [bond.name, ig_bond.name, "MMKT"]
     print(f"universe: {names}; current prices {np.round(prices_vector, 2)}")
+    if STUDENT_T_NU is not None:
+        print(f"Student-t scenarios: nu={STUDENT_T_NU} (excess kurtosis "
+              f"{6.0 / (STUDENT_T_NU - 4.0):.2f}); judge uses the same t DGP")
     print(f"10Y yield: {current_ytm:.3%}; weekly dYield mean {joint[snapshot.YIELD_TICKER].mean()*1e4:.2f}bp, "
           f"std {joint[snapshot.YIELD_TICKER].std()*1e4:.1f}bp")
     print(f"IG OAS spread: {current_spread:.2%}; weekly dSpread std {joint['DSPREAD'].std()*1e4:.1f}bp")
@@ -433,7 +455,11 @@ def main() -> None:
     # ---- Judging: paired fresh seeds under the prior (no views) ----------
     def judge_sample_fn(seed: int) -> np.ndarray:
         rng_j = np.random.default_rng(seed)
-        inv_j = mu_tau + rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
+        z_j = rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
+        if STUDENT_T_NU is not None:
+            chi2_j = rng_j.chisquare(STUDENT_T_NU, size=(N_SCENARIOS, 1))
+            z_j = z_j / np.sqrt(chi2_j / STUDENT_T_NU) * np.sqrt((STUDENT_T_NU - 2.0) / STUDENT_T_NU)
+        inv_j = mu_tau + z_j
         market_j = market_from_invariants(inv_j)
         stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
         return mliq.apply_meucci_liquidity(
