@@ -34,3 +34,34 @@ def test_unsold_property_does_not_fund_early_call_and_arrears_persist():
     r=cash_first(c,draw,[3.,1.]);assert not r['funded'][0]
     np.testing.assert_allclose(r['payment_shortfalls'],[[2.,12.]])
     assert r['terminal_net'][0]==pytest.approx(88.)
+
+
+def test_budget_pass_must_not_be_reported_as_paid_in_full():
+    from emfin_v2.evaluation import evaluate
+    from emfin_v2.ledger import summarize_execution
+    paths=np.ones((20,1,2));funding=paths.copy();funding[:,:,1]=0
+    draw=ScenarioDraw((paths,np.full((20,1),95.),np.array([1]),np.array([95.]),np.ones((20,1))),funding)
+    c=dict(wealth=100.,cash_index=0,confidence=.95,cml_budget=.1,loss_budget=.1,funding_budget_fraction=.2,real_estate=dict(enabled=True,holding_mode='fixed',fixed_weight=.1),asset_layout=dict(property_indices=[1]),minimum_weights=[0.,0.],wasserstein_radius=0.)
+    p=np.full(20,.05);verdict=evaluate(c,[draw,draw],[90.,10.],[p,p],[p,p]);audit=summarize_execution(c,[draw,draw],[90.,10.])
+    assert verdict['funding_pass'] and verdict['overall_pass']
+    assert audit['funded_fraction']==0 and audit['observed_unpaid_calls']
+    assert audit['paths']==40 and audit['paths_with_unpaid_calls']==40
+    assert audit['largest_observed_unpaid']==pytest.approx(5.)
+    assert audit['payment_outcomes'][0]['paid_in_full_fraction']==0
+    assert not audit['full_funding_guarantee'] and not audit['wasserstein_certified']
+
+
+def test_zero_unpaid_observations_are_not_a_guarantee():
+    from emfin_v2.ledger import summarize_execution
+    paths=np.ones((2,1,1));draw=ScenarioDraw((paths,np.ones((2,1)),np.array([1]),np.ones(1),np.ones((2,1))),paths)
+    r=summarize_execution(dict(cash_index=0,real_estate=dict(enabled=False)),[draw],[100.])
+    assert r['outcome']=='No unpaid calls observed' and r['funded_fraction']==1
+    assert not r['full_funding_guarantee'] and 'unseen tails' in r['interpretation']
+
+
+def test_execution_audit_only_clips_disclosed_solver_weight_roundoff():
+    from emfin_v2.ledger import summarize_execution
+    paths=np.ones((2,1,2));draw=ScenarioDraw((paths,np.ones((2,1)),np.array([1]),np.ones(1),np.ones((2,1))),paths)
+    c=dict(wealth=100.,cash_index=0,real_estate=dict(enabled=False))
+    r=summarize_execution(c,[draw],[100.,-1e-6]);assert r['numerical_negative_holdings_clipped']==1e-6
+    with pytest.raises(ValueError,match='nonnegative'):summarize_execution(c,[draw],[101.,-1.])

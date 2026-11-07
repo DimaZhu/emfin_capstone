@@ -23,3 +23,15 @@ W1 provisioning risk buffers are not asserted to bound this nonlinear selling
 policy. Its cash-flow results must be checked on the matched judge/history;
 any gap between the two models must be shown. Converting the optimization
 itself to a dynamic self-financing policy remains further work.
+
+The execution summary now names unpaid calls, counts affected reference paths
+and reports each payment's paid-in-full fraction and largest unpaid amount.
+It never changes a tail-gap budget into a probability or full-funding promise.
+A deterministic regression proves that95 due against90 cash+10 unsold property
+passes the20% allowance yet leaves5 unpaid on every path. This condition gets
+a red headline even when every declared budget check passes.
+
+The audit accepts only the final judge's existing1e-7 absolute weight residual
+for near-zero negative solver holdings. It clips those negatives for long-only
+execution arithmetic, reports the dollar amount, and does not repair the final
+risk verdict or normalize the portfolio. Material short positions still fail.

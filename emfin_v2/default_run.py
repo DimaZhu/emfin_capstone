@@ -390,12 +390,9 @@ def run(c,output='artifacts/default'):
                          funding_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
                          evaluation_pass=verdict['overall_pass']))
         # Separate executable-policy audit, not a relabel of optimizer accounting.
-        from emfin_v2.ledger import cash_first
+        from emfin_v2.ledger import summarize_execution
         try:
-            audit_funded=[];audit_unpaid=[];audit_terminal=[]
-            for item in evaluation:
-                audit=cash_first(c,item,a);audit_funded.extend(audit['funded'].tolist());audit_unpaid.append(float(audit['payment_shortfalls'].max()));audit_terminal.extend(audit['terminal_net'].tolist())
-            rows[-1]['execution_audit']=dict(available=True,funded_fraction=float(np.mean(audit_funded)),largest_observed_unpaid=max(audit_unpaid),terminal_net_quantiles=np.quantile(audit_terminal,[.05,.5,.95]).tolist(),policy=audit['policy'],scope=audit['scope'],wasserstein_certified=False)
+            rows[-1]['execution_audit']=summarize_execution(c,evaluation,a)
         except ValueError as error:
             rows[-1]['execution_audit']=dict(available=False,error=str(error),scope='Execution audit unavailable, not passed.')
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
