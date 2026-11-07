@@ -1,0 +1,17 @@
+{
+  "annual-bagging.json": "daa3ff2a4e37c8ede396656c14eeb472728ec03c5fc37f285c587cf2a7a527cc",
+  "annual-fhs.json": "f1ae295c25dc86e90d4a5b7e5bd029b04f58341b89d886783f870be47ece8976",
+  "annual-walkforward.json": "cbf3eb27e785668ee1c33e144aebf6010fc17521963e5b2b605a298616b85b04",
+  "fhs.json": "05879e86cd15292fa6ee2261e727b32808d26516b9c2724825148a7c46576f39",
+  "higher-fidelity.json": "0fccccbcb268c8e0ee17c9ae43bcbd4cf6bf66532bb6e6fffe9e308ff13ac661",
+  "paired-historical.json": "7731ba96f22ef7257ce97ccaa06df804415d148a04cfa4f6c7b4296d23f7fb74",
+  "payout-stress.json": "d36871fc6eae4ecb779fa9b070b1fd5aac589387ab51e33678af2d3136531a79",
+  "pilot.json": "510354790608fd87bdc1f0e7294ba328e4d2895b4dda62a0b32e72a13b666dee",
+  "resample.json": "99a72393123ac721eff04bf664f5ccae9d07b034ef693d693adbbc2418f07cdc",
+  "resample32.json": "f37b30f14211b2bf1ed8bbd239ff575a1ef853d4ef208349d83bdc88bca8903e",
+  "sensitivity-after-exp-retry.json": "7533acaa5dd78f97857e98823ec3cf6f5cde20bddd4f7a26881f165428519cde",
+  "sensitivity-before-exact-retry.json": "380d423e58a647ff17cf2c1d66fcc0394ab4c1260f0a272761a6c5b43da6f892",
+  "sensitivity.json": "c65a23accd58cea74ada357bd7f260dfec2ec36858cb0c0df9a379860cc01ba9",
+  "walkforward.json": "3d5a9f51462203efe7013e0ce13d0cd87a390f21fcf53a58419868eea929b229",
+  "report.html": "7f793a5d6e9061e1c495cb19a5dc2878782da089a491a9645190475ee0039e58"
+}

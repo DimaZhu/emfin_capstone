@@ -30,3 +30,9 @@ def test_property_calibration_is_past_only_with_explicit_release_lag():
     returns,meta=history('All Residential','2007-12-28')
     assert meta['last_period']=='2007-Q3' and meta['release_lag_days']==45
     assert len(returns)>20
+
+
+def test_fhs_is_not_silently_gaussian_on_unsupported_legacy_adapter():
+    from emfin_v2.default_run import load_config,LEGACY_CONFIG,validate_config
+    c=load_config(LEGACY_CONFIG);c['scenario_model']='fhs_ewma'
+    with pytest.raises(ValueError,match='requires the actual-instrument'):validate_config(c)

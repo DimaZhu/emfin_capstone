@@ -97,6 +97,7 @@ def validate_config(config):
     if c.get('asset_registry'):
         from emfin_v2.registry_runtime import configure
         c=configure(c,c['asset_registry']);allowed=c['asset_layout']['view_indices']
+    if c['scenario_model']=='fhs_ewma' and not c.get('asset_registry'):raise ValueError('EWMA FHS requires the actual-instrument registry adapter, not legacy yield repricing')
     validate_views(c.get('market_return_views',{}),allowed)
     if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)
@@ -388,6 +389,15 @@ def run(c,output='artifacts/default'):
         rows.append(dict(method=name,net_ce=ce_ci,gap_cvar=gap_ci,stressed_gap_cvar=stress_gap_ci,training_gap=metrics(c,draw,a)[0].tolist(),wasserstein_buffer=dro_buffer(c,a),wasserstein_gap_upper=(np.maximum(gap_ci['high'],stress_gap_ci['high'])+dro_buffer(c,a)).tolist(),budgets=(draw[3]*c['funding_budget_fraction']).tolist(),
                          funding_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
                          evaluation_pass=verdict['overall_pass']))
+        # Separate executable-policy audit, not a relabel of optimizer accounting.
+        from emfin_v2.ledger import cash_first
+        try:
+            audit_funded=[];audit_unpaid=[];audit_terminal=[]
+            for item in evaluation:
+                audit=cash_first(c,item,a);audit_funded.extend(audit['funded'].tolist());audit_unpaid.append(float(audit['payment_shortfalls'].max()));audit_terminal.extend(audit['terminal_net'].tolist())
+            rows[-1]['execution_audit']=dict(available=True,funded_fraction=float(np.mean(audit_funded)),largest_observed_unpaid=max(audit_unpaid),terminal_net_quantiles=np.quantile(audit_terminal,[.05,.5,.95]).tolist(),policy=audit['policy'],scope=audit['scope'],wasserstein_certified=False)
+        except ValueError as error:
+            rows[-1]['execution_audit']=dict(available=False,error=str(error),scope='Execution audit unavailable, not passed.')
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
         v=evaluation[0];values=v[0]@a
         paid=np.zeros_like(values)

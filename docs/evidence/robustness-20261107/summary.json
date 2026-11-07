@@ -1,0 +1,4632 @@
+{
+  "pilot_seconds": 1.1599410420001277,
+  "higher_seconds": 4.5613264080000135,
+  "bag_success": 32,
+  "bag_required": 32,
+  "annual": [
+    {
+      "model": "Gaussian mixture",
+      "method": "cash_fixed_property:raw",
+      "name": "Cash + fixed property",
+      "count": 19,
+      "mean": -0.02380635310664085,
+      "worst": -0.03977509075713037,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100538430.20097773,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00783498991982745,
+          "ledger_net_return": 0.005384302009777242,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97808749.77444248,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02511990639735373,
+          "ledger_net_return": -0.021912502255575173,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96170612.97914898,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04525514369080241,
+          "ledger_net_return": -0.03829387020851016,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97795922.8341125,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02204077165887508,
+          "ledger_net_return": -0.02204077165887508,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97716718.67438717,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.022832813256128293,
+          "ledger_net_return": -0.022832813256128293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96205202.40395166,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03794797596048338,
+          "ledger_net_return": -0.03794797596048338,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96022490.92428696,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03977509075713037,
+          "ledger_net_return": -0.03977509075713037,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96408154.30784802,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03591845692151974,
+          "ledger_net_return": -0.03591845692151974,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97801116.17495887,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.021988838250411313,
+          "ledger_net_return": -0.021988838250411313,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97636588.66661903,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023634113333809714,
+          "ledger_net_return": -0.023634113333809714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97217344.90231448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027826550976855158,
+          "ledger_net_return": -0.027826550976855158,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97532627.48745894,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02467372512541055,
+          "ledger_net_return": -0.02467372512541055,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98459482.52844317,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020257435478926555,
+          "ledger_net_return": -0.015405174715568237,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97603551.25878789,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023964487412121094,
+          "ledger_net_return": -0.023964487412121094,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97146250.11271077,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028537498872892253,
+          "ledger_net_return": -0.028537498872892253,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98111934.48280925,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.018880655171907512,
+          "ledger_net_return": -0.018880655171907512,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Gaussian mixture",
+      "method": "raw_mean_variance:validation_calibrated",
+      "name": "Raw MV",
+      "count": 19,
+      "mean": -0.007624660085113042,
+      "worst": -0.0532729148476383,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.09052944022492956,
+            0.1086337275095382,
+            0.05548606872923361,
+            0.42035075741742933,
+            0.22500000611886942,
+            0.1
+          ],
+          "terminal_net": 111023210.6218331,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.006333633817158013,
+          "ledger_net_return": 0.1102321062183309,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            4.687556723096813e-09,
+            0.09261150900600074,
+            0.0624492676073693,
+            0.29493921796212735,
+            0.45000000073694585,
+            0.1
+          ],
+          "terminal_net": 98725720.33684759,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0644323711822532,
+          "ledger_net_return": -0.012742796631524111,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            5.076081549039196e-10,
+            5.753023059785911e-10,
+            0.030237413954885464,
+            0.1947625840367603,
+            0.6750000009254438,
+            0.1
+          ],
+          "terminal_net": 95611364.3288297,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05329358377567517,
+          "ledger_net_return": -0.043886356711702934,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            1.3151659042507452e-08,
+            0.028593214847736595,
+            0.1027642967235351,
+            0.31864246830797105,
+            0.4500000069690983,
+            0.1
+          ],
+          "terminal_net": 103137135.50664608,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.014706606436751035,
+          "ledger_net_return": 0.031371355066460715,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            4.6508016721071755e-09,
+            0.012966879750959493,
+            0.04739643516180651,
+            0.16463668000854323,
+            0.6750000004278891,
+            0.1
+          ],
+          "terminal_net": 98899231.46966328,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.011007685303367265,
+          "ledger_net_return": -0.011007685303367265,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            1.246107532842762e-07,
+            0.016394832420611925,
+            0.04541896518187219,
+            0.16318607022618156,
+            0.675000007560581,
+            0.1
+          ],
+          "terminal_net": 94672708.51523617,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0532729148476383,
+          "ledger_net_return": -0.0532729148476383,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.03599941170269946,
+            3.352697444443972e-08,
+            0.02852630816020208,
+            0.16047423842837677,
+            0.6750000081817472,
+            0.1
+          ],
+          "terminal_net": 97974504.95526966,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0202549504473033,
+          "ledger_net_return": -0.0202549504473033,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04031356604582273,
+            1.1517217917148111e-09,
+            0.022169066175574487,
+            0.16251736580711879,
+            0.6750000008197622,
+            0.1
+          ],
+          "terminal_net": 96172106.00373286,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0382789399626714,
+          "ledger_net_return": -0.0382789399626714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04227683419502268,
+            1.2726857378187908e-09,
+            0.014600569274634581,
+            0.16812259405186528,
+            0.6750000012057918,
+            0.1
+          ],
+          "terminal_net": 96991209.69336754,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.030087903066324584,
+          "ledger_net_return": -0.030087903066324584,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0462468965728502,
+            1.814055307949598e-10,
+            0.015046221480392474,
+            0.16370688156543403,
+            0.6750000001999179,
+            0.1
+          ],
+          "terminal_net": 99363243.54265828,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0075803757875838595,
+          "ledger_net_return": -0.006367564573417139,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05140517313699989,
+            1.4740676674935758e-09,
+            0.017186834833275755,
+            0.1564079891435316,
+            0.675000001412106,
+            0.10000000000002486
+          ],
+          "terminal_net": 97336601.30024584,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02709705776372806,
+          "ledger_net_return": -0.026633986997541603,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04785625725121695,
+            1.1091320779064071e-08,
+            0.016968703623241817,
+            0.16017501600395093,
+            0.6750000120302695,
+            0.1
+          ],
+          "terminal_net": 100599878.62775365,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.0001074697990524065,
+          "ledger_net_return": 0.005998786277536361,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05328833871434353,
+            3.1310371944207556e-09,
+            0.018054338227367527,
+            0.15365731698343763,
+            0.6750000029438141,
+            0.1
+          ],
+          "terminal_net": 100114186.23105946,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01631823918256614,
+          "ledger_net_return": 0.0011418623105945436,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0478583171977206,
+            1.3773327716161077e-08,
+            0.018403416023529538,
+            0.15873824047284768,
+            0.6750000125325744,
+            0.1
+          ],
+          "terminal_net": 98219136.04730597,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.017818270110116163,
+          "ledger_net_return": -0.01780863952694034,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05439314404496252,
+            3.753755683568803e-09,
+            0.014445201478658843,
+            0.15616164638499677,
+            0.6750000043376263,
+            0.1
+          ],
+          "terminal_net": 94996230.74122453,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06050413271405819,
+          "ledger_net_return": -0.0500376925877547,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04880700523917816,
+            9.107883005066045e-09,
+            0.02428622825687428,
+            0.151906739309285,
+            0.6750000180867796,
+            0.1
+          ],
+          "terminal_net": 99709732.91522464,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023812889998806153,
+          "ledger_net_return": -0.00290267084775353,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05242989531103065,
+            1.0078425181465368e-09,
+            0.02608723271214492,
+            0.1464828688061241,
+            0.6750000021628578,
+            0.1
+          ],
+          "terminal_net": 99012161.22269253,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.010007117335738891,
+          "ledger_net_return": -0.009878387773074704,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05531930534153561,
+            3.5213424876438605e-10,
+            0.03426306527590732,
+            0.13541762862428003,
+            0.6750000004061427,
+            0.1
+          ],
+          "terminal_net": 102705862.91578496,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.002581335449268418,
+          "ledger_net_return": 0.027058629157849623,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Gaussian mixture",
+      "method": "cara_constraints:validation_calibrated",
+      "name": "CARA, same constraints",
+      "count": 19,
+      "mean": -0.008543372848928943,
+      "worst": -0.07219936760240453,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.042817235941892386,
+            0.08591834800607229,
+            0.04144930966220578,
+            0.2798151063684362,
+            0.45000000000257423,
+            0.0999999999979092
+          ],
+          "terminal_net": 108081365.37241529,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.005318168411610147,
+          "ledger_net_return": 0.08081365372415283,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            9.940941173321411e-11,
+            0.10355989099265671,
+            0.04732134964077683,
+            0.29911875921879194,
+            0.4500000000052365,
+            0.09999999999520828
+          ],
+          "terminal_net": 98167420.29127096,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06889156523168427,
+          "ledger_net_return": -0.01832579708729043,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            7.44501347370535e-12,
+            0.0044533865494792895,
+            0.01980517999762514,
+            0.20074143343133707,
+            0.6750000000065224,
+            0.09999999999915607
+          ],
+          "terminal_net": 95645253.22164306,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05218096669256522,
+          "ledger_net_return": -0.04354746778356944,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            6.696594275041943e-12,
+            0.010234034345844937,
+            0.013386365279883296,
+            0.14408863225246848,
+            0.7322909681070268,
+            0.09999999999910235
+          ],
+          "terminal_net": 101926792.77532999,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0011715366402080818,
+          "ledger_net_return": 0.019267927753299885,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            1.0216706003199249e-10,
+            0.03867665520361701,
+            0.05721788942407041,
+            0.3541054552167159,
+            0.450000000020728,
+            0.09999999999636658
+          ],
+          "terminal_net": 103062192.2345072,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.013761715131983876,
+          "ledger_net_return": 0.030621922345072106,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            1.0373168334926592e-10,
+            0.013694888455557684,
+            0.015162977332769882,
+            0.16304134149875962,
+            0.7081007925975208,
+            0.09999999999870449
+          ],
+          "terminal_net": 98727100.77528797,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012728992247120319,
+          "ledger_net_return": -0.012728992247120319,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.002431981986690689,
+            0.013996285132848308,
+            0.014660374376364554,
+            0.16774435326484577,
+            0.7011670052293174,
+            0.09999999999889647
+          ],
+          "terminal_net": 95574908.81362294,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.044250911863770614,
+          "ledger_net_return": -0.044250911863770614,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.02629022423336134,
+            6.13562567245658e-11,
+            0.006017457673814742,
+            0.1446178031567455,
+            0.7230745148645733,
+            0.0999999999988725
+          ],
+          "terminal_net": 97751936.6610708,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02248063338929207,
+          "ledger_net_return": -0.02248063338929207,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.059766491695945306,
+            7.373524296964488e-11,
+            0.010763013571223305,
+            0.30558278525837124,
+            0.5238877093672377,
+            0.09999999999627954
+          ],
+          "terminal_net": 96625930.05654241,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.033740699434575916,
+          "ledger_net_return": -0.033740699434575916,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.061950050738962724,
+            2.0051136285832016e-11,
+            0.00300250364313762,
+            0.288501924152682,
+            0.546545521422769,
+            0.09999999999751233
+          ],
+          "terminal_net": 97171187.2851156,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02828812714884399,
+          "ledger_net_return": -0.02828812714884399,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0622856989163682,
+            1.1281531519758389e-11,
+            6.804906034915538e-11,
+            0.28600913520510474,
+            0.5517051657707807,
+            0.09999999999684277
+          ],
+          "terminal_net": 99806086.72322752,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0038790364706400293,
+          "ledger_net_return": -0.0019391327677248382,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06521547616026956,
+            8.552424476008469e-12,
+            0.00026543621640017406,
+            0.2978387366332473,
+            0.5366803509670369,
+            0.09999999999838967
+          ],
+          "terminal_net": 97339727.2285185,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028851313144988122,
+          "ledger_net_return": -0.026602727714814978,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06301509587505293,
+            4.972490225893383e-12,
+            4.251710162128055e-11,
+            0.286865212338445,
+            0.5501196917278288,
+            0.09999999999875743
+          ],
+          "terminal_net": 101935134.80753855,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.003651648489132242,
+          "ledger_net_return": 0.01935134807538552,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06798354120816041,
+            5.13110174368982e-12,
+            2.8535852663015342e-11,
+            0.30755422064708043,
+            0.5244622380971995,
+            0.0999999999984565
+          ],
+          "terminal_net": 101402543.95646231,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009061816510637422,
+          "ledger_net_return": 0.014025439564623099,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.05614063494573209,
+            1.3862302965883334e-11,
+            1.7296993009787702e-11,
+            0.3030607300981963,
+            0.5407986349081022,
+            0.09999999999813192
+          ],
+          "terminal_net": 98081739.09197079,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02043871361877425,
+          "ledger_net_return": -0.019182609080292123,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.05583073917210358,
+            1.2159184093014288e-11,
+            2.3958607670488275e-11,
+            0.3002871474216114,
+            0.5438821133465801,
+            0.09999999999737928
+          ],
+          "terminal_net": 92780063.23975955,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.08462102111022396,
+          "ledger_net_return": -0.07219936760240453,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.04774895886142818,
+            1.0790576468565213e-11,
+            0.008810745112868801,
+            0.20252045612597944,
+            0.6409198398740082,
+            0.09999999999834172
+          ],
+          "terminal_net": 99666087.28748548,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027422555587019226,
+          "ledger_net_return": -0.0033391271251451693,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.050218944149007023,
+            1.6286908726618047e-11,
+            0.008055938474341091,
+            0.18748322895264014,
+            0.6542418883770786,
+            0.0999999999965949
+          ],
+          "terminal_net": 98441328.50122622,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.015586714987737782,
+          "ledger_net_return": -0.015586714987737782,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.049754652724821324,
+            6.293507775998605e-12,
+            0.016495187062072834,
+            0.16474078202347991,
+            0.6690093781679307,
+            0.09999999999828857
+          ],
+          "terminal_net": 101580793.26403989,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0031892094032288654,
+          "ledger_net_return": 0.015807932640398814,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Gaussian mixture",
+      "method": "mv_same_constraints:validation_calibrated",
+      "name": "MV, same constraints",
+      "count": 19,
+      "mean": -0.006529107656904556,
+      "worst": -0.07219936539784988,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.09415787737139047,
+            0.11083541716892853,
+            0.055841009635727426,
+            0.4141656953280241,
+            0.22500000049590732,
+            0.10000000000000107
+          ],
+          "terminal_net": 111080535.97385363,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.006286808789479292,
+          "ledger_net_return": 0.11080535973853634,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            3.127763366999815e-10,
+            0.09263064951889002,
+            0.057409477137698575,
+            0.29995987296078325,
+            0.4500000000698461,
+            0.10000000000000023
+          ],
+          "terminal_net": 98807333.61449483,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06345993260237903,
+          "ledger_net_return": -0.0119266638550517,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            3.874301398440268e-11,
+            0.0035698560788205613,
+            0.019040271892464183,
+            0.2023898710859635,
+            0.6750000009040068,
+            0.10000000000000006
+          ],
+          "terminal_net": 95543734.7882523,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05286261995781061,
+          "ledger_net_return": -0.04456265211747701,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            4.795962414419767e-11,
+            0.010234033377327782,
+            0.013386365751814023,
+            0.14408862817247545,
+            0.7322909726504232,
+            0.1
+          ],
+          "terminal_net": 101926792.73815736,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00117153665136438,
+          "ledger_net_return": 0.01926792738157368,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            1.1991114076138456e-09,
+            0.03350648441001831,
+            0.05923579097967808,
+            0.3572577198421214,
+            0.45000000356906933,
+            0.10000000000000009
+          ],
+          "terminal_net": 103227636.43327402,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.013672120415930022,
+          "ledger_net_return": 0.03227636433274017,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            1.5726071315994383e-09,
+            0.013694886329459496,
+            0.0151629768703226,
+            0.16304133653335984,
+            0.708100798694252,
+            0.09999999999999971
+          ],
+          "terminal_net": 98727100.73732504,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012728992626749536,
+          "ledger_net_return": -0.012728992626749536,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0027314275597122933,
+            0.013693039665063267,
+            0.01472221860073717,
+            0.16773938863252028,
+            0.701113925541967,
+            0.1
+          ],
+          "terminal_net": 95585263.26357418,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04414736736425817,
+          "ledger_net_return": -0.04414736736425817,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.026290223496763528,
+            7.968776515915126e-11,
+            0.006017457466944887,
+            0.14461779986113207,
+            0.7230745190954716,
+            0.10000000000000003
+          ],
+          "terminal_net": 97751936.62513216,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02248063374867837,
+          "ledger_net_return": -0.02248063374867837,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05976647114024546,
+            1.3977387887236957e-10,
+            0.010763023545065042,
+            0.30558278198139793,
+            0.5238877231935177,
+            0.10000000000000002
+          ],
+          "terminal_net": 96625929.95104004,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03374070048959954,
+          "ledger_net_return": -0.03374070048959954,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.061950048261575,
+            5.444657983853048e-11,
+            0.003002503827508948,
+            0.28850191491206817,
+            0.5465455329444012,
+            0.10000000000000007
+          ],
+          "terminal_net": 97171187.25840704,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028288127415929565,
+          "ledger_net_return": -0.028288127415929565,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.062285697400709196,
+            2.3168496289749113e-11,
+            1.4540504910483612e-10,
+            0.2860091263374602,
+            0.5517051760932571,
+            0.1
+          ],
+          "terminal_net": 99806086.67436348,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003879036865366725,
+          "ledger_net_return": -0.0019391332563651886,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.06521547605494654,
+            5.445713026077142e-11,
+            0.0002654386165650675,
+            0.2978387212543079,
+            0.5366803640197234,
+            0.1
+          ],
+          "terminal_net": 97339727.21920776,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028851312938045548,
+          "ledger_net_return": -0.02660272780792239,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0630150921261627,
+            5.619113813357567e-11,
+            3.1199939230516985e-10,
+            0.28686519947431005,
+            0.5501197080313368,
+            0.1
+          ],
+          "terminal_net": 101935134.57785955,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.0036516483465276472,
+          "ledger_net_return": 0.01935134577859543,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0679835390500138,
+            3.888084865205119e-11,
+            2.2500264664711413e-10,
+            0.30755420954936247,
+            0.5244622511367403,
+            0.1
+          ],
+          "terminal_net": 101402543.81781167,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009061816682421564,
+          "ledger_net_return": 0.014025438178116634,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05614063400294324,
+            3.967682594183708e-11,
+            6.494083734389469e-11,
+            0.3030607234012644,
+            0.5407986424911753,
+            0.09999999999999985
+          ],
+          "terminal_net": 98081739.08929476,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020438713524597585,
+          "ledger_net_return": -0.019182609107052384,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05583073709630419,
+            5.936785668841197e-11,
+            1.3673679303914491e-10,
+            0.3002871357598188,
+            0.5438821269477722,
+            0.10000000000000007
+          ],
+          "terminal_net": 92780063.46021502,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.08462101860828752,
+          "ledger_net_return": -0.07219936539784988,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04601729037592063,
+            5.560168765584554e-11,
+            0.010760751473413974,
+            0.20267593596769168,
+            0.640546022127372,
+            0.09999999999999998
+          ],
+          "terminal_net": 99646277.8967776,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027368627273280377,
+          "ledger_net_return": -0.0035372210322239805,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.049298434722628494,
+            6.133407458630931e-11,
+            0.00926697643124548,
+            0.1871869576345985,
+            0.6542476311501935,
+            0.1
+          ],
+          "terminal_net": 98449828.81488243,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01550171185117577,
+          "ledger_net_return": -0.01550171185117577,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04807383520586504,
+            4.853967398103434e-11,
+            0.01867792400396696,
+            0.16418169332280033,
+            0.669066547418828,
+            0.1
+          ],
+          "terminal_net": 101705842.51795846,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0030846122329518666,
+          "ledger_net_return": 0.01705842517958467,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "EWMA FHS",
+      "method": "cash_fixed_property:raw",
+      "name": "Cash + fixed property",
+      "count": 19,
+      "mean": -0.02380635310664085,
+      "worst": -0.03977509075713037,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100538430.20097773,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00783498991982745,
+          "ledger_net_return": 0.005384302009777242,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97808749.77444248,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02511990639735373,
+          "ledger_net_return": -0.021912502255575173,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96170612.97914898,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04525514369080241,
+          "ledger_net_return": -0.03829387020851016,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97795922.8341125,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02204077165887508,
+          "ledger_net_return": -0.02204077165887508,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97716718.67438717,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.022832813256128293,
+          "ledger_net_return": -0.022832813256128293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96205202.40395166,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03794797596048338,
+          "ledger_net_return": -0.03794797596048338,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96022490.92428696,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03977509075713037,
+          "ledger_net_return": -0.03977509075713037,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96408154.30784802,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03591845692151974,
+          "ledger_net_return": -0.03591845692151974,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97801116.17495887,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.021988838250411313,
+          "ledger_net_return": -0.021988838250411313,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97636588.66661903,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023634113333809714,
+          "ledger_net_return": -0.023634113333809714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97217344.90231448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027826550976855158,
+          "ledger_net_return": -0.027826550976855158,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97532627.48745894,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02467372512541055,
+          "ledger_net_return": -0.02467372512541055,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98459482.52844317,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020257435478926555,
+          "ledger_net_return": -0.015405174715568237,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97603551.25878789,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023964487412121094,
+          "ledger_net_return": -0.023964487412121094,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97146250.11271077,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028537498872892253,
+          "ledger_net_return": -0.028537498872892253,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98111934.48280925,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.018880655171907512,
+          "ledger_net_return": -0.018880655171907512,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "EWMA FHS",
+      "method": "raw_mean_variance:validation_calibrated",
+      "name": "Raw MV",
+      "count": 19,
+      "mean": -0.015255313014761322,
+      "worst": -0.04797080705880863,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.062371075025155355,
+            0.04826145526750654,
+            0.059281764815274675,
+            0.2800857047808654,
+            0.45000000011119806,
+            0.1
+          ],
+          "terminal_net": 107303108.57407387,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00455916292100067,
+          "ledger_net_return": 0.07303108574073858,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            4.7605637858325706e-08,
+            0.10175412634766438,
+            0.03862571916080206,
+            0.30962009806125784,
+            0.4500000088246378,
+            0.1
+          ],
+          "terminal_net": 98443854.8792045,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06596804631677833,
+          "ledger_net_return": -0.015561451207955046,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.03817437945851156,
+            0.005942365024198647,
+            0.047655299100348714,
+            0.32394370947885465,
+            0.48428424693808647,
+            0.1
+          ],
+          "terminal_net": 96954468.27964857,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05299219460317839,
+          "ledger_net_return": -0.030455317203514243,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            7.663524816032456e-10,
+            0.014411348560413253,
+            0.10202734025966917,
+            0.10856131001332733,
+            0.6750000004002378,
+            0.10000000000000002
+          ],
+          "terminal_net": 100161082.32639673,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009750958975771384,
+          "ledger_net_return": 0.0016108232639673314,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            6.989467912164673e-08,
+            0.007459581941583882,
+            0.029596868324634023,
+            0.1879434772158793,
+            0.6750000026232237,
+            0.1
+          ],
+          "terminal_net": 98804791.85360372,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01195208146396276,
+          "ledger_net_return": -0.01195208146396276,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.06244225690195665,
+            2.4979480947468736e-08,
+            0.037337486245396526,
+            0.12522022888251863,
+            0.6750000029906472,
+            0.1
+          ],
+          "terminal_net": 98047188.7265862,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.019528112734138126,
+          "ledger_net_return": -0.019528112734138126,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96022490.92428696,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03977509075713037,
+          "ledger_net_return": -0.03977509075713037,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.054112686682897385,
+            6.336666837380915e-09,
+            0.01960414494962765,
+            0.15128316136933456,
+            0.6750000006614736,
+            0.1
+          ],
+          "terminal_net": 97168042.04286021,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028319579571397857,
+          "ledger_net_return": -0.028319579571397857,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.06952289285704358,
+            7.948070496516634e-10,
+            0.028316875121900016,
+            0.1271602309594576,
+            0.6750000002667917,
+            0.1
+          ],
+          "terminal_net": 99934348.60153802,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0031738846761121264,
+          "ledger_net_return": -0.0006565139846198553,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97636588.66661903,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023634113333809714,
+          "ledger_net_return": -0.023634113333809714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97217344.90231448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027826550976855158,
+          "ledger_net_return": -0.027826550976855158,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04974528523983338,
+            5.008728451358766e-09,
+            0.002512092339650558,
+            0.17274261466614754,
+            0.6750000027456401,
+            0.1
+          ],
+          "terminal_net": 98294227.22499445,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01705772775005554,
+          "ledger_net_return": -0.01705772775005554,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.07744384646496195,
+            3.4465577132480456e-10,
+            0.035742891138870345,
+            0.11181326099694909,
+            0.6750000010545628,
+            0.1
+          ],
+          "terminal_net": 95202919.29411913,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06092990297177281,
+          "ledger_net_return": -0.04797080705880863,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05366514554218287,
+            1.6523229285182522e-08,
+            0.04140495717975396,
+            0.12992981530729147,
+            0.6750000654475423,
+            0.1
+          ],
+          "terminal_net": 99973512.99606314,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02092115363065461,
+          "ledger_net_return": -0.0002648700393685921,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97146250.11271077,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028537498872892253,
+          "ledger_net_return": -0.028537498872892253,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98111934.48280925,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.018880655171907512,
+          "ledger_net_return": -0.018880655171907512,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "EWMA FHS",
+      "method": "cara_constraints:validation_calibrated",
+      "name": "CARA, same constraints",
+      "count": 19,
+      "mean": -0.008767757464880314,
+      "worst": -0.04772694770216124,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.09651643168246717,
+            0.03570906677440425,
+            0.0966345713759558,
+            0.44613993014004943,
+            0.22500000000321832,
+            0.09999999999734409
+          ],
+          "terminal_net": 109780841.27861787,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.005276765613480783,
+          "ledger_net_return": 0.09780841278617869,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            4.587985934962859e-11,
+            0.12642953045998176,
+            0.0502225519738956,
+            0.49834791749449825,
+            0.22500000000304585,
+            0.09999999999747827
+          ],
+          "terminal_net": 100821069.65620306,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.07040475946677327,
+          "ledger_net_return": 0.00821069656203055,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            1.345397444314146e-10,
+            0.012754796351220498,
+            0.0462678345567106,
+            0.24338610023025653,
+            0.5975912686937614,
+            0.09999999999627414
+          ],
+          "terminal_net": 96703418.06142738,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04803391360961584,
+          "ledger_net_return": -0.03296581938572618,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            4.068784519607194e-11,
+            0.011673273202608539,
+            0.02231518511490859,
+            0.051554605250848526,
+            0.8144569363815812,
+            0.09999999999895948
+          ],
+          "terminal_net": 101411648.75568834,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003968995478748516,
+          "ledger_net_return": 0.014116487556883328,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.018172627341047846,
+            0.032617507442998385,
+            0.10450416994871352,
+            0.23630966566438932,
+            0.50839602472266,
+            0.10000000017417968
+          ],
+          "terminal_net": 101824507.16828838,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012270158100455952,
+          "ledger_net_return": 0.018245071682883696,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            9.965116138802609e-10,
+            0.006626346148370208,
+            0.03536997593523174,
+            0.25247492782947917,
+            0.6055287490667768,
+            0.09999999999737445
+          ],
+          "terminal_net": 99095653.81070732,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009043461892926818,
+          "ledger_net_return": -0.009043461892926818,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.059879277562546206,
+            3.969147617924882e-11,
+            0.03561818829568891,
+            0.12950253409171059,
+            0.6750000000035776,
+            0.09999999999924632
+          ],
+          "terminal_net": 98048994.55481903,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.019510054451809644,
+          "ledger_net_return": -0.019510054451809644,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.026391546473763315,
+            3.30694688936039e-12,
+            0.03212236196970067,
+            0.1507664297399312,
+            0.6907196618000141,
+            0.09999999999851725
+          ],
+          "terminal_net": 96043159.7570448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03956840242955195,
+          "ledger_net_return": -0.03956840242955195,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.04067992033071837,
+            3.31990681859142e-12,
+            0.01563364059486229,
+            0.14837056292024275,
+            0.6953158761443834,
+            0.09999999999928534
+          ],
+          "terminal_net": 96978486.34349519,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03021513656504815,
+          "ledger_net_return": -0.03021513656504815,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.04257781646464313,
+            0.002336614833970872,
+            0.007940983796078487,
+            0.1544810321559738,
+            0.6926635527420062,
+            0.09999999999918593
+          ],
+          "terminal_net": 99246302.65703346,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.008466609589051655,
+          "ledger_net_return": -0.007536973429665417,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.09227324729097812,
+            1.6301157737712134e-11,
+            0.021213856564464235,
+            0.1115128961060346,
+            0.6750000000067957,
+            0.09999999999828599
+          ],
+          "terminal_net": 97057103.87705222,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.030868126477723523,
+          "ledger_net_return": -0.0294289612294778,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0593776355510723,
+            1.1012421952066966e-11,
+            0.022334620354950357,
+            0.1213057993857964,
+            0.6969819446894229,
+            0.09999999999913935
+          ],
+          "terminal_net": 100033756.529685,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020592989218169433,
+          "ledger_net_return": 0.0003375652968500287,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.022675026614748222,
+            0.002767124309139309,
+            4.5236954890767236e-11,
+            0.19905582087615903,
+            0.6755020281408942,
+            0.09999999999846436
+          ],
+          "terminal_net": 97533835.6873083,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.024661643126916988,
+          "ledger_net_return": -0.024661643126916988,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.07145594782174478,
+            9.856890422448953e-12,
+            0.035633522569913555,
+            0.11791052958533144,
+            0.6750000000046229,
+            0.0999999999990523
+          ],
+          "terminal_net": 95227305.22978388,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.060468038741589014,
+          "ledger_net_return": -0.04772694770216124,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.05537132869471288,
+            1.522065377761016e-11,
+            0.02889395118415867,
+            0.13636085257513272,
+            0.6793738674986228,
+            0.09999999999642786
+          ],
+          "terminal_net": 99883037.49485534,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.022259020438262667,
+          "ledger_net_return": -0.0011696250514465767,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97146250.11271077,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028537498872892253,
+          "ledger_net_return": -0.028537498872892253,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.04370153742077178,
+            5.813022512632769e-12,
+            0.028169428070913233,
+            0.14606551265834905,
+            0.6820635218229287,
+            0.09999999999764178
+          ],
+          "terminal_net": 102162059.32079202,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.002562009364517781,
+          "ledger_net_return": 0.02162059320792009,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "EWMA FHS",
+      "method": "mv_same_constraints:validation_calibrated",
+      "name": "MV, same constraints",
+      "count": 19,
+      "mean": -0.008157839602892946,
+      "worst": -0.04813852361939441,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.08374452869551031,
+            0.0495681322217297,
+            0.0825312964998696,
+            0.4591560424184846,
+            0.22500000016440305,
+            0.10000000000000023
+          ],
+          "terminal_net": 109926153.52933796,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.005633604019233296,
+          "ledger_net_return": 0.09926153529337967,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            3.382538593344367e-10,
+            0.12713099322410062,
+            0.048759354646640864,
+            0.49910965170162425,
+            0.22500000008937807,
+            0.10000000000000009
+          ],
+          "terminal_net": 100793436.62802406,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.07059388050000115,
+          "ledger_net_return": 0.007934366280240468,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            2.8352592416539616e-09,
+            0.01286772438970054,
+            0.042555503696862104,
+            0.2501977930805451,
+            0.5943789759976332,
+            0.1
+          ],
+          "terminal_net": 96566555.52157265,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04879006983919887,
+          "ledger_net_return": -0.0343344447842735,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            2.0739700720783465e-10,
+            0.01167326540985167,
+            0.022315186863132597,
+            0.05155461443441754,
+            0.8144569330852013,
+            0.1
+          ],
+          "terminal_net": 101411648.74122842,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003968994694517836,
+          "ledger_net_return": 0.014116487412284107,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.01484930216862129,
+            0.0358988150289508,
+            0.10173886956450943,
+            0.2392678536871193,
+            0.5082451595507992,
+            0.1
+          ],
+          "terminal_net": 101778998.43709616,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012549188635371578,
+          "ledger_net_return": 0.017789984370961687,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            1.9120164200434666e-09,
+            0.0071902643849042795,
+            0.03395583863331578,
+            0.25436763804311774,
+            0.6044862570266462,
+            0.09999999999999996
+          ],
+          "terminal_net": 99105585.09473293,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.008944149052670713,
+          "ledger_net_return": -0.008944149052670713,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.06173495503151588,
+            1.6506469151325846e-10,
+            0.03489472049262954,
+            0.12837032427405443,
+            0.675000000036734,
+            0.10000000000000006
+          ],
+          "terminal_net": 98067820.07275365,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01932179927246347,
+          "ledger_net_return": -0.01932179927246347,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.026391545802287534,
+            1.0794433678260712e-11,
+            0.03212236167163785,
+            0.15076642560377787,
+            0.6907196669115024,
+            0.1
+          ],
+          "terminal_net": 96043159.75179021,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03956840248209792,
+          "ledger_net_return": -0.03956840248209792,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04089260086054935,
+            1.5314257486907752e-11,
+            0.015165342745289452,
+            0.14862189216973296,
+            0.695320164209114,
+            0.10000000000000002
+          ],
+          "terminal_net": 96978997.80036803,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.030210021996319725,
+          "ledger_net_return": -0.030210021996319725,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.041508808479810505,
+            0.0024582674036152654,
+            0.011083549686144169,
+            0.15035696871445656,
+            0.694592405715974,
+            0.0999999999999999
+          ],
+          "terminal_net": 99257484.94400316,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.008376622983689463,
+          "ledger_net_return": -0.0074251505599683965,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.09227324541006765,
+            3.460881487777608e-11,
+            0.02121385563978896,
+            0.11151289876488912,
+            0.6750000001506454,
+            0.10000000000000003
+          ],
+          "terminal_net": 97057103.8932088,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.030868126260263584,
+          "ledger_net_return": -0.02942896106791193,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05937763543166855,
+            2.5446153029493987e-11,
+            0.022334619683413465,
+            0.1213057959879619,
+            0.69698194887151,
+            0.09999999999999996
+          ],
+          "terminal_net": 100033756.48082313,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020592989417710483,
+          "ledger_net_return": 0.0003375648082313276,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.02268475448222477,
+            0.002348809369551549,
+            4.6066553646929997e-10,
+            0.19996643386000768,
+            0.6750000018275505,
+            0.1
+          ],
+          "terminal_net": 97530145.66436043,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.024698543356395652,
+          "ledger_net_return": -0.024698543356395652,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0725971892182749,
+            3.644136956219987e-11,
+            0.033118450596122305,
+            0.1192843601134707,
+            0.67500000003569,
+            0.1
+          ],
+          "terminal_net": 95186147.63806055,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.060720319468592576,
+          "ledger_net_return": -0.04813852361939441,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05504262092850549,
+            7.68033247148173e-11,
+            0.028396850749468485,
+            0.13782290652364088,
+            0.6787376217215818,
+            0.10000000000000002
+          ],
+          "terminal_net": 99873418.75130592,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.022390050297501962,
+          "ledger_net_return": -0.0012658124869407983,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04116422989488567,
+            0.0013867350478932088,
+            0.00937972727542714,
+            0.07023686054816458,
+            0.7778324472336292,
+            0.10000000000000007
+          ],
+          "terminal_net": 98383802.16177244,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01616197838227551,
+          "ledger_net_return": -0.01616197838227551,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04370153829789676,
+            1.9665049407060552e-11,
+            0.028169425716811986,
+            0.14606550752262212,
+            0.6820635284430042,
+            0.10000000000000003
+          ],
+          "terminal_net": 102162059.12284982,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0025620093812862565,
+          "ledger_net_return": 0.02162059122849813,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Mixture + outer refit",
+      "method": "cash_fixed_property:raw",
+      "name": "Cash + fixed property",
+      "count": 19,
+      "mean": -0.02380635310664085,
+      "worst": -0.03977509075713037,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100538430.20097773,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00783498991982745,
+          "ledger_net_return": 0.005384302009777242,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97808749.77444248,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02511990639735373,
+          "ledger_net_return": -0.021912502255575173,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96170612.97914898,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04525514369080241,
+          "ledger_net_return": -0.03829387020851016,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97795922.8341125,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02204077165887508,
+          "ledger_net_return": -0.02204077165887508,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97716718.67438717,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.022832813256128293,
+          "ledger_net_return": -0.022832813256128293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97025015.376132,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.029749846238680044,
+          "ledger_net_return": -0.029749846238680044,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96205202.40395166,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03794797596048338,
+          "ledger_net_return": -0.03794797596048338,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96022490.92428696,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03977509075713037,
+          "ledger_net_return": -0.03977509075713037,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 96408154.30784802,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03591845692151974,
+          "ledger_net_return": -0.03591845692151974,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97801116.17495887,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.021988838250411313,
+          "ledger_net_return": -0.021988838250411313,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97636588.66661903,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023634113333809714,
+          "ledger_net_return": -0.023634113333809714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97318815.14508307,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.026811848549169293,
+          "ledger_net_return": -0.026811848549169293,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97217344.90231448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027826550976855158,
+          "ledger_net_return": -0.027826550976855158,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97532627.48745894,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02467372512541055,
+          "ledger_net_return": -0.02467372512541055,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98459482.52844317,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020257435478926555,
+          "ledger_net_return": -0.015405174715568237,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97603551.25878789,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023964487412121094,
+          "ledger_net_return": -0.023964487412121094,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 97146250.11271077,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028537498872892253,
+          "ledger_net_return": -0.028537498872892253,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cash_fixed_property:raw",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 98111934.48280925,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.018880655171907512,
+          "ledger_net_return": -0.018880655171907512,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Mixture + outer refit",
+      "method": "raw_mean_variance:validation_calibrated",
+      "name": "Raw MV",
+      "count": 19,
+      "mean": -0.007624660085113042,
+      "worst": -0.0532729148476383,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.09052944022492956,
+            0.1086337275095382,
+            0.05548606872923361,
+            0.42035075741742933,
+            0.22500000611886942,
+            0.1
+          ],
+          "terminal_net": 111023210.6218331,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.006333633817158013,
+          "ledger_net_return": 0.1102321062183309,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            4.687556723096813e-09,
+            0.09261150900600074,
+            0.0624492676073693,
+            0.29493921796212735,
+            0.45000000073694585,
+            0.1
+          ],
+          "terminal_net": 98725720.33684759,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0644323711822532,
+          "ledger_net_return": -0.012742796631524111,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            5.076081549039196e-10,
+            5.753023059785911e-10,
+            0.030237413954885464,
+            0.1947625840367603,
+            0.6750000009254438,
+            0.1
+          ],
+          "terminal_net": 95611364.3288297,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05329358377567517,
+          "ledger_net_return": -0.043886356711702934,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9,
+            0.1
+          ],
+          "terminal_net": 100248920.86290939,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003610486364914234,
+          "ledger_net_return": 0.002489208629093964,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            1.3151659042507452e-08,
+            0.028593214847736595,
+            0.1027642967235351,
+            0.31864246830797105,
+            0.4500000069690983,
+            0.1
+          ],
+          "terminal_net": 103137135.50664608,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.014706606436751035,
+          "ledger_net_return": 0.031371355066460715,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            4.6508016721071755e-09,
+            0.012966879750959493,
+            0.04739643516180651,
+            0.16463668000854323,
+            0.6750000004278891,
+            0.1
+          ],
+          "terminal_net": 98899231.46966328,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.011007685303367265,
+          "ledger_net_return": -0.011007685303367265,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            1.246107532842762e-07,
+            0.016394832420611925,
+            0.04541896518187219,
+            0.16318607022618156,
+            0.675000007560581,
+            0.1
+          ],
+          "terminal_net": 94672708.51523617,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0532729148476383,
+          "ledger_net_return": -0.0532729148476383,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.03599941170269946,
+            3.352697444443972e-08,
+            0.02852630816020208,
+            0.16047423842837677,
+            0.6750000081817472,
+            0.1
+          ],
+          "terminal_net": 97974504.95526966,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0202549504473033,
+          "ledger_net_return": -0.0202549504473033,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04031356604582273,
+            1.1517217917148111e-09,
+            0.022169066175574487,
+            0.16251736580711879,
+            0.6750000008197622,
+            0.1
+          ],
+          "terminal_net": 96172106.00373286,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0382789399626714,
+          "ledger_net_return": -0.0382789399626714,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04227683419502268,
+            1.2726857378187908e-09,
+            0.014600569274634581,
+            0.16812259405186528,
+            0.6750000012057918,
+            0.1
+          ],
+          "terminal_net": 96991209.69336754,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.030087903066324584,
+          "ledger_net_return": -0.030087903066324584,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0462468965728502,
+            1.814055307949598e-10,
+            0.015046221480392474,
+            0.16370688156543403,
+            0.6750000001999179,
+            0.1
+          ],
+          "terminal_net": 99363243.54265828,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0075803757875838595,
+          "ledger_net_return": -0.006367564573417139,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05140517313699989,
+            1.4740676674935758e-09,
+            0.017186834833275755,
+            0.1564079891435316,
+            0.675000001412106,
+            0.10000000000002486
+          ],
+          "terminal_net": 97336601.30024584,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02709705776372806,
+          "ledger_net_return": -0.026633986997541603,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04785625725121695,
+            1.1091320779064071e-08,
+            0.016968703623241817,
+            0.16017501600395093,
+            0.6750000120302695,
+            0.1
+          ],
+          "terminal_net": 100599878.62775365,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.0001074697990524065,
+          "ledger_net_return": 0.005998786277536361,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05328833871434353,
+            3.1310371944207556e-09,
+            0.018054338227367527,
+            0.15365731698343763,
+            0.6750000029438141,
+            0.1
+          ],
+          "terminal_net": 100114186.23105946,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01631823918256614,
+          "ledger_net_return": 0.0011418623105945436,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.0478583171977206,
+            1.3773327716161077e-08,
+            0.018403416023529538,
+            0.15873824047284768,
+            0.6750000125325744,
+            0.1
+          ],
+          "terminal_net": 98219136.04730597,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.017818270110116163,
+          "ledger_net_return": -0.01780863952694034,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05439314404496252,
+            3.753755683568803e-09,
+            0.014445201478658843,
+            0.15616164638499677,
+            0.6750000043376263,
+            0.1
+          ],
+          "terminal_net": 94996230.74122453,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06050413271405819,
+          "ledger_net_return": -0.0500376925877547,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.04880700523917816,
+            9.107883005066045e-09,
+            0.02428622825687428,
+            0.151906739309285,
+            0.6750000180867796,
+            0.1
+          ],
+          "terminal_net": 99709732.91522464,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023812889998806153,
+          "ledger_net_return": -0.00290267084775353,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05242989531103065,
+            1.0078425181465368e-09,
+            0.02608723271214492,
+            0.1464828688061241,
+            0.6750000021628578,
+            0.1
+          ],
+          "terminal_net": 99012161.22269253,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.010007117335738891,
+          "ledger_net_return": -0.009878387773074704,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "raw_mean_variance:validation_calibrated",
+          "weights": [
+            0.05531930534153561,
+            3.5213424876438605e-10,
+            0.03426306527590732,
+            0.13541762862428003,
+            0.6750000004061427,
+            0.1
+          ],
+          "terminal_net": 102705862.91578496,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.002581335449268418,
+          "ledger_net_return": 0.027058629157849623,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Mixture + outer refit",
+      "method": "cara_constraints:validation_calibrated",
+      "name": "CARA, same constraints",
+      "count": 19,
+      "mean": -0.008543372848928943,
+      "worst": -0.07219936760240453,
+      "funded": 19,
+      "final_pass": 19,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.042817235941892386,
+            0.08591834800607229,
+            0.04144930966220578,
+            0.2798151063684362,
+            0.45000000000257423,
+            0.0999999999979092
+          ],
+          "terminal_net": 108081365.37241529,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.005318168411610147,
+          "ledger_net_return": 0.08081365372415283,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            9.940941173321411e-11,
+            0.10355989099265671,
+            0.04732134964077683,
+            0.29911875921879194,
+            0.4500000000052365,
+            0.09999999999520828
+          ],
+          "terminal_net": 98167420.29127096,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06889156523168427,
+          "ledger_net_return": -0.01832579708729043,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            7.44501347370535e-12,
+            0.0044533865494792895,
+            0.01980517999762514,
+            0.20074143343133707,
+            0.6750000000065224,
+            0.09999999999915607
+          ],
+          "terminal_net": 95645253.22164306,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05218096669256522,
+          "ledger_net_return": -0.04354746778356944,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            6.696594275041943e-12,
+            0.010234034345844937,
+            0.013386365279883296,
+            0.14408863225246848,
+            0.7322909681070268,
+            0.09999999999910235
+          ],
+          "terminal_net": 101926792.77532999,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0011715366402080818,
+          "ledger_net_return": 0.019267927753299885,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            1.0216706003199249e-10,
+            0.03867665520361701,
+            0.05721788942407041,
+            0.3541054552167159,
+            0.450000000020728,
+            0.09999999999636658
+          ],
+          "terminal_net": 103062192.2345072,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.013761715131983876,
+          "ledger_net_return": 0.030621922345072106,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            1.0373168334926592e-10,
+            0.013694888455557684,
+            0.015162977332769882,
+            0.16304134149875962,
+            0.7081007925975208,
+            0.09999999999870449
+          ],
+          "terminal_net": 98727100.77528797,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012728992247120319,
+          "ledger_net_return": -0.012728992247120319,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.002431981986690689,
+            0.013996285132848308,
+            0.014660374376364554,
+            0.16774435326484577,
+            0.7011670052293174,
+            0.09999999999889647
+          ],
+          "terminal_net": 95574908.81362294,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.044250911863770614,
+          "ledger_net_return": -0.044250911863770614,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.02629022423336134,
+            6.13562567245658e-11,
+            0.006017457673814742,
+            0.1446178031567455,
+            0.7230745148645733,
+            0.0999999999988725
+          ],
+          "terminal_net": 97751936.6610708,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02248063338929207,
+          "ledger_net_return": -0.02248063338929207,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.059766491695945306,
+            7.373524296964488e-11,
+            0.010763013571223305,
+            0.30558278525837124,
+            0.5238877093672377,
+            0.09999999999627954
+          ],
+          "terminal_net": 96625930.05654241,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.033740699434575916,
+          "ledger_net_return": -0.033740699434575916,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.061950050738962724,
+            2.0051136285832016e-11,
+            0.00300250364313762,
+            0.288501924152682,
+            0.546545521422769,
+            0.09999999999751233
+          ],
+          "terminal_net": 97171187.2851156,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02828812714884399,
+          "ledger_net_return": -0.02828812714884399,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.0622856989163682,
+            1.1281531519758389e-11,
+            6.804906034915538e-11,
+            0.28600913520510474,
+            0.5517051657707807,
+            0.09999999999684277
+          ],
+          "terminal_net": 99806086.72322752,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0038790364706400293,
+          "ledger_net_return": -0.0019391327677248382,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06521547616026956,
+            8.552424476008469e-12,
+            0.00026543621640017406,
+            0.2978387366332473,
+            0.5366803509670369,
+            0.09999999999838967
+          ],
+          "terminal_net": 97339727.2285185,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028851313144988122,
+          "ledger_net_return": -0.026602727714814978,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06301509587505293,
+            4.972490225893383e-12,
+            4.251710162128055e-11,
+            0.286865212338445,
+            0.5501196917278288,
+            0.09999999999875743
+          ],
+          "terminal_net": 101935134.80753855,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.003651648489132242,
+          "ledger_net_return": 0.01935134807538552,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.06798354120816041,
+            5.13110174368982e-12,
+            2.8535852663015342e-11,
+            0.30755422064708043,
+            0.5244622380971995,
+            0.0999999999984565
+          ],
+          "terminal_net": 101402543.95646231,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009061816510637422,
+          "ledger_net_return": 0.014025439564623099,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.05614063494573209,
+            1.3862302965883334e-11,
+            1.7296993009787702e-11,
+            0.3030607300981963,
+            0.5407986349081022,
+            0.09999999999813192
+          ],
+          "terminal_net": 98081739.09197079,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02043871361877425,
+          "ledger_net_return": -0.019182609080292123,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.05583073917210358,
+            1.2159184093014288e-11,
+            2.3958607670488275e-11,
+            0.3002871474216114,
+            0.5438821133465801,
+            0.09999999999737928
+          ],
+          "terminal_net": 92780063.23975955,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.08462102111022396,
+          "ledger_net_return": -0.07219936760240453,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.04774895886142818,
+            1.0790576468565213e-11,
+            0.008810745112868801,
+            0.20252045612597944,
+            0.6409198398740082,
+            0.09999999999834172
+          ],
+          "terminal_net": 99666087.28748548,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027422555587019226,
+          "ledger_net_return": -0.0033391271251451693,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.050218944149007023,
+            1.6286908726618047e-11,
+            0.008055938474341091,
+            0.18748322895264014,
+            0.6542418883770786,
+            0.0999999999965949
+          ],
+          "terminal_net": 98441328.50122622,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.015586714987737782,
+          "ledger_net_return": -0.015586714987737782,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "cara_constraints:validation_calibrated",
+          "weights": [
+            0.049754652724821324,
+            6.293507775998605e-12,
+            0.016495187062072834,
+            0.16474078202347991,
+            0.6690093781679307,
+            0.09999999999828857
+          ],
+          "terminal_net": 101580793.26403989,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0031892094032288654,
+          "ledger_net_return": 0.015807932640398814,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Mixture + outer refit",
+      "method": "mv_same_constraints:validation_calibrated",
+      "name": "MV, same constraints",
+      "count": 19,
+      "mean": -0.006529107656904556,
+      "worst": -0.07219936539784988,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.09415787737139047,
+            0.11083541716892853,
+            0.055841009635727426,
+            0.4141656953280241,
+            0.22500000049590732,
+            0.10000000000000107
+          ],
+          "terminal_net": 111080535.97385363,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.006286808789479292,
+          "ledger_net_return": 0.11080535973853634,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            3.127763366999815e-10,
+            0.09263064951889002,
+            0.057409477137698575,
+            0.29995987296078325,
+            0.4500000000698461,
+            0.10000000000000023
+          ],
+          "terminal_net": 98807333.61449483,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.06345993260237903,
+          "ledger_net_return": -0.0119266638550517,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            3.874301398440268e-11,
+            0.0035698560788205613,
+            0.019040271892464183,
+            0.2023898710859635,
+            0.6750000009040068,
+            0.10000000000000006
+          ],
+          "terminal_net": 95543734.7882523,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05286261995781061,
+          "ledger_net_return": -0.04456265211747701,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            4.795962414419767e-11,
+            0.010234033377327782,
+            0.013386365751814023,
+            0.14408862817247545,
+            0.7322909726504232,
+            0.1
+          ],
+          "terminal_net": 101926792.73815736,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.00117153665136438,
+          "ledger_net_return": 0.01926792738157368,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            1.1991114076138456e-09,
+            0.03350648441001831,
+            0.05923579097967808,
+            0.3572577198421214,
+            0.45000000356906933,
+            0.10000000000000009
+          ],
+          "terminal_net": 103227636.43327402,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.013672120415930022,
+          "ledger_net_return": 0.03227636433274017,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            1.5726071315994383e-09,
+            0.013694886329459496,
+            0.0151629768703226,
+            0.16304133653335984,
+            0.708100798694252,
+            0.09999999999999971
+          ],
+          "terminal_net": 98727100.73732504,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.012728992626749536,
+          "ledger_net_return": -0.012728992626749536,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0027314275597122933,
+            0.013693039665063267,
+            0.01472221860073717,
+            0.16773938863252028,
+            0.701113925541967,
+            0.1
+          ],
+          "terminal_net": 95585263.26357418,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04414736736425817,
+          "ledger_net_return": -0.04414736736425817,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.026290223496763528,
+            7.968776515915126e-11,
+            0.006017457466944887,
+            0.14461779986113207,
+            0.7230745190954716,
+            0.10000000000000003
+          ],
+          "terminal_net": 97751936.62513216,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02248063374867837,
+          "ledger_net_return": -0.02248063374867837,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05976647114024546,
+            1.3977387887236957e-10,
+            0.010763023545065042,
+            0.30558278198139793,
+            0.5238877231935177,
+            0.10000000000000002
+          ],
+          "terminal_net": 96625929.95104004,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.03374070048959954,
+          "ledger_net_return": -0.03374070048959954,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.061950048261575,
+            5.444657983853048e-11,
+            0.003002503827508948,
+            0.28850191491206817,
+            0.5465455329444012,
+            0.10000000000000007
+          ],
+          "terminal_net": 97171187.25840704,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028288127415929565,
+          "ledger_net_return": -0.028288127415929565,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.062285697400709196,
+            2.3168496289749113e-11,
+            1.4540504910483612e-10,
+            0.2860091263374602,
+            0.5517051760932571,
+            0.1
+          ],
+          "terminal_net": 99806086.67436348,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.003879036865366725,
+          "ledger_net_return": -0.0019391332563651886,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.06521547605494654,
+            5.445713026077142e-11,
+            0.0002654386165650675,
+            0.2978387212543079,
+            0.5366803640197234,
+            0.1
+          ],
+          "terminal_net": 97339727.21920776,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.028851312938045548,
+          "ledger_net_return": -0.02660272780792239,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0630150921261627,
+            5.619113813357567e-11,
+            3.1199939230516985e-10,
+            0.28686519947431005,
+            0.5501197080313368,
+            0.1
+          ],
+          "terminal_net": 101935134.57785955,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": 0.0036516483465276472,
+          "ledger_net_return": 0.01935134577859543,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.0679835390500138,
+            3.888084865205119e-11,
+            2.2500264664711413e-10,
+            0.30755420954936247,
+            0.5244622511367403,
+            0.1
+          ],
+          "terminal_net": 101402543.81781167,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.009061816682421564,
+          "ledger_net_return": 0.014025438178116634,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05614063400294324,
+            3.967682594183708e-11,
+            6.494083734389469e-11,
+            0.3030607234012644,
+            0.5407986424911753,
+            0.09999999999999985
+          ],
+          "terminal_net": 98081739.08929476,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.020438713524597585,
+          "ledger_net_return": -0.019182609107052384,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.05583073709630419,
+            5.936785668841197e-11,
+            1.3673679303914491e-10,
+            0.3002871357598188,
+            0.5438821269477722,
+            0.10000000000000007
+          ],
+          "terminal_net": 92780063.46021502,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.08462101860828752,
+          "ledger_net_return": -0.07219936539784988,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04601729037592063,
+            5.560168765584554e-11,
+            0.010760751473413974,
+            0.20267593596769168,
+            0.640546022127372,
+            0.09999999999999998
+          ],
+          "terminal_net": 99646277.8967776,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.027368627273280377,
+          "ledger_net_return": -0.0035372210322239805,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.049298434722628494,
+            6.133407458630931e-11,
+            0.00926697643124548,
+            0.1871869576345985,
+            0.6542476311501935,
+            0.1
+          ],
+          "terminal_net": 98449828.81488243,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.01550171185117577,
+          "ledger_net_return": -0.01550171185117577,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "mv_same_constraints:validation_calibrated",
+          "weights": [
+            0.04807383520586504,
+            4.853967398103434e-11,
+            0.01867792400396696,
+            0.16418169332280033,
+            0.669066547418828,
+            0.1
+          ],
+          "terminal_net": 101705842.51795846,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0030846122329518666,
+          "ledger_net_return": 0.01705842517958467,
+          "model_final_pass": true
+        }
+      ]
+    },
+    {
+      "model": "Mixture + outer refit",
+      "method": "whole_fit_bagging:validation_calibrated",
+      "name": "Whole-fit bagging",
+      "count": 19,
+      "mean": -0.00974308232124815,
+      "worst": -0.04523641972019854,
+      "funded": 19,
+      "final_pass": 18,
+      "records": [
+        {
+          "origin": "2006-12-29",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.04852210461392168,
+            0.06338018880233073,
+            0.09053602456712184,
+            0.24756168198879674,
+            0.4500000000056128,
+            0.09999999999753312
+          ],
+          "terminal_net": 108466354.43085448,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.006293309464028951,
+          "ledger_net_return": 0.08466354430854484,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2007-12-28",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.016559028664861496,
+            0.046387090749004906,
+            0.04178446415847271,
+            0.12026941640584884,
+            0.6750000000021615,
+            0.09999999999782296
+          ],
+          "terminal_net": 97112688.03892402,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05146111604394865,
+          "ledger_net_return": -0.02887311961075978,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2008-12-26",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.0009017919786089049,
+            0.025651348809861016,
+            0.06638213190379166,
+            0.314809183893067,
+            0.4922555433877781,
+            0.0999999999970124
+          ],
+          "terminal_net": 97786653.18473086,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04668049376570593,
+          "ledger_net_return": -0.02213346815269146,
+          "model_final_pass": false
+        },
+        {
+          "origin": "2009-12-25",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.0034082593740448145,
+            0.015537869403527802,
+            0.03346180775194784,
+            0.15037727120863054,
+            0.6972147922479838,
+            0.09999999999845963
+          ],
+          "terminal_net": 102609237.06129827,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0022925069966783784,
+          "ledger_net_return": 0.02609237061298275,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2010-12-31",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.008069210593061581,
+            0.023209775470598586,
+            0.060499657840705226,
+            0.30026280598441646,
+            0.5079585500914583,
+            0.09999999999780454
+          ],
+          "terminal_net": 102563054.49663207,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.011620748868987563,
+          "ledger_net_return": 0.02563054496632078,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2011-12-30",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.007674510041495421,
+            0.013907031972023556,
+            0.042634419852519825,
+            0.15087211960459587,
+            0.6849119185153626,
+            0.09999999999844637
+          ],
+          "terminal_net": 98940366.31784867,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.010596336821513286,
+          "ledger_net_return": -0.010596336821513286,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2012-12-28",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.011375729649302472,
+            0.011777791400150138,
+            0.029102070822193352,
+            0.14478653234297556,
+            0.702957875774272,
+            0.09999999999876615
+          ],
+          "terminal_net": 95655185.33935662,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.04344814660643381,
+          "ledger_net_return": -0.04344814660643381,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2013-12-27",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.02185913687357806,
+            0.0015781028486287934,
+            0.018611404723501233,
+            0.13142937455455353,
+            0.7265219809870364,
+            0.09999999999858879
+          ],
+          "terminal_net": 97556268.39225183,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.024437316077481674,
+          "ledger_net_return": -0.024437316077481674,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2014-12-26",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.021165674335168447,
+            0.005960117946392271,
+            0.029910371413198248,
+            0.1545481959827709,
+            0.6884156403120969,
+            0.09999999999884769
+          ],
+          "terminal_net": 95989940.62102126,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.040100593789787475,
+          "ledger_net_return": -0.040100593789787475,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2015-12-25",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.026656645486884727,
+            0.0016269399665238091,
+            0.022757190916710742,
+            0.12780063982692305,
+            0.7211585837937048,
+            0.0999999999989707
+          ],
+          "terminal_net": 96847544.51464638,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.031524554853536224,
+          "ledger_net_return": -0.031524554853536224,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2016-12-30",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.024138517889346824,
+            0.0015175722339196976,
+            0.02237779356627717,
+            0.12498613421515804,
+            0.7269799788350664,
+            0.09999999999209985
+          ],
+          "terminal_net": 98943813.51820634,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.010878845950487603,
+          "ledger_net_return": -0.010561864817936528,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2017-12-29",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.034261908811760444,
+            4.918644348578925e-12,
+            0.00918179988934859,
+            0.13307699779195928,
+            0.7234792934909207,
+            0.09999999999876963
+          ],
+          "terminal_net": 97452213.21111645,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.02554571939887884,
+          "ledger_net_return": -0.025477867888835548,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2018-12-28",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.027006468162498787,
+            3.948210554229587e-11,
+            0.014766188717258101,
+            0.12717278242976227,
+            0.7310545606456065,
+            0.09999999999883102
+          ],
+          "terminal_net": 99593144.92898516,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0044040699705019115,
+          "ledger_net_return": -0.004068550710148333,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2019-12-27",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.029147487544481418,
+            0.0013754793692354506,
+            0.016686312259468726,
+            0.13187464371625013,
+            0.7209160770996311,
+            0.09999999999878541
+          ],
+          "terminal_net": 99424930.18833019,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.011109276565666182,
+          "ledger_net_return": -0.00575069811669815,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2020-12-25",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.03145794769591033,
+            5.754539636265078e-05,
+            0.021691703584952805,
+            0.1358885180471923,
+            0.7109042852631534,
+            0.09999999999861918
+          ],
+          "terminal_net": 97848855.56080389,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.021511444391961065,
+          "ledger_net_return": -0.021511444391961065,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2021-12-31",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.03730003877668067,
+            0.0020717793066843365,
+            0.013464704830071937,
+            0.14425678484217935,
+            0.7029066922329914,
+            0.09999999999873467
+          ],
+          "terminal_net": 95476358.02798015,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.05478078131872277,
+          "ledger_net_return": -0.04523641972019854,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2022-12-30",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.026968020369036082,
+            0.00156000084246287,
+            0.020091059030163803,
+            0.08508836563665079,
+            0.7662925541117414,
+            0.09999999999889486
+          ],
+          "terminal_net": 98869397.420645,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.023156498552809768,
+          "ledger_net_return": -0.01130602579355,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2023-12-29",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.03376897458184547,
+            6.9708502538291056e-12,
+            0.017300634617105227,
+            0.09332037678144497,
+            0.7556100140027291,
+            0.09999999999889964
+          ],
+          "terminal_net": 98362151.0847729,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.016378489152271025,
+          "ledger_net_return": -0.016378489152271025,
+          "model_final_pass": true
+        },
+        {
+          "origin": "2024-12-27",
+          "method": "whole_fit_bagging:validation_calibrated",
+          "weights": [
+            0.041312153738045566,
+            1.0211154227958814e-09,
+            0.031140685326867517,
+            0.10627798247295411,
+            0.7212691771396226,
+            0.10000000000200557
+          ],
+          "terminal_net": 101989987.25122397,
+          "funded": true,
+          "max_shortfall": 0.0,
+          "minimum_net_return": -0.0020732231856896988,
+          "ledger_net_return": 0.01989987251223968,
+          "model_final_pass": true
+        }
+      ]
+    }
+  ],
+  "radius": {
+    "available": true,
+    "distance": 0.3386004041333631,
+    "blocks": 21,
+    "nonoverlap_horizon": 52,
+    "earlier_blocks": 10,
+    "later_blocks": 10,
+    "metric": "max_path empirical equal-mass assignment on listed/FX paths only",
+    "configured_radius": 2e-05,
+    "scope": "Historical distribution-shift diagnostic, not a statistically justified W1 radius or property/liability calibration. Early versus recent regimes need not be stationary; no confidence coverage inferred."
+  },
+  "sources": "ROBUSTNESS_SOURCES.md",
+  "limits": [
+    "Private research, not a recommendation.",
+    "Conditional simulated judge is not economic truth.",
+    "Annual episodes reset capital, include3% scheduled withdrawals and do not form a compounded strategy.",
+    "Latest data vintages, assumed 45-day property release lag, not revision-safe point-in-time archives.",
+    "Cash earns0% by explicit uncalibrated assumption.",
+    "Listed sales assumed immediately spendable within each week.",
+    "W1 radius remains uncalibrated. Ledger is not W1-certified.",
+    "Separate quarterly bootstrap refits property dispersion, but does not estimate joint cross-frequency dependence."
+  ]
+}
