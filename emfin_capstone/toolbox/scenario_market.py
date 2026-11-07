@@ -489,7 +489,8 @@ def optimization_with_cvar_and_liquidity(
     the cheapest feasible sales, which is the evaluator's cost-minimizing policy
     (up to sigma_j's tiny weight in the CE, which the policy ignores).  The need
     constraint is hard: a portfolio whose need exceeds its maximal net proceeds in
-    some solver scenario is infeasible (all cash is always feasible).
+    some solver scenario is infeasible (all cash stays feasible as long as the cash
+    value alone covers its need, i.e. for any threshold below ~the cash value).
 
     Two exact reductions keep the program small and well-posed.  Pre-screen: since
     g_j'h >= min_n g_jn on the simplex, a scenario with min_n g_jn >= 1 + T/w never
@@ -499,8 +500,9 @@ def optimization_with_cvar_and_liquidity(
     sum_costly (s_jn - c_jn(s_jn)) >= need_j - (costless value)_j, still convex
     (pos(affine) - affine).  Without it the solver must also pin down free, non-unique
     cash sales, and the equity sale boxes 0 <= s <= g h collapse when h -> 0 —
-    interior-point CLARABEL stalls on exactly those (a mostly-cash replica of the
-    history failed every settings rung).  Same solver-scenario rule and settings ladder as
+    interior-point CLARABEL stalls on exactly those (an all-cash replica of the
+    history: rung 0 raised after 12 s and the ladder ran on for over 10 minutes;
+    with the elimination it certifies on rung 1 in ~6 s).  Same solver-scenario rule and settings ladder as
     ``optimization_with_cvar_constrain``; with costless parameters, or a threshold
     no scenario can reach, it reproduces that optimizer.
     """
