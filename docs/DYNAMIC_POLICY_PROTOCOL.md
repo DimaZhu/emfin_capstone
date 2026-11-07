@@ -162,3 +162,34 @@ conditional diagnostics, not economic confidence or global horizon proof.
 Compute budget 60seconds. This is a new exploratory question, not a repair of
 the failed feedback search. Frequency is conditional on this unusually
 cash-heavy starting target and one-year horizon.
+
+## Post-score implementation validation corrections
+No selection or paths changed. Added rejection of random future liability
+amounts (this policy only sees a known fixed schedule), correct production-key
+`net_rental_yield` rejection, and explicit input validation. The relaxation bound
+now rejects non-unit cash or liabilities exceeding initial liquid wealth, matching
+its proof conditions. Frequency intervals were widened using the preserved
+batch differences for the simultaneous12comparison family (four laws x three
+comparisons), rather than reusing attribution's two-law correction. Point
+estimates, selection and risk verdicts are unchanged; no paths were regenerated.
+
+## Multi-year follow-up, frozen before paths
+User 23:21 accepts a multi-year frequency comparison. Model sensitivities use
+3and5years (not confirmed obligation durations), same250k/month,36/60monthly
+calls totaling9M/15M. Same starting target, no capital/risk preference refit.
+Extend the existing deterministic recurring schedule with spacing52/12weeks.
+Original fixed shadow path/terminal budgets remain unchanged, not scaled to
+manufacture acceptance. Same four law definitions and fitted one-week moments;
+long-run stationarity/extrapolation is an assumption. Existing EP horizon-return
+views and path-loss stress increment stay fixed in their declared horizon units;
+property log-drift target scales automatically by horizon as usual. No fresh
+historical calibration or new economic coverage.
+
+Annual now rebalances near months12,24,...; all frequencies still fund payments
+monthly. Same5bps per buy/sell and1week settlement, no terminal rebalance.
+Fresh validation4x200paths/law, offsets410000+years*10000; select maximum worst-
+law CE only among four frequencies passing all four model validation screens.
+Freeze selected or NONE before final4x400paths/law, offsets510000+years*10000.
+Report all final rows, breaches, fees, differences. If none passes do not call
+best-CE frequency optimal. Paired intervals conditional4batch, simultaneous
+24comparison family across2horizonsx4lawsx3comparisons. Budget120seconds.

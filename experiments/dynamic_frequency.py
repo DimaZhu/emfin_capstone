@@ -8,6 +8,7 @@ from emfin_v2.dynamic_judge import judge
 from experiments.dynamic_execution import drawsets
 from experiments.dynamic_robust import models
 from experiments.dynamic_attribution import paired
+from scipy.stats import t
 from experiments.robustness import save
 ROOT=Path('artifacts/dynamic-policy-20261107/frequency')
 
@@ -26,7 +27,8 @@ def main():
         ds,ps=drawsets(cc,fit,400,320000);results={}
         for f in freqs:
             v,rs=evaluate(cc,ds,ps,a,f);rows.append(dict(model=name,months=f,judge=v));results[f]=rs
-        for f in [1,3,6]:pairs.append(dict(model=name,comparison=f'{f}month minus12month',paired=paired(results[f],results[12],c['risk_tolerance'])))
+        for f in [1,3,6]:
+            z=paired(results[f],results[12],c['risk_tolerance']);delta=np.array(z['batch_ce_differences']);half=float(t.ppf(1-.05/(2*12),3)*delta.std(ddof=1)/2);z.update(lower=z['mean']-half,upper=z['mean']+half,scope='Simultaneous12comparison Bonferroni4batch conditional MC diagnostic only; no economic/model/post-selection optimality coverage.');pairs.append(dict(model=name,comparison=f'{f}month minus12month',paired=z))
     result=dict(seconds=time.perf_counter()-start,selected=selected,validation=validation,rows=rows,paired=pairs,scope='Fixed original target;one-year only. Fresh4x400final paths/law. No global optimal horizon or economic probability guarantee. Same5bps/1weeksettlement/250kmonthlypayments.');save(result,ROOT/'summary.json');print(json.dumps(dict(seconds=result['seconds'],selected=selected,rows=[dict(model=x['model'],months=x['months'],ce=x['judge']['common_cara_ledger_ce'],passed=x['judge']['overall_pass'],cost=x['judge']['cost_mean']) for x in rows]),indent=2))
 
 if __name__=='__main__':main()

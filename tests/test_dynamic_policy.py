@@ -24,7 +24,7 @@ def test_future_changes_do_not_change_past_controls_or_cash():
 
 
 def test_pending_sale_cannot_be_spent_before_settlement():
-    c,d=fixture();initial=np.array([90.,0.,0.,0.,0.,10.]);d[2][:]=[1,2];d[1][:]=[10,10]
+    c,d=fixture();initial=np.array([90.,0.,0.,0.,0.,10.]);d[2][:]=[1,2];d[1][:]=[10,10];d[3][:]=[10,10]
     r=execute(c,d,initial,np.r_[[-8]*4,[0]*4],delay=2)
     assert (r['shortfalls'][:,0]>0).all();assert not r['funded'].any()
 
@@ -87,3 +87,18 @@ def test_same_dynamic_judge_refuses_unpaid_despite_small_tail_budget():
 
 def test_annual_frequency_is_cashfirst_over_one_year_and_preserves_payments():
     c,d=fixture();a=np.array([20.,20.,20.,20.,10.,10.]);annual=execute(c,d,a,mode='static_frequency',rebalance_months=12);cashfirst=execute(c,d,a,mode='cash_first');np.testing.assert_allclose(annual['terminal_net'],cashfirst['terminal_net']);assert annual['funded'].all()
+
+
+def test_future_random_liabilities_and_property_rent_are_not_silently_accepted():
+    c,d=fixture();a=np.array([20.,20.,20.,20.,10.,10.]);d[1][1,1]+=1
+    with pytest.raises(ValueError,match='fixed known'):execute(c,d,a,mode='cash_first')
+    c,d=fixture();c['real_estate']['net_rental_yield']=.04
+    with pytest.raises(ValueError,match='zero rent'):execute(c,d,a,mode='cash_first')
+
+
+def test_frozen_frequency_snapshot_matches_declared_scope():
+    from emfin_v2.dynamic_science import load
+    s=load();assert s['available'] and s['selected_months']==12 and len(s['rows'])==16
+    assert all(x['judge']['overall_pass'] and x['judge']['fully_paid_paths']==1600 for x in s['rows'])
+    assert all(not x['judge']['wasserstein_certified'] for x in s['rows'])
+    assert 'NONE' in s['dynamic_takeaway']
