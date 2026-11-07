@@ -55,6 +55,7 @@ from emfin_capstone.toolbox import (
     meucci_liquidity as mliq,
     scenario_market,
     seqep,
+    shrinkage,
     snapshot,
 )
 
@@ -112,6 +113,7 @@ FFR_HALF_LIFE_WEEKS = 78  # ~half the OAS-common window; was 156 on the full 276
 FFR_STATE_WINDOW = 13
 FFR_BANDWIDTH_SCALE = 0.5
 FFR_MIN_ESS = 60  # robustness floor: widen the kernel until this many effective weeks remain
+SHRINK_T0 = 156  # mean-shrinkage prior strength in weeks (~3 years); placeholder, communicable
 
 # Illustrative committee views (NOT research-backed):
 VIEWS = [
@@ -198,6 +200,27 @@ def main() -> None:
     inv_mean, inv_cov = ffr.weighted_moments(invariants, ffr_prior.weights)
     uniform_mean = invariants.mean(axis=0)
     uniform_cov = np.cov(invariants, rowvar=False, ddof=1)
+
+    # Estimation-error control (external review, point 5): shrink the
+    # moments before they drive anything.
+    # Covariance: Ledoit-Wolf toward the scaled identity.  The intensity is
+    # estimated on the raw weekly sample with the Kish ESS in place of T
+    # (documented approximation) and applied to the FFR-weighted covariance.
+    # Mean: Bayes-Stein toward structural targets - equity log-returns
+    # toward their grand mean (Jorion), rate and spread CHANGES toward zero
+    # (unpredictability prior), money market unshrunk (its mean is carry,
+    # structural rather than estimated).  Prior strength SHRINK_T0 weeks.
+    # Every method downstream - including the vanilla MV benchmark - now
+    # optimizes the same shrunk moments: a fair benchmark.
+    _, lw_delta = shrinkage.ledoit_wolf_cov(invariants, ess=ffr_prior.ess)
+    n_inv = len(inv_mean)
+    lw_target = (np.trace(inv_cov) / n_inv) * np.eye(n_inv)
+    inv_cov = (1.0 - lw_delta) * inv_cov + lw_delta * lw_target
+    mean_target = np.array([inv_mean[:3].mean()] * 3 + [0.0, 0.0, inv_mean[5]])
+    inv_mean, mean_w = shrinkage.shrink_mean(inv_mean, mean_target, ffr_prior.ess, SHRINK_T0)
+    print(f"shrinkage: LW covariance intensity {lw_delta:.1%} (ESS {ffr_prior.ess:.0f}); "
+          f"mean shrinkage weight {mean_w:.1%} toward structural targets "
+          f"(T0={SHRINK_T0}w). MV benchmark uses the same shrunk moments.")
 
     drift = inv_mean - uniform_mean
     print("FFR vs uniform weekly mean drift (DFUS, DFAI, DFAE, dY, dSpread, MMKT):",
@@ -539,9 +562,10 @@ def main() -> None:
     )
     _tick("judging (5 paired seeds)")
     print("\n=== Judge (out-of-sample, paired seeds, liability-adjusted CE in $) ===")
-    print("(judge scenarios come from the full-sample Gaussian; a state-conditioned prior "
-          "earns nothing there unless the state truly predicts - FFR's value is a "
-          "real-data, non-stationarity property, and any CE gap below is the cost of insurance)")
+    print("(judge scenarios are fresh pseudo-random Gaussian draws around the SAME shrunk "
+          "FFR-weighted moments - they measure estimation consistency, not model "
+          "misspecification; a state-conditioned prior earns nothing there unless the "
+          "state truly predicts, and any CE gap below is the cost of insurance)")
     summary = result.summary()
     for name in result.names:
         s = summary[name]
