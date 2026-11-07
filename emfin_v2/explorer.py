@@ -68,7 +68,7 @@ class Controls:
         if not np.isfinite(self.re_correlation) or not -1<=self.re_correlation<=1:raise ValueError('RE dependence must be -1 to 1')
         if not np.isfinite(self.re_haircut) or not 0<=self.re_haircut<100:raise ValueError('RE sale haircut must be 0 to below 100%')
         if not np.isfinite(self.stress_increment) or not 0<=self.stress_increment<=10:raise ValueError('stress increment must be 0-10 percentage points')
-        if self.asset_views is not None and (len(self.asset_views)!=5 or any(not np.isfinite(v) or not -50<=v<=50 for v in self.asset_views)):raise ValueError('five expected horizon returns must be -50% to 50%')
+        if self.asset_views is not None and (not 1<=len(self.asset_views)<=64 or any(not np.isfinite(v) or not -50<=v<=50 for v in self.asset_views)):raise ValueError('expected horizon returns must be -50% to 50%')
         if type(self.recurring_months) is not int or not 0<=self.recurring_months<=60:raise ValueError('recurring months must be0-60')
         from emfin_v2.payouts import expand_recurring
         if self.recurring_months:expand_recurring(dict(amount=self.recurring_monthly_k*1000,months=self.recurring_months,first_week=self.recurring_first_week,spacing_weeks=self.recurring_spacing_weeks),self.horizon)
@@ -87,12 +87,12 @@ def base_inputs():
     return frame,mean,cov
 
 @lru_cache(maxsize=128)
-def compute(c=Controls()):
+def compute(c=Controls(),config_path=None):
     c.validate()
     if c.multiperiod:
         from emfin_v2.default_run import load_config,run
         from tempfile import TemporaryDirectory
-        config=load_config()
+        config=load_config(config_path) if config_path else load_config()
         config['scenario_tier']=c.scenario_tier
         if c.scenario_tier=='interactive':
             config.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.])
@@ -114,7 +114,9 @@ def compute(c=Controls()):
         config['view_spread']=.005*c.view/50
         config['sequential_ep']=c.sequential
         config['stress_mean_path_loss_increment']=c.stress_increment/100 if c.stress else 0.
-        config['market_return_views']={str(i):v/100 for i,v in enumerate(c.asset_views)} if c.asset_views is not None else {}
+        view_indices=config.get('asset_layout',{}).get('view_indices',list(range(5)))
+        if c.asset_views is not None and len(c.asset_views)!=len(view_indices):raise ValueError('expected horizon targets must match the active registry view membership')
+        config['market_return_views']={str(i):v/100 for i,v in zip(view_indices,c.asset_views)} if c.asset_views is not None else {}
         config['student_nu']=8. if c.student else None
         config['real_estate']['enabled']=c.real_estate
         config['real_estate'].update(holding_mode=c.re_holding_mode,fixed_weight=c.re_fixed/100)
@@ -188,7 +190,7 @@ def from_default(result):
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,re_holding_mode=cfg['real_estate'].get('holding_mode','minimum'),re_fixed=cfg['real_estate'].get('fixed_weight',.1)*100,
         re_sg_type=cfg['real_estate'].get('sg_property_type','All Residential'),re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
-        re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in range(5)) if cfg.get('market_return_views') else None),
+        re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in cfg.get('asset_layout',{}).get('view_indices',list(range(5)))) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.',
@@ -203,11 +205,12 @@ def template(result, static=False):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--port',type=int,default=8765);p.add_argument('--precompute',action='store_true');p.add_argument('--export',default=None)
+    p.add_argument('--config',default=None,help='Local config, including optional asset registry and private history manifest paths')
     args=p.parse_args()
     if args.precompute:
         for monthly in (125.,250.,500.):
             for budget in (.1,.2,1.):compute(Controls(recurring_monthly_k=monthly,budget=budget))
-    first=compute()
+    first=compute(Controls(),args.config)
     if args.export:
         Path(args.export).write_text(template(first,True));print(args.export);return
     class Handler(BaseHTTPRequestHandler):
@@ -232,7 +235,7 @@ def main():
                 else:
                     if data.get('payouts') is not None:data['payouts']=tuple(tuple(row) for row in data['payouts'])
                     if data.get('asset_views') is not None:data['asset_views']=tuple(data['asset_views'])
-                    result=compute(Controls(**data))
+                    result=compute(Controls(**data),args.config)
                 body=json.dumps(result).encode()
                 self.send_response(200)
             except Exception as e:

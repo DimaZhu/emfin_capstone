@@ -20,18 +20,25 @@ def write_report(result, output_dir='artifacts/report'):
     return dest
 
 
-def efficient_frontier(gross_samples, points=15):
+def efficient_frontier(gross_samples, points=15,minimum_weights=None,fixed_weights=None):
     """Long-only model mean/variance frontier, without liability constraints."""
     import cvxpy as cp
     r=np.asarray(gross_samples)-1
     mu=r.mean(0);cov=np.cov(r,rowvar=False)
-    w=cp.Variable(r.shape[1]);problem_min=cp.Problem(cp.Minimize(cp.quad_form(w,cp.psd_wrap(cov))),[cp.sum(w)==1,w>=0])
+    w=cp.Variable(r.shape[1]);constraints=[cp.sum(w)==1,w>=0]
+    from emfin_v2.toolbox.holdings import validate_fixed
+    fixed=validate_fixed(fixed_weights,r.shape[1],minimum_weights)
+    if minimum_weights is not None:constraints.append(w>=np.asarray(minimum_weights))
+    constraints.extend(w[i]==v for i,v in fixed.items())
+    problem_min=cp.Problem(cp.Minimize(cp.quad_form(w,cp.psd_wrap(cov))),constraints)
     problem_min.solve(solver='CLARABEL')
     if w.value is None:raise RuntimeError('minimum variance frontier failed')
     low=float(mu@w.value)
     rows=[]
-    for target in np.linspace(low,float(mu.max()),points):
-        problem=cp.Problem(cp.Minimize(cp.quad_form(w,cp.psd_wrap(cov))),[cp.sum(w)==1,w>=0,mu@w>=target])
+    free=[i for i in range(len(mu)) if i not in fixed]
+    high=sum(mu[i]*v for i,v in fixed.items())+(1-sum(fixed.values()))*max((mu[i] for i in free),default=0.)
+    for target in np.linspace(low,max(low,high),points):
+        problem=cp.Problem(cp.Minimize(cp.quad_form(w,cp.psd_wrap(cov))),constraints+[mu@w>=target])
         problem.solve(solver='CLARABEL')
         if w.value is None:continue
         rows.append(dict(risk=float(np.sqrt(max(w.value@cov@w.value,0))),mean=float(mu@w.value)))

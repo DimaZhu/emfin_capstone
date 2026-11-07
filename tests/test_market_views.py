@@ -28,5 +28,5 @@ def test_view_validation(v):
 
 def test_controls_hashable_and_invalid_targets_rejected():
     assert hash(Controls(asset_views=(1.,2.,3.,4.,5.)))
-    with pytest.raises(ValueError):Controls(asset_views=(1.,2.)).validate()
+    with pytest.raises(ValueError):Controls(asset_views=()).validate()
     with pytest.raises(ValueError):Controls(stress_increment=11).validate()

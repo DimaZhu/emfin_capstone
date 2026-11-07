@@ -6,7 +6,7 @@ from emfin_v2.toolbox import mpep
 def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     selected='proposed' if 'proposed' in allocations else None
     h=c['horizon_weeks'];wealth=c['wealth']
-    result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=[6] if len(assets)==7 and c['real_estate']['enabled'] else [],
+    result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(assets)==7 and c['real_estate']['enabled'] else []),
         status={k:status[k] for k in ('kind','risky_fraction','optimality_claim','reason') if k in status},confidence=c['confidence'],loss_budget=c['loss_budget'],cml_budget=c['cml_budget'],
         cash_index=c['cash_index'],wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],profile=c.get('risk_profile','Balanced'),
         liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
@@ -21,6 +21,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])/len(assets)
     smallest=min(p['amount']*c['funding_budget_fraction'] for p in c['liabilities'])
     result['budget_warning']=f'Incompatible risk settings: W1 buffer is at least ${lower_buffer:,.0f}, above the smallest per-payment tail-gap budget ${smallest:,.0f}. No solver can fix this parameter conflict.' if lower_buffer>smallest+1e-8 else None
+    result['history_evidence']=c.get('history_evidence')
     result['scenario_tier']=c.get('scenario_tier','full')
     result['scenario_counts']={k:c[k] for k in ('train_scenarios','validation_scenarios','evaluation_scenarios','validation_seeds','evaluation_seeds')}
     result['recurring_payout']=c.get('recurring_payout')
@@ -67,12 +68,14 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     # Equality constraints are met, not economically binding inequality budgets.
     for g in guards[-2:]:
         if g['state']!='Breached':g['state']='Met'
-    if len(w)>6:
+    property_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(w)==7 else [])
+    if property_indices:
+        re_index=property_indices[0]
         if c['real_estate'].get('holding_mode')=='fixed':
-            g=guard('Fixed RE holding',abs(c['real_estate']['fixed_weight']-w[6]),0.,'Fixed initial capital fraction, not an optimized RE weight or ongoing rebalancing')
+            g=guard('Fixed RE holding',abs(c['real_estate']['fixed_weight']-w[re_index]),0.,'Fixed initial capital fraction, not an optimized RE weight or ongoing rebalancing')
             if g['state']!='Breached':g['state']='Met'
             guards.append(g)
-        else:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[6],0.,'Minimum holding, NOT an illiquid-asset cap'))
+        else:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[re_index],0.,'Minimum holding, NOT an illiquid-asset cap'))
     for i in range(len(c['liabilities'])):
         current=row['wasserstein_gap_upper'][i]
         g=guard('Held-out funding: week '+str(c['liabilities'][i]['week']),current,row['budgets'][i],'Conditional batch-mean upper interval plus W1 buffer; no distribution-coverage guarantee','usd')
@@ -83,7 +86,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
            ('Stagflation shock',[-.25,-.25,-.30,-.10,-.15,0.,-.20],1.),
            ('Business liquidity-call proxy',[-.15,-.15,-.20,-.05,-.08,0.,-.15],1.2)]
     shocks=[]
-    if len(w) not in (6,7) or c['cash_index']!=5:specs=[]
+    if c.get('asset_registry') or len(w) not in (6,7) or c['cash_index']!=5:specs=[]
     for name,shock,last_call in specs:
         changes=np.asarray(shock[:len(w)])
         growth=np.mean(draw[4],axis=0)
