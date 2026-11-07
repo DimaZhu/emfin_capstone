@@ -228,7 +228,9 @@ def solve(c,draw,q,qs,mult):
     except RuntimeError as err:
         # Cash is not assumed feasible: require pointwise budgets, a stronger
         # check than any scenario weighting or convex mixture of posteriors.
-        a=np.zeros(d);a[c['cash_index']]=c['wealth']
+        mins=np.asarray(c.get('minimum_weights') if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else np.zeros(d),float)
+        if mins.shape!=(d,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:raise ValueError('invalid minimum holdings')
+        a=mins*c['wealth'];a[c['cash_index']]+=(1-mins.sum())*c['wealth']
         gap,_=metrics(c,draw,a)
         portfolio=paths@a/c['wealth']
         max_loss=float(np.maximum(0,1-portfolio).max())
@@ -238,9 +240,10 @@ def solve(c,draw,q,qs,mult):
             for j in range(len(steps)):
                 if steps[j]<steps[i] or (steps[j]==steps[i] and j<i):
                     need+=amounts[:,j]*growth[:,steps[i]-1]/growth[:,steps[j]-1]
-            pointwise.append(float(np.maximum(need-funding_paths(draw)[:,steps[i]-1]@a,0).max()) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
-        if (not c.get('minimum_weights') or all(v==0 for j,v in enumerate(c['minimum_weights']) if j!=c['cash_index'])) and (d!=7 or c['real_estate']['minimum_weight']==0) and all(pointwise) and max_loss+dro_buffer(c,a,False)/c['wealth']<=min(c['loss_budget'],c['cml_budget']):
-            return a,dict(kind='verified pointwise cash fallback',reason=str(err))
+            pointwise.append(float(np.maximum(need-funding_paths(draw)[:,steps[i]-1]@a,0).max())+dro_buffer(c,a) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
+        if all(pointwise) and max_loss+dro_buffer(c,a,False)/c['wealth']<=min(c['loss_budget'],c['cml_budget']):
+            kind='verified pointwise minimum-holdings fallback' if np.any(mins[np.arange(d)!=c['cash_index']]>0) else 'verified pointwise cash fallback'
+            return a,dict(kind=kind,reason=str(err),optimality_claim=False)
         return None,dict(kind='unavailable',reason=str(err),cash_fallback_rejected=True)
 
 

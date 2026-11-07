@@ -188,7 +188,7 @@ def from_default(result):
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.',
-        seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture') else {'proposed':result['status']['kind']},
+        seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture','verified pointwise cash fallback','verified pointwise minimum-holdings fallback') else {'proposed':result['status']['kind']},
         caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE source and sale/rent assumptions are explicit; no measured cross-asset dependence. '+result['caveats'][0])
 
 
