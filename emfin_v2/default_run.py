@@ -72,6 +72,8 @@ def validate_config(config):
     validate(c['wasserstein_radius'],c['wasserstein_liability_scale'])
     from emfin_v2.innovations import validate as validate_innovations
     validate_innovations(c)
+    from emfin_v2.utilities import KINDS
+    if c.get('objective_kind','cara') not in KINDS:raise ValueError('unknown allocation objective')
     c.setdefault('funding_mode','tail_allowance')
     if c['funding_mode'] not in ('tail_allowance','pay_all_99'):raise ValueError('unknown funding mode')
     c.setdefault('radius_calibration_mode','manual')
@@ -274,7 +276,7 @@ def solve(c,draw,q,qs,mult):
             stress_probabilities=[qs],funding_stress_probabilities=[qs],
             wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),wasserstein_metric=c.get('wasserstein_metric','legacy_l1'),
             funding_market_paths=funding_paths(draw),
-            minimum_weights=mins,fixed_weights=fixed,objective_kind=c.get('objective_kind','cara'))
+            minimum_weights=mins,fixed_weights=fixed,objective_kind=c.get('objective_kind','cara'),utility_settings=c.get('utility_settings'))
         return a,dict(kind='optimized',**diag)
     except RuntimeError as err:
         # Cash is not assumed feasible: require pointwise budgets, a stronger
@@ -433,6 +435,10 @@ def run(c,output='artifacts/default'):
             rows[-1]['execution_audit']=summarize_execution(c,evaluation,a)
         except ValueError as error:
             rows[-1]['execution_audit']=dict(available=False,error=str(error),scope='Execution audit unavailable, not passed.')
+        if c.get('objective_kind','cara')!='mean_variance':
+            from emfin_v2.utilities import native_ce
+            gross=np.concatenate([v[0][:,-1]@a for v in evaluation]);provision=np.concatenate([sum(v[1][:,i]*v[4][:,-1]/v[4][:,step-1] for i,step in enumerate(v[2])) for v in evaluation]);p_native=np.concatenate([p/len(evaluation) for p in evaluation_nominal])
+            rows[-1]['native_utility']=native_ce(c.get('objective_kind','cara'),gross,gross-provision,p_native,c['wealth'],c['risk_tolerance'],provision,c.get('utility_settings'))
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
         v=evaluation[0];values=v[0]@a
         paid=np.zeros_like(values)

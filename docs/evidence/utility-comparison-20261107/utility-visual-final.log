@@ -1,0 +1,89 @@
+desktop overflow False errors []
+domain text CHECK STRESS TEST, NOT USER PAYMENTS
+
+CARA surplus
+
+-exp(-X/T)
+
+Risk-adjusted surplus after payments; constant dollar absolute aversion.
+
+Ignores/limits: No special increase in aversion near payment floor. No direct path/consumption preference.
+
+T=$10M (10% of starting wealth)
+
+NO validation candidate; raw final FAIL
+
+Cash 35.5% · candidate fraction raw. Paid all 34.5%; reference lower 95% 32.5%.
+
+Common CARA net-ledger CE $8.107M. Mean ledger net $9.222M.
+
+Native terminal surplus after payments CE: $8.037M. Do not rank native gross/net values together.
+
+Raw solve and final failures
+
+CHECK STRESS TEST, NOT USER PAYMENTS
+
+CRRA gross
+
+(G/W0)^(1-gamma)/(1-gamma)
+
+Relative-risk preference on total marked terminal wealth.
+
+Ignores/limits: Payment reserve absent from objective, but present in shared constraints. Domain G>0.
+
+gamma=10.00
+
+NO validation candidate; raw final FAIL
+
+Cash 35.5% · candidate fraction raw. Paid all 34.5%; reference lower 95% 32.5%.
+
+Common CARA net-ledger CE $8.107M. Mean ledger net $9.222M.
+
+Native gross terminal marked wealth CE: $103.067M. Do not rank native gross/net values together.
+
+Raw solve and final failures
+
+CHECK STRESS TEST, NOT USER PAYMENTS
+
+HARA payment floor
+
+((G-L)/S0)^(1-gamma)/(1-gamma)
+
+Surplus above the terminal payment reserve, cautious near floor.
+
+Ignores/limits: Undefined at/below floor; training feasibility is not all-support admissibility. Same as CRRA on net surplus at matched gamma.
+
+gamma=0.5000; floor $95.0M
+
+NO validation candidate; raw final FAIL
+
+Cash 35.5% · candidate fraction raw. Paid all 34.5%; reference lower 95% 32.5%.
+
+Common CARA net-ledger CE $8.107M. Mean ledger net $9.222M.
+
+Native terminal surplus after payments CE: UNAVAILABLE (30 domain failures). Do not rank native gross/net values together.
+
+Raw solve and final failures
+
+CHECK STRESS TEST, NOT USER PAYMENTS
+
+Kinked shortfall
+
+X/W0 - 4*max(-X/W0,0)
+
+Ending surplus; marginal downside penalty5times upside below target.
+
+Ignores/limits: Risk-neutral above target. Not an all-payment probability objective or S-shaped prospect theory.
+
+Downside/upside marginal slope 5:1
+
+NO validation candidate; raw final FAIL
+
+Cash 36.8% · candidate fraction raw. Paid all 34.3%; reference lower 95% 32.4%.
+
+Common CARA net-ledger CE $8.079M. Mean ledger net $9.209M.
+
+Native terminal surplus after payments CE: $9.013M. Do not rank native gross/net values together.
+
+Raw solve and final failures
+mobile overflow False

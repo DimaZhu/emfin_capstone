@@ -1,0 +1,7 @@
+Processing /tmp/utility-final-wheel/emfin_v2-2.1.0-py3-none-any.whl
+Installing collected packages: emfin-v2
+  Attempting uninstall: emfin-v2
+    Found existing installation: emfin-v2 2.1.0
+    Uninstalling emfin-v2-2.1.0:
+      Successfully uninstalled emfin-v2-2.1.0
+Successfully installed emfin-v2-2.1.0

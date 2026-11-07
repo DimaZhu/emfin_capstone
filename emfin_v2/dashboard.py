@@ -22,6 +22,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])*(max(1.,c.get('wasserstein_liability_scale',.01)) if c.get('wasserstein_metric')=='max_path' else max(1/len(assets),c.get('wasserstein_liability_scale',.01)))
     smallest=min(p['amount']*c['funding_budget_fraction'] for p in c['liabilities'])
     result['budget_warning']=f'Incompatible risk settings: W1 buffer is at least ${lower_buffer:,.0f}, above the smallest per-payment tail-gap budget ${smallest:,.0f}. No solver can fix this parameter conflict.' if lower_buffer>smallest+1e-8 else None
+    result['objective_kind']=c.get('objective_kind','cara')
     result['funding_mode']=c.get('funding_mode','tail_allowance')
     result['radius_calibration']=c.get('radius_calibration')
     result['registry_mode']=bool(c.get('asset_registry'))
@@ -58,6 +59,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     cmls=[mpep.cml_of_paths(train_loss,p,c['confidence']) for p in (q,qs)]
     row=next(r for r in rows if r['method']==selected)
     result['strict_funding']=row['evaluation'].get('strict_funding')
+    result['native_utility']=row.get('native_utility')
     def guard(name,current,limit,note,unit='fraction'):
         tolerance=max(1e-7,abs(limit)*.01)
         state='Breached' if current>limit+tolerance else 'Binding' if current>=limit-tolerance else 'Met'

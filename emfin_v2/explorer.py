@@ -31,6 +31,7 @@ def validate_server_work(config):
 class Controls:
     liability: float=3.
     budget: float=20.
+    objective_kind: str='cara'
     funding_mode: str='tail_allowance'
     radius_calibration_mode: str='manual'
     view: float=50.
@@ -71,6 +72,7 @@ class Controls:
 
 
     def validate(self):
+        if self.objective_kind not in ('cara','crra_gross','hara_payment_floor','kinked_shortfall','mean_variance'):raise ValueError('unknown utility choice')
         if self.funding_mode not in ('tail_allowance','pay_all_99'):raise ValueError('unknown funding mode')
         if self.radius_calibration_mode not in ('manual','past_empirical'):raise ValueError('unknown radius calibration mode')
         if not 0<=self.liability<=105 or not .01<=self.budget<=50 or not 0<=self.view<=100:
@@ -129,6 +131,7 @@ def compute(c=Controls(),config_path=None):
         config['one_off_liabilities']=one_off
         config['liabilities']=expand_recurring(config['recurring_payout'],c.horizon,one_off)
         if not config['liabilities']:config['liabilities']=[dict(name='No payment',week=c.horizon,amount=0)]
+        config['objective_kind']=c.objective_kind
         config['funding_mode']=c.funding_mode
         config['radius_calibration_mode']=c.radius_calibration_mode if c.dro else 'manual'
         config['funding_budget_fraction']=c.budget/100
@@ -207,7 +210,8 @@ def from_default(result):
         rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][i],
             gap_upper=check['upper'] if check else r['wasserstein_gap_upper'][i],stress_gap=r['stressed_gap_cvar']['mean'][i],nominal_gap=r['training_gap'][i],budget=r['budgets'][i],week=int(cfg['liabilities'][i]['week']),overall_pass=r.get('overall_pass',False),verified=bool(judge)))
     selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
-    return dict(strict_tradeoff=result.get('strict_tradeoff',[]),controls=dict(funding_mode=cfg.get('funding_mode','tail_allowance'),radius_calibration_mode=cfg.get('radius_calibration_mode','manual'),scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
+    from emfin_v2.utility_science import load as load_utility_science
+    return dict(utility_science=load_utility_science(),strict_tradeoff=result.get('strict_tradeoff',[]),controls=dict(objective_kind=cfg.get('objective_kind','cara'),funding_mode=cfg.get('funding_mode','tail_allowance'),radius_calibration_mode=cfg.get('radius_calibration_mode','manual'),scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         fat_tails=cfg.get('scenario_model','legacy_student_t' if cfg['student_nu'] is not None else 'gaussian')!='gaussian',sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,

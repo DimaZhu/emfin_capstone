@@ -146,3 +146,10 @@ cash-first payment event; `radius_calibration_mode="past_empirical"` adds a
 past-path W1 stress policy. Neither is a guarantee. The empirical radius
 currently conflicts with existing budgets. Both are labelled alternatives;
 defaults unchanged. See [results](docs/STRICT_FUNDING_RESULTS.md).
+
+Utility alternatives (opt-in): `crra_gross`, `hara_payment_floor`,
+`kinked_shortfall`, alongside default `cara`. The dashboard Research and
+science section compares the confirmed$250k/month plan plus labelled payment
+sensitivities and secondary check stress tests. Native gross/surplus CEs are
+not interchangeable. No utility winner is established. See
+[utility findings](docs/UTILITY_COMPARISON_RESULTS.md).

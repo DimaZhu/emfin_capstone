@@ -306,6 +306,7 @@ def optimization_multiperiod(
     wasserstein_radius: float = 0.,
     wasserstein_metric: str = 'legacy_l1',
     objective_kind: str = 'cara',
+    utility_settings: dict | None = None,
     wasserstein_liability_scale: float = .01,
     funding_market_paths: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
@@ -472,6 +473,10 @@ def optimization_multiperiod(
         centered=rel_net-probs@rel_net
         objective=-probs@rel_net+cp.sum(cp.multiply(probs,cp.square(centered)))/(2*rel_risk_tolerance)
     elif objective_kind=='cara':objective=expected_disutility
+    elif objective_kind in ('crra_gross','hara_payment_floor','kinked_shortfall'):
+        from emfin_v2.utilities import convex_objective
+        objective,domain_constraints,utility_spec=convex_objective(value_terminal,rel_net,probs,wealth,risk_tolerance,provision,objective_kind,utility_settings)
+        constraints.extend(domain_constraints)
     else:raise ValueError('unknown allocation objective')
     problem = cp.Problem(cp.Minimize(objective), constraints)
     formulation='log_cara' if objective_kind=='cara' else objective_kind
@@ -502,6 +507,10 @@ def optimization_multiperiod(
         "weights": weights.value.copy(),
         "funding_presolve_certificates": funding_certificates,
     }
+    if objective_kind in ('cara','crra_gross','hara_payment_floor','kinked_shortfall'):
+        from emfin_v2.utilities import native_ce
+        diagnostics['native_utility']=native_ce(objective_kind,np.asarray(value_terminal.value)*wealth,np.asarray(rel_net.value)*wealth,probs,wealth,risk_tolerance,provision,utility_settings)
+    diagnostics['cara_ce_at_solution']=diagnostics['ce_in_solver']
     return allocations, diagnostics
 
 

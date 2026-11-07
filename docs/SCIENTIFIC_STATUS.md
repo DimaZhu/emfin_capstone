@@ -95,3 +95,11 @@ a tail allowance into an economic guarantee or integrate the ledger optimizer.
 Strict funding and final all-risk verdicts can disagree. `past_empirical` W1
 radius currently conflicts with funding budgets, without truncation or fallback.
 See STRICT_FUNDING_RESULTS.md. Defaults unchanged.
+
+## Utility preferences (7 November2026)
+Four labelled objectives now have prespecified same-path/same-judge comparison.
+Confirmed250k/month leads findings; nearby sizes are sensitivities and extreme
+fixtures are check stress tests, not user obligations. Hard risk constraints
+dominate current results. Raw HARA final domain violations are preserved.
+See UTILITY_COMPARISON_PROTOCOL.md and UTILITY_COMPARISON_RESULTS.md. No
+CARA/default promotion or risk-budget change.
