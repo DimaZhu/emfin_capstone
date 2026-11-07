@@ -1,6 +1,6 @@
 """Build/install V2 and run it outside the checkout.
 
-Uses a temporary venv with existing runtime dependencies, not the source package.
+Uses a fresh temporary venv with independently installed runtime dependencies.
 No publishing or upstream access. Every imported V2 file must be in that venv.
 """
 from pathlib import Path
@@ -10,7 +10,12 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def run(args,cwd,env):
-    return subprocess.run([str(a) for a in args],cwd=cwd,env=env,check=True,text=True,capture_output=True)
+    result = subprocess.run([str(a) for a in args],cwd=cwd,env=env,text=True,capture_output=True)
+    if result.returncode:
+        print(result.stdout, file=sys.stderr)
+        print(result.stderr, file=sys.stderr)
+        result.check_returncode()
+    return result
 
 
 def main():
@@ -19,10 +24,11 @@ def main():
         env=os.environ.copy();env.pop('PYTHONPATH',None)
         build=run([sys.executable,'-m','pip','wheel',ROOT,'--no-deps','--no-build-isolation','--wheel-dir',wheel_dir],root,env)
         wheel=next(wheel_dir.glob('emfin_v2-*.whl'))
-        venv_dir=root/'venv';venv.create(venv_dir,with_pip=True,system_site_packages=True)
+        venv_dir=root/'venv';venv.create(venv_dir,with_pip=True)
         bindir=venv_dir/('Scripts' if os.name=='nt' else 'bin')
         python=bindir/('python.exe' if os.name=='nt' else 'python')
-        run([python,'-m','pip','install','--no-deps',wheel],root,env)
+        run([python,'-m','pip','install','--upgrade','pip>=26.2','setuptools>=84.1','wheel>=0.48'],root,env)
+        run([python,'-m','pip','install',wheel],root,env)
         work=root/'outside-clone';work.mkdir()
         probe=run([python,'-c',"import emfin_v2,json; from emfin_v2.default_run import DEFAULT_CONFIG; from emfin_v2.toolbox.raw_data import series_file; print(json.dumps(dict(version=emfin_v2.__version__,module=emfin_v2.__file__,config=str(DEFAULT_CONFIG),data=str(series_file('DGS3MO')))))"],work,env)
         info=json.loads(probe.stdout)

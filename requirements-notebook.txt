@@ -1,0 +1,8 @@
+# OPTIONAL: requires Python 3.11+ because patched Tornado 6.6 does.
+# Do not lower the Tornado floor to make Python 3.10 resolve.
+-r requirements-data.txt
+notebook==7.6.3
+jupyterlab>=4.6.4,<5
+tornado>=6.6,<7
+
+nbconvert>=7.17.2
