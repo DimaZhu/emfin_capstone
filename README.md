@@ -140,3 +140,9 @@ The [bounded annual volatility research model](docs/BOUNDED_VOLATILITY.md) adds
 conditional variance with a declared finite-moment cap. It does not replace
 the default or change funding limits. Its annual and cross-law failures are
 part of the evidence, not hidden by a model switch.
+
+Optional research modes: `funding_mode="pay_all_99"` screens the joint all-date
+cash-first payment event; `radius_calibration_mode="past_empirical"` adds a
+past-path W1 stress policy. Neither is a guarantee. The empirical radius
+currently conflicts with existing budgets. Both are labelled alternatives;
+defaults unchanged. See [results](docs/STRICT_FUNDING_RESULTS.md).

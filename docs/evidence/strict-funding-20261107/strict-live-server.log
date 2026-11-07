@@ -1,0 +1,12 @@
+/tmp/tmpbnnq9xbf/report.md optimized 0.52s
+Local explorer: http://127.0.0.1:8779
+127.0.0.1 - - [07/Nov/2026 22:51:26] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Nov/2026 22:51:27] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [07/Nov/2026 22:51:27] code 404, message Not Found
+127.0.0.1 - - [07/Nov/2026 22:51:27] "GET /favicon.ico HTTP/1.1" 404 -
+/tmp/tmpy9w63ex9/report.md optimized 0.62s
+127.0.0.1 - - [07/Nov/2026 22:51:28] "POST /compute HTTP/1.1" 200 -
+/tmp/tmpni_93jpk/report.md no calibration candidate passed 0.29s
+127.0.0.1 - - [07/Nov/2026 22:51:29] "POST /compute HTTP/1.1" 200 -
+/tmp/tmpspg72coc/report.md optimized 0.56s
+127.0.0.1 - - [07/Nov/2026 22:51:29] "POST /run-config HTTP/1.1" 200 -

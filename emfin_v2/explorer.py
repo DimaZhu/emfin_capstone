@@ -31,6 +31,8 @@ def validate_server_work(config):
 class Controls:
     liability: float=3.
     budget: float=20.
+    funding_mode: str='tail_allowance'
+    radius_calibration_mode: str='manual'
     view: float=50.
     fat_tails: bool=True
     sequential: bool=True
@@ -69,6 +71,8 @@ class Controls:
 
 
     def validate(self):
+        if self.funding_mode not in ('tail_allowance','pay_all_99'):raise ValueError('unknown funding mode')
+        if self.radius_calibration_mode not in ('manual','past_empirical'):raise ValueError('unknown radius calibration mode')
         if not 0<=self.liability<=105 or not .01<=self.budget<=50 or not 0<=self.view<=100:
             raise ValueError('controls outside supported range')
         if self.re_holding_mode not in ('fixed','minimum') or not np.isfinite(self.re_fixed) or not 0<=self.re_fixed<=100:raise ValueError('invalid RE holding mode/percentage')
@@ -77,7 +81,7 @@ class Controls:
         if self.scenario_tier not in ('interactive','full'):raise ValueError('unknown scenario tier')
         if self.profile not in ('Preserve','Balanced','Growth','Aggressive'):raise ValueError('unknown risk profile')
         if self.re_source not in ('singapore_ura','abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
-        if not np.isfinite(self.dro_radius) or not 0<=self.dro_radius<=.001:raise ValueError('Wasserstein radius must be 0-.001')
+        if not np.isfinite(self.dro_radius) or self.dro_radius<0 or (self.radius_calibration_mode=='manual' and self.dro_radius>.001):raise ValueError('Wasserstein radius must be 0-.001')
         from emfin_v2.real_estate import validate
         validate(dict(sg_property_type=self.re_sg_type,smoothing_alpha=self.re_alpha,net_rental_yield=self.re_rent/100,sale_week=self.re_sale_week,sale_delay_weeks=self.re_sale_delay,history_case=self.re_history,forward_mode=self.re_forward_mode,forward_log_drift=self.re_forward_drift/100))
         if not np.isfinite(self.re_correlation) or not -1<=self.re_correlation<=1:raise ValueError('RE dependence must be -1 to 1')
@@ -125,6 +129,8 @@ def compute(c=Controls(),config_path=None):
         config['one_off_liabilities']=one_off
         config['liabilities']=expand_recurring(config['recurring_payout'],c.horizon,one_off)
         if not config['liabilities']:config['liabilities']=[dict(name='No payment',week=c.horizon,amount=0)]
+        config['funding_mode']=c.funding_mode
+        config['radius_calibration_mode']=c.radius_calibration_mode if c.dro else 'manual'
         config['funding_budget_fraction']=c.budget/100
         config['view_spread']=.005*c.view/50
         config['sequential_ep']=c.sequential
@@ -201,7 +207,7 @@ def from_default(result):
         rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][i],
             gap_upper=check['upper'] if check else r['wasserstein_gap_upper'][i],stress_gap=r['stressed_gap_cvar']['mean'][i],nominal_gap=r['training_gap'][i],budget=r['budgets'][i],week=int(cfg['liabilities'][i]['week']),overall_pass=r.get('overall_pass',False),verified=bool(judge)))
     selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
-    return dict(controls=dict(scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
+    return dict(strict_tradeoff=result.get('strict_tradeoff',[]),controls=dict(funding_mode=cfg.get('funding_mode','tail_allowance'),radius_calibration_mode=cfg.get('radius_calibration_mode','manual'),scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         fat_tails=cfg.get('scenario_model','legacy_student_t' if cfg['student_nu'] is not None else 'gaussian')!='gaussian',sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,

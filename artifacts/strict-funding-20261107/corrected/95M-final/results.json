@@ -1,0 +1,3745 @@
+{
+  "strict_tradeoff": [
+    {
+      "multiplier": 1.0,
+      "candidate_fraction": 1.0,
+      "cash_weight": 0.35541353505487233,
+      "net_ce": 7980019.1462777015,
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 274,
+        "reference_fraction": 0.3425,
+        "reference_lower95": 0.31474181940138896,
+        "weighted": {
+          "nominal": {
+            "mean": 0.3452219743993604,
+            "minimum_batch": 0.301142213899832,
+            "batches": [
+              0.3527408084850791,
+              0.3866893725839575,
+              0.301142213899832,
+              0.3403155026285728
+            ]
+          },
+          "stressed": {
+            "mean": 0.3253606901022301,
+            "minimum_batch": 0.28667528708018686,
+            "batches": [
+              0.3287984525440899,
+              0.36301292952527103,
+              0.28667528708018686,
+              0.3229560912593726
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.7133247129198131,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 11508432.476513118,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "validation_budget_passed": true,
+      "weights": [
+        0.1832491511264094,
+        3.9876075266201085e-11,
+        7.0003190463318665e-09,
+        0.3613373066909416,
+        0.35541353505487233,
+        0.09999999999027058
+      ],
+      "selected": false
+    },
+    {
+      "multiplier": 1.0,
+      "candidate_fraction": 0.75,
+      "cash_weight": 0.49156015129115427,
+      "net_ce": 7461629.691680213,
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 154,
+        "reference_fraction": 0.1925,
+        "reference_lower95": 0.1698143191623067,
+        "weighted": {
+          "nominal": {
+            "mean": 0.19329656944449497,
+            "minimum_batch": 0.1581372676526949,
+            "batches": [
+              0.2082402175305842,
+              0.20654618951002596,
+              0.1581372676526949,
+              0.20026260308467478
+            ]
+          },
+          "stressed": {
+            "mean": 0.17884947375783275,
+            "minimum_batch": 0.14575014267744174,
+            "batches": [
+              0.19118445923915622,
+              0.1915083039227907,
+              0.14575014267744174,
+              0.1869549891919423
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.8542498573225583,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 9881324.35738483,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "validation_budget_passed": true,
+      "weights": [
+        0.13743686334480704,
+        2.990705644965081e-11,
+        5.2502392847489e-09,
+        0.2710029800182062,
+        0.49156015129115427,
+        0.09999999999270294
+      ],
+      "selected": false
+    },
+    {
+      "multiplier": 1.0,
+      "candidate_fraction": 0.5,
+      "cash_weight": 0.6277067675274361,
+      "net_ce": 6857424.60554339,
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 47,
+        "reference_fraction": 0.05875,
+        "reference_lower95": 0.045680021399813406,
+        "weighted": {
+          "nominal": {
+            "mean": 0.05924792320387744,
+            "minimum_batch": 0.055059977995213394,
+            "batches": [
+              0.06457793594420252,
+              0.05582236495203899,
+              0.06153141392405484,
+              0.055059977995213394
+            ]
+          },
+          "stressed": {
+            "mean": 0.053784130235197056,
+            "minimum_batch": 0.049825388124154775,
+            "batches": [
+              0.056712193929079904,
+              0.05173643036068065,
+              0.056862508526872885,
+              0.049825388124154775
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.9543199786001866,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 8254216.238256559,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "validation_budget_passed": true,
+      "weights": [
+        0.0916245755632047,
+        1.9938037633100543e-11,
+        3.5001595231659333e-09,
+        0.1806686533454708,
+        0.6277067675274361,
+        0.09999999999513529
+      ],
+      "selected": false
+    },
+    {
+      "multiplier": 1.0,
+      "candidate_fraction": 0.25,
+      "cash_weight": 0.763853383763718,
+      "net_ce": 6164885.618074161,
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 0,
+        "reference_fraction": 0.0,
+        "reference_lower95": 0.0,
+        "weighted": {
+          "nominal": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "stressed": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 1.0,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 6627108.119128287,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "validation_budget_passed": true,
+      "weights": [
+        0.04581228778160235,
+        9.969018816550271e-12,
+        1.7500797615829666e-09,
+        0.0903343266727354,
+        0.763853383763718,
+        0.09999999999756765
+      ],
+      "selected": false
+    },
+    {
+      "multiplier": 1.0,
+      "candidate_fraction": 0.0,
+      "cash_weight": 0.9,
+      "net_ce": 5381386.857323873,
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 0,
+        "reference_fraction": 0.0,
+        "reference_lower95": 0.0,
+        "weighted": {
+          "nominal": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "stressed": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 1.0,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 5000000.0,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "validation_budget_passed": true,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "selected": false
+    }
+  ],
+  "innovation_evidence": {
+    "model": "gaussian_scale_mixture",
+    "price_exponential_moments": "finite at all finite orders for linear Gaussian-mixture log paths",
+    "mixture": {
+      "probabilities": [
+        0.9,
+        0.1
+      ],
+      "variance_scales": [
+        0.75,
+        3.25
+      ]
+    },
+    "scope": "Development-selected iid weekly variance mixture, not fitted regimes, not Student-t and not FHS. Log covariance preserved. A common state couples listed assets, FX and property shocks."
+  },
+  "frontier": [
+    {
+      "risk": 0.018301919560749582,
+      "mean": 0.007345021634206873
+    },
+    {
+      "risk": 0.022564073077436318,
+      "mean": 0.016807782495797632
+    },
+    {
+      "risk": 0.02955968813646753,
+      "mean": 0.02627148515152636
+    },
+    {
+      "risk": 0.037766068538363444,
+      "mean": 0.035735179298800684
+    },
+    {
+      "risk": 0.046547201798093914,
+      "mean": 0.04519887797682222
+    },
+    {
+      "risk": 0.055631579230518396,
+      "mean": 0.054662576450013836
+    },
+    {
+      "risk": 0.06489197048722505,
+      "mean": 0.06412627502856187
+    },
+    {
+      "risk": 0.07426758101039535,
+      "mean": 0.07358997466442697
+    },
+    {
+      "risk": 0.08492831352292521,
+      "mean": 0.08305367218434227
+    },
+    {
+      "risk": 0.09727248546258226,
+      "mean": 0.09251737238077387
+    },
+    {
+      "risk": 0.11073851742951776,
+      "mean": 0.10198106940074532
+    },
+    {
+      "risk": 0.12496428685182312,
+      "mean": 0.1114447680229035
+    },
+    {
+      "risk": 0.13974106310248258,
+      "mean": 0.12090846670706555
+    },
+    {
+      "risk": 0.16199022309471084,
+      "mean": 0.13037216528389287
+    },
+    {
+      "risk": 0.19380551076770666,
+      "mean": 0.13983586361151423
+    }
+  ],
+  "points": {
+    "1/N": {
+      "risk": 0.09091067381656281,
+      "mean": 0.07145658258179631
+    },
+    "shrunk MV": {
+      "risk": 0.0832502820147403,
+      "mean": 0.08167189909175233
+    },
+    "without posterior stress": {
+      "risk": 0.05064595879176833,
+      "mean": 0.04804099912095143
+    }
+  },
+  "label": "Private research: actual VTI/VWO/GLD/IEF histories, cash account, SGD property with USD FX. Not client-calibrated.",
+  "config": {
+    "label": "Private research: actual VTI/VWO/GLD/IEF histories, cash account, SGD property with USD FX. Not client-calibrated.",
+    "seed": 20261107,
+    "wealth": 100000000,
+    "horizon_weeks": 52,
+    "liabilities": [
+      {
+        "name": "Counterfactual95M",
+        "week": 52,
+        "amount": 95000000.0
+      }
+    ],
+    "liability_vol": 0.0,
+    "risk_tolerance": 10000000,
+    "confidence": 0.95,
+    "funding_budget_fraction": 0.2,
+    "loss_budget": 0.15,
+    "cml_budget": 0.06,
+    "student_nu": null,
+    "train_scenarios": 100,
+    "validation_scenarios": 200,
+    "evaluation_scenarios": 400,
+    "validation_seeds": 4,
+    "evaluation_seeds": 4,
+    "multiplier_grid": [
+      1.0
+    ],
+    "view_spread": 0.0,
+    "stress_mean_path_loss_increment": 0.01,
+    "liquidity_haircuts": [
+      0.001,
+      0.002,
+      0.001,
+      0.0005,
+      0.0
+    ],
+    "real_estate": {
+      "enabled": true,
+      "minimum_weight": 0.0,
+      "annual_drift": 0.04,
+      "annual_vol": 0.12,
+      "equity_correlation": 0.3,
+      "liquidation_haircut": 0.1,
+      "source": "singapore_ura",
+      "smoothing_alpha": 0.0,
+      "net_rental_yield": 0.0,
+      "sale_week": 0,
+      "sale_delay_weeks": 12,
+      "history_case": "central",
+      "forward_mode": "view",
+      "forward_log_drift": 0.04,
+      "sg_property_type": "All Residential",
+      "holding_mode": "fixed",
+      "fixed_weight": 0.1,
+      "history_end": "2026-10-30"
+    },
+    "client_evidence": {
+      "status": "illustrative",
+      "holdings": null,
+      "family_company": null,
+      "sources": []
+    },
+    "sequential_ep": true,
+    "view_vol_cap": null,
+    "wasserstein_radius": 2e-05,
+    "wasserstein_liability_scale": 0.01,
+    "recurring_payout": null,
+    "asset_registry": {
+      "schema_version": 1,
+      "status": "target universe; runtime supports private histories, default cutover blocked on VTI/VWO data",
+      "assets": [
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [
+            "equity"
+          ],
+          "cash": false,
+          "id": "us_equity",
+          "ticker": "VTI",
+          "name": "US equity",
+          "asset_class": "equity",
+          "haircut": 0.001,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.vanguardoffshore.com/en/product/etf/equity/0970/vanguard-total-stock-market-etf",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [
+            "equity"
+          ],
+          "cash": false,
+          "id": "em_equity",
+          "ticker": "VWO",
+          "name": "Emerging-market equity",
+          "asset_class": "equity",
+          "haircut": 0.002,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://workplace.vanguard.com/investments/product-details/fund/0964",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [],
+          "cash": false,
+          "id": "gold",
+          "ticker": "GLD",
+          "name": "Gold",
+          "asset_class": "gold",
+          "haircut": 0.001,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.spdrgoldshares.com/usa/gld/",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [],
+          "cash": false,
+          "id": "treasury",
+          "ticker": "IEF",
+          "name": "US Treasuries",
+          "asset_class": "treasury",
+          "haircut": 0.0005,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.ishares.com/us/products/etf-investments",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          },
+          "limitations": "IEF candidate for the requested Treasury sleeve, not the former synthetic ten-year bond. Historical total-return data are still required."
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "cash_account",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": false,
+          "factors": [],
+          "cash": true,
+          "id": "cash",
+          "ticker": null,
+          "name": "Cash / money market",
+          "asset_class": "cash_like",
+          "haircut": 0.0,
+          "source": {
+            "kind": "explicit_cash_rate",
+            "annual_rate": 0.0,
+            "status": "zero-rate uncalibrated placeholder"
+          },
+          "limitations": "Cash-account model, not SHV or guaranteed investable yield. Set explicit rate/currency and validate account terms before client use."
+        },
+        {
+          "enabled": true,
+          "currency": "SGD",
+          "return_model": "quarterly_property",
+          "liquidity": "planned_sale_only",
+          "minimum_weight": 0.0,
+          "mean_view": false,
+          "factors": [],
+          "cash": false,
+          "id": "sg_property",
+          "ticker": null,
+          "name": "Singapore URA All Residential",
+          "asset_class": "real_estate",
+          "haircut": 0.1,
+          "source": {
+            "kind": "ura_quarterly_index",
+            "url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+            "property_type": "All Residential",
+            "redistribution": "Singapore Open Data Licence with attribution"
+          },
+          "limitations": "Price index only, not rent/total return. Registry adapter converts SGD marks/rent/sale proceeds using the explicit SGD/USD factor. Legacy default is separately labelled if no FX model runs."
+        }
+      ],
+      "relative_mean_view": null,
+      "reporting_currency": "USD"
+    },
+    "history_bundle": "actual_etfs",
+    "history_end": "2026-10-30",
+    "scenario_model": "gaussian_scale_mixture",
+    "innovation_mixture": {
+      "probabilities": [
+        0.9,
+        0.1
+      ],
+      "variance_scales": [
+        0.75,
+        3.25
+      ]
+    },
+    "wasserstein_metric": "max_path",
+    "history_manifests": {
+      "us_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/us_equity-manifest.json",
+      "em_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/em_equity-manifest.json",
+      "gold": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/gold-manifest.json",
+      "treasury": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/treasury-manifest.json"
+    },
+    "funding_mode": "pay_all_99",
+    "radius_calibration_mode": "manual",
+    "cash_index": 4,
+    "view_instruments": [
+      0,
+      1
+    ],
+    "minimum_weights": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scenario_archives": null,
+    "asset_layout": {
+      "ids": [
+        "us_equity",
+        "em_equity",
+        "gold",
+        "treasury",
+        "cash",
+        "sg_property"
+      ],
+      "names": [
+        "US equity",
+        "Emerging-market equity",
+        "Gold",
+        "US Treasuries",
+        "Cash / money market",
+        "Singapore URA All Residential"
+      ],
+      "index": {
+        "us_equity": 0,
+        "em_equity": 1,
+        "gold": 2,
+        "treasury": 3,
+        "cash": 4,
+        "sg_property": 5
+      },
+      "cash_index": 4,
+      "liquid_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "property_indices": [
+        5
+      ],
+      "view_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "factor_indices": {
+        "equity": [
+          0,
+          1
+        ]
+      },
+      "minimum_weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "haircuts": [
+        0.001,
+        0.002,
+        0.001,
+        0.0005,
+        0.0,
+        0.1
+      ]
+    },
+    "asset_names": [
+      "US equity",
+      "Emerging-market equity",
+      "Gold",
+      "US Treasuries",
+      "Cash / money market",
+      "Singapore URA All Residential"
+    ],
+    "fx": {
+      "mean_policy": "zero",
+      "enabled": true
+    },
+    "scenario_tier": "bounded4batch strict diagnostic",
+    "cash_mix_grid": [
+      1.0,
+      0.75,
+      0.5,
+      0.25,
+      0.0
+    ],
+    "history_evidence": {
+      "label": "PRIVATE RESEARCH. Yahoo-adjusted ETF histories plus issuer Treasury NAV returns. Terms risk accepted; not cleared for public distribution. Parametric scenarios, not an actual-history backtest.",
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "weekly_returns": 1129,
+      "sources": [
+        {
+          "asset_id": "us_equity",
+          "source_url": "https://finance.yahoo.com/quote/VTI/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "e7222fa5bc257b56c6f1f81c0eafb4057f7a7a14e99c0f65e1e561defa1e0fa4"
+        },
+        {
+          "asset_id": "em_equity",
+          "source_url": "https://finance.yahoo.com/quote/VWO/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "99f2625bb86aa461631711b87fb6f316a818278a792b20986b9de7528a290d5b"
+        },
+        {
+          "asset_id": "gold",
+          "source_url": "https://finance.yahoo.com/quote/GLD/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "09badf00545dace214b5e532ddb99886eb140dcf91b291be9e3aeed31bdc054c"
+        },
+        {
+          "asset_id": "treasury",
+          "source_url": "https://www.blackrock.com/us/financial-professionals/products/239456/ishares-710-year-treasury-bond-etf",
+          "use_terms": "Personal non-commercial analysis only, notices retained in source workbook. No redistribution or public/commercial use.",
+          "sha256": "866f3b508fa05cf9416dc4c1d89e7740592d9fca950b6fa3ffc4647a06ddb8dd"
+        }
+      ]
+    },
+    "fx_evidence": {
+      "series": "RXI_N.B.SI",
+      "currency_pair": "SGD_per_USD",
+      "source_url": "https://www.federalreserve.gov/releases/h10/data/FRB_h10_xml.zip",
+      "release_page": "https://www.federalreserve.gov/releases/h10/hist/dat00_si.htm",
+      "terms_url": "https://www.federalreserve.gov/disclaimer.htm",
+      "attribution": "Source: Board of Governors of the Federal Reserve System (US), H.10 Foreign Exchange Rates.",
+      "use_terms": "Federal Reserve Board website information is public domain unless otherwise indicated. No exception marked for this series. Attribution requested. No logo or seal used.",
+      "prepared": "2026-11-02T16:52:42",
+      "first_date": "1981-01-02",
+      "last_date": "2026-10-30",
+      "observations": 11499,
+      "file": "sgd-per-usd.csv",
+      "sha256": "7597bf52e44fd46304d7556f24c0313b0750cc3833217a6ecee4acc41a8b2fd2",
+      "limitations": "SGD per USD noon New York buying rate for cable transfers. Reference rate, not executable spot or FX total return. Latest vintage, not point-in-time revision-safe data. FX return uses inverse quote: USD per SGD. No FX hedge, rate differential or conversion fee model.",
+      "annual_log_vol": 0.05024173219677656,
+      "annual_sample_log_drift": 0.010890738552295942,
+      "mean_policy": "zero",
+      "correlations": {
+        "us_equity": 0.40788496229963905,
+        "em_equity": 0.5762342430262468,
+        "gold": 0.4315965240625469,
+        "treasury": 0.09994959688669017
+      },
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "dependence_note": "Joint listed-ETF/FX covariance fitted on common weekly dates. Weekly property dependence is assumed through its user-set equity shock correlation; property/FX correlation is induced, not separately estimated from quarterly property data. Daily FX is NY noon while ETF NAV is close, so observations are not synchronous.",
+      "model_annual_log_vol": 0.050241732196776565,
+      "model_correlations": {
+        "us_equity": 0.39736912345525954,
+        "em_equity": 0.5613781267278841,
+        "gold": 0.42046936833891446,
+        "treasury": 0.09737275794785008
+      }
+    },
+    "invariance_evidence": {
+      "available": true,
+      "rows": [
+        {
+          "name": "us_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014024196749697667,
+          "late_mean": 0.0025549929254922695,
+          "early_vol": 0.025977394941897783,
+          "late_vol": 0.024024110957981,
+          "sample_skewness": -0.9885851179670224,
+          "sample_excess_kurtosis": 9.055984523808808,
+          "mean_shift_in_full_sample_sd": 0.046076190406745786,
+          "split_cdf_distance": 0.03460114228331135,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.07052763599901916,
+              "squared_returns": 0.3286983557475859
+            },
+            {
+              "lag": 4,
+              "returns": -0.02746958939324597,
+              "squared_returns": 0.16132523129728155
+            },
+            {
+              "lag": 8,
+              "returns": 0.04156541838977456,
+              "squared_returns": 0.06036885143474273
+            }
+          ]
+        },
+        {
+          "name": "em_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0009454539538046416,
+          "late_mean": 0.0014607828404532106,
+          "early_vol": 0.03654283944014308,
+          "late_vol": 0.02450127185924515,
+          "sample_skewness": -0.6918497311233737,
+          "sample_excess_kurtosis": 7.180610303426668,
+          "mean_shift_in_full_sample_sd": 0.016574188218000184,
+          "split_cdf_distance": 0.0923743174543401,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.032442081662946036,
+              "squared_returns": 0.343978004946072
+            },
+            {
+              "lag": 4,
+              "returns": -0.005618641576819779,
+              "squared_returns": 0.19681760069574356
+            },
+            {
+              "lag": 8,
+              "returns": 0.08001524038355477,
+              "squared_returns": 0.07522409716709409
+            }
+          ]
+        },
+        {
+          "name": "gold",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014640952115221805,
+          "late_mean": 0.00222061581548858,
+          "early_vol": 0.02645620509912645,
+          "late_vol": 0.021440489615339405,
+          "sample_skewness": -0.27922277501772974,
+          "sample_excess_kurtosis": 2.044574332854946,
+          "mean_shift_in_full_sample_sd": 0.031430821327590806,
+          "split_cdf_distance": 0.06575346764576662,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.0003234729309989343,
+              "squared_returns": 0.11936935605896909
+            },
+            {
+              "lag": 4,
+              "returns": -0.004941464534606933,
+              "squared_returns": 0.14518422403711398
+            },
+            {
+              "lag": 8,
+              "returns": -0.032791284313892104,
+              "squared_returns": 0.11322883946751086
+            }
+          ]
+        },
+        {
+          "name": "treasury",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0010157644252539906,
+          "late_mean": 0.00019062077816785675,
+          "early_vol": 0.00903190554573737,
+          "late_vol": 0.00869757943548711,
+          "sample_skewness": -0.1309482554564808,
+          "sample_excess_kurtosis": 0.9990239219599069,
+          "mean_shift_in_full_sample_sd": -0.0930069853894397,
+          "split_cdf_distance": 0.08023912634155528,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.060370106297258364,
+              "squared_returns": 0.11179182639645495
+            },
+            {
+              "lag": 4,
+              "returns": 0.04601268134002484,
+              "squared_returns": 0.15463430220187024
+            },
+            {
+              "lag": 8,
+              "returns": 0.03267518255273232,
+              "squared_returns": 0.13128842938461954
+            }
+          ]
+        },
+        {
+          "name": "cash",
+          "observations": 1129,
+          "deterministic": true,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0,
+          "late_mean": 0.0,
+          "early_vol": 0.0,
+          "late_vol": 0.0,
+          "sample_skewness": null,
+          "sample_excess_kurtosis": null,
+          "mean_shift_in_full_sample_sd": null,
+          "split_cdf_distance": 0.0,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 4,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 8,
+              "returns": null,
+              "squared_returns": null
+            }
+          ]
+        },
+        {
+          "name": "__fx_usd_per_sgd",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.00023613186619505928,
+          "late_mean": 0.00018278994056410554,
+          "early_vol": 0.007601123743469994,
+          "late_vol": 0.006277719998702824,
+          "sample_skewness": -0.22985423994918625,
+          "sample_excess_kurtosis": 2.3968054795385925,
+          "mean_shift_in_full_sample_sd": -0.007656067559180611,
+          "split_cdf_distance": 0.06055042992531223,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": 0.017829225848633203,
+              "squared_returns": 0.13760266427499526
+            },
+            {
+              "lag": 4,
+              "returns": -0.0175538492263167,
+              "squared_returns": 0.13135597035797467
+            },
+            {
+              "lag": 8,
+              "returns": 0.06895380872891475,
+              "squared_returns": 0.08363316678115204
+            }
+          ]
+        }
+      ],
+      "observations": 1129,
+      "assumption": "Raw weekly log returns are modeled iid by the Gaussian-mixture default; this assumption has not been established.",
+      "scope": "Descriptive split-distribution and lag diagnostics, inspired by Meucci (2005), pp.103-105. No p-values, multiple-test pass label or economic coverage claim. Low linear autocorrelation alone does not imply independence; squared-return dependence can remain. No data cleaning, parameter adjustment or model selection is performed.",
+      "book": {
+        "title": "Risk and Asset Allocation",
+        "author": "Attilio Meucci",
+        "year": 2005,
+        "printed_pages": "103-105",
+        "pdf_pages": "125-127"
+      },
+      "prior_weekly_shape": {
+        "skewness": 0.0,
+        "excess_kurtosis": 1.6875,
+        "scope": "Before entropy-pooling views. Development-selected mixture shape, not fitted to historical skewness or kurtosis. Sample shape estimates are noisy descriptive statistics, not population truths."
+      }
+    }
+  },
+  "snapshot": "2026-10-30",
+  "seconds": 0.5783976750000193,
+  "status": {
+    "kind": "no calibration candidate passed",
+    "note": "No proposed allocation is returned; baselines remain comparators, not safe fallbacks."
+  },
+  "calibration": [
+    {
+      "multiplier": 1.0,
+      "risky_fraction": 1.0,
+      "status": "optimized",
+      "wasserstein_buffer": 39999.99999610752,
+      "gap_cvar": {
+        "mean": [
+          8713592.487395454
+        ],
+        "low": [
+          7893562.944300335
+        ],
+        "high": [
+          9533622.030490573
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          8948218.961164461
+        ],
+        "low": [
+          8262050.030987974
+        ],
+        "high": [
+          9634387.891340949
+        ]
+      },
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 274,
+        "reference_fraction": 0.3425,
+        "reference_lower95": 0.31474181940138896,
+        "weighted": {
+          "nominal": {
+            "mean": 0.3452219743993604,
+            "minimum_batch": 0.301142213899832,
+            "batches": [
+              0.3527408084850791,
+              0.3866893725839575,
+              0.301142213899832,
+              0.3403155026285728
+            ]
+          },
+          "stressed": {
+            "mean": 0.3253606901022301,
+            "minimum_batch": 0.28667528708018686,
+            "batches": [
+              0.3287984525440899,
+              0.36301292952527103,
+              0.28667528708018686,
+              0.3229560912593726
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.7133247129198131,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 11508432.476513118,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "passed": false
+    },
+    {
+      "multiplier": 1.0,
+      "risky_fraction": 0.75,
+      "status": "optimized",
+      "wasserstein_buffer": 39999.99999708064,
+      "gap_cvar": {
+        "mean": [
+          7785194.365546592
+        ],
+        "low": [
+          7170172.208225251
+        ],
+        "high": [
+          8400216.522867933
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          7961164.220873348
+        ],
+        "low": [
+          7446537.523240981
+        ],
+        "high": [
+          8475790.918505717
+        ]
+      },
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 154,
+        "reference_fraction": 0.1925,
+        "reference_lower95": 0.1698143191623067,
+        "weighted": {
+          "nominal": {
+            "mean": 0.19329656944449497,
+            "minimum_batch": 0.1581372676526949,
+            "batches": [
+              0.2082402175305842,
+              0.20654618951002596,
+              0.1581372676526949,
+              0.20026260308467478
+            ]
+          },
+          "stressed": {
+            "mean": 0.17884947375783275,
+            "minimum_batch": 0.14575014267744174,
+            "batches": [
+              0.19118445923915622,
+              0.1915083039227907,
+              0.14575014267744174,
+              0.1869549891919423
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.8542498573225583,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 9881324.35738483,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "passed": false
+    },
+    {
+      "multiplier": 1.0,
+      "risky_fraction": 0.5,
+      "status": "optimized",
+      "wasserstein_buffer": 39999.99999805375,
+      "gap_cvar": {
+        "mean": [
+          6856796.243697727
+        ],
+        "low": [
+          6446781.472150167
+        ],
+        "high": [
+          7266811.015245287
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          6974109.480582232
+        ],
+        "low": [
+          6631025.015493989
+        ],
+        "high": [
+          7317193.945670474
+        ]
+      },
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 47,
+        "reference_fraction": 0.05875,
+        "reference_lower95": 0.045680021399813406,
+        "weighted": {
+          "nominal": {
+            "mean": 0.05924792320387744,
+            "minimum_batch": 0.055059977995213394,
+            "batches": [
+              0.06457793594420252,
+              0.05582236495203899,
+              0.06153141392405484,
+              0.055059977995213394
+            ]
+          },
+          "stressed": {
+            "mean": 0.053784130235197056,
+            "minimum_batch": 0.049825388124154775,
+            "batches": [
+              0.056712193929079904,
+              0.05173643036068065,
+              0.056862508526872885,
+              0.049825388124154775
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 0.9543199786001866,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 8254216.238256559,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "passed": false
+    },
+    {
+      "multiplier": 1.0,
+      "risky_fraction": 0.25,
+      "status": "optimized",
+      "wasserstein_buffer": 39999.999999026855,
+      "gap_cvar": {
+        "mean": [
+          5928398.121848869
+        ],
+        "low": [
+          5723390.7360750865
+        ],
+        "high": [
+          6133405.507622652
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          5987054.740291122
+        ],
+        "low": [
+          5815512.507747
+        ],
+        "high": [
+          6158596.972835245
+        ]
+      },
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 0,
+        "reference_fraction": 0.0,
+        "reference_lower95": 0.0,
+        "weighted": {
+          "nominal": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "stressed": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 1.0,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 6627108.119128287,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "passed": false
+    },
+    {
+      "multiplier": 1.0,
+      "risky_fraction": 0.0,
+      "status": "optimized",
+      "wasserstein_buffer": 39999.99999999997,
+      "gap_cvar": {
+        "mean": [
+          5000000.0
+        ],
+        "low": [
+          5000000.0
+        ],
+        "high": [
+          5000000.0
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          5000000.0
+        ],
+        "low": [
+          5000000.0
+        ],
+        "high": [
+          5000000.0
+        ]
+      },
+      "strict_check": {
+        "mode": "pay_all_99",
+        "target": 0.99,
+        "paths": 800,
+        "fully_funded_paths": 0,
+        "reference_fraction": 0.0,
+        "reference_lower95": 0.0,
+        "weighted": {
+          "nominal": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "stressed": {
+            "mean": 0.0,
+            "minimum_batch": 0.0,
+            "batches": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "passed": false,
+        "upper_failure": 1.0,
+        "generated_iid_assumption": true,
+        "roundoff_dollars": 1e-06,
+        "largest_unpaid": 5000000.0,
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+      },
+      "passed": false
+    }
+  ],
+  "rows": [
+    {
+      "method": "1/N",
+      "net_ce": {
+        "mean": [
+          8126526.514036523
+        ],
+        "low": [
+          7639399.597160266
+        ],
+        "high": [
+          8613653.43091278
+        ]
+      },
+      "gap_cvar": {
+        "mean": [
+          14400554.285960158
+        ],
+        "low": [
+          13424429.219683062
+        ],
+        "high": [
+          15376679.352237254
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          15234214.504103815
+        ],
+        "low": [
+          14068804.52501517
+        ],
+        "high": [
+          16399624.48319246
+        ]
+      },
+      "training_gap": [
+        12814983.906705853
+      ],
+      "wasserstein_buffer": 39999.999999999956,
+      "wasserstein_gap_upper": [
+        16439624.48319246
+      ],
+      "budgets": [
+        19000000.0
+      ],
+      "funding_pass": false,
+      "tail_budget_pass": true,
+      "overall_pass": false,
+      "evaluation": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 879,
+          "reference_fraction": 0.549375,
+          "reference_lower95": 0.5285473495867308,
+          "weighted": {
+            "nominal": {
+              "mean": 0.5456010354367788,
+              "minimum_batch": 0.5045302034201027,
+              "batches": [
+                0.5911933647434665,
+                0.5045302034201027,
+                0.5544234535897619,
+                0.5322571199937842
+              ]
+            },
+            "stressed": {
+              "mean": 0.5145810644529759,
+              "minimum_batch": 0.47491383937435255,
+              "batches": [
+                0.5591217632406964,
+                0.47491383937435255,
+                0.526901297924868,
+                0.4973873572719868
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.5250861606256474,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 22005053.7822375,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 0,
+            "week": 52,
+            "upper": 17556202.08608671,
+            "limit": 19000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 16351903.355965957,
+              "nominal": 16254644.82062166,
+              "stressed": 17556202.08608671,
+              "common_hull": 17556202.08608671
+            },
+            "mean": {
+              "reference": 14400554.285960155,
+              "nominal": 14435198.467240684,
+              "stressed": 15234214.504103815,
+              "common_hull": 15234214.504103815
+            },
+            "buffer": 39999.999999999956
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.15066368836556354,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.13944370262642264,
+              "nominal": 0.13899642611717375,
+              "stressed": 0.15066368836556354,
+              "common_hull": 0.15066368836556354
+            },
+            "mean": {
+              "reference": 0.12830032142831144,
+              "nominal": 0.12867028551691864,
+              "stressed": 0.13587362637513467,
+              "common_hull": 0.13587362637513467
+            },
+            "buffer": 0.0003999999999999996
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.1388592270607383,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.12719303741832338,
+              "nominal": 0.12424540381791162,
+              "stressed": 0.1388592270607383,
+              "common_hull": 0.1388592270607383
+            },
+            "mean": {
+              "reference": 0.105715239976728,
+              "nominal": 0.10628666513893703,
+              "stressed": 0.11472216106771749,
+              "common_hull": 0.11472216106771749
+            },
+            "buffer": 0.0003999999999999996
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.5250861606256474,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 1.1102230246251565e-16,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 0,
+        "batch_estimates": [
+          [
+            [
+              0.15143394800787363,
+              0.1509148821536132,
+              0.1612901778578719,
+              0.1612901778578719
+            ],
+            [
+              0.13133637612490767,
+              0.1304475732673885,
+              0.13870872317355126,
+              0.13870872317355126
+            ],
+            [
+              0.11242904089805163,
+              0.11121630658521553,
+              0.12140597535170669,
+              0.12140597535170669
+            ]
+          ],
+          [
+            [
+              0.14660807950908983,
+              0.14735374385384617,
+              0.1549564028387012,
+              0.1549564028387012
+            ],
+            [
+              0.13095122177100846,
+              0.13214689204246957,
+              0.140587290480495,
+              0.140587290480495
+            ],
+            [
+              0.1080711844620142,
+              0.10934501140905191,
+              0.11679256301285698,
+              0.11679256301285698
+            ]
+          ],
+          [
+            [
+              0.1395510894473459,
+              0.1396842313357293,
+              0.14845539906616698,
+              0.14845539906616698
+            ],
+            [
+              0.12673195411349306,
+              0.12688005704604777,
+              0.1337182230408629,
+              0.1337182230408629
+            ],
+            [
+              0.10595188419389265,
+              0.10614725727197044,
+              0.11693444096451058,
+              0.11693444096451058
+            ]
+          ],
+          [
+            [
+              0.13842905447409687,
+              0.13945508134643864,
+              0.1446666004014125,
+              0.1446666004014125
+            ],
+            [
+              0.12418173370383657,
+              0.12520661971176875,
+              0.13048026880562955,
+              0.13048026880562955
+            ],
+            [
+              0.09640885035295353,
+              0.09843808528951024,
+              0.10375566494179567,
+              0.10375566494179567
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 12,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "evaluation_pass": false,
+      "execution_audit": {
+        "numerical_negative_holdings_clipped": 0.0,
+        "available": true,
+        "funded_fraction": 0.549375,
+        "paths": 1600,
+        "paths_with_unpaid_calls": 721,
+        "observed_unpaid_calls": true,
+        "outcome": "Unpaid calls observed",
+        "largest_observed_unpaid": 22005053.7822375,
+        "payment_outcomes": [
+          {
+            "payout_index": 0,
+            "week": 52,
+            "paid_in_full_fraction": 0.549375,
+            "largest_observed_unpaid": 22005053.7822375
+          }
+        ],
+        "terminal_net_quantiles": [
+          -2377777.1347296014,
+          11763903.530427065,
+          30496657.951475512
+        ],
+        "policy": "Cash first, then proportional liquidation of liquid sleeves at configured net unit values, assumed immediately spendable within the modeled week; no rebalance/borrowing; property only scheduled rent/sale receipts.",
+        "scope": "Independent executable policy audit. Optimizer still uses money-market provisioning, not this policy. Unit values already include configured liquidity haircuts.",
+        "wasserstein_certified": false,
+        "full_funding_guarantee": false,
+        "interpretation": "Reference-scenario execution outcome only, not a probability guarantee. Budget pass may permit shortfalls; zero unpaid observations does not bound unseen tails."
+      }
+    },
+    {
+      "method": "shrunk MV",
+      "net_ce": {
+        "mean": [
+          9810240.00931861
+        ],
+        "low": [
+          9324387.20131684
+        ],
+        "high": [
+          10296092.817320382
+        ]
+      },
+      "gap_cvar": {
+        "mean": [
+          11597920.130064517
+        ],
+        "low": [
+          10655615.405610906
+        ],
+        "high": [
+          12540224.854518129
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          12114037.264114194
+        ],
+        "low": [
+          11081057.339639135
+        ],
+        "high": [
+          13147017.188589253
+        ]
+      },
+      "training_gap": [
+        11615186.209210277
+      ],
+      "wasserstein_buffer": 39999.9999999998,
+      "wasserstein_gap_upper": [
+        13187017.188589253
+      ],
+      "budgets": [
+        19000000.0
+      ],
+      "funding_pass": false,
+      "tail_budget_pass": true,
+      "overall_pass": false,
+      "evaluation": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 971,
+          "reference_fraction": 0.606875,
+          "reference_lower95": 0.5863433059355687,
+          "weighted": {
+            "nominal": {
+              "mean": 0.6037985294742044,
+              "minimum_batch": 0.5734759673198622,
+              "batches": [
+                0.6298105906139619,
+                0.5734759673198622,
+                0.6044674317909293,
+                0.6074401281720643
+              ]
+            },
+            "stressed": {
+              "mean": 0.5776417724764117,
+              "minimum_batch": 0.5496909382953925,
+              "batches": [
+                0.6044028019589953,
+                0.5496909382953925,
+                0.5804516450166016,
+                0.5760217046346571
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.4503090617046075,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 19358525.632499114,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 0,
+            "week": 52,
+            "upper": 14176713.749116575,
+            "limit": 19000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 13483045.63802397,
+              "nominal": 13397741.896836156,
+              "stressed": 14176713.749116575,
+              "common_hull": 14176713.749116575
+            },
+            "mean": {
+              "reference": 11597920.130064514,
+              "nominal": 11611504.687595407,
+              "stressed": 12114037.264114194,
+              "common_hull": 12114037.264114194
+            },
+            "buffer": 39999.9999999998
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.12333076532521207,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.12053659678989494,
+              "nominal": 0.11947119591538072,
+              "stressed": 0.12333076532521207,
+              "common_hull": 0.12333076532521207
+            },
+            "mean": {
+              "reference": 0.10183039922013186,
+              "nominal": 0.10197944771202666,
+              "stressed": 0.10626997011547953,
+              "common_hull": 0.10626997011547953
+            },
+            "buffer": 0.00039999999999999807
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.10365505031579436,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.09444741797046992,
+              "nominal": 0.0917008981615844,
+              "stressed": 0.10365505031579436,
+              "common_hull": 0.10365505031579436
+            },
+            "mean": {
+              "reference": 0.07626518431203073,
+              "nominal": 0.07664204570702635,
+              "stressed": 0.08247329068759243,
+              "common_hull": 0.08247329068759243
+            },
+            "buffer": 0.00039999999999999807
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.4503090617046075,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 4.107825191113079e-15,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 6.938893903907228e-16,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 0,
+        "batch_estimates": [
+          [
+            [
+              0.12231822340874345,
+              0.12168202226082275,
+              0.1291225790148977,
+              0.1291225790148977
+            ],
+            [
+              0.10616269807163253,
+              0.10539816880244621,
+              0.11072142254503023,
+              0.11072142254503023
+            ],
+            [
+              0.08302985984396091,
+              0.08163663002633487,
+              0.09114191324679262,
+              0.09114191324679262
+            ]
+          ],
+          [
+            [
+              0.11962338765967327,
+              0.12000105863717356,
+              0.12370226726941629,
+              0.12370226726941629
+            ],
+            [
+              0.10756510928714363,
+              0.10788401236175127,
+              0.11095760986282167,
+              0.11095760986282167
+            ],
+            [
+              0.07846489165889954,
+              0.07951518695379241,
+              0.08355498368262845,
+              0.08355498368262845
+            ]
+          ],
+          [
+            [
+              0.11001015272690297,
+              0.11007329807083552,
+              0.11533920992692182,
+              0.11533920992692182
+            ],
+            [
+              0.09758129850108806,
+              0.09767883864091964,
+              0.10275593173276626,
+              0.10275593173276626
+            ],
+            [
+              0.07364520688445643,
+              0.07376930866363707,
+              0.07979035468143045,
+              0.07979035468143045
+            ]
+          ],
+          [
+            [
+              0.11196504140726088,
+              0.11270380853498445,
+              0.11639743435333197,
+              0.11639743435333197
+            ],
+            [
+              0.09601249102066321,
+              0.09695677104298948,
+              0.10064491632129996,
+              0.10064491632129996
+            ],
+            [
+              0.06992077886080607,
+              0.07164705718434106,
+              0.07540591113951821,
+              0.07540591113951821
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 12,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "evaluation_pass": false,
+      "execution_audit": {
+        "numerical_negative_holdings_clipped": 0.0,
+        "available": true,
+        "funded_fraction": 0.606875,
+        "paths": 1600,
+        "paths_with_unpaid_calls": 629,
+        "observed_unpaid_calls": true,
+        "outcome": "Unpaid calls observed",
+        "largest_observed_unpaid": 19358525.632499114,
+        "payment_outcomes": [
+          {
+            "payout_index": 0,
+            "week": 52,
+            "paid_in_full_fraction": 0.606875,
+            "largest_observed_unpaid": 19358525.632499114
+          }
+        ],
+        "terminal_net_quantiles": [
+          189237.43645513308,
+          12581866.278144814,
+          27241073.700082876
+        ],
+        "policy": "Cash first, then proportional liquidation of liquid sleeves at configured net unit values, assumed immediately spendable within the modeled week; no rebalance/borrowing; property only scheduled rent/sale receipts.",
+        "scope": "Independent executable policy audit. Optimizer still uses money-market provisioning, not this policy. Unit values already include configured liquidity haircuts.",
+        "wasserstein_certified": false,
+        "full_funding_guarantee": false,
+        "interpretation": "Reference-scenario execution outcome only, not a probability guarantee. Budget pass may permit shortfalls; zero unpaid observations does not bound unseen tails."
+      }
+    },
+    {
+      "method": "without posterior stress",
+      "net_ce": {
+        "mean": [
+          8225521.644239174
+        ],
+        "low": [
+          7856284.565873629
+        ],
+        "high": [
+          8594758.722604718
+        ]
+      },
+      "gap_cvar": {
+        "mean": [
+          8828711.6583555
+        ],
+        "low": [
+          8212562.459139979
+        ],
+        "high": [
+          9444860.85757102
+        ]
+      },
+      "stressed_gap_cvar": {
+        "mean": [
+          9136156.127394048
+        ],
+        "low": [
+          8568793.716213249
+        ],
+        "high": [
+          9703518.538574848
+        ]
+      },
+      "training_gap": [
+        7805444.139067698
+      ],
+      "wasserstein_buffer": 39999.99999601624,
+      "wasserstein_gap_upper": [
+        9743518.538570864
+      ],
+      "budgets": [
+        19000000.0
+      ],
+      "funding_pass": false,
+      "tail_budget_pass": true,
+      "overall_pass": false,
+      "evaluation": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 602,
+          "reference_fraction": 0.37625,
+          "reference_lower95": 0.3561964747128057,
+          "weighted": {
+            "nominal": {
+              "mean": 0.3735029062691902,
+              "minimum_batch": 0.3396782067938567,
+              "batches": [
+                0.3927960494127258,
+                0.3396782067938567,
+                0.3795113227688255,
+                0.38202604610135293
+              ]
+            },
+            "stressed": {
+              "mean": 0.35231490312697816,
+              "minimum_batch": 0.31660842485848156,
+              "batches": [
+                0.3727701556533707,
+                0.31660842485848156,
+                0.3598356962511293,
+                0.36004533574493114
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.6833915751415185,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 14124080.819255427,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 0,
+            "week": 52,
+            "upper": 10287107.638042929,
+            "limit": 19000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 10075192.507569954,
+              "nominal": 10014433.380919827,
+              "stressed": 10287107.638042929,
+              "common_hull": 10287107.638042929
+            },
+            "mean": {
+              "reference": 8828711.658355499,
+              "nominal": 8840862.921202522,
+              "stressed": 9136156.127394047,
+              "common_hull": 9136156.127394047
+            },
+            "buffer": 39999.99999601624
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.08046082229075877,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.07717934301318864,
+              "nominal": 0.07601745883942995,
+              "stressed": 0.08046082229075877,
+              "common_hull": 0.08046082229075877
+            },
+            "mean": {
+              "reference": 0.06703250568247457,
+              "nominal": 0.06713953915303054,
+              "stressed": 0.06963864166503439,
+              "common_hull": 0.06963864166503439
+            },
+            "buffer": 0.00039999999996016237
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.07114929955259879,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.06788887140104738,
+              "nominal": 0.06515344272103767,
+              "stressed": 0.07114929955259879,
+              "common_hull": 0.07114929955259879
+            },
+            "mean": {
+              "reference": 0.05094677756891752,
+              "nominal": 0.05129533211208558,
+              "stressed": 0.05452056006429723,
+              "common_hull": 0.05452056006429723
+            },
+            "buffer": 0.00039999999996016237
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.6833915751415185,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 9.959322255781444e-11,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 9.956591107140866e-12,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 0,
+        "batch_estimates": [
+          [
+            [
+              0.09018106647426105,
+              0.08978518367173256,
+              0.09346415379621272,
+              0.09346415379621272
+            ],
+            [
+              0.06877013822847153,
+              0.06807069433495233,
+              0.070693625024894,
+              0.070693625024894
+            ],
+            [
+              0.055945304670663,
+              0.05493163709042814,
+              0.058458845272540465,
+              0.058458845272540465
+            ]
+          ],
+          [
+            [
+              0.09248393441618728,
+              0.09268319143698375,
+              0.09451559333798469,
+              0.09451559333798469
+            ],
+            [
+              0.06893349530268815,
+              0.06922207479879595,
+              0.07167497373475994,
+              0.07167497373475994
+            ],
+            [
+              0.05082131901386398,
+              0.05159830153280565,
+              0.05400631195361296,
+              0.05400631195361296
+            ]
+          ],
+          [
+            [
+              0.08685915800223525,
+              0.08691994781038395,
+              0.0909642904508945,
+              0.0909642904508945
+            ],
+            [
+              0.06805084104582002,
+              0.06812927672757059,
+              0.07152291345361547,
+              0.07152291345361547
+            ],
+            [
+              0.053393211219540646,
+              0.053502830521668564,
+              0.058274403363387545,
+              0.058274403363387545
+            ]
+          ],
+          [
+            [
+              0.08362430744153634,
+              0.08424619392900058,
+              0.08650220751066999,
+              0.08650220751066999
+            ],
+            [
+              0.06237554815291861,
+              0.06313611075080332,
+              0.06466305444686815,
+              0.06466305444686815
+            ],
+            [
+              0.04362727537160248,
+              0.045148559303439965,
+              0.04734267966764794,
+              0.04734267966764794
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 12,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "evaluation_pass": false,
+      "execution_audit": {
+        "numerical_negative_holdings_clipped": 0.0,
+        "available": true,
+        "funded_fraction": 0.37625,
+        "paths": 1600,
+        "paths_with_unpaid_calls": 998,
+        "observed_unpaid_calls": true,
+        "outcome": "Unpaid calls observed",
+        "largest_observed_unpaid": 14124080.819255427,
+        "payment_outcomes": [
+          {
+            "payout_index": 0,
+            "week": 52,
+            "paid_in_full_fraction": 0.37625,
+            "largest_observed_unpaid": 14124080.819255427
+          }
+        ],
+        "terminal_net_quantiles": [
+          1721580.179234459,
+          9113094.71921648,
+          18320464.725276835
+        ],
+        "policy": "Cash first, then proportional liquidation of liquid sleeves at configured net unit values, assumed immediately spendable within the modeled week; no rebalance/borrowing; property only scheduled rent/sale receipts.",
+        "scope": "Independent executable policy audit. Optimizer still uses money-market provisioning, not this policy. Unit values already include configured liquidity haircuts.",
+        "wasserstein_certified": false,
+        "full_funding_guarantee": false,
+        "interpretation": "Reference-scenario execution outcome only, not a probability guarantee. Budget pass may permit shortfalls; zero unpaid observations does not bound unseen tails."
+      }
+    }
+  ],
+  "weights": {
+    "1/N": [
+      0.18,
+      0.18,
+      0.18,
+      0.18,
+      0.18,
+      0.1
+    ],
+    "shrunk MV": [
+      0.2965290941100294,
+      9.848977233996577e-10,
+      0.17313740610611758,
+      0.430333492564986,
+      6.2339658772679606e-09,
+      0.09999999999999931
+    ],
+    "without posterior stress": [
+      0.1972299099012953,
+      5.364229240821563e-11,
+      0.0013444145299150762,
+      0.37337197982028975,
+      0.3280536956052211,
+      0.09999999999004341
+    ]
+  },
+  "assets": [
+    "US equity",
+    "Emerging-market equity",
+    "Gold",
+    "US Treasuries",
+    "Cash / money market",
+    "Singapore URA All Residential"
+  ],
+  "net_wealth_fan": {
+    "1/N": [
+      [
+        0.984048290094467,
+        0.9767586940743264,
+        0.973209727115087,
+        0.9682608859560884,
+        0.9673025576257905,
+        0.965535450330823,
+        0.9606612400164182,
+        0.9565219137080817,
+        0.9510571286745627,
+        0.9458995534794435,
+        0.9453149852908413,
+        0.9447809534929473,
+        0.9395251603107978,
+        0.9462614400183821,
+        0.9447170562080911,
+        0.9441493496570678,
+        0.940213782487035,
+        0.9415792618229133,
+        0.9413092319938711,
+        0.9358849552455116,
+        0.9407126738130818,
+        0.9361295330740983,
+        0.9395055759189537,
+        0.9321763615633409,
+        0.9354718837279554,
+        0.9335412968056357,
+        0.9350496143155541,
+        0.9332897138750821,
+        0.9326783700408787,
+        0.9337838358928815,
+        0.9321940870862455,
+        0.9331617388754647,
+        0.9298767231829734,
+        0.9307519526848361,
+        0.9342019530472027,
+        0.9285695096695262,
+        0.9332294614038144,
+        0.9302702774698182,
+        0.928029018759565,
+        0.9295228946764277,
+        0.9328758580467723,
+        0.9370417562244017,
+        0.9404703308531611,
+        0.9341831531093093,
+        0.931938610429028,
+        0.927588219197624,
+        0.9251395999511512,
+        0.9226077119706904,
+        0.9195176064258771,
+        0.9221557279348348,
+        0.9243499821310925,
+        -0.02703913175472043
+      ],
+      [
+        0.9941087461096398,
+        0.9922421342749574,
+        0.9902340959298038,
+        0.9892894269118279,
+        0.98960500985508,
+        0.9877098027553606,
+        0.9885699991093946,
+        0.9861562879548249,
+        0.9862412664408694,
+        0.9874690595402837,
+        0.9886353223702529,
+        0.9885056061352017,
+        0.9874596571622851,
+        0.9890413364985574,
+        0.9902497614133494,
+        0.9894777908861229,
+        0.9882715343402422,
+        0.9863599173405784,
+        0.9867115067123433,
+        0.985881517011082,
+        0.9868850987800328,
+        0.9878470261267145,
+        0.9889018542157172,
+        0.9862284071033166,
+        0.9888291625876615,
+        0.98885199798675,
+        0.9879978794945208,
+        0.9879169313949371,
+        0.9909768145097521,
+        0.9934585761599813,
+        0.9922345409402545,
+        0.9916775854402998,
+        1.0002707395855486,
+        0.9978714286687743,
+        0.9965544879270809,
+        0.9985786759135515,
+        0.9933026846466638,
+        0.9952346225706462,
+        0.997752905679379,
+        0.999382949178117,
+        0.9972523919520881,
+        0.9990914283692157,
+        0.9999514796368225,
+        1.0004690179190854,
+        1.0031792958504218,
+        1.0034190339644462,
+        1.0027719666242232,
+        1.004458003143228,
+        1.0087433577895413,
+        1.0088614244401974,
+        1.0103736680858604,
+        0.06118680698314149
+      ],
+      [
+        1.0013007153908091,
+        1.002483243995918,
+        1.0039766047536305,
+        1.0037615768662729,
+        1.005364311139852,
+        1.0058784519489499,
+        1.005922745698907,
+        1.009709897997058,
+        1.0101143026060984,
+        1.0112570818531055,
+        1.015458077960902,
+        1.0159985399701372,
+        1.0194787823339966,
+        1.0208402470963995,
+        1.0203717078908388,
+        1.0234282572197564,
+        1.0242756371095676,
+        1.0283661534147135,
+        1.024714582124598,
+        1.0248137659159928,
+        1.0310585292777086,
+        1.0289565050709268,
+        1.0291835642826979,
+        1.0318070459218407,
+        1.035896306090315,
+        1.0330301818159178,
+        1.0308990076096731,
+        1.0337250415767882,
+        1.035193010463357,
+        1.033245307489956,
+        1.0394101222083763,
+        1.042225492588762,
+        1.0434164482316914,
+        1.0451431119415653,
+        1.047170138838375,
+        1.0478239131873273,
+        1.0478026717507185,
+        1.052657892132658,
+        1.054585358463295,
+        1.0528766279926296,
+        1.054150720979803,
+        1.0590888713398714,
+        1.0601122591369405,
+        1.0589113882104044,
+        1.0643018493631677,
+        1.0679404114347346,
+        1.071048883711144,
+        1.0718746249255615,
+        1.0764287823371557,
+        1.0746508893751678,
+        1.074368492617939,
+        0.12820592432963013
+      ],
+      [
+        1.0078809475529853,
+        1.013837879512162,
+        1.0171928220333224,
+        1.0214924045452094,
+        1.0259864662964537,
+        1.0266132213151913,
+        1.029363278640068,
+        1.0333472766632492,
+        1.0355512150258033,
+        1.0365873537175831,
+        1.0388840799001477,
+        1.0398823718577381,
+        1.0432133136415358,
+        1.0479510637893446,
+        1.0509872528651232,
+        1.053577672206991,
+        1.054509896428192,
+        1.0582934966551236,
+        1.0640094047475368,
+        1.063857039057932,
+        1.064797280999401,
+        1.0657903366548336,
+        1.0663365569793581,
+        1.0713691570552861,
+        1.074615381163441,
+        1.078088813697005,
+        1.0766736848678888,
+        1.0816529702355369,
+        1.087798517148062,
+        1.0868800609422227,
+        1.091891198597909,
+        1.096349228158783,
+        1.0958008318253452,
+        1.098617130250878,
+        1.0974425069798144,
+        1.1011981334712988,
+        1.1043751992784316,
+        1.1088641575370848,
+        1.1079125112600265,
+        1.110986984674993,
+        1.1150357998388363,
+        1.116205626336482,
+        1.1172966758863585,
+        1.1218767646766037,
+        1.1234457173306178,
+        1.1259898964308541,
+        1.1248945443785665,
+        1.1297408347466367,
+        1.1370745774131437,
+        1.1358311025137589,
+        1.1370877332677396,
+        0.18885247816686618
+      ],
+      [
+        1.0194370538879354,
+        1.0330569973262045,
+        1.0425202581569721,
+        1.0526862878811627,
+        1.0564548913779293,
+        1.0617713633992893,
+        1.068934500712603,
+        1.0699937871429777,
+        1.0785963139957357,
+        1.083691585739493,
+        1.084425046738607,
+        1.0955604777834773,
+        1.1021497997943013,
+        1.0979016977922034,
+        1.1031034468025567,
+        1.1095146502068567,
+        1.113450932028356,
+        1.1131878059383786,
+        1.113489252382909,
+        1.1188076526047845,
+        1.1241226926663914,
+        1.1290639359491528,
+        1.134193990842811,
+        1.1360465627459533,
+        1.139651871812814,
+        1.147945951778993,
+        1.1523372840769515,
+        1.1560752747545526,
+        1.1665350556982603,
+        1.17026651703802,
+        1.1708403204249154,
+        1.1764188667350173,
+        1.182999889776268,
+        1.1907475538591472,
+        1.1875820000896176,
+        1.1986960030695766,
+        1.1941607742225788,
+        1.1986606394807282,
+        1.2040699378077875,
+        1.204405099640338,
+        1.2057020970697314,
+        1.2022567330073293,
+        1.209205112586969,
+        1.2002582683259264,
+        1.209916498963662,
+        1.2178075659307095,
+        1.2088759168390382,
+        1.2176149376827259,
+        1.2316942211154165,
+        1.2269794416253037,
+        1.2287279561635693,
+        0.29220224738143996
+      ]
+    ],
+    "shrunk MV": [
+      [
+        0.9861450856751276,
+        0.9805089061213554,
+        0.9782177646724398,
+        0.9749510143435254,
+        0.974429537678938,
+        0.9705559128074681,
+        0.9696759667426891,
+        0.9683483712204125,
+        0.965116441914052,
+        0.964187828311871,
+        0.9610299330168178,
+        0.960881615542478,
+        0.9584809799456303,
+        0.9605546355503032,
+        0.9638339338108505,
+        0.959685297174539,
+        0.9566777072978463,
+        0.9575363031892071,
+        0.9587124661810889,
+        0.956603493651241,
+        0.9571729624327384,
+        0.9569055822987484,
+        0.9588917327706965,
+        0.9562863390843873,
+        0.9547614457513679,
+        0.9546260746983681,
+        0.9519007659073467,
+        0.9555821088214206,
+        0.950908644173627,
+        0.9535327360533744,
+        0.9480054603710156,
+        0.9505778105451269,
+        0.9530883224857106,
+        0.9506057642254354,
+        0.9528669569876076,
+        0.9500343092158425,
+        0.9475876952712659,
+        0.9509076467728339,
+        0.9487713750084515,
+        0.9563742608337069,
+        0.9543577775328131,
+        0.9490647897926808,
+        0.957177452476213,
+        0.948870678833194,
+        0.9498302633556797,
+        0.9461002429699714,
+        0.9479393235883268,
+        0.9535395225928097,
+        0.9470325126345477,
+        0.9564639549483831,
+        0.9539654147037828,
+        0.0053627021813743665
+      ],
+      [
+        0.994760573492304,
+        0.9935280944375781,
+        0.9931315720339031,
+        0.990302547729024,
+        0.9919665616488664,
+        0.9908080914545342,
+        0.9919815439590497,
+        0.992249991743352,
+        0.9912771153006907,
+        0.9918956900105593,
+        0.993419023467689,
+        0.9931233341961389,
+        0.9948503648474867,
+        0.9954361222392898,
+        0.9958065026065945,
+        0.993868577148071,
+        0.992658200154478,
+        0.9950244744695004,
+        0.9956029587346995,
+        0.993387242520672,
+        0.9944934166526322,
+        0.994857199749518,
+        0.9983463530023449,
+        0.9978963118043949,
+        1.0004212191710795,
+        1.0019010428374777,
+        0.9996297604968498,
+        1.0000032122148514,
+        1.0030889749891703,
+        1.0038458586437675,
+        1.0056119737253428,
+        1.0060343172566206,
+        1.007888287033258,
+        1.0089576840953596,
+        1.0080076352380902,
+        1.0099916409234937,
+        1.00903769234921,
+        1.0118765983996323,
+        1.010314200595575,
+        1.0126075776478412,
+        1.0154439143252871,
+        1.0172342217289754,
+        1.0205159754161963,
+        1.0206145352076255,
+        1.0228239285377825,
+        1.0234810953550841,
+        1.0209475490457547,
+        1.0184635213654663,
+        1.0214752813088195,
+        1.0235477994361544,
+        1.0238567690021008,
+        0.07588539462102786
+      ],
+      [
+        1.0011683293278564,
+        1.0026621778533413,
+        1.0044035717568636,
+        1.0053373109336836,
+        1.007534027805375,
+        1.0072166625622754,
+        1.0069938191100292,
+        1.008389114823331,
+        1.0096764630235104,
+        1.0117925729416077,
+        1.0133126115603397,
+        1.0157388237038187,
+        1.017064054346562,
+        1.019265208862831,
+        1.019440246055443,
+        1.0219010748094868,
+        1.024891851565898,
+        1.0264626572855895,
+        1.0235370565694306,
+        1.024688557386931,
+        1.02860840742499,
+        1.0280268957548064,
+        1.0295381439879199,
+        1.0294494981147908,
+        1.0319397210700312,
+        1.0317740491919807,
+        1.0347246590079675,
+        1.0354760939956442,
+        1.0377669532872045,
+        1.03825073321218,
+        1.0398524123659794,
+        1.0408432370702494,
+        1.045047644154701,
+        1.0459295247744964,
+        1.0495568655703127,
+        1.0496124259487263,
+        1.0489770335665125,
+        1.0506439211308443,
+        1.0545619828211275,
+        1.055963889286781,
+        1.0572739358462355,
+        1.0590896403010253,
+        1.0625363726192618,
+        1.0599908729770378,
+        1.0652425797129812,
+        1.0680159081965148,
+        1.0701366409486288,
+        1.0709979700513967,
+        1.0738565898418573,
+        1.075359383175005,
+        1.078246962890498,
+        0.12699839752240866
+      ],
+      [
+        1.0066429363467293,
+        1.0123213157027577,
+        1.0160062533083125,
+        1.019291265922315,
+        1.0214517445144122,
+        1.0252045907751686,
+        1.027122921719459,
+        1.032767595178199,
+        1.0351740446329651,
+        1.0367537892865875,
+        1.038974305957452,
+        1.0395115703878064,
+        1.042858826383083,
+        1.045008030565024,
+        1.0470260707667183,
+        1.051219537588251,
+        1.0517569988398474,
+        1.0538008958831688,
+        1.0558591332847331,
+        1.0598009193636213,
+        1.0614541108281634,
+        1.0622168953466733,
+        1.0634034737050744,
+        1.0665175176171438,
+        1.0684025471769505,
+        1.0713058723088134,
+        1.0718637115352472,
+        1.0762848551011155,
+        1.078157087749934,
+        1.0811567636841635,
+        1.0884377194798907,
+        1.090443370438784,
+        1.09165348693884,
+        1.0931224160164694,
+        1.094529517812916,
+        1.0973254036195028,
+        1.1002369639058176,
+        1.1030771587189554,
+        1.1019640108949704,
+        1.1029078132578565,
+        1.1048427597850858,
+        1.1098870457146779,
+        1.105487998433946,
+        1.109946630849318,
+        1.1146972995900555,
+        1.1191615380411346,
+        1.1170985662308464,
+        1.1211282900108435,
+        1.1263018977499022,
+        1.1278927511429386,
+        1.1265425984425896,
+        0.18090410235663107
+      ],
+      [
+        1.0163644254001454,
+        1.0297139998319425,
+        1.0374411970115536,
+        1.0447574859692241,
+        1.0511513240717436,
+        1.0501274986577551,
+        1.0635121423335354,
+        1.063537841440457,
+        1.0678579717117516,
+        1.0803622999569094,
+        1.0745683927755114,
+        1.0817867275712814,
+        1.0861394023182733,
+        1.0911709031712824,
+        1.0921892047897008,
+        1.0965445014803878,
+        1.1008465080938479,
+        1.1006301454998546,
+        1.104108276001147,
+        1.106586359952586,
+        1.109186331671227,
+        1.1169505286743733,
+        1.1263058124376408,
+        1.1260397938785365,
+        1.1235874531137722,
+        1.1257339487418145,
+        1.1337743993141896,
+        1.1406446988095105,
+        1.1439735945337488,
+        1.147116520727214,
+        1.150002138570325,
+        1.1542801492859864,
+        1.1561613546663618,
+        1.1639469785757315,
+        1.1704979256623627,
+        1.1677032612540421,
+        1.1749345298902905,
+        1.1746548673359858,
+        1.1816524229648608,
+        1.1742519235335387,
+        1.1749866165021763,
+        1.179519793634987,
+        1.1881376490514488,
+        1.1885037456728684,
+        1.1912877537205524,
+        1.1906430358495412,
+        1.1937702185550425,
+        1.1977147740985472,
+        1.205560777629828,
+        1.2060193593523634,
+        1.205242038070006,
+        0.2591548586895772
+      ]
+    ],
+    "without posterior stress": [
+      [
+        0.9912081458124679,
+        0.9877153341693278,
+        0.9861135844952694,
+        0.9841178068921792,
+        0.9827732736744408,
+        0.9810919063673407,
+        0.9811815552314685,
+        0.9760905171527985,
+        0.9778153515505271,
+        0.9770127514199697,
+        0.976521845766525,
+        0.975363019136273,
+        0.9749103101662087,
+        0.9747230873822247,
+        0.9739468369222349,
+        0.974520292060563,
+        0.9728544624338092,
+        0.9701464575584072,
+        0.9715073831372059,
+        0.9731339157389572,
+        0.9708362510694711,
+        0.9683254961460699,
+        0.9693732886456075,
+        0.9667106195231645,
+        0.9670810441129257,
+        0.9693724155734954,
+        0.9675122189827069,
+        0.968102597555628,
+        0.9657493901672906,
+        0.9666078165673387,
+        0.965396289238006,
+        0.964107020934874,
+        0.9644098423274252,
+        0.9651420630146587,
+        0.9637496544244772,
+        0.9620632185237912,
+        0.9617948331178411,
+        0.9632618179734638,
+        0.9633730563747854,
+        0.9657735366583106,
+        0.9648942549584395,
+        0.9617383471021982,
+        0.964147824503905,
+        0.9628191268228413,
+        0.961159385321668,
+        0.9580170320691147,
+        0.9570780955408793,
+        0.9601529097644688,
+        0.9593678505910288,
+        0.9616090311168954,
+        0.9650443030611653,
+        0.010062093507098907
+      ],
+      [
+        0.9968691639285024,
+        0.9959097878112064,
+        0.9950468988565242,
+        0.9936383435481903,
+        0.9934388082846287,
+        0.9928600562021223,
+        0.9932403009819928,
+        0.9929708320135131,
+        0.992938315331569,
+        0.9931691315452648,
+        0.993874563338276,
+        0.9936142430845916,
+        0.9939290288064484,
+        0.994654030724939,
+        0.9949694782537717,
+        0.9950527450963185,
+        0.9934432786135291,
+        0.9941765852871283,
+        0.9945319048247374,
+        0.9940701808714331,
+        0.9949140349156598,
+        0.994312682854918,
+        0.9957605536890775,
+        0.9949460239857315,
+        0.9965062018396466,
+        0.9976008581096434,
+        0.9964708746409536,
+        0.9978335556203449,
+        0.9979665094776293,
+        0.9999019239537378,
+        0.998690432110286,
+        0.9985944262034883,
+        0.9978377294619842,
+        0.998154469570292,
+        0.9996653214901047,
+        1.0012588919864092,
+        1.0013710816385226,
+        1.0035599495517973,
+        1.0043691091400357,
+        1.0052221866386797,
+        1.0042451310399783,
+        1.0056546745275106,
+        1.0079627321851217,
+        1.00815978474672,
+        1.0087592646607022,
+        1.0095073191687525,
+        1.0091239248939712,
+        1.011292331694209,
+        1.01168567732998,
+        1.0129410095489861,
+        1.0113738951579012,
+        0.06146543289601989
+      ],
+      [
+        1.000970701725151,
+        1.001811015145888,
+        1.0028508493965864,
+        1.0030990932272486,
+        1.0033101538768732,
+        1.004029149109656,
+        1.004175472240762,
+        1.005822895077789,
+        1.0062216670542634,
+        1.0065745122873258,
+        1.0066899938755112,
+        1.0076499411286108,
+        1.009143218268859,
+        1.010414304593866,
+        1.0111746233625118,
+        1.0113857297343072,
+        1.0105539679180353,
+        1.0132969164965129,
+        1.0133446327759135,
+        1.0141709846882927,
+        1.0165279066407629,
+        1.0151295753918799,
+        1.0151162214398615,
+        1.0164049239640605,
+        1.015647280576092,
+        1.0155962484128414,
+        1.0175563168654744,
+        1.0192905812039164,
+        1.0196200086052642,
+        1.0220414331434986,
+        1.0221294134871846,
+        1.0238007137335656,
+        1.0252535923235468,
+        1.0258188470325182,
+        1.0262890983552893,
+        1.0254315476171536,
+        1.0266208677273185,
+        1.0282698212474723,
+        1.0282370219642347,
+        1.0298712458729633,
+        1.0312130321278867,
+        1.031238606054253,
+        1.0333904174414055,
+        1.0351266777258896,
+        1.0355182353312062,
+        1.0380850932634402,
+        1.0386294883592695,
+        1.0393451047573672,
+        1.0403424625129518,
+        1.0417964455123854,
+        1.042288280603862,
+        0.09245734555234529
+      ],
+      [
+        1.0044820349518702,
+        1.007565190673048,
+        1.010003355932964,
+        1.012367915492192,
+        1.013746627550992,
+        1.0159473661724008,
+        1.0168762161386702,
+        1.0197483788146657,
+        1.0204571035766834,
+        1.021355899004234,
+        1.0225906752660099,
+        1.0237874440105184,
+        1.026329627625643,
+        1.0261271731448307,
+        1.0265117714311667,
+        1.0285608285825487,
+        1.0315969716869766,
+        1.0322101711628642,
+        1.0332213111316033,
+        1.033448207443295,
+        1.03397161566675,
+        1.0344923888547748,
+        1.0370243407030666,
+        1.0382339983052784,
+        1.0404560352591583,
+        1.0402951257176265,
+        1.042143559440008,
+        1.044704978414306,
+        1.0457670495127864,
+        1.0470214732028629,
+        1.049895879937151,
+        1.0516545751124498,
+        1.053483312391009,
+        1.0530678286784714,
+        1.0548553360688273,
+        1.0573473794858081,
+        1.057702778491383,
+        1.0571771022783787,
+        1.057546889492167,
+        1.0582624262198466,
+        1.057733922841545,
+        1.0631066273074241,
+        1.0632630877984202,
+        1.0624266237049196,
+        1.0652156526385712,
+        1.0654156024761716,
+        1.0704840549952457,
+        1.0699871092467852,
+        1.0720214015244893,
+        1.0726488997671646,
+        1.075479073673097,
+        0.12754223684789345
+      ],
+      [
+        1.0104891320207312,
+        1.0176544612851683,
+        1.0226645662190594,
+        1.0266203527040316,
+        1.029291359333111,
+        1.0316788247729005,
+        1.0376930176628616,
+        1.0378571152208391,
+        1.0415601604963527,
+        1.0430365537296389,
+        1.0484361671655908,
+        1.049949197516156,
+        1.0532854193612085,
+        1.0577825790561044,
+        1.0583350093181458,
+        1.0615062589433348,
+        1.062530367858278,
+        1.0624116347365569,
+        1.061547348856841,
+        1.0640554842990522,
+        1.0675394835111913,
+        1.0718220029027237,
+        1.0745890423529032,
+        1.075372986923692,
+        1.076465546917411,
+        1.0768413945018773,
+        1.0808554432796025,
+        1.0804035576428088,
+        1.0846395864520286,
+        1.0872022783810757,
+        1.089523148857703,
+        1.0903836671560088,
+        1.0911586884802862,
+        1.0946418523553454,
+        1.0952485087047785,
+        1.09286956449313,
+        1.0980963803686843,
+        1.0979312863671609,
+        1.0999364946916321,
+        1.0982474627261574,
+        1.1021895063142355,
+        1.101019475859472,
+        1.1019449330909417,
+        1.1079223572204353,
+        1.1124208447270005,
+        1.1129180780016703,
+        1.1150992217978197,
+        1.1157946108403884,
+        1.1154001436355387,
+        1.119540038644712,
+        1.121141594755957,
+        0.1792328507544926
+      ]
+    ]
+  },
+  "supersedes": "All earlier multi-period figures before cumulative payout correction.",
+  "caveats": [
+    "Wasserstein risk bounds use an explicit max_path transport metric on normalized path prices and cumulative payout requirements, unrestricted support and a development-selected radius, not a confidence-calibrated ambiguity set. Utility remains nominal.",
+    "Final all-risk verdict uses separate Bonferroni-adjusted one-sided conditional batch bounds for every payment, path/terminal loss and holdings. Reference, nominal and stress measures plus their common-threshold convex-hull envelope are checked. These are Monte Carlo diagnostics, not economic forecast coverage. Zero observed losses do not bound unseen tails.",
+    "Funding-selected candidates remain frozen when final all-risk evaluation fails. Final results never tune or repair them. Passing a coarse model check is not an investment recommendation.",
+    "Archive split independence is the input provider responsibility; generated mode uses disjoint calibration/evaluation seeds. Final failures are never recalibrated away.",
+    "Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.",
+    "Liabilities, views and innovation-law parameters are illustrative/development-selected, not client evidence. Scenario law: gaussian_scale_mixture",
+    "Weekly log shocks aggregate by summation. Read innovation_evidence for the selected iid, conditional or legacy model domain. Legacy t cannot support population price means/variances; iid exact formulas do not apply to recursive conditional variance.",
+    "Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.",
+    "Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.",
+    "1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings."
+  ],
+  "dashboard": {
+    "wealth": 100000000,
+    "horizon_weeks": 52,
+    "payouts": [
+      {
+        "name": "Counterfactual95M",
+        "week": 52,
+        "amount": 95000000.0
+      }
+    ],
+    "selected": null,
+    "satellite_indices": [
+      5
+    ],
+    "status": {
+      "kind": "no calibration candidate passed"
+    },
+    "confidence": 0.95,
+    "loss_budget": 0.15,
+    "cml_budget": 0.06,
+    "cash_index": 4,
+    "wasserstein_radius": 2e-05,
+    "wasserstein_liability_scale": 0.01,
+    "risk_tolerance": 10000000,
+    "profile": "Balanced",
+    "innovation_evidence": {
+      "model": "gaussian_scale_mixture",
+      "price_exponential_moments": "finite at all finite orders for linear Gaussian-mixture log paths",
+      "mixture": {
+        "probabilities": [
+          0.9,
+          0.1
+        ],
+        "variance_scales": [
+          0.75,
+          3.25
+        ]
+      },
+      "scope": "Development-selected iid weekly variance mixture, not fitted regimes, not Student-t and not FHS. Log covariance preserved. A common state couples listed assets, FX and property shocks."
+    },
+    "price_moments_finite": true,
+    "liability_vol": 0.0,
+    "haircuts": [
+      0.001,
+      0.002,
+      0.001,
+      0.0005,
+      0.0
+    ],
+    "qualifications": [
+      "Illustrative, not client-calibrated. All dollar amounts are USD.",
+      "Displayed return and volatility describe finite simulated paths, not economic forecasts. Explicit legacy log-Student-t modes do not have finite population price moments. The new Gaussian-mixture default does. Certainty equivalent is risk-adjusted net wealth, not expected profit.",
+      "CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.",
+      "The fan is marked wealth, not available cash, after cumulative payouts and configured synthetic liquidity haircuts, with money-market opportunity costs. RE follows an explicit fixed sale/settlement plan, not a dynamic asset-sale policy.",
+      "Stress cards are deterministic simplified shocks, not calibrated historical crisis replays or probability forecasts.",
+      "Time-to-cash has not been calibrated. A liquid-market label does not guarantee same-day sale or settlement.",
+      "Wasserstein risk bounds use a development radius and explicit unrestricted-support transport metric; utility is nominal. No probability coverage is guaranteed by the radius.",
+      "Zero observed losses is not a bound on unseen tails."
+    ],
+    "budget_warning": null,
+    "funding_mode": "pay_all_99",
+    "radius_calibration": null,
+    "registry_mode": true,
+    "history_evidence": {
+      "label": "PRIVATE RESEARCH. Yahoo-adjusted ETF histories plus issuer Treasury NAV returns. Terms risk accepted; not cleared for public distribution. Parametric scenarios, not an actual-history backtest.",
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "weekly_returns": 1129,
+      "sources": [
+        {
+          "asset_id": "us_equity",
+          "source_url": "https://finance.yahoo.com/quote/VTI/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "e7222fa5bc257b56c6f1f81c0eafb4057f7a7a14e99c0f65e1e561defa1e0fa4"
+        },
+        {
+          "asset_id": "em_equity",
+          "source_url": "https://finance.yahoo.com/quote/VWO/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "99f2625bb86aa461631711b87fb6f316a818278a792b20986b9de7528a290d5b"
+        },
+        {
+          "asset_id": "gold",
+          "source_url": "https://finance.yahoo.com/quote/GLD/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "09badf00545dace214b5e532ddb99886eb140dcf91b291be9e3aeed31bdc054c"
+        },
+        {
+          "asset_id": "treasury",
+          "source_url": "https://www.blackrock.com/us/financial-professionals/products/239456/ishares-710-year-treasury-bond-etf",
+          "use_terms": "Personal non-commercial analysis only, notices retained in source workbook. No redistribution or public/commercial use.",
+          "sha256": "866f3b508fa05cf9416dc4c1d89e7740592d9fca950b6fa3ffc4647a06ddb8dd"
+        }
+      ]
+    },
+    "invariance_evidence": {
+      "available": true,
+      "rows": [
+        {
+          "name": "us_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014024196749697667,
+          "late_mean": 0.0025549929254922695,
+          "early_vol": 0.025977394941897783,
+          "late_vol": 0.024024110957981,
+          "sample_skewness": -0.9885851179670224,
+          "sample_excess_kurtosis": 9.055984523808808,
+          "mean_shift_in_full_sample_sd": 0.046076190406745786,
+          "split_cdf_distance": 0.03460114228331135,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.07052763599901916,
+              "squared_returns": 0.3286983557475859
+            },
+            {
+              "lag": 4,
+              "returns": -0.02746958939324597,
+              "squared_returns": 0.16132523129728155
+            },
+            {
+              "lag": 8,
+              "returns": 0.04156541838977456,
+              "squared_returns": 0.06036885143474273
+            }
+          ]
+        },
+        {
+          "name": "em_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0009454539538046416,
+          "late_mean": 0.0014607828404532106,
+          "early_vol": 0.03654283944014308,
+          "late_vol": 0.02450127185924515,
+          "sample_skewness": -0.6918497311233737,
+          "sample_excess_kurtosis": 7.180610303426668,
+          "mean_shift_in_full_sample_sd": 0.016574188218000184,
+          "split_cdf_distance": 0.0923743174543401,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.032442081662946036,
+              "squared_returns": 0.343978004946072
+            },
+            {
+              "lag": 4,
+              "returns": -0.005618641576819779,
+              "squared_returns": 0.19681760069574356
+            },
+            {
+              "lag": 8,
+              "returns": 0.08001524038355477,
+              "squared_returns": 0.07522409716709409
+            }
+          ]
+        },
+        {
+          "name": "gold",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014640952115221805,
+          "late_mean": 0.00222061581548858,
+          "early_vol": 0.02645620509912645,
+          "late_vol": 0.021440489615339405,
+          "sample_skewness": -0.27922277501772974,
+          "sample_excess_kurtosis": 2.044574332854946,
+          "mean_shift_in_full_sample_sd": 0.031430821327590806,
+          "split_cdf_distance": 0.06575346764576662,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.0003234729309989343,
+              "squared_returns": 0.11936935605896909
+            },
+            {
+              "lag": 4,
+              "returns": -0.004941464534606933,
+              "squared_returns": 0.14518422403711398
+            },
+            {
+              "lag": 8,
+              "returns": -0.032791284313892104,
+              "squared_returns": 0.11322883946751086
+            }
+          ]
+        },
+        {
+          "name": "treasury",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0010157644252539906,
+          "late_mean": 0.00019062077816785675,
+          "early_vol": 0.00903190554573737,
+          "late_vol": 0.00869757943548711,
+          "sample_skewness": -0.1309482554564808,
+          "sample_excess_kurtosis": 0.9990239219599069,
+          "mean_shift_in_full_sample_sd": -0.0930069853894397,
+          "split_cdf_distance": 0.08023912634155528,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.060370106297258364,
+              "squared_returns": 0.11179182639645495
+            },
+            {
+              "lag": 4,
+              "returns": 0.04601268134002484,
+              "squared_returns": 0.15463430220187024
+            },
+            {
+              "lag": 8,
+              "returns": 0.03267518255273232,
+              "squared_returns": 0.13128842938461954
+            }
+          ]
+        },
+        {
+          "name": "cash",
+          "observations": 1129,
+          "deterministic": true,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0,
+          "late_mean": 0.0,
+          "early_vol": 0.0,
+          "late_vol": 0.0,
+          "sample_skewness": null,
+          "sample_excess_kurtosis": null,
+          "mean_shift_in_full_sample_sd": null,
+          "split_cdf_distance": 0.0,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 4,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 8,
+              "returns": null,
+              "squared_returns": null
+            }
+          ]
+        },
+        {
+          "name": "__fx_usd_per_sgd",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.00023613186619505928,
+          "late_mean": 0.00018278994056410554,
+          "early_vol": 0.007601123743469994,
+          "late_vol": 0.006277719998702824,
+          "sample_skewness": -0.22985423994918625,
+          "sample_excess_kurtosis": 2.3968054795385925,
+          "mean_shift_in_full_sample_sd": -0.007656067559180611,
+          "split_cdf_distance": 0.06055042992531223,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": 0.017829225848633203,
+              "squared_returns": 0.13760266427499526
+            },
+            {
+              "lag": 4,
+              "returns": -0.0175538492263167,
+              "squared_returns": 0.13135597035797467
+            },
+            {
+              "lag": 8,
+              "returns": 0.06895380872891475,
+              "squared_returns": 0.08363316678115204
+            }
+          ]
+        }
+      ],
+      "observations": 1129,
+      "assumption": "Raw weekly log returns are modeled iid by the Gaussian-mixture default; this assumption has not been established.",
+      "scope": "Descriptive split-distribution and lag diagnostics, inspired by Meucci (2005), pp.103-105. No p-values, multiple-test pass label or economic coverage claim. Low linear autocorrelation alone does not imply independence; squared-return dependence can remain. No data cleaning, parameter adjustment or model selection is performed.",
+      "book": {
+        "title": "Risk and Asset Allocation",
+        "author": "Attilio Meucci",
+        "year": 2005,
+        "printed_pages": "103-105",
+        "pdf_pages": "125-127"
+      },
+      "prior_weekly_shape": {
+        "skewness": 0.0,
+        "excess_kurtosis": 1.6875,
+        "scope": "Before entropy-pooling views. Development-selected mixture shape, not fitted to historical skewness or kurtosis. Sample shape estimates are noisy descriptive statistics, not population truths."
+      }
+    },
+    "fx_evidence": {
+      "series": "RXI_N.B.SI",
+      "currency_pair": "SGD_per_USD",
+      "source_url": "https://www.federalreserve.gov/releases/h10/data/FRB_h10_xml.zip",
+      "release_page": "https://www.federalreserve.gov/releases/h10/hist/dat00_si.htm",
+      "terms_url": "https://www.federalreserve.gov/disclaimer.htm",
+      "attribution": "Source: Board of Governors of the Federal Reserve System (US), H.10 Foreign Exchange Rates.",
+      "use_terms": "Federal Reserve Board website information is public domain unless otherwise indicated. No exception marked for this series. Attribution requested. No logo or seal used.",
+      "prepared": "2026-11-02T16:52:42",
+      "first_date": "1981-01-02",
+      "last_date": "2026-10-30",
+      "observations": 11499,
+      "file": "sgd-per-usd.csv",
+      "sha256": "7597bf52e44fd46304d7556f24c0313b0750cc3833217a6ecee4acc41a8b2fd2",
+      "limitations": "SGD per USD noon New York buying rate for cable transfers. Reference rate, not executable spot or FX total return. Latest vintage, not point-in-time revision-safe data. FX return uses inverse quote: USD per SGD. No FX hedge, rate differential or conversion fee model.",
+      "annual_log_vol": 0.05024173219677656,
+      "annual_sample_log_drift": 0.010890738552295942,
+      "mean_policy": "zero",
+      "correlations": {
+        "us_equity": 0.40788496229963905,
+        "em_equity": 0.5762342430262468,
+        "gold": 0.4315965240625469,
+        "treasury": 0.09994959688669017
+      },
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "dependence_note": "Joint listed-ETF/FX covariance fitted on common weekly dates. Weekly property dependence is assumed through its user-set equity shock correlation; property/FX correlation is induced, not separately estimated from quarterly property data. Daily FX is NY noon while ETF NAV is close, so observations are not synchronous.",
+      "model_annual_log_vol": 0.050241732196776565,
+      "model_correlations": {
+        "us_equity": 0.39736912345525954,
+        "em_equity": 0.5613781267278841,
+        "gold": 0.42046936833891446,
+        "treasury": 0.09737275794785008
+      }
+    },
+    "scenario_tier": "bounded4batch strict diagnostic",
+    "scenario_counts": {
+      "train_scenarios": 100,
+      "validation_scenarios": 200,
+      "evaluation_scenarios": 400,
+      "validation_seeds": 4,
+      "evaluation_seeds": 4
+    },
+    "recurring_payout": null,
+    "one_off_payouts": [
+      {
+        "name": "Counterfactual95M",
+        "week": 52,
+        "amount": 95000000.0
+      }
+    ],
+    "market_views": {
+      "units": "Expected simple return over 52 weeks, after configured liquidity haircut; not annual return",
+      "rows": [
+        {
+          "asset_index": 0,
+          "name": "US equity",
+          "prior": 0.1472134299902865,
+          "requested": null,
+          "achieved": 0.14207885388781152,
+          "stressed": 0.12416685282897919,
+          "prior_min": -0.22615580933532675,
+          "prior_max": 1.1422924415912412
+        },
+        {
+          "asset_index": 1,
+          "name": "Emerging-market equity",
+          "prior": 0.07765975892117534,
+          "requested": null,
+          "achieved": 0.07127296994193472,
+          "stressed": 0.05376951094583642,
+          "prior_min": -0.29671536423233236,
+          "prior_max": 1.0354804976929488
+        },
+        {
+          "asset_index": 2,
+          "name": "Gold",
+          "prior": 0.1004355553036995,
+          "requested": null,
+          "achieved": 0.098363148110159,
+          "stressed": 0.0962371143614356,
+          "prior_min": -0.32960622822853824,
+          "prior_max": 0.6316937902167381
+        },
+        {
+          "asset_index": 3,
+          "name": "US Treasuries",
+          "prior": 0.03087351097549159,
+          "requested": null,
+          "achieved": 0.030986822214282887,
+          "stressed": 0.03193444067587149,
+          "prior_min": -0.14711586552827483,
+          "prior_max": 0.22708156360376153
+        }
+      ],
+      "stress": {
+        "increment": 0.01,
+        "prior": 0.08525856238065391,
+        "nominal": 0.0868626935527284,
+        "achieved": 0.09686269363451808,
+        "units": "Expected maximum equity-basket loss from initial value over the horizon; not CML or a crisis probability"
+      },
+      "relative_equity_spread": {
+        "requested": null,
+        "achieved": -0.07080588394587682,
+        "note": "Legacy relative view disabled for the registry universe; absolute targets use registered membership."
+      },
+      "posterior_effective_scenarios": 98.99408709223923,
+      "note": "Prior is a sample-informed modeled horizon distribution, not a realized historical return. Reweighting can move other asset moments. Targets outside joint scenario support fail explicitly."
+    },
+    "re_data": {
+      "available": true,
+      "source": "singapore_ura",
+      "enabled": true,
+      "observed": {
+        "provenance": "URA Private Residential Property Price Index via data.gov.sg, All Residential",
+        "first_period": "1975-Q1",
+        "last_period": "2026-Q2",
+        "observations": 206,
+        "return_count": 205,
+        "frequency": "quarterly",
+        "periods_per_year": 4,
+        "units": "Price index,2009-Q1=100",
+        "property_type": "All Residential",
+        "source_url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+        "licence_url": "https://data.gov.sg/open-data-licence",
+        "attribution": "Contains information from Private Residential Property Price Index (Base Quarter2009-Q1=100), Quarterly, accessed on7 November2026 from data.gov.sg / Urban Redevelopment Authority, made available under the Singapore Open Data Licence version1.0: https://data.gov.sg/open-data-licence . No official endorsement.",
+        "sha256": "4865156968e1a758f50569b63c4526fb30f17bcf79387a620a606776a89845af",
+        "as_of": "2026-10-30",
+        "release_lag_days": 45,
+        "limitations": "Private residential transaction price index, not HDB, rent, total return or a tradable fund. Aggregate index is not a specific property. Quarterly history does not identify weekly volatility, liquidity or execution costs. Latest vintage may revise earlier values; this is not vintage-correct historical backtesting."
+      },
+      "assumptions": {
+        "holding_mode": "fixed",
+        "fixed_weight": 0.1,
+        "smoothing_alpha": 0.0,
+        "net_rental_yield": 0.0,
+        "sale_week": 0,
+        "sale_delay_weeks": 12,
+        "history_case": "central",
+        "sg_property_type": "All Residential",
+        "forward_mode": "view",
+        "forward_log_drift": 0.04,
+        "enabled": true,
+        "minimum_weight": 0.0,
+        "annual_drift": 0.04,
+        "annual_vol": 0.12,
+        "equity_correlation": 0.3,
+        "liquidation_haircut": 0.1,
+        "source": "singapore_ura",
+        "history_end": "2026-10-30"
+      },
+      "calibration": {
+        "annual_log_drift": 0.04,
+        "annual_vol": 0.15933634835411922,
+        "source": "singapore_ura",
+        "assumptions": {
+          "holding_mode": "fixed",
+          "fixed_weight": 0.1,
+          "smoothing_alpha": 0.0,
+          "net_rental_yield": 0.0,
+          "sale_week": 0,
+          "sale_delay_weeks": 12,
+          "history_case": "central",
+          "sg_property_type": "All Residential",
+          "forward_mode": "view",
+          "forward_log_drift": 0.04,
+          "enabled": true,
+          "minimum_weight": 0.0,
+          "annual_drift": 0.04,
+          "annual_vol": 0.12,
+          "equity_correlation": 0.3,
+          "liquidation_haircut": 0.1,
+          "source": "singapore_ura",
+          "history_end": "2026-10-30"
+        },
+        "dependence_note": "User-set Pearson correlation of weekly RE price shocks with equal-weight equity log shocks in the scenario model; not estimated from property history. Other cross-asset correlations are induced by the shared factor model, not independently set.",
+        "rent_note": "User-set net unlevered rental yield after operating costs, vacancy and taxes; paid weekly on initial property capital and reinvested in MMKT. No debt, FX or tenant/default model.",
+        "iid_scaled_vol": 0.0984534601989237,
+        "drift_range": [
+          0.027630562049530058,
+          0.06191530473009774,
+          0.09996420156296408
+        ],
+        "vol_range": [
+          0.1025167535716448,
+          0.13635407558639237,
+          0.1722997016279781
+        ],
+        "return_count": 205,
+        "method": "Circular moving-block bootstrap, 4-period blocks (4 observations/year), 2000 resamples, fixed seed; annual volatility uses rolling sums of 4 returns with serial covariance, overlapping-year observations; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+        "smoothing_alpha": 0.0,
+        "observed": {
+          "provenance": "URA Private Residential Property Price Index via data.gov.sg, All Residential",
+          "first_period": "1975-Q1",
+          "last_period": "2026-Q2",
+          "observations": 206,
+          "return_count": 205,
+          "frequency": "quarterly",
+          "periods_per_year": 4,
+          "units": "Price index,2009-Q1=100",
+          "property_type": "All Residential",
+          "source_url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+          "licence_url": "https://data.gov.sg/open-data-licence",
+          "attribution": "Contains information from Private Residential Property Price Index (Base Quarter2009-Q1=100), Quarterly, accessed on7 November2026 from data.gov.sg / Urban Redevelopment Authority, made available under the Singapore Open Data Licence version1.0: https://data.gov.sg/open-data-licence . No official endorsement.",
+          "sha256": "4865156968e1a758f50569b63c4526fb30f17bcf79387a620a606776a89845af",
+          "as_of": "2026-10-30",
+          "release_lag_days": 45,
+          "limitations": "Private residential transaction price index, not HDB, rent, total return or a tradable fund. Aggregate index is not a specific property. Quarterly history does not identify weekly volatility, liquidity or execution costs. Latest vintage may revise earlier values; this is not vintage-correct historical backtesting."
+        },
+        "history_note": "Public Singapore URA quarterly price-index returns, annualized with4 periods/year; four-quarter circular block bootstrap. Annual price dispersion is estimated from rolling four-quarter sums, including serial covariance; overlapping years are not independent. Weekly paths assume square-root-of-time disaggregation of this annual dispersion and a parametric shock model, not observed weekly property returns. No rent, execution or liquidity is estimated from the index. Latest vintage, not revision-safe historical backtest data.",
+        "sample_implied_log_drift": 0.06253356626542508,
+        "forward_log_drift": 0.04,
+        "forward_note": "4% default is an illustrative long-run price-log-return view, not a data estimate, calibrated prior, conservative bound or promised return. Net rent is separate. View mode pins the terminal log-price mean through entropy pooling; sample mode is an explicitly optional historical-sample sensitivity."
+      },
+      "ep_achieved_annual_log_drift": {
+        "nominal": 0.04000000000000002,
+        "stressed": 0.0399999996444395
+      }
+    },
+    "sfo_inputs": {
+      "status": "Default placeholder, not real SFO/client evidence",
+      "investable_wealth": 100000000,
+      "currency": "USD",
+      "horizon_weeks": 52,
+      "payouts": [
+        {
+          "name": "Counterfactual95M",
+          "week": 52,
+          "amount": 95000000.0
+        }
+      ],
+      "wasserstein_radius": 2e-05,
+      "wasserstein_liability_scale": 0.01,
+      "risk_tolerance": 10000000,
+      "company_value": 0.0,
+      "company_note": "Not provided; excluded, not measured as zero",
+      "evidence_status": "illustrative",
+      "missing": [
+        "verified holdings/units and prices",
+        "dated obligations and currency",
+        "company cash flows/valuation and sector exposure",
+        "property rent/cost/debt and sale-delay evidence",
+        "risk limits and approval owner",
+        "independent training/validation/evaluation scenarios"
+      ],
+      "private_import_format": "scenario_archives: training NPZ, validation NPZ list, evaluation NPZ list. See docs/CLIENT_INPUTS.md. Never upload client data to GitHub."
+    },
+    "unavailable": "No proposed allocation passed calibration. Baselines are comparators, not approved alternatives.",
+    "guardrails": [],
+    "shocks": []
+  }
+}
