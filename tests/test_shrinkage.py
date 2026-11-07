@@ -43,3 +43,13 @@ def test_mean_shrinkage_endpoints():
     assert w0 < 0.01 and w1 > 0.99
     np.testing.assert_allclose(shrunk_no, mean, atol=1e-3)
     np.testing.assert_allclose(shrunk_all, target, atol=1e-3)
+
+
+def test_covariance_shrinkage_is_invariant_to_column_units():
+    rng=np.random.default_rng(14)
+    x=rng.normal(size=(500,3)) @ np.array([[1.,.4,.1],[0.,1.,.2],[0.,0.,1.]])
+    a,da=shrinkage.ledoit_wolf_cov(x)
+    units=np.array([100.,.001,3.])
+    b,db=shrinkage.ledoit_wolf_cov(x*units)
+    np.testing.assert_allclose(b,a*np.outer(units,units),rtol=1e-10)
+    assert abs(da-db)<1e-10

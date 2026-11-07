@@ -33,17 +33,23 @@ def run():
             inv = 13*mean + z / np.sqrt(rng_nu.chisquare(nu, (1000, 1))/(nu-2))
             market = dataset.gross_market(inv, anchor.YIELD_LEVEL, anchor.SPREAD_LEVEL)
             for mult in multipliers:
-                a, diag = liabilities.optimization_liability_aware(
-                    market, np.ones(6), 1e6, 950000., 25000., .95, .1, .002*mult)
-                gap = np.maximum(950000.-held_market@a, 0.)
+                try:
+                    a, diag = liabilities.optimization_liability_aware(
+                        market, np.ones(6), 1e6, 950000., 25000., .95, .1, .002*mult)
+                    gap = np.maximum(950000.-held_market@a, 0.)
+                    gap_score = risk_stats.empirical_cvar(gap, .95)
+                    status = diag['status']
+                except RuntimeError:
+                    gap_score = None
+                    status = 'unavailable: solver validation failed'
                 records.append(dict(fold=fold_id, train_stop=str(train.index[-1].date()),
                     validation_start=str(val.index[0].date()), validation_stop=str(val.index[-1].date()),
-                    nu=nu, multiplier=mult, weekly_nll=nlls[nu], gap_cvar=risk_stats.empirical_cvar(gap, .95),
-                    rolling_paths=len(gap), nonoverlap_paths=len(val)//13, solver_status=diag['status']))
+                    nu=nu, multiplier=mult, weekly_nll=nlls[nu], gap_cvar=gap_score,
+                    rolling_paths=len(held_market), nonoverlap_paths=len(val)//13, solver_status=status))
     mean_nll = {nu: float(np.mean([r['weekly_nll'] for r in records if r['nu']==nu])) for nu in nu_grid}
     selected_nu = min(mean_nll, key=mean_nll.get)
     # Worst development-fold risk, not a pooled average that can hide one breach.
-    feasible = [m for m in multipliers if max(r['gap_cvar'] for r in records if r['nu']==selected_nu and r['multiplier']==m) <= 1900.]
+    feasible = [m for m in multipliers if max(r['gap_cvar'] if r['gap_cvar'] is not None else float('inf') for r in records if r['nu']==selected_nu and r['multiplier']==m) <= 1900.]
     selected_mult = max(feasible) if feasible else None
     return dict(label='exploratory short-history calibration, not a validated 95% tail guarantee',
         assumptions=['13-week elliptical t horizon approximation', 'synthetic constant-maturity bonds',

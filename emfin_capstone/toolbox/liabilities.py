@@ -88,6 +88,7 @@ def optimization_liability_aware(
     long_only: bool = True,
     n_optimization_scenarios: int = 10_000,
     scenario_probs: np.ndarray | None = None,
+    minimum_weights: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
     """Maximize CARA CE of net wealth (W - L) under loss + shortfall budgets.
 
@@ -132,6 +133,12 @@ def optimization_liability_aware(
     constraints = [cp.sum(weights) == 1, cvar_loss <= gamma_loss]
     if long_only:
         constraints.append(weights >= 0)
+
+    if minimum_weights is not None:
+        mins = np.asarray(minimum_weights,float).ravel()
+        if mins.shape != (n_assets,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:
+            raise ValueError("minimum weights must align, be nonnegative and sum to at most 1")
+        constraints.append(weights >= mins)
 
     # funding-gap budget (only binds when there is a liability).  The gap is
     # one-sided — a surplus does not offset a shortfall in the tail — so the
@@ -403,22 +410,21 @@ def optimization_multiperiod(
     return allocations, diagnostics
 
 
-def crra_scaled_tolerance(base_tolerance: float, surplus_ratio: float, reference_ratio: float,
+def surplus_scaled_cara_tolerance(base_tolerance: float, surplus_ratio: float, reference_ratio: float,
                           floor: float = 1e-3) -> float:
-    """CRRA-on-surplus risk tolerance (Kallberg-Ziemba construction).
+    """Illustrative surplus-scaled CARA tolerance, not CRRA power utility.
 
-    CARA's absolute risk tolerance is independent of wealth - the property
-    the external review criticizes: a family's risk capacity should fall as
-    its funding ratio falls.  CRRA has relative risk aversion constant, so
-    absolute tolerance is proportional to surplus.  The standard surrogate
-    keeps the tractable CARA solve but scales its tolerance by the surplus
-    ratio relative to a reference point: zeta * (f / f0), floored away from
-    zero so the solve stays finite.  Exact power utility over unbounded
-    scenario sets is not DCP-robust (there is always a scenario with
-    negative surplus); this surrogate keeps the convex machinery and the
-    comparative statics the review asked for.
+    Scaling absolute tolerance with surplus mimics one local comparative
+    static of CRRA; a one-step rescale is not utility equivalence or a
+    fixed-point solution. The floor is numerical, not an economic model of
+    negative surplus. Exact CRRA can be concave on positive surplus, but
+    requires an explicit domain and an infeasibility policy.
     """
     if base_tolerance <= 0 or reference_ratio <= 0:
         raise ValueError("tolerance and reference ratio must be positive")
     ratio = max(surplus_ratio, floor) / reference_ratio
     return base_tolerance * ratio
+
+
+# Backward-compatible helper name. New code uses the accurate name above.
+crra_scaled_tolerance = surplus_scaled_cara_tolerance

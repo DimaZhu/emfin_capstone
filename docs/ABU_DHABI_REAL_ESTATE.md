@@ -65,14 +65,10 @@ Terms findings for the other sources (2026-11-07):
   gated (the page mentions a confirmation step within 14 days); not clearly
   open for bulk download - request access first; not pulled.
 
-## Data status (as of 2026-11-07)
+## Current boundary
 
-- All tests validate against simulate_smoothed_observations (known truth).
-- Free backbone candidate: BIS/FRED UAE residential property prices
-  (quarterly from ~2003). The claim that BIS's UAE series is REIDIN-derived
-  is NOT yet verified from sources - check the BIS series metadata before
-  relying on it.
-- REIDIN public monthly PDFs / ADREC reports / ValuStrat quarterly reviews:
-  terms of use must be read before use; no scraping of third-party
-  dashboards (Daar etc.) per the plan.
-- When a file lands: data/raw/<source>/<date>/ + DataManifest entry.
+The BIS/FRED UAE series and its manifest are present, and the observer script
+uses them. Synthetic tests remain necessary because the latent truth is unknown
+in real observations. A stale national index is not an Abu Dhabi client valuation.
+REIDIN derivation was verified against the BIS national-source document, as noted
+above. Client exposures and licensed local observations remain missing.
