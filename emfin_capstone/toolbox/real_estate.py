@@ -21,12 +21,12 @@ Implements the codeable core of the Abu Dhabi plan (2026-11-07):
   robustness feature, echoing Couts-Goncalves-Rossi 2024);
 * Scalability - ``MarketAdapter`` registry: each market plugs in a loader
   and observer mapping, with a manifest entry (URL, access date, licence,
-  hash).  No data ships here: the licensed/non-bulk sources (REIDIN,
-  ADREC, ValuStrat) cannot be pulled programmatically, and third-party
-  dashboards are not scraped.  Validation is therefore SYNTHETIC (known
-  truth) until a licensed source lands in data/raw/<source>/<date>/ with
-  its manifest.  BIS/FRED UAE quarterly series is the intended free
-  backbone (licence check pending).
+  hash).  A pinned BIS/FRED UAE quarterly series is present with provenance in
+  data/raw/manifest.json; it ends 2024Q1 and is national, not Abu Dhabi.
+  The observer script exercises real data, while latent-truth tests remain
+  SYNTHETIC. Licensed/non-bulk sources (REIDIN, ADREC, ValuStrat) are not
+  redistributed or treated as approved bulk downloads. See the current
+  data/terms status in docs/ABU_DHABI_REAL_ESTATE.md.
 
 Layer 5 (state-dependent liquidity) lives in toolbox/meucci_liquidity.py:
 time-to-sell and cost as state-dependent random variables convolved with
