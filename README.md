@@ -133,3 +133,25 @@ to `artifacts/report/`. After installation, `emfin-run` is equivalent.
 Client obligations, views, liquidity inputs and alternative-asset calibration
 remain illustrative. The real-estate allocation example is synthetic-labelled,
 not an estimate of the real SFO client's exposure.
+
+## Local visual explorer
+
+```bash
+python -m emfin_capstone.explorer --precompute
+# Open http://127.0.0.1:8765
+python -m emfin_capstone.explorer --export artifacts/report/explorer.html
+```
+
+The explorer needs only the existing Python requirements and a browser. It binds
+only to your own computer and has no analytics/CDN/network dependency. Installed
+entry point: `emfin-explore` (keep the cloned repo and its pinned data available).
+Controls recompute the shared optimizer; nine liability/budget configurations can
+be precomputed and repeated settings use an in-memory cache. The static HTML is
+self-contained, shows the same default charts and disables controls rather than
+pretending to run Python in the browser.
+
+This is a fast **single-date companion**, not the full multi-period research run.
+It uses fixed synthetic liquidity haircuts, an equity mean-loss stress (not CML),
+and nominal Gaussian paths for the fan even if Student-t is selected. Those limits
+are printed beside the charts. Red gap numbers show fresh Monte Carlo breaches;
+training-budget compliance is not hidden or equated with out-of-sample safety.
