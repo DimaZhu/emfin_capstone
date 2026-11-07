@@ -85,3 +85,10 @@ search wall budget180s, study300s, no batches>30minutes. Preserve failures and
 report if a trivial cash/static policy matches or wins. Provide CE difference
 and MC error, turnover, costs, settlement misses, payment rate/CP, all-risk
 outcome. This is retrospective simulation, not proof of economic superiority.
+
+Before pilot/results: validation compute is capped to the top12training-feasible
+candidates by trainingCE, plus separately labelled baselines. This limits the
+policy class actually compared; it is not a global optimum certificate. A
+legacy W1 additive reserve is retained as an explicitly heuristic stress
+screen for shared dynamic judgment, never represented as a nonlinear policy
+DRO bound. Both raw empirical tails and the reserve are reported separately.
