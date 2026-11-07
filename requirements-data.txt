@@ -1,0 +1,8 @@
+# Optional live data regeneration and research plots, not runtime.
+-r requirements-dev.txt
+yfinance==1.8.0
+plotly==7.1.0
+# Security floors for optional HTTP/build dependencies.
+certifi>=2026.10.18
+urllib3>=2.8.0
+setuptools>=84.1.0

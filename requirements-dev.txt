@@ -1,4 +1,4 @@
-# Development and data-regeneration tooling on top of the runtime pins.
+# Core test tooling only. Optional data/notebook tools have separate files.
 # Install: pip install -r requirements-dev.txt
 -r requirements.txt
 pytest==9.2.0
@@ -6,7 +6,3 @@ pytest==9.2.0
 # tests/test_entropy_pooling.py to cross-check our solver. Test-only: the
 # GPL-3.0 fortitudo.tech package must NOT be added here (copyleft).
 entropy-pooling==1.0.11
-# Live data regeneration (scripts/pin_data_snapshot.py) and the notebook.
-yfinance==1.8.0
-plotly==7.1.0
-notebook==7.6.3

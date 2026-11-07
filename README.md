@@ -13,7 +13,7 @@ python -m venv .venv
 # macOS / Linux
 source .venv/bin/activate
 # Windows PowerShell instead: .venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
+python -m pip install --upgrade "pip>=26.2" "setuptools>=84.1" "wheel>=0.48"
 python -m pip install .
 python -m emfin_capstone
 emfin-explore
@@ -66,9 +66,15 @@ python scripts/smoke_installed.py
 
 The smoke test builds a wheel, installs into a separate temporary virtual
 environment, leaves the clone, runs both launch names and installed console
-commands, and verifies the report and bundled resources. It uses available
-runtime dependencies through system-site-packages; use a fresh venv without that
-option to check dependency downloading on your own machine.
+commands, and verifies the report and bundled resources. It installs runtime dependencies
+into a fresh venv without system-site-packages. This check needs package-index
+access (or a configured local wheel cache).
+
+Core test tools do not install Jupyter. For optional live-data/plot tooling use
+`requirements-data.txt`. Optional notebooks use `requirements-notebook.txt` in a
+separate **Python 3.11+** environment so patched Tornado 6.6 can be installed.
+The engine itself still supports Python 3.10. See the [dependency audit](docs/DEPENDENCY_AUDIT.md)
+for scan scope, security floors and historical archive findings.
 
 ## V2 and legacy boundary
 
