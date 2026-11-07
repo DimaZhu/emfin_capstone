@@ -1,0 +1,14 @@
+{
+  "tickers": [
+    "DFUS",
+    "DFAI",
+    "DFAE",
+    "^TNX"
+  ],
+  "source": "yfinance (Yahoo Finance), auto_adjust=True for ETFs (total return), raw close for ^TNX (yield index, percent)",
+  "start": "2021-06-15",
+  "end": "2026-11-06",
+  "fetched_at_utc": "2026-11-07T05:15:33+00:00",
+  "rows": 1357,
+  "note": "Pinned snapshot for reproducible capstone runs. ^TNX is the CBOE 10Y US Treasury yield index in percent; DFUS/DFAI/DFAE are dividend-adjusted closes."
+}
