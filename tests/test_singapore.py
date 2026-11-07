@@ -18,7 +18,8 @@ def test_public_ura_is_quarterly_price_index_not_rent():
 def test_quarterly_annualization_and_separate_forward_view():
     x,m=history();c=calibration(dict(source='singapore_ura',annual_drift=.04,annual_vol=.12))
     assert c['sample_implied_log_drift']==pytest.approx(np.mean(x)*4)
-    assert c['annual_vol']==pytest.approx(np.std(x,ddof=1)*2)
+    assert c['annual_vol']==pytest.approx(np.std(np.convolve(x,np.ones(4),mode='valid'),ddof=1))
+    assert c['iid_scaled_vol']==pytest.approx(np.std(x,ddof=1)*2)
     assert c['forward_log_drift']==.04
     assert '4-period blocks' in c['method']
     assert 'not observed weekly' in c['history_note']
@@ -35,3 +36,9 @@ def test_singapore_source_is_default_but_rent_remains_an_assumption():
 
 def test_unknown_property_type_fails():
     with pytest.raises(ValueError):history('HDB')
+
+
+def test_annual_volatility_includes_serial_covariance():
+    x=tuple(np.repeat([-.02,.02],20))
+    stats=history_statistics(x,0.,replicates=50,block=4,periods_per_year=4)
+    assert stats['annual_vol']>stats['iid_scaled_vol']*1.5

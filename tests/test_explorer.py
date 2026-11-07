@@ -17,7 +17,7 @@ def test_bad_controls_rejected():
 
 
 def test_optional_flags_have_actual_model_effect():
-    a=compute(Controls(view=0,sequential=False,student=True,stress=True))
-    assert a['controls']['student']
+    a=compute(Controls(view=0,sequential=False,fat_tails=True,stress=True))
+    assert a['controls']['fat_tails']
     assert a['controls']['stress']
     assert len(a['frontier'])>=10

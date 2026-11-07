@@ -10,7 +10,7 @@
   "funding_budget_fraction": 0.2,
   "loss_budget": 0.15,
   "cml_budget": 0.06,
-  "student_nu": 8.0,
+  "student_nu": null,
   "train_scenarios": 1000,
   "validation_scenarios": 4000,
   "evaluation_scenarios": 8000,
@@ -70,5 +70,17 @@
   },
   "asset_registry": "bundled",
   "history_bundle": "actual_etfs",
-  "history_end": "2026-10-30"
+  "history_end": "2026-10-30",
+  "scenario_model": "gaussian_scale_mixture",
+  "innovation_mixture": {
+    "probabilities": [
+      0.9,
+      0.1
+    ],
+    "variance_scales": [
+      0.75,
+      3.25
+    ]
+  },
+  "wasserstein_metric": "max_path"
 }

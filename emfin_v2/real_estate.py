@@ -48,11 +48,14 @@ def history_statistics(returns,alpha,replicates=2000,block=3,periods_per_year=12
     starts=rng.integers(0,n,(replicates,(n+block-1)//block))
     idx=(starts[:,:,None]+np.arange(block))%n
     samples=x[idx.reshape(replicates,-1)[:,:n]]
-    drift=samples.mean(1)*periods_per_year;vol=samples.std(1,ddof=1)*np.sqrt(periods_per_year)
-    return dict(annual_log_drift=float(x.mean()*periods_per_year),annual_vol=float(x.std(ddof=1)*np.sqrt(periods_per_year)),
+    drift=samples.mean(1)*periods_per_year
+    annual=np.convolve(x,np.ones(periods_per_year),mode='valid')
+    sampled_annual=np.lib.stride_tricks.sliding_window_view(samples,periods_per_year,axis=1).sum(-1)
+    vol=sampled_annual.std(1,ddof=1)
+    return dict(annual_log_drift=float(x.mean()*periods_per_year),annual_vol=float(annual.std(ddof=1)),iid_scaled_vol=float(x.std(ddof=1)*np.sqrt(periods_per_year)),
         drift_range=np.quantile(drift,[.05,.5,.95]).tolist(),
         vol_range=np.quantile(vol,[.05,.5,.95]).tolist(),return_count=n,
-        method=f'Circular moving-block bootstrap, {block}-period blocks ({periods_per_year} observations/year), {replicates} resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast',
+        method=f'Circular moving-block bootstrap, {block}-period blocks ({periods_per_year} observations/year), {replicates} resamples, fixed seed; annual volatility uses rolling sums of {periods_per_year} returns with serial covariance, overlapping-year observations; marginal 5/50/95 percentiles, not a joint confidence region or forecast',
         smoothing_alpha=float(alpha))
 
 
@@ -64,12 +67,15 @@ def calibration(re):
                 rent_note='User-set net unlevered rental yield after operating costs, vacancy and taxes; paid weekly on initial property capital and reinvested in MMKT. No debt, FX or tenant/default model.')
     if r.get('source')=='singapore_ura':
         from emfin_v2.singapore import history
-        returns,observed=history(r['sg_property_type'])
+        returns,observed=history(r['sg_property_type'],r.get('history_end'))
+        if r.get('calibration_returns_override') is not None:
+            returns=tuple(r['calibration_returns_override'])
+            if len(returns)<20 or not np.isfinite(returns).all():raise ValueError('invalid property bootstrap returns')
         stats=history_statistics(returns,r['smoothing_alpha'],block=4,periods_per_year=4)
         result.update(stats,observed=observed)
         if r['history_case']=='cautious':result.update(annual_log_drift=stats['drift_range'][0],annual_vol=stats['vol_range'][2])
         if r['history_case']=='optimistic':result.update(annual_log_drift=stats['drift_range'][2],annual_vol=stats['vol_range'][0])
-        result['history_note']='Public Singapore URA quarterly price-index returns, annualized with4 periods/year; four-quarter circular block bootstrap. Weekly paths assume square-root-of-time scaling and a parametric shock model, not observed weekly property returns. No rent, execution or liquidity is estimated from the index. Latest vintage, not revision-safe historical backtest data.'
+        result['history_note']='Public Singapore URA quarterly price-index returns, annualized with4 periods/year; four-quarter circular block bootstrap. Annual price dispersion is estimated from rolling four-quarter sums, including serial covariance; overlapping years are not independent. Weekly paths assume square-root-of-time disaggregation of this annual dispersion and a parametric shock model, not observed weekly property returns. No rent, execution or liquidity is estimated from the index. Latest vintage, not revision-safe historical backtest data.'
     elif r.get('source')=='abu_dhabi_private':
         from emfin_v2.abu_dhabi import default_path,local_calibration,monthly_returns
         observed=local_calibration()

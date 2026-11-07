@@ -1,4 +1,4 @@
-"""One default argument: funding-aware allocation under Student-t path uncertainty.
+"""One default argument: funding-aware allocation under explicitly named path uncertainty.
 
 No model promises a never-failing solve. The runner instead always writes a
 status report: validated allocation, verified cash fallback, or no feasible
@@ -20,6 +20,14 @@ def load_config(path=DEFAULT_CONFIG):
     try:
         c=json.loads(Path(path).read_text())
     except (OSError,json.JSONDecodeError) as error:raise ValueError('Cannot read model config: '+str(error)) from error
+    return validate_config(c)
+
+
+def validate_config(config):
+    """One final deep-copied boundary for CLI, UI, archive and direct runner."""
+    import copy
+    c=copy.deepcopy(config)
+    if not isinstance(c,dict):raise ValueError('Model config must be an object')
     if c.get('asset_registry')=='bundled':
         from emfin_v2.assets import load_registry
         c['asset_registry']=load_registry()
@@ -40,6 +48,7 @@ def load_config(path=DEFAULT_CONFIG):
     for key in ['horizon_weeks','train_scenarios','validation_scenarios','evaluation_scenarios','validation_seeds','evaluation_seeds','seed']:
         if type(c[key]) is not int or c[key]<0:raise ValueError(key+' must be a nonnegative integer')
     if any(c[k]<20 for k in ['train_scenarios','validation_scenarios','evaluation_scenarios']):raise ValueError('at least 20 scenarios per split required')
+    if c['liability_vol']!=0:raise ValueError('Stochastic liabilities are disabled: provide a deterministic dated schedule until a causal calibrated model is validated')
     if c['liability_vol']<0 or c['funding_budget_fraction']<0 or c['loss_budget']<0 or c['cml_budget']<0:raise ValueError('risk budgets and liability volatility must be nonnegative')
     if not c['multiplier_grid'] or any(not isinstance(x,(int,float)) or not np.isfinite(x) or not 0<x<=1 for x in c['multiplier_grid']):raise ValueError('budget multipliers must be in (0,1]')
     if 'cash_mix_grid' in c and (not c['cash_mix_grid'] or any(not isinstance(x,(int,float)) or not np.isfinite(x) or not 0<=x<=1 for x in c['cash_mix_grid'])):raise ValueError('cash mix fractions must be in [0,1]')
@@ -56,9 +65,13 @@ def load_config(path=DEFAULT_CONFIG):
     if c['evaluation_seeds']<2 or c['validation_seeds']<2:
         raise ValueError('at least two independent seeds per interval')
     c.setdefault('wasserstein_radius',0.)
+    c.setdefault('wasserstein_metric','legacy_l1')
+    if c['wasserstein_metric'] not in ('legacy_l1','max_path'):raise ValueError('unknown Wasserstein metric')
     c.setdefault('wasserstein_liability_scale',.01)
     from emfin_v2.toolbox.wasserstein import validate
     validate(c['wasserstein_radius'],c['wasserstein_liability_scale'])
+    from emfin_v2.innovations import validate as validate_innovations
+    validate_innovations(c)
     c.setdefault('sequential_ep',True)
     c.setdefault('cash_index',5)
     c.setdefault('view_instruments',[1,0])
@@ -87,6 +100,8 @@ def load_config(path=DEFAULT_CONFIG):
     validate_views(c.get('market_return_views',{}),allowed)
     if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)
+    if c.get('history_end'):c['real_estate']['history_end']=c['history_end']
+    else:c['real_estate'].pop('history_end',None)
     return c
 
 
@@ -139,10 +154,9 @@ def draw_paths(c,fit,n,seed,stressed=False):
     frame,mu,cov=fit;h=c['horizon_weeks'];rng=np.random.default_rng(seed)
     z=rng.normal(size=(n,h,6))@np.linalg.cholesky(cov+1e-12*np.eye(6)).T
     equity_gaussian=z[:,:,:3].mean(2)/max(np.sqrt(cov[:3,:3].sum()/9),1e-12)
-    scale=np.ones((n,h,1))
-    if c['student_nu'] is not None:
-        scale=np.sqrt(rng.chisquare(c['student_nu'],(n,h,1))/(c['student_nu']-2))
-        z/=scale
+    from emfin_v2.innovations import divisor
+    scale=divisor(c,rng,n,h)
+    z/=scale
     cumul=np.cumsum(mu+z,axis=1);last=frame.iloc[-1]
     paths=np.stack([dataset.gross_market(cumul[:,j],last.YIELD_LEVEL,last.SPREAD_LEVEL,j+1) for j in range(h)],1)
     growth=paths[:,:,5].copy() # no haircut on MMKT
@@ -158,11 +172,8 @@ def draw_paths(c,fit,n,seed,stressed=False):
         paths=np.concatenate([paths,mark[:,:,None]],axis=2)
     steps=np.array([i['week'] for i in c['liabilities']],int)
     bases=np.array([i['amount'] for i in c['liabilities']],float)
-    # Explicit optional liability model: same amount shock per payout, correlated
-    # with terminal equity stress; default is a deterministic schedule.
-    vol=c['liability_vol'];stress=-cumul[:,-1,:3].mean(1)
-    stress=(stress-stress.mean())/max(stress.std(),1e-9)
-    amounts=bases[None,:]*np.exp(vol*(.3*stress[:,None]+np.sqrt(.91)*rng.normal(size=(n,len(bases))))-.5*vol*vol)
+    if c['liability_vol']!=0:raise ValueError('Stochastic liabilities are disabled')
+    amounts=np.broadcast_to(bases,(n,len(bases))).copy()
     return ScenarioDraw((paths,amounts,steps,bases,growth),funding,re_log)
 
 
@@ -228,7 +239,7 @@ def metrics(c,draw,a,probs=None):
 
 def dro_buffer(c,a,liability=True):
     from emfin_v2.toolbox.wasserstein import penalty
-    return c['wealth']*penalty(a/c['wealth'],c.get('wasserstein_radius',0.),c['confidence'],c.get('wasserstein_liability_scale',.01) if liability else 0.)
+    return c['wealth']*penalty(a/c['wealth'],c.get('wasserstein_radius',0.),c['confidence'],c.get('wasserstein_liability_scale',.01) if liability else 0.,metric=c.get('wasserstein_metric','legacy_l1'))
 
 
 def holding_bounds(c,d):
@@ -246,7 +257,7 @@ def holding_bounds(c,d):
 def solve(c,draw,q,qs,mult):
     paths,amounts,steps,bases,growth=draw;n,d=paths.shape[0],paths.shape[2]
     mins,fixed=holding_bounds(c,d)
-    lower_buffer=c['wealth']*c.get('wasserstein_radius',0.)/(1-c['confidence'])/d
+    lower_buffer=c['wealth']*c.get('wasserstein_radius',0.)/(1-c['confidence'])*(max(1.,c.get('wasserstein_liability_scale',.01)) if c.get('wasserstein_metric')=='max_path' else max(1/d,c.get('wasserstein_liability_scale',.01)))
     smallest_budget=float(np.min(bases*c['funding_budget_fraction']*mult))
     if lower_buffer>smallest_budget+1e-8:
         return None,dict(kind='incompatible risk settings',reason=f'W1 buffer is at least ${lower_buffer:,.0f}, above the smallest payment budget ${smallest_budget:,.0f}; adjust radius or budget explicitly, not solver tolerances',cash_fallback_rejected=True)
@@ -255,9 +266,9 @@ def solve(c,draw,q,qs,mult):
             c['risk_tolerance'],c['confidence'],c['loss_budget'],c['funding_budget_fraction']*mult,
             scenario_probs=q,n_optimization_scenarios=n,cml_budget=c['cml_budget'],
             stress_probabilities=[qs],funding_stress_probabilities=[qs],
-            wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),
+            wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),wasserstein_metric=c.get('wasserstein_metric','legacy_l1'),
             funding_market_paths=funding_paths(draw),
-            minimum_weights=mins,fixed_weights=fixed)
+            minimum_weights=mins,fixed_weights=fixed,objective_kind=c.get('objective_kind','cara'))
         return a,dict(kind='optimized',**diag)
     except RuntimeError as err:
         # Cash is not assumed feasible: require pointwise budgets, a stronger
@@ -285,6 +296,9 @@ def solve(c,draw,q,qs,mult):
 
 def run(c,output='artifacts/default'):
     started=time.perf_counter()
+    c=validate_config(c)
+    from emfin_v2.innovations import describe
+    innovation_evidence=describe(c)
     if c.get('asset_registry'):
         from emfin_v2.registry_runtime import configure
         c=configure(c,c['asset_registry'])
@@ -385,17 +399,17 @@ def run(c,output='artifacts/default'):
     common_mu=(gross_common-1).mean(0);common_cov=np.cov(gross_common,rowvar=False)
     frontier=efficient_frontier(gross_common,minimum_weights=mins,fixed_weights=fixed)
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
-    result=dict(frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
+    result=dict(innovation_evidence=innovation_evidence,frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
         status=status,calibration=calibration,rows=rows,weights={k:(a/c['wealth']).tolist() for k,a in allocations.items()},
         assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['Singapore URA private residential price index'] if d==7 and c['real_estate'].get('source')=='singapore_ura' else ['RE synthetic'] if d==7 else [])),
         net_wealth_fan=fan, supersedes='All earlier multi-period figures before cumulative payout correction.',
-        caveats=['Wasserstein risk bounds use an explicit L1 transport metric on normalized path prices and cumulative payout requirements, unrestricted support and a development-selected radius, not a confidence-calibrated ambiguity set. Utility remains nominal.',
+        caveats=['Wasserstein risk bounds use an explicit '+c['wasserstein_metric']+' transport metric on normalized path prices and cumulative payout requirements, unrestricted support and a development-selected radius, not a confidence-calibrated ambiguity set. Utility remains nominal.',
                  'Final all-risk verdict uses separate Bonferroni-adjusted one-sided conditional batch bounds for every payment, path/terminal loss and holdings. Reference, nominal and stress measures plus their common-threshold convex-hull envelope are checked. These are Monte Carlo diagnostics, not economic forecast coverage. Zero observed losses do not bound unseen tails.',
                  'Funding-selected candidates remain frozen when final all-risk evaluation fails. Final results never tune or repair them. Passing a coarse model check is not an investment recommendation.',
                  'Archive split independence is the input provider responsibility; generated mode uses disjoint calibration/evaluation seeds. Final failures are never recalibrated away.',
                  'Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.',
-                 'Liabilities and views are illustrative; Student-t nu=8 is development-selected, not client evidence.',
-                 'Default weekly t shocks aggregate by summation; quarterly shocks are not assumed to preserve t degrees of freedom.',
+                 'Liabilities, views and innovation-law parameters are illustrative/development-selected, not client evidence. Scenario law: '+c['scenario_model'],
+                 'Weekly log shocks aggregate by summation. The finite Gaussian variance mixture has finite exponential moments; it is not a Student-t law, fitted regime process or FHS. Legacy t remains explicitly labelled and cannot support population price means/variances.',
                  'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
                  '1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings.'])

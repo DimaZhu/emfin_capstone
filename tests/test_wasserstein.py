@@ -43,3 +43,24 @@ def test_dro_zero_radius_reduces_to_same_problem_and_positive_radius_tightens():
 @pytest.mark.parametrize('radius,scale',[(-1,.01),(float('nan'),.01),(.01,-1)])
 def test_invalid_dro_inputs(radius,scale):
     with pytest.raises(ValueError):wasserstein.penalty([.5,.5],radius,.95,scale)
+
+
+def test_maxpath_duplicate_sleeve_and_time_grid_invariance():
+    original=wasserstein.penalty([.8,.2],.00002,.95,.01,metric='max_path')
+    duplicate=wasserstein.penalty([.4,.4,.2],.00002,.95,.01,metric='max_path')
+    assert original==duplicate==pytest.approx(.0004)
+    x=np.array([[.2,-.1],[.3,.1]])
+    assert wasserstein.ground_distance(x)==wasserstein.ground_distance(np.repeat(x,2,axis=0))
+    assert wasserstein.ground_distance(x)==wasserstein.ground_distance(x[:,[0,0,1]])
+    w=cp.Variable(3);problem=cp.Problem(cp.Minimize(wasserstein.cvx_penalty(w,.00002,.95,.01,metric='max_path')),[w==[.4,.4,.2]])
+    problem.solve(solver='CLARABEL');assert problem.value==pytest.approx(original,abs=1e-8)
+
+
+def test_maxpath_transport_lp_approaches_dual_bound():
+    eps=.01;w=np.array([.4,.4,.2]);eta=.1
+    for far in [100.,1000.,10000.]:
+        support=np.array([np.zeros(3),np.full(3,-far)])
+        losses=np.maximum(0,-support@w-eta);cost=np.array([wasserstein.ground_distance(x) for x in support])
+        lp=linprog(-losses,A_ub=[cost],b_ub=[eps],A_eq=[[1,1]],b_eq=[1],bounds=(0,None),method='highs')
+        assert lp.success
+        assert -lp.fun==pytest.approx(eps*w.sum()-eps*eta/far)
