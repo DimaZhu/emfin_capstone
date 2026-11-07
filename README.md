@@ -42,8 +42,8 @@ virtualenv in step 3 differs.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/DimaZhu/EMFin_2026_capstone_project.git
-cd EMFin_2026_capstone_project
+git clone https://github.com/DimaZhu/emfin_capstone.git
+cd emfin_capstone
 
 # 2. Install the required Python version and select it for this shell
 pyenv install 3.12.2        # skip if already installed
@@ -61,8 +61,8 @@ poetry install
 
 ```powershell
 # 1. Clone the repository
-git clone https://github.com/DimaZhu/EMFin_2026_capstone_project.git
-cd EMFin_2026_capstone_project
+git clone https://github.com/DimaZhu/emfin_capstone.git
+cd emfin_capstone
 
 # 2. Install the required Python version and select it for this shell
 pyenv install 3.12.2        # skip if already installed
