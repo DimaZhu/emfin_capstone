@@ -1,0 +1,1719 @@
+{
+  "sample_relaxation_upper": [
+    {
+      "model": "iid_nominal",
+      "perfect_foresight_sample_ce": 241070951.98421732,
+      "scope": "Pathwise clairvoyant frictionless weekly relaxation; sample bound only, not executable, not a true-law CI or achieved return."
+    },
+    {
+      "model": "bounded_nominal",
+      "perfect_foresight_sample_ce": 196752333.09324872,
+      "scope": "Pathwise clairvoyant frictionless weekly relaxation; sample bound only, not executable, not a true-law CI or achieved return."
+    },
+    {
+      "model": "iid_drift_minus2pp",
+      "perfect_foresight_sample_ce": 237420923.56143707,
+      "scope": "Pathwise clairvoyant frictionless weekly relaxation; sample bound only, not executable, not a true-law CI or achieved return."
+    },
+    {
+      "model": "iid_drift_minus2pp_cov1.2",
+      "perfect_foresight_sample_ce": 253172340.07455224,
+      "scope": "Pathwise clairvoyant frictionless weekly relaxation; sample bound only, not executable, not a true-law CI or achieved return."
+    }
+  ],
+  "baseline_validation": [
+    {
+      "model": "iid_nominal",
+      "policy": "original_cash_first",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04181676751358121,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.04033892242454826,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 98116500.10954332,
+        "net_mean": 98401104.51624228,
+        "net_quantiles": [
+          94713488.23130393,
+          98230812.14061421,
+          102611357.8903235
+        ],
+        "cost_mean": 0.0,
+        "turnover_mean": 0.0,
+        "trades_mean": 0.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_nominal",
+      "policy": "pro_rata_withdrawal",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04168119892762617,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.040082228556360865,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 98103772.44560286,
+        "net_mean": 98385664.01902452,
+        "net_quantiles": [
+          94716757.22214898,
+          98199012.82507852,
+          102564532.27417423
+        ],
+        "cost_mean": 233.40012287252185,
+        "turnover_mean": 466800.2457450436,
+        "trades_mean": 48.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_nominal",
+      "policy": "static_target_monthly",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04304885129862209,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.04223938356659723,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 98080468.71463421,
+        "net_mean": 98350943.64529431,
+        "net_quantiles": [
+          94692425.42648585,
+          98184099.01236436,
+          102394156.29325001
+        ],
+        "cost_mean": 1848.854945994983,
+        "turnover_mean": 3697709.891989966,
+        "trades_mean": 47.8425,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "bounded_nominal",
+      "policy": "original_cash_first",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.03510567917628483,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.03313497199201727,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999,
+            0.9999999999999999
+          ]
+        },
+        "common_cara_ledger_ce": 98128733.36613236,
+        "net_mean": 98334488.5737893,
+        "net_quantiles": [
+          95198444.24817121,
+          98217997.6561018,
+          101858063.35234813
+        ],
+        "cost_mean": 0.0,
+        "turnover_mean": 0.0,
+        "trades_mean": 0.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "bounded_nominal",
+      "policy": "pro_rata_withdrawal",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.035094124067308455,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.033134436005296454,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999,
+            0.9999999999999999
+          ]
+        },
+        "common_cara_ledger_ce": 98115687.12169604,
+        "net_mean": 98320222.6631144,
+        "net_quantiles": [
+          95195180.46518412,
+          98202858.87885419,
+          101827401.66480826
+        ],
+        "cost_mean": 233.03904148124923,
+        "turnover_mean": 466078.08296249853,
+        "trades_mean": 48.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "bounded_nominal",
+      "policy": "static_target_monthly",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.03533310902604949,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.03337182046611924,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999,
+            0.9999999999999999
+          ]
+        },
+        "common_cara_ledger_ce": 98092612.33749488,
+        "net_mean": 98292475.03499585,
+        "net_quantiles": [
+          95204576.53497112,
+          98186514.40367496,
+          101770616.60461435
+        ],
+        "cost_mean": 1231.4882312360062,
+        "turnover_mean": 2462976.462472012,
+        "trades_mean": 47.745000000000005,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp",
+      "policy": "original_cash_first",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04420437837441597,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.042741720917160775,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0000000000000002
+          ]
+        },
+        "common_cara_ledger_ce": 97831982.51757877,
+        "net_mean": 98113358.9119358,
+        "net_quantiles": [
+          94447493.67077819,
+          97915151.10310116,
+          102303212.185055
+        ],
+        "cost_mean": 0.0,
+        "turnover_mean": 0.0,
+        "trades_mean": 0.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp",
+      "policy": "pro_rata_withdrawal",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04405427856475268,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.04245115557828473,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0000000000000002
+          ]
+        },
+        "common_cara_ledger_ce": 97823868.04799601,
+        "net_mean": 98102626.08221127,
+        "net_quantiles": [
+          94456987.61653073,
+          97901894.40616284,
+          102261349.0486362
+        ],
+        "cost_mean": 231.3617215299897,
+        "turnover_mean": 462723.4430599794,
+        "trades_mean": 48.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp",
+      "policy": "static_target_monthly",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04559954381478097,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.04477808654809666,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            0.9999999999999999,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0,
+            1.0,
+            1.0,
+            1.0000000000000002
+          ]
+        },
+        "common_cara_ledger_ce": 97809257.62236202,
+        "net_mean": 98079099.81723389,
+        "net_quantiles": [
+          94425292.12972946,
+          97911292.97871372,
+          102117949.82181656
+        ],
+        "cost_mean": 1822.7082213451533,
+        "turnover_mean": 3645416.4426903063,
+        "trades_mean": 47.84375,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp_cov1.2",
+      "policy": "original_cash_first",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.045819482985222496,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.04526535015858871,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            0.9999999999999998,
+            1.0000000000000002,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 97831274.23760408,
+        "net_mean": 98135639.55843346,
+        "net_quantiles": [
+          94334344.3515902,
+          97954102.52973647,
+          102464926.36152562
+        ],
+        "cost_mean": 0.0,
+        "turnover_mean": 0.0,
+        "trades_mean": 0.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp_cov1.2",
+      "policy": "pro_rata_withdrawal",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.04558446671172618,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.044944091102967695,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            0.9999999999999998,
+            1.0000000000000002,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 97823243.20104891,
+        "net_mean": 98124537.90011993,
+        "net_quantiles": [
+          94349310.71041493,
+          97952424.19840878,
+          102420687.61411838
+        ],
+        "cost_mean": 231.49523913654707,
+        "turnover_mean": 462990.4782730941,
+        "trades_mean": 48.0,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    },
+    {
+      "model": "iid_drift_minus2pp_cov1.2",
+      "policy": "static_target_monthly",
+      "judge": {
+        "overall_pass": true,
+        "checks": [
+          {
+            "name": "Executed funding week4",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week8",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week13",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week17",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week21",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week26",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week30",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week34",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week39",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week43",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week47",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed funding week52",
+            "empirical_upper": 0.0,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.0005,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow path-loss tail",
+            "empirical_upper": 0.047779702511890135,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.06,
+            "passed": true
+          },
+          {
+            "name": "Executed shadow terminal-loss tail",
+            "empirical_upper": 0.047971966746861085,
+            "stress_reserve": 0.0003999999999999997,
+            "limit": 0.15,
+            "passed": true
+          }
+        ],
+        "strict_pass": true,
+        "fully_paid_paths": 800,
+        "paths": 800,
+        "funded_fraction": 1.0,
+        "reference_lower95": 0.9962623371738993,
+        "weighted": {
+          "nominal": [
+            1.0000000000000002,
+            1.0,
+            1.0000000000000002,
+            0.9999999999999999
+          ],
+          "stressed": [
+            1.0000000000000002,
+            0.9999999999999998,
+            1.0000000000000002,
+            1.0
+          ]
+        },
+        "common_cara_ledger_ce": 97808141.09038289,
+        "net_mean": 98098744.96271482,
+        "net_quantiles": [
+          94347947.28240855,
+          97924490.31058004,
+          102259743.7346419
+        ],
+        "cost_mean": 1991.0261220395403,
+        "turnover_mean": 3982052.2440790804,
+        "trades_mean": 47.84375,
+        "largest_unpaid": 0.0,
+        "breaches": [],
+        "wasserstein_certified": false,
+        "economic_probability_guarantee": false,
+        "scope": "Shared executed-policy judge: actual unpaid calls and shadow marked wealth including actually-paid withdrawals accrued at cash. Batch/CP bounds conditional on frozen law/policy only. Legacy W1 additive reserve is an explicit stress screen, NOT a certificate for nonlinear feedback."
+      }
+    }
+  ],
+  "scope": "Post-result diagnostic; no training/selection or final repair. Sample upper gap is not closed."
+}
