@@ -1,5 +1,5 @@
 import pytest
-from emfin_capstone.explorer import compute,Controls,template
+from emfin_v2.explorer import compute,Controls,template
 
 
 def test_explorer_default_and_cached_result():

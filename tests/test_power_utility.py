@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from emfin_capstone.toolbox.power_utility import allocate_positive_surplus
+from emfin_v2.toolbox.power_utility import allocate_positive_surplus
 
 
 def test_exact_power_utility_has_expected_risk_aversion_effect():

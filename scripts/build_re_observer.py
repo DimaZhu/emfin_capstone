@@ -16,8 +16,8 @@ _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 
 import numpy as np
 
-from emfin_capstone.toolbox import real_estate as re_
-from emfin_capstone.toolbox.raw_data import series_file
+from emfin_v2.toolbox import real_estate as re_
+from emfin_v2.toolbox.raw_data import series_file
 
 RAW = series_file("QAEN628BIS")
 

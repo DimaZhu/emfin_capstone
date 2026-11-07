@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from scipy import optimize
 
-from emfin_capstone.toolbox import entropy_pooling as ep
+from emfin_v2.toolbox import entropy_pooling as ep
 
 
 @pytest.fixture()

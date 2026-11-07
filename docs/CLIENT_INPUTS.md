@@ -18,7 +18,7 @@ with guesses.
 
 ## Config format
 
-Copy `configs/default.json` to a PRIVATE file and pass `--config /private/path.json`.
+Copy `emfin_v2/resources/configs/default.json` to a PRIVATE file and pass `--config /private/path.json`.
 Amounts are base-currency units, wealth is gross investable initial wealth, weeks
 are one-based. Each `liabilities` row has `name`, `week`, `amount`. Current default
 supports deterministic payouts or one stated lognormal uncertainty parameter;

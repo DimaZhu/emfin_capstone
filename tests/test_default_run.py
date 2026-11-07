@@ -1,7 +1,7 @@
 import json
 import numpy as np
 import pytest
-from emfin_capstone.default_run import load_config,run,draw_paths,setup,metrics
+from emfin_v2.default_run import load_config,run,draw_paths,setup,metrics
 
 
 def test_default_end_to_end_calibration_and_heldout_report(tmp_path):

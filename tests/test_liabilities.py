@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import liabilities as liab
-from emfin_capstone.toolbox import risk_stats
+from emfin_v2.toolbox import liabilities as liab
+from emfin_v2.toolbox import risk_stats
 
 
 def test_cvar_fractional_atom_matches_sorted_tail():
@@ -15,7 +15,7 @@ def test_cvar_fractional_atom_matches_sorted_tail():
 
 
 def test_cvar_agrees_with_existing_engine_when_integer():
-    from emfin_capstone.toolbox import scenario_market
+    from emfin_v2.toolbox import scenario_market
     rng = np.random.default_rng(5)
     losses = rng.standard_normal(4000)
     assert risk_stats.empirical_cvar(losses, 0.95) == pytest.approx(
@@ -106,7 +106,7 @@ def _linear_calibration_problem(crossing: float):
 
 
 def test_calibration_keeps_nominal_when_it_passes_oos():
-    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+    from emfin_v2.toolbox.liabilities import calibrate_shortfall_budget
 
     solve, evaluate, seen = _linear_calibration_problem(0.5)
     # target above anything hi can realize -> nominal passes immediately
@@ -117,7 +117,7 @@ def test_calibration_keeps_nominal_when_it_passes_oos():
 
 
 def test_calibration_finds_largest_feasible_multiplier():
-    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+    from emfin_v2.toolbox.liabilities import calibrate_shortfall_budget
 
     solve, evaluate, _ = _linear_calibration_problem(0.5)
     cal = calibrate_shortfall_budget(solve, evaluate, target=100.0, tol=0.05)
@@ -131,7 +131,7 @@ def test_calibration_finds_largest_feasible_multiplier():
 
 
 def test_calibration_reports_failure_when_even_tightest_fails():
-    from emfin_capstone.toolbox.liabilities import calibrate_shortfall_budget
+    from emfin_v2.toolbox.liabilities import calibrate_shortfall_budget
 
     solve, evaluate, _ = _linear_calibration_problem(0.5)
     # target below what lo = 0.1 realizes (20) is fine; use target 10 -> fail
@@ -150,7 +150,7 @@ def _steady_paths(n_scen=200, n_steps=6, growth=1.01, n_assets=2):
 
 
 def test_multiperiod_zero_liabilities_matches_asset_only_direction():
-    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+    from emfin_v2.toolbox.liabilities import optimization_multiperiod
 
     paths, prices = _steady_paths()
     n_scen, n_steps, _ = paths.shape
@@ -168,7 +168,7 @@ def test_multiperiod_zero_liabilities_matches_asset_only_direction():
 
 
 def test_multiperiod_gap_constraint_forces_funding():
-    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+    from emfin_v2.toolbox.liabilities import optimization_multiperiod
 
     paths, prices = _steady_paths()
     n_scen, n_steps, _ = paths.shape
@@ -188,7 +188,7 @@ def test_multiperiod_gap_constraint_forces_funding():
 
 
 def test_multiperiod_metrics_per_date():
-    from emfin_capstone.toolbox.liabilities import multiperiod_gap_metrics
+    from emfin_v2.toolbox.liabilities import multiperiod_gap_metrics
 
     values = np.array([[100.0, 110.0, 120.0], [90.0, 95.0, 130.0]])
     liabilities = np.array([[100.0, 100.0], [100.0, 100.0]])
@@ -203,7 +203,7 @@ def test_multiperiod_metrics_per_date():
 
 
 def test_multiperiod_rejects_misaligned_inputs():
-    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+    from emfin_v2.toolbox.liabilities import optimization_multiperiod
 
     paths, prices = _steady_paths()
     n_scen, n_steps, _ = paths.shape
@@ -221,7 +221,7 @@ def test_multiperiod_rejects_misaligned_inputs():
 
 def test_money_market_handles_short_series():
     import pandas as pd
-    from emfin_capstone.toolbox import moneymarket
+    from emfin_v2.toolbox import moneymarket
 
     # two observations -> one return; the diff alignment must not crash
     mm = moneymarket.money_market_weekly_returns(pd.Series([0.04, 0.05]))
@@ -230,7 +230,7 @@ def test_money_market_handles_short_series():
 
 
 def test_crra_tolerance_tracks_surplus_ratio():
-    from emfin_capstone.toolbox.liabilities import crra_scaled_tolerance
+    from emfin_v2.toolbox.liabilities import crra_scaled_tolerance
 
     base, f0 = 2_500_000.0, 0.10
     assert crra_scaled_tolerance(base, f0, f0) == base  # reference point is identity
@@ -253,7 +253,7 @@ def test_centered_exponential_ce_matches_logsumexp_value():
 
 
 def test_cml_budget_detects_intermediate_losses_and_covers_mixtures():
-    from emfin_capstone.toolbox.mpep import cml_of_paths
+    from emfin_v2.toolbox.mpep import cml_of_paths
     n=200
     # All terminal risky outcomes recover, but half lose 30% mid-path.
     paths=np.ones((n,2,2))

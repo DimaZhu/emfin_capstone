@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 import pytest
 import cvxpy as cp
-from emfin_capstone.toolbox import raw_data,moneymarket,solvers
-from emfin_capstone.engine import parse_options
+from emfin_v2.toolbox import raw_data,moneymarket,solvers
+from emfin_v2.engine import parse_options
 
 @pytest.mark.parametrize('flag,field',[('--tsdr','tsdr'),('--no-tail-calibration','no_tail_calibration'),('--no-crra','no_surplus_cara'),('--no-surplus-cara','no_surplus_cara'),('--with-uniform-contrast','with_uniform_contrast')])
 def test_research_boolean_flags(flag,field):assert getattr(parse_options([flag]),field)
@@ -63,14 +63,14 @@ def test_capped_solver_refuses_infeasible_optimization():
 
 
 def test_research_main_tiny_n_smoke_stops_at_documented_infeasible_case(capsys):
-    from emfin_capstone import engine
+    from emfin_v2 import engine
     with pytest.raises(RuntimeError,match='multi-period optimization failed validation'):
         engine.main(['--scenarios','64','--no-crra','--no-tail-calibration'])
     assert '64 scenarios' in capsys.readouterr().out or engine.N_SCENARIOS==64
 
 
 def test_research_help_and_default_dispatch(capsys):
-    from emfin_capstone import default_run
+    from emfin_v2 import default_run
     with pytest.raises(SystemExit) as e:default_run.main(['--research','--help'])
     assert e.value.code==0
     assert '--with-uniform-contrast' in capsys.readouterr().out

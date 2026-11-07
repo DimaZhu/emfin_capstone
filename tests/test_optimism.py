@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import optimism
+from emfin_v2.toolbox import optimism
 
 
 def test_t_ci_contains_mean_and_shrinks_with_n():

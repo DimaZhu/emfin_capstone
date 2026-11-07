@@ -3,7 +3,7 @@
 import numpy as np
 from scipy.stats import norm, qmc
 
-from emfin_capstone.toolbox.risk_stats import empirical_cvar
+from emfin_v2.toolbox.risk_stats import empirical_cvar
 
 
 def _sobol(mean, cov, n, seed):

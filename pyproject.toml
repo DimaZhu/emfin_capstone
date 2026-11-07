@@ -1,31 +1,26 @@
-[tool.poetry]
-name = "emfin-capstone"
-version = "0.1.0"
-description = "Portfolio optimization capstone project"
-authors = ["EMFin 2026 capstone project"]
-packages = [{ include = "emfin_capstone" }]
-
-[tool.poetry.dependencies]
-python = ">=3.10,<3.14"
-pandas = ">=2.2,<3"
-numpy = ">=2.0,<3"
-scipy = ">=1.14,<2"
-cvxpy = ">=1.7,<2"
-
-[tool.poetry.group.dev.dependencies]
-notebook = ">=7.2"
-yfinance = ">=1.3"
-plotly = ">=5.24"
-pytest = "^8.0"
-# BSD-3-Clause reference EP implementation (Fortitudo Technologies), used by
-# tests/test_entropy_pooling.py to cross-check our solver. Test-only: the
-# GPL-3.0 fortitudo.tech package must NOT be added here (copyleft).
-entropy-pooling = "^1.0"
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=59.6", "wheel>=0.37"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry.scripts]
-emfin-run = "emfin_capstone.cli:main"
-emfin-explore = "emfin_capstone.explorer:main"
+[project]
+name = "emfin-v2"
+version = "2.0.0"
+description = "Standalone scenario-based funding-risk engine with cumulative payouts"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+authors = [{name = "Tijs de Boer"}]
+dependencies = ["numpy==2.2.6", "pandas==2.3.3", "scipy==1.15.3", "cvxpy==1.7.5"]
+
+[project.scripts]
+emfin-run = "emfin_v2.default_run:main"
+emfin-explore = "emfin_v2.explorer:main"
+
+[tool.setuptools]
+license-files = ["NOTICE.md", "legacy/ATTRIBUTION.md"]
+
+[tool.setuptools.packages.find]
+include = ["emfin_v2*", "emfin_capstone*"]
+exclude = ["legacy*", "tests*"]
+
+[tool.setuptools.package-data]
+emfin_v2 = ["resources/configs/*.json", "resources/data/snapshot/*", "resources/data/raw/*.json", "resources/data/raw/fred/*/*.csv", "web/*.html"]

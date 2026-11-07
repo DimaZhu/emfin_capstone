@@ -1,152 +1,86 @@
-# emfin_capstone
+# EMFin V2
 
-Scenario-based funding-risk capstone engine. The default is an offline,
-config-driven comparison with cumulative payouts and explicit validation.
-The original notebook is retained as background, not the current entry point.
+Tijs de Boer's standalone funding-risk engine, version 2.0.0.
+It compares 1/N, shrunk mean-variance and a funding-aware model using cumulative
+payout accounting, Student-t paths and nominal/stressed posterior risk checks.
 
-## Quickstart: one default, offline
+## Run it on your machine
 
-Python >=3.10,<3.14 (dependency support; tests run on 3.10 here), from this clone:
-
-```bash
-pip install -r requirements.txt
-python -m emfin_capstone --config configs/default.json
-```
-
-This compares 1/N, shrunk MV and one funding-aware model plus one stress panel.
-It writes JSON, CSV, a text report and a self-contained HTML chart report to
-`artifacts/default/`. The same config controls all input assumptions.
-`python scripts/run_v2_engine.py` and installed `emfin-run` are equivalent.
-
-For the local interactive multi-period/RE explorer:
+Python 3.10-3.13 is declared; tested here on Python 3.10.12. From this clone:
 
 ```bash
-python -m emfin_capstone.explorer --precompute
+python -m venv .venv
+# macOS / Linux
+source .venv/bin/activate
+# Windows PowerShell instead: .venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install .
+python -m emfin_capstone
+emfin-explore
 # Open http://127.0.0.1:8765
 ```
 
-Tests: install `requirements-dev.txt`, then `python -m pytest tests/`.
-Read [current model/status](docs/ENGINE_V2.md), [real-client input format](docs/CLIENT_INPUTS.md)
-and [paper scope](docs/PAPER_STRUCTURE.md). Default data are real historical series;
-liabilities, views, liquidity and RE assumptions are illustrative, not client evidence.
-Earlier multi-period figures were withdrawn after fixing cumulative payout accounting.
-Optional methods use `--research` and belong in appendices, not the headline default.
+`python -m emfin_v2` and `emfin-run` also run V2. `emfin_capstone` is only a
+compatibility launch name. The installed implementation is `emfin_v2`; the
+Python distribution is `emfin-v2`. You can run it from any working directory.
+Do not install `legacy/original` for V2.
 
-## Prerequisites (Poetry workflow, optional)
+The default config, historical CSVs, provenance manifests and HTML template ship
+inside the wheel. A normal default run does not need the original repo, notebook,
+Yahoo, Fortitudo, a network connection or credentials. Dependency installation
+needs a package index or predownloaded wheels. The explorer binds only to your
+own machine. Its synthetic RE controls do not connect to any property service.
 
-The Poetry workflow below remains supported for the notebook and live-data
-work; regenerate the lock file with `poetry lock` on your own Python (the
-committed lock was removed - it pinned Python 3.12-only builds and drifted).
-For the reproducible engine runs prefer the Quickstart above.
-
-Install the tooling once.
-
-### macOS / Linux
+Reports go to `artifacts/default/` in your current directory, not site-packages.
+The default took about 2.2 seconds in this environment; RE exploration can take
+longer. Results include JSON, CSV, Markdown and self-contained HTML. For a custom
+config, copy the bundled example before editing:
 
 ```bash
-# macOS (Homebrew)
-brew install pyenv poetry
-# add pyenv to your shell (zsh); then restart the shell or `source ~/.zshrc`
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+python -c "from emfin_v2.default_run import DEFAULT_CONFIG; from shutil import copyfile; copyfile(DEFAULT_CONFIG, 'my-config.json')"
+python -m emfin_capstone --config my-config.json --output my-report
 ```
 
-On Linux, install pyenv via the [official installer](https://github.com/pyenv/pyenv#installation)
-and Poetry via the [official installer](https://python-poetry.org/docs/#installation).
+## Model limits
 
-### Windows (PowerShell)
+Historical market series are real, with source terms in bundled manifests.
+Liabilities, views, liquidity and RE assumptions are illustrative, not client data.
+Fresh stressed validation selects an explicit optimizer/cash mixture in the
+pinned example. It is not a globally optimal allocation or a safety guarantee.
+Zero observed Monte Carlo losses are not an upper bound on unseen tail losses.
+Older multi-period results were withdrawn after correcting cumulative payouts.
 
-```powershell
-# pyenv-win — manages Python versions
-Invoke-WebRequest -UseBasicParsing `
-  -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" `
-  -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
-# then close and reopen PowerShell so pyenv is on PATH
+Read [model details](docs/ENGINE_V2.md), [client input format](docs/CLIENT_INPUTS.md)
+and [paper scope](docs/PAPER_STRUCTURE.md). Optional research catalogue:
+`python -m emfin_v2 --research --help`. Its original stochastic payout example
+is infeasible under corrected accounting and reports unavailable.
 
-# Poetry — dependency management
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-```
-
-## Installation
-
-Steps 1, 2 and 4 are identical on every platform; only creating/activating the
-virtualenv in step 3 differs.
-
-### macOS / Linux
+## Package and test it
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/TijsdeBoer/emfin_capstone.git
-cd emfin_capstone
-
-# 2. Install the required Python version and select it for this shell
-pyenv install 3.12.2        # skip if already installed
-pyenv shell 3.12.2
-
-# 3. Create a virtualenv in .env/ and activate it
-python -m venv .env
-source .env/bin/activate
-
-# 4. Install runtime + dev dependencies (includes Jupyter Notebook)
-poetry install
+python -m pip wheel . --no-deps --wheel-dir dist
+python -m pip install -r requirements-dev.txt
+python -m pytest tests/ -q
+python scripts/smoke_installed.py
 ```
 
-### Windows (PowerShell)
+The smoke test builds a wheel, installs into a separate temporary virtual
+environment, leaves the clone, runs both launch names and installed console
+commands, and verifies the report and bundled resources. It uses available
+runtime dependencies through system-site-packages; use a fresh venv without that
+option to check dependency downloading on your own machine.
 
-```powershell
-# 1. Clone the repository
-git clone https://github.com/TijsdeBoer/emfin_capstone.git
-cd emfin_capstone
+## V2 and legacy boundary
 
-# 2. Install the required Python version and select it for this shell
-pyenv install 3.12.2        # skip if already installed
-pyenv shell 3.12.2
+`emfin_v2/` is the active installed model. `emfin_capstone/` is a small launcher.
+`legacy/original/` preserves the original `main` tree at the recorded commit;
+`legacy/notebooks/` and `legacy/README-before-v2.md` preserve the older workflow.
+They are excluded from the wheel. Git history and the GitHub fork relationship
+are preserved. This version does not alter or contact the upstream project.
 
-# 3. Create a virtualenv in .env\ and activate it
-python -m venv .env
-.\.env\Scripts\Activate.ps1
-
-# 4. Install runtime + dev dependencies (includes Jupyter Notebook)
-poetry install
-```
-
-> On Windows **cmd.exe** instead of PowerShell, activate with `.\.env\Scripts\activate.bat`.
-> If PowerShell blocks the activation script, allow it for the current user with
-> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
-
-Step 3 creates the `.env/` virtualenv (backed by the pyenv Python from step 2)
-and activates it. Because the environment is already active, `poetry install`
-installs into `.env/` rather than creating its own — populating it with the
-runtime packages (pandas, numpy, scipy, plotly, cvxpy, yfinance) and the dev
-tooling (Jupyter Notebook and its kernel stack). The `.env/` directory is
-git-ignored.
-
-To reactivate the environment in a new shell later, run `source .env/bin/activate`
-(macOS/Linux) or `.\.env\Scripts\Activate.ps1` (Windows).
-
-## Running the notebook
-
-With the `.env` environment activated:
-
-```bash
-jupyter notebook notebooks/portfolio_optimization.ipynb
-```
-
-## Notes
-
-- **Live prices.** The `emfin_capstone.toolbox.price` module fetches prices live
-  (via yfinance) and caches responses under `data/cache/`, which is created
-  automatically on first run. The `data/` directory is git-ignored.
-
-## Current interfaces
-
-- Default: `python -m emfin_capstone --config configs/default.json`.
-- Explorer: `python -m emfin_capstone.explorer --precompute`.
-- Static explorer export: `python -m emfin_capstone.explorer --export /tmp/explorer.html`.
-- Chronological development study: `python scripts/validate_chronological.py`.
-- Exact positive-domain CRRA experiment: `python scripts/power_utility_sensitivity.py`.
-- Legacy research catalogue: `python scripts/run_v2_engine.py --research` (may be infeasible;
-  its older multi-period headline results are superseded).
-
-No new web framework is required. The app binds only to localhost; no external
-CDN or analytics. Keep private client inputs out of this repository. No live
-account access is needed for any default run.
+Some shared utilities in the active V2 package are derived from the inherited
+project. A new package name does not erase that provenance. See [NOTICE](NOTICE.md)
+and [legacy attribution](legacy/ATTRIBUTION.md). No new open-source licence is
+granted here. This local/fork version is for Tijs's environment; licensing and
+data redistribution should be settled before a separate public release. The
+`v2.0` tag identifies a reproducible code state, not a licence grant.

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from emfin_capstone.toolbox import validation
+from emfin_v2.toolbox import validation
 
 
 def test_folds_never_touch_final_window():

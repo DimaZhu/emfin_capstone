@@ -17,8 +17,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from emfin_capstone.toolbox import liabilities as liab
-from emfin_capstone.toolbox import scenario_market
+from emfin_v2.toolbox import liabilities as liab
+from emfin_v2.toolbox import scenario_market
 
 
 @dataclass(frozen=True)

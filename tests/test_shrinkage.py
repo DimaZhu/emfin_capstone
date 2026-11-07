@@ -1,6 +1,6 @@
 import numpy as np
 
-from emfin_capstone.toolbox import shrinkage
+from emfin_v2.toolbox import shrinkage
 
 
 def test_lw_intensity_bounds_and_pd_repair():

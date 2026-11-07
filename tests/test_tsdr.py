@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import tsdr
+from emfin_v2.toolbox import tsdr
 
 
 def _history(n=800, seed=3):

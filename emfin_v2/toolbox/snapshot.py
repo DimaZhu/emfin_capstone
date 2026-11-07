@@ -19,8 +19,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from emfin_capstone import config
-from emfin_capstone.toolbox import price, returns
+from emfin_v2 import config
+from emfin_v2.toolbox import price, returns
 
 SNAPSHOT_DIR: Path = config.DATA_DIR / "snapshot"
 CLOSES_FILENAME = "closes.csv"

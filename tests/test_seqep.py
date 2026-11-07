@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from emfin_capstone.toolbox import entropy_pooling as ep
-from emfin_capstone.toolbox import seqep
+from emfin_v2.toolbox import entropy_pooling as ep
+from emfin_v2.toolbox import seqep
 
 
 def _scenarios(n=4000, seed=11):

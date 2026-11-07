@@ -8,7 +8,7 @@ The active/default branch is `engine-v2` in TijsdeBoer/emfin_capstone.
 After installing `requirements.txt`, run:
 
 ```
-python -m emfin_capstone --config configs/default.json
+python -m emfin_capstone --config emfin_v2/resources/configs/default.json
 ```
 
 The compatibility script `python scripts/run_v2_engine.py` and installed
@@ -129,7 +129,7 @@ in CHANGELOG_ENGINE.md are not current claims or reusable result tables.
 
 ## Reproducibility and audit notes
 
-Raw series resolve through `data/raw/manifest.json` with SHA-256 checks, not
+Raw series resolve through `emfin_v2/resources/data/raw/manifest.json` with SHA-256 checks, not
 date-coded paths. `scripts/fetch_raw_drop.py` only stages a user-selected CSV;
 review its source and terms before changing the manifest. Snapshot refresh
 preserves pre-existing manifest notes. Refreshing data is a manual action.
@@ -145,6 +145,10 @@ The unused `liquidity.IlliquidHolding` time-to-cash helper remains an isolated
 research example, not an active client valuation model. The synthetic RE sleeve
 uses an explicit configured proportional haircut. Do not interpret it as an
 empirically validated property sale-delay model.
+
+See NOTICE.md and legacy/ATTRIBUTION.md. V2 is packaged as emfin-v2 2.0.0;
+config/data/template resources travel with its wheel. The old emfin_capstone
+command is a launch alias, not a dependency on the notebook.
 
 No licence is assigned here to inherited project code: rightsholder consent is
 needed before choosing a project licence. Dependency/data provenance does not

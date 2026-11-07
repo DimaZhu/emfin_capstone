@@ -10,7 +10,7 @@ from pathlib import Path
 import json,time
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 import numpy as np
-from emfin_capstone.toolbox import dataset,shrinkage,entropy_pooling as ep,seqep,liabilities,benchmark,risk_stats,reporting,scenario_market,mpep
+from emfin_v2.toolbox import dataset,shrinkage,entropy_pooling as ep,seqep,liabilities,benchmark,risk_stats,reporting,scenario_market,mpep
 
 @dataclass(frozen=True)
 class Controls:
@@ -41,7 +41,7 @@ def base_inputs():
 def compute(c=Controls()):
     c.validate()
     if c.multiperiod:
-        from emfin_capstone.default_run import load_config,run
+        from emfin_v2.default_run import load_config,run
         from tempfile import TemporaryDirectory
         config=load_config()
         ratio=c.liability/95

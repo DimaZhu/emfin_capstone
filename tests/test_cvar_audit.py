@@ -10,7 +10,7 @@ Uryasev (2002) variational identity, which needs no counting convention.
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import mpep, risk_stats
+from emfin_v2.toolbox import mpep, risk_stats
 
 
 def _ru_cvar(losses: np.ndarray, c: float) -> float:
@@ -59,7 +59,7 @@ def test_weighted_cml_reduces_to_fractional_cvar_under_uniform_weights():
 
 
 def test_strict_variant_still_raises_on_noninteger_tail():
-    from emfin_capstone.toolbox import scenario_market
+    from emfin_v2.toolbox import scenario_market
     with pytest.raises(Exception):
         scenario_market.empirical_cvar(np.arange(7.0), 0.9)  # (1-c)N = 0.7
     # and agrees with the fractional version where it is defined

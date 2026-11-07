@@ -4,7 +4,7 @@ with known truth until a licensed/open source lands (see module docstring)."""
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import real_estate as re_
+from emfin_v2.toolbox import real_estate as re_
 
 
 class TestUnsmoothing:

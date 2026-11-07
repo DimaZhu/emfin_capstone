@@ -1,7 +1,7 @@
 """Shared pinned weekly invariants, no downloads or implicit data refreshes."""
 from pathlib import Path
 import pandas as pd
-from emfin_capstone.toolbox import snapshot, moneymarket, bonds, raw_data
+from emfin_v2.toolbox import snapshot, moneymarket, bonds, raw_data
 import numpy as np
 
 COLUMNS = ['DFUS', 'DFAI', 'DFAE', snapshot.YIELD_TICKER, 'DSPREAD', 'MMKT']

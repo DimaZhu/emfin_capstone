@@ -37,7 +37,7 @@ from typing import Callable, Optional
 
 import numpy as np
 
-from emfin_capstone.toolbox import entropy_pooling as ep
+from emfin_v2.toolbox import entropy_pooling as ep
 
 # Parameter keys are ("mean", j) and ("var", j) for scenario column j.
 ParamDict = dict[tuple[str, int], float]

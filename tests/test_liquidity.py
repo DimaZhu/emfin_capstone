@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from emfin_capstone.toolbox import liquidity as liq
+from emfin_v2.toolbox import liquidity as liq
 
 
 def test_zero_cost_returns_input_unchanged():
