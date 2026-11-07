@@ -58,3 +58,28 @@ resampled paths carry a fatter DFUS tail than the i.i.d. Gaussian (95%
 CVaR 11.7% vs 8.9% of terminal return) - history's tails are fatter than
 the parametric fit - and the multi-period allocation shifts accordingly
 (29.2% vs 18.7% US equity).
+
+## Validation expansion: empirical judge and SAA study
+
+The new empirical judge resamples joint weekly history via the state transition
+chain without decay. Its evaluation overlaps the fitted history, so it is
+explicitly **not historical out-of-sample evidence**. A high-vol/calm split
+is a conditional diagnostic, not a claim that high volatility predicts losses.
+1/N is included alongside the common shrunk-moment MV benchmark.
+
+The SAA study solves 12 independent 2,000-scenario problems and evaluates all
+allocations on one shared 50,000-scenario Monte Carlo holdout. Training and
+holdout use the same Gaussian or variance-matched Student-t DGP and liquidity
+map. It is a prior/no-views diagnostic, not a repeated EP-view experiment.
+The t intervals condition on the shared holdout and fitted DGP; they exclude
+holdout error, parameter uncertainty, and economic out-of-sample uncertainty.
+The first run's absolute CE-gap intervals cover zero. Paired excess gaps over
+a fixed 1/N control are $39k [-$5k,$84k] for MV and $44k [$1k,$87k] for SAA.
+These are small-sample Monte Carlo findings, not a general optimism bound.
+Calibration and final parametric evaluation now use disjoint seed streams.
+
+For numerical stability, the liability solvers minimize centered expected
+exponential disutility, an exactly monotone transform of CARA CE, instead of
+nesting an extra log cone. Diagnostics transform back to dollar CE. A regression
+test verifies the value against logsumexp. The default reference pipeline
+completes in about 40 seconds here; timing remains machine-dependent.

@@ -53,6 +53,8 @@ from emfin_capstone.toolbox import (
     liabilities as liab,
     moneymarket,
     meucci_liquidity as mliq,
+    judge as judge_mod,
+    optimism as optimism_mod,
     mpep as mpep_mod,
     tsdr as tsdr_mod,
     scenario_market,
@@ -193,6 +195,7 @@ def main() -> None:
     # ESS floor: an over-tight kernel on a short window burns the effective
     # sample below what a 6x6 covariance needs, so widen the bandwidth until
     # the floor holds (robustness guard; reported, not silent).
+    tsdr_labels = tsdr_mod.state_labels(eq_vol_state)  # 25%/90% vol-state classes
     bandwidth = float(eq_vol_state.std()) * FFR_BANDWIDTH_SCALE
     while True:
         ffr_prior = ffr.build_ffr_prior(
@@ -455,17 +458,17 @@ def main() -> None:
     _tick("optimize: EP (views)")
 
     # ---- Judging: paired fresh seeds under the prior (no views) ----------
-    def judge_sample_fn(seed: int) -> np.ndarray:
+    def judge_sample_fn(seed: int, n: int = N_SCENARIOS) -> np.ndarray:
         rng_j = np.random.default_rng(seed)
-        z_j = rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
+        z_j = rng_j.standard_normal((n, len(mu_tau))) @ chol.T
         if STUDENT_T_NU is not None:
-            chi2_j = rng_j.chisquare(STUDENT_T_NU, size=(N_SCENARIOS, 1))
+            chi2_j = rng_j.chisquare(STUDENT_T_NU, size=(n, 1))
             z_j = z_j / np.sqrt(chi2_j / STUDENT_T_NU) * np.sqrt((STUDENT_T_NU - 2.0) / STUDENT_T_NU)
         inv_j = mu_tau + z_j
         market_j = market_from_invariants(inv_j)
         stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
         return mliq.apply_meucci_liquidity(
-            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+            market_j, np.tile(ref_amounts, (n, 1)), meucci_params, market_corr,
             gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 50_000)
 
     # 4. entropy-pooled + liability-aware, with the shortfall budget
@@ -490,7 +493,7 @@ def main() -> None:
 
     def _realized_gap_cvar(alloc: np.ndarray) -> float:
         res = benchmark.judge_allocations(
-            {"calibration probe": alloc}, judge_sample_fn, N_JUDGE_SEEDS, JUDGE_SEED_BASE,
+            {"calibration probe": alloc}, judge_sample_fn, N_JUDGE_SEEDS, JUDGE_SEED_BASE + 20_000,
             WEALTH, RISK_TOLERANCE, liability_due=liability_due, confidence_level=CONFIDENCE)
         return float(res.shortfall_cvar_by_seed.mean())
 
@@ -610,7 +613,6 @@ def main() -> None:
     #     the simulated paths.  --tsdr enables the contrast allocation.
     alloc_tsdr = None
     if "--tsdr" in sys.argv:
-        tsdr_labels = tsdr_mod.state_labels(eq_vol_state)  # 25%/90% quantiles
         tsdr_pv = tsdr_mod.state_probability_vectors(tsdr_labels, half_life=len(invariants) / 2)
         inv_paths, _ = tsdr_mod.resample_invariant_paths(
             invariants, tsdr_labels, tsdr_pv, n_scenarios=n_opt, n_steps=HORIZON_WEEKS,
@@ -652,6 +654,7 @@ def main() -> None:
     }
     if alloc_crra is not None:
         allocations["EP+liab (CRRA)"] = alloc_crra
+    allocations["1/N"] = (WEALTH / len(prices_vector)) / prices_vector  # equal dollars per sleeve
     allocations["EP+liab (MPEP)"] = alloc_mpep
     if alloc_tsdr is not None:
         allocations["EP+liab (TSDR)"] = alloc_tsdr
@@ -707,6 +710,96 @@ def main() -> None:
         for name, sc in zip(result.names, result.shortfall_cvar_by_seed.mean(axis=0)):
             print(f"{name:>18}: ${sc:,.0f}")
 
+    # ---- Empirical, regime-aware judge -----------------------------------
+    # Complement to the parametric judge: judge scenarios resampled from
+    # REAL history through the empirical Markov chain (toolbox/judge.py) -
+    # regime persistence and fat tails present in history are present in
+    # the judging, so state-conditioned priors can finally show their value.
+    # HONEST LABEL: the empirical judge OVERLAPS the estimation window -
+    # an in-sample-overlapping evaluation, valid for relative comparison
+    # and tail realism, not a substitute for the walk-forward CV.
+    def empirical_judge_sample_fn(seed: int) -> np.ndarray:
+        inv_j, _ = judge_mod.empirical_horizon_invariants(
+            invariants, tsdr_labels, N_SCENARIOS, HORIZON_WEEKS,
+            initial_state=int(tsdr_labels[-1]), seed=seed)
+        market_j = market_from_invariants(inv_j)
+        stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
+        return mliq.apply_meucci_liquidity(
+            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+            gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 60_000)
+
+    emp_result = benchmark.judge_allocations(
+        allocations, empirical_judge_sample_fn, N_JUDGE_SEEDS, JUDGE_SEED_BASE + 700,
+        WEALTH, RISK_TOLERANCE, liability_due=liability_due, confidence_level=CONFIDENCE)
+    _tick("judging (empirical regime-aware, 5 paired seeds)")
+    print("\n=== Empirical judge (regime-aware; IN-SAMPLE-OVERLAPPING - relative comparison only) ===")
+    emp_summary = emp_result.summary()
+    for name in emp_result.names:
+        s = emp_summary[name]
+        print(f"{name:>18}: CE {s['ce_mean']:>14,.0f} +/- {s['ce_se']:,.0f}")
+    # regime split: CE on judge paths that enter the high-vol state vs not
+    print("\nCE split by regime (paths that enter the high-vol state vs not):")
+    ce_hi = {n: [] for n in emp_result.names}
+    ce_lo = {n: [] for n in emp_result.names}
+    for seed in range(JUDGE_SEED_BASE + 700, JUDGE_SEED_BASE + 700 + N_JUDGE_SEEDS):
+        inv_j, hi_mask = judge_mod.empirical_horizon_invariants(
+            invariants, tsdr_labels, N_SCENARIOS, HORIZON_WEEKS,
+            initial_state=int(tsdr_labels[-1]), seed=seed)
+        market_j = market_from_invariants(inv_j)
+        stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
+        samples_j = mliq.apply_meucci_liquidity(
+            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+            gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 60_000)
+        for name in emp_result.names:
+            w = samples_j @ allocations[name]
+            ce_hi[name].append(scenario_market.empirical_certainty_equivalent(
+                w[hi_mask], RISK_TOLERANCE) if hi_mask.any() else float("nan"))
+            ce_lo[name].append(scenario_market.empirical_certainty_equivalent(
+                w[~hi_mask], RISK_TOLERANCE) if (~hi_mask).any() else float("nan"))
+    for name in emp_result.names:
+        print(f"{name:>18}: high-vol {np.mean(ce_hi[name]):>14,.0f}   "
+              f"calm {np.mean(ce_lo[name]):>14,.0f}")
+
+    # ---- SAA optimism (A): K independent training sets, one held-out -----
+    # Solve the liability-aware problem on K independent scenario sets from
+    # the SAME prior; evaluate every allocation on one large shared
+    # held-out set.  gap = in-solver CE - held-out CE, t-CI across K.
+    # 1/N is the fixed-allocation sampling control; coverage is not guaranteed.
+    K_OPT = 12
+    opt_mult = calibration.best_multiplier if calibration else 1.0
+    held_out = judge_sample_fn(JUDGE_SEED_BASE + 10_000, n=50_000)
+    ce_in: dict[str, list] = {"1/N": [], "MV (per-set)": [], "SAA (prior+liab)": []}
+    ce_out: dict[str, list] = {"1/N": [], "MV (per-set)": [], "SAA (prior+liab)": []}
+    a_1n = allocations["1/N"]
+    for k in range(K_OPT):
+        print(f"SAA replicate {k + 1}/{K_OPT}: 2,000 iid training scenarios", flush=True)
+        mnet_k = judge_sample_fn(SCENARIO_SEED + 900 + k, n=2_000)
+        a_mv_k = benchmark.mean_variance_allocation(
+            mnet_k.mean(axis=0), np.cov(mnet_k.T), prices_vector, WEALTH, RISK_TOLERANCE)
+        a_saa_k, _ = liab.optimization_liability_aware(
+            market_samples=mnet_k, prices_vector=prices_vector, wealth=WEALTH,
+            liability_due=liability_due, risk_tolerance=RISK_TOLERANCE,
+            confidence_level=CONFIDENCE, gamma_loss=GAMMA_LOSS,
+            gamma_shortfall=GAMMA_SHORTFALL * opt_mult)
+        for name, a in (("1/N", a_1n), ("MV (per-set)", a_mv_k), ("SAA (prior+liab)", a_saa_k)):
+            ce_in[name].append(scenario_market.empirical_certainty_equivalent(mnet_k @ a, RISK_TOLERANCE))
+            ce_out[name].append(scenario_market.empirical_certainty_equivalent(held_out @ a, RISK_TOLERANCE))
+    gaps = optimism_mod.optimism_gaps(
+        {k2: np.array(v) for k2, v in ce_in.items()},
+        {k2: np.array(v) for k2, v in ce_out.items()})
+    excess_gaps = optimism_mod.optimism_gaps(
+        {name: np.asarray(v) - np.asarray(ce_in["1/N"]) for name, v in ce_in.items()},
+        {name: np.asarray(v) - np.asarray(ce_out["1/N"]) for name, v in ce_out.items()})
+    _tick(f"SAA optimism ({K_OPT} x 2k training sets, 50k held-out)")
+    print("\n=== SAA optimism: in-solver CE minus held-out CE (95% CI, $) ===")
+    print("(1/N is a sampling control; CI is conditional on the shared held-out set)")
+    for name, g in gaps.items():
+        print(f"{name:>18}: {g['gap_mean']:>+12,.0f}  [{g['gap_lo']:>+12,.0f}, {g['gap_hi']:>+12,.0f}]")
+
+
+    print("Paired excess gap relative to the fixed 1/N control:")
+    for name, g in excess_gaps.items():
+        print(f"{name:>18}: {g['gap_mean']:+,.0f} [{g['gap_lo']:+,.0f}, {g['gap_hi']:+,.0f}]")
 
     # ---- Multi-period funding check on fresh judge paths -----------------
     # Both liability-aware allocations are graded on fresh scenario PATHS:
