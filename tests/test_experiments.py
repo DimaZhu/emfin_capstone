@@ -11,7 +11,9 @@ def test_grid_is_729_distinct_synthetic_configurations():
     assert len(items)==729 and len({digest(c) for _,c in items})==729
     for point,c in items:
         assert c['real_estate']['source']=='synthetic' and c['real_estate']['enabled']
-        assert sum(p['amount'] for p in c['liabilities'])/c['wealth']==pytest.approx(point['payout_ratio'])
+        assert len(c['liabilities'])==12 and c['horizon_weeks']==52
+        assert sum(p['amount'] for p in c['liabilities'])==pytest.approx(point['monthly_payout_k']*12000)
+        assert c['liabilities'][0]['week']==point['first_due_week']
         assert c['real_estate']['minimum_weight']==point['re_min']
 
 

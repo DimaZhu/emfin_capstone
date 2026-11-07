@@ -1,5 +1,7 @@
 # EMFin V2
 
+> Active default:52-week horizon, editable$250k/month x12 placeholder, W1 on with a visible20% per-payment tail-gap budget. Interactive dashboard uses an explicitly coarse tier. Earlier13-week reference/grid/lookup artifacts are archived, not current one-year evidence. No new grid has been run. See docs/ONE_YEAR_MONTHLY.md (or ONE_YEAR_MONTHLY.md from docs).
+
 Tijs de Boer's standalone funding-risk engine, version 2.1.0.
 It compares 1/N, shrunk mean-variance and a funding-aware model using cumulative
 payout accounting, Student-t paths and nominal/stressed posterior risk checks.

@@ -1,24 +1,13 @@
 {
-  "label": "Illustrative implementation, not client-calibrated",
+  "label": "Illustrative one-year (52-week) implementation, not client-calibrated",
   "seed": 20261107,
   "wealth": 100000000,
-  "horizon_weeks": 13,
-  "liabilities": [
-    {
-      "name": "Illustrative capital call",
-      "week": 10,
-      "amount": 35000000
-    },
-    {
-      "name": "Illustrative property payout",
-      "week": 13,
-      "amount": 60000000
-    }
-  ],
+  "horizon_weeks": 52,
+  "liabilities": [],
   "liability_vol": 0.0,
   "risk_tolerance": 10000000,
   "confidence": 0.95,
-  "funding_budget_fraction": 0.002,
+  "funding_budget_fraction": 0.2,
   "loss_budget": 0.15,
   "cml_budget": 0.06,
   "student_nu": 8.0,
@@ -68,5 +57,12 @@
   "sequential_ep": true,
   "view_vol_cap": null,
   "wasserstein_radius": 2e-05,
-  "wasserstein_liability_scale": 0.01
+  "wasserstein_liability_scale": 0.01,
+  "recurring_payout": {
+    "amount": 250000,
+    "months": 12,
+    "first_week": 4,
+    "spacing_weeks": 4.333333333333333,
+    "note": "Editable placeholder, not client evidence. Weekly approximation of monthly payments."
+  }
 }

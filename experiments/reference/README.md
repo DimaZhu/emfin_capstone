@@ -1,8 +1,3 @@
-# Small synthetic reference, not full-grid evidence
+# Archived13-week scientific reference
 
-Generated with the recorded code/data/dependency hashes and experiment definitions.
-Nine reduced-scenario cells, 32 one-factor studies; no private Abu Dhabi import.
-Open report.html locally. Tests: 222 pass at generation. These outputs are a
-reproducible example, not publication-grade validation or an investment recommendation.
-Regenerate into a new artifacts directory, inspect the changes, then explicitly
-replace this reference set. Never silently refresh a scientific claim.
+These stored outputs predate the52-week monthly schedule. They are retained for provenance, not current one-year validation. Their own JSON/configs record13 weeks. No52-week replacement has been run yet.
