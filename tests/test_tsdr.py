@@ -75,3 +75,14 @@ def test_empty_state_raises():
     labels = np.zeros(20, dtype=int)  # only state 0 present; ask for state 2 vector
     pv = tsdr.state_probability_vectors(labels, half_life=5.0)
     assert pv.shape == (1, 20)  # no empty rows created
+
+
+def test_each_path_transitions_exactly_once_per_step():
+    # Deterministic successor 0->1->2->0. An in-place grouped update would
+    # mistakenly advance the first group three times in one step.
+    labels=np.array([0,1,2,0])
+    inv=np.arange(4.)[:,None]
+    pv=np.array([[1.,0.,0.,0.],[0.,1.,0.,0.],[0.,0.,1.,0.]])
+    paths, states=tsdr.resample_invariant_paths(inv,labels,pv,20,3,0,7)
+    np.testing.assert_array_equal(states, np.tile([1,2,0],(20,1)))
+    np.testing.assert_array_equal(paths[:,:,0], np.tile([1.,2.,3.],(20,1)))

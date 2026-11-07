@@ -83,3 +83,32 @@ exponential disutility, an exactly monotone transform of CARA CE, instead of
 nesting an extra log cone. Diagnostics transform back to dollar CE. A regression
 test verifies the value against logsumexp. The default reference pipeline
 completes in about 40 seconds here; timing remains machine-dependent.
+
+## Chronological calibration and data-driven nu
+
+`python scripts/validate_chronological.py` builds expanding development folds,
+selects nu by validation weekly multivariate log likelihood, and picks the largest
+budget multiplier meeting the worst development-fold empirical gap budget.
+The last 26 observations (2026-05-13 through 2026-11-04 on this snapshot) are
+reserved and **not evaluated** by this script. This restriction applies to this
+protocol, not to the existing full-history current-allocation runner.
+
+The three development folds select nu=5 from {5,8,30,200} and multiplier=1 from
+{0.25,0.5,1}. This is exploratory, not a validated 95% tail guarantee: each fold
+contains only 1-2 nonoverlapping 13-week outcomes; rolling outcomes overlap.
+The JSON records every fold's score, dates and effective nonoverlap count.
+No liquidity costs are assumed in this diagnostic; exact repricing uses synthetic
+10-year 4%-coupon instruments and training-date yield/spread anchors.
+
+`--student-t=auto` in the main runner fits conditional nu MLE on the development
+prefix, constrained to [4.1,200] to keep the existing moment views finite. It is
+not a joint location/covariance/nu MLE. Unconstrained development fits are near
+2.8 in this small sample; therefore the finite-fourth-moment restriction matters
+and must not be hidden. Weekly t tails and the elliptical horizon approximation
+are different models: aggregation does not preserve Student-t degrees of freedom.
+
+A transition-order regression test also caught and fixed an in-place grouped
+TSDR update: a path entering a later state could previously be advanced twice
+within a single week. Transitions are now simultaneous. Earlier TSDR performance
+numbers should be rerun, not reused. Stationarity requires invariant initialization;
+convergence from a chosen initial state is not the same as strict stationarity.
