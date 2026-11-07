@@ -87,6 +87,10 @@ def draw(c,fitted,n,seed):
         from emfin_v2.historical_simulation import fhs_innovations
         innovation=fhs_innovations(frame.to_numpy(),n,h,seed,c.get('fhs_decay',.94))
         factor=innovation[:,:,members].mean(2)/max(np.sqrt(variance),1e-12)
+    bounded_diagnostics=None
+    if c.get('scenario_model')=='bounded_ewma_mixture':
+        from emfin_v2.bounded_volatility import transform,settings
+        innovation,bounded_diagnostics=transform(innovation,frame.to_numpy(),mu,np.diag(cov),settings(c),True)
     cumul=np.cumsum(mu+innovation,axis=1)
     fx=np.exp(cumul[:,:,-1]) if c['fx']['enabled'] else None
     liquid_count=len(c['liquidity_haircuts']);paths=np.exp(cumul[:,:,:liquid_count]);growth=paths[:,:,c['cash_index']].copy();paths*=1-np.asarray(c['liquidity_haircuts'])
@@ -100,4 +104,7 @@ def draw(c,fitted,n,seed):
     steps=np.array([i['week'] for i in c['liabilities']],int);bases=np.array([i['amount'] for i in c['liabilities']],float)
     if c['liability_vol']!=0:raise ValueError('Stochastic liabilities are disabled')
     amounts=np.broadcast_to(bases,(n,len(bases))).copy()
-    return ScenarioDraw((paths,amounts,steps,bases,growth),funding,re_log)
+    if not np.isfinite(paths).all() or not np.isfinite(funding).all():raise ValueError('scenario price arithmetic overflow; finite mathematical moments do not guarantee finite floating-point paths')
+    result=ScenarioDraw((paths,amounts,steps,bases,growth),funding,re_log)
+    result.bounded_diagnostics=bounded_diagnostics
+    return result

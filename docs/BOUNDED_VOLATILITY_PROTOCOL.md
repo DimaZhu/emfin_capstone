@@ -75,6 +75,13 @@ on common actual histories and cross-law final judges, record all failures.
 Actual listed paths are historical; property uses latest-vintage quarterly
 index and publication-lag convention, not true revision-safe tradable prices.
 Annual evidence small/dependent. No superiority by best average alone.
+At4/13/26/52week endpoints, also score the simulated cumulative listed/FX log
+return forecasts against actual held-out returns, using exact empirical-support
+CRPS normalized by frozen initial weekly SD times sqrt(endpoint). This is a
+multihorizon marginal diagnostic, not a joint path score or annual tail proof.
+Pre-output addition: cash-reserve and equal-weight duplicates can be reported
+once by unique weights but names remain explicit. Raw candidates and validation
+blends remain distinct; failed numeric solves do not silently become optimized.
 If resource limits prevent all19, report exact incomplete scope, no cherry pick.
 
 ## Tests, cost, delivery and release gate
@@ -87,3 +94,9 @@ no batch over30min and no multi-hour grid. Artifacts hold source/config/data
 hashes, all bounds/hits, selection provenance and failures. ReportPDF/evidence.
 No production default replacement, new risk allowance, spending, external
 contact, publication, new package dependency or GPL. User chooses promotion.
+
+Pilot cost plan recorded before execution: weekly score sweep is small vector
+arithmetic, expected<5s, hard60s; current-snapshot pilot involves four solves
+and five final laws, expected<30s, hard120s. Pilot is correctness/cost only,
+not parameter selection. If either fails, fix implementation errors transparently
+before completing the unchanged design; preserve failure text.
