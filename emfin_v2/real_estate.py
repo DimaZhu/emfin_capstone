@@ -2,7 +2,7 @@
 from functools import lru_cache
 import numpy as np
 
-DEFAULTS = dict(smoothing_alpha=0., net_rental_yield=0., sale_week=0,
+DEFAULTS = dict(holding_mode='minimum',fixed_weight=.1,smoothing_alpha=0., net_rental_yield=0., sale_week=0,
                 sale_delay_weeks=12, history_case='central',sg_property_type='All Residential',forward_mode='view',forward_log_drift=.04)
 
 
@@ -12,6 +12,8 @@ def assumptions(re):
 
 def validate(re):
     r=assumptions(re)
+    if r['holding_mode'] not in ('fixed','minimum'):raise ValueError('unknown RE holding mode')
+    if not isinstance(r['fixed_weight'],(int,float)) or not np.isfinite(r['fixed_weight']) or not 0<=r['fixed_weight']<=1:raise ValueError('invalid fixed RE weight')
     for k in ['smoothing_alpha','net_rental_yield','forward_log_drift']:
         if not isinstance(r[k],(int,float)) or not np.isfinite(r[k]):
             raise ValueError('RE '+k+' must be finite')

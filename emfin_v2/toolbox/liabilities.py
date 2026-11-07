@@ -302,6 +302,7 @@ def optimization_multiperiod(
     stress_probabilities: list[np.ndarray] | None = None,
     funding_stress_probabilities: list[np.ndarray] | None = None,
     minimum_weights: np.ndarray | None = None,
+    fixed_weights: dict | None = None,
     wasserstein_radius: float = 0.,
     wasserstein_liability_scale: float = .01,
     funding_market_paths: np.ndarray | None = None,
@@ -382,6 +383,10 @@ def optimization_multiperiod(
         if mins.shape!=(n_assets,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:
             raise ValueError("invalid minimum holdings")
         constraints.append(weights>=mins)
+
+    from emfin_v2.toolbox.holdings import validate_fixed
+    fixed=validate_fixed(fixed_weights,n_assets,minimum_weights)
+    constraints.extend(weights[i]==v for i,v in fixed.items())
 
     # Scale each funding budget to one. A nonnegative threshold makes the
     # extra positive-part layer on the gap redundant, reducing cone size.

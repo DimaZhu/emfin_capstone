@@ -210,8 +210,20 @@ def dro_buffer(c,a,liability=True):
     return c['wealth']*penalty(a/c['wealth'],c.get('wasserstein_radius',0.),c['confidence'],c.get('wasserstein_liability_scale',.01) if liability else 0.)
 
 
+def holding_bounds(c,d):
+    mins=np.asarray(c.get('minimum_weights') if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else np.zeros(d),float)
+    if mins.shape!=(d,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:raise ValueError('invalid minimum holdings')
+    fixed=dict(c.get('fixed_weights') or {})
+    if c['real_estate']['enabled'] and c['real_estate'].get('holding_mode','minimum')=='fixed':
+        if d!=7:raise ValueError('legacy property adapter requires seven assets')
+        fixed['6']=c['real_estate'].get('fixed_weight',.1)
+    from emfin_v2.toolbox.holdings import validate_fixed
+    return mins,validate_fixed(fixed,d,mins)
+
+
 def solve(c,draw,q,qs,mult):
     paths,amounts,steps,bases,growth=draw;n,d=paths.shape[0],paths.shape[2]
+    mins,fixed=holding_bounds(c,d)
     lower_buffer=c['wealth']*c.get('wasserstein_radius',0.)/(1-c['confidence'])/d
     smallest_budget=float(np.min(bases*c['funding_budget_fraction']*mult))
     if lower_buffer>smallest_budget+1e-8:
@@ -223,12 +235,16 @@ def solve(c,draw,q,qs,mult):
             stress_probabilities=[qs],funding_stress_probabilities=[qs],
             wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),
             funding_market_paths=funding_paths(draw),
-            minimum_weights=c.get('minimum_weights') if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else None)
+            minimum_weights=mins,fixed_weights=fixed)
         return a,dict(kind='optimized',**diag)
     except RuntimeError as err:
         # Cash is not assumed feasible: require pointwise budgets, a stronger
         # check than any scenario weighting or convex mixture of posteriors.
-        a=np.zeros(d);a[c['cash_index']]=c['wealth']
+        a=mins.copy()
+        for i,v in fixed.items():a[i]=v
+        if c['cash_index'] in fixed and a.sum()<1-1e-12:
+            return None,dict(kind='unavailable',reason=str(err),cash_fallback_rejected=True)
+        a[c['cash_index']]+=1-a.sum();a*=c['wealth']
         gap,_=metrics(c,draw,a)
         portfolio=paths@a/c['wealth']
         max_loss=float(np.maximum(0,1-portfolio).max())
@@ -238,9 +254,10 @@ def solve(c,draw,q,qs,mult):
             for j in range(len(steps)):
                 if steps[j]<steps[i] or (steps[j]==steps[i] and j<i):
                     need+=amounts[:,j]*growth[:,steps[i]-1]/growth[:,steps[j]-1]
-            pointwise.append(float(np.maximum(need-funding_paths(draw)[:,steps[i]-1]@a,0).max()) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
-        if (not c.get('minimum_weights') or all(v==0 for j,v in enumerate(c['minimum_weights']) if j!=c['cash_index'])) and (d!=7 or c['real_estate']['minimum_weight']==0) and all(pointwise) and max_loss+dro_buffer(c,a,False)/c['wealth']<=min(c['loss_budget'],c['cml_budget']):
-            return a,dict(kind='verified pointwise cash fallback',reason=str(err))
+            pointwise.append(float(np.maximum(need-funding_paths(draw)[:,steps[i]-1]@a,0).max())+dro_buffer(c,a) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
+        if all(pointwise) and max_loss+dro_buffer(c,a,False)/c['wealth']<=min(c['loss_budget'],c['cml_budget']):
+            kind='verified pointwise fixed-holdings fallback' if fixed else 'verified pointwise minimum-holdings fallback' if np.any(mins[np.arange(d)!=c['cash_index']]>0) else 'verified pointwise cash fallback'
+            return a,dict(kind=kind,reason=str(err),optimality_claim=False)
         return None,dict(kind='unavailable',reason=str(err),cash_fallback_rejected=True)
 
 
@@ -255,18 +272,21 @@ def run(c,output='artifacts/default'):
         prior=c['liabilities']
         c['liabilities']=[dict(name=prior[i]['name'] if len(prior)==len(draw[2]) else f'Imported payout {i+1}',week=int(step),amount=float(draw[3][i])) for i,step in enumerate(draw[2])]
     q,qs=probabilities(c,draw[0],getattr(draw,'re_price_logs',None));d=draw[0].shape[2]
-    mins=np.asarray(c['minimum_weights'],float) if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else np.zeros(d)
-    if mins.shape!=(d,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:raise ValueError('invalid minimum holdings')
-    equal=np.full(d,1/d)
-    for _ in range(d+1):
-        locked=equal<mins
-        equal=np.maximum(equal,mins)
-        free=equal>mins+1e-12
-        if equal.sum()<=1+1e-12:break
-        if not free.any():equal=mins.copy();break
-        equal[free]-=(equal.sum()-1)/free.sum()
+    mins,fixed=holding_bounds(c,d)
+    equal=np.zeros(d)
+    for i,v in fixed.items():equal[i]=v
+    free=set(range(d))-set(fixed)
+    remaining=1-sum(fixed.values())
+    while free:
+        share=remaining/len(free)
+        locked={i for i in free if mins[i]>share}
+        if not locked:
+            for i in free:equal[i]=share
+            break
+        for i in locked:equal[i]=mins[i];remaining-=mins[i]
+        free-=locked
     baseline={'1/N':equal*c['wealth']}
-    baseline['shrunk MV']=benchmark.mean_variance_allocation(draw[0][:,-1].mean(0),np.cov(draw[0][:,-1].T),np.ones(d),c['wealth'],c['risk_tolerance'],minimum_weights=mins)
+    baseline['shrunk MV']=benchmark.mean_variance_allocation(draw[0][:,-1].mean(0),np.cov(draw[0][:,-1].T),np.ones(d),c['wealth'],c['risk_tolerance'],minimum_weights=mins,fixed_weights=fixed)
     validation=[load_archive(p,c) for p in archive['validation']] if archive else [draw_paths(c,fit,c['validation_scenarios'],c['seed']+1000+j) for j in range(c['validation_seeds'])]
     validation_stress=[probabilities(c,v[0],getattr(v,'re_price_logs',None))[1] for v in validation]
     calibration=[];chosen=None;status={}
@@ -285,7 +305,7 @@ def run(c,output='artifacts/default'):
                 if prior<step or (prior==step and j<k):need+=draw[1][:,j]*draw[4][:,step-1]/draw[4][:,prior-1]
             cash_safe &= bool(np.maximum(need-funding_paths(draw)[:,step-1]@cash,0).max()+dro_buffer(c,cash) <= c['funding_budget_fraction']*mult*draw[3][k])
         cash_safe &= bool(np.maximum(0,1-draw[0]@cash/c['wealth']).max()+dro_buffer(c,cash,False)/c['wealth']<=min(c['cml_budget'],c['loss_budget']))
-        if np.any(mins[np.arange(d)!=c['cash_index']]>0):cash_safe=False
+        if np.any(mins[np.arange(d)!=c['cash_index']]>0) or any(i!=c['cash_index'] and v>0 for i,v in fixed.items()):cash_safe=False
         grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
         for risky_fraction in grid:
             candidate=risky_fraction*a+(1-risky_fraction)*cash
