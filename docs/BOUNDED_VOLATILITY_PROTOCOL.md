@@ -100,3 +100,12 @@ arithmetic, expected<5s, hard60s; current-snapshot pilot involves four solves
 and five final laws, expected<30s, hard120s. Pilot is correctness/cost only,
 not parameter selection. If either fails, fix implementation errors transparently
 before completing the unchanged design; preserve failure text.
+
+Implementation audit after pilot: persist all portfolio/blend selections to a
+source/config-hashed lock BEFORE any final scoring. Pilot generated final draws
+before selection, but no final scores entered selection. This amendment adds a
+stronger persisted audit trail and data manifest copies, no model/selection/risk
+setting change. Original pilot output is retained, not overwritten.
+Measured pilot1.99s. Confirmatory200/400/800x4 expected<10s, hard120s.
+Historical single-origin100/200/400x2 pilot expected<5s, hard60s; measure before
+committing the nineteen-origin batch. Weekly run measured2.18s.

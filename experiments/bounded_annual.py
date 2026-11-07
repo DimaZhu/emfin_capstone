@@ -16,6 +16,10 @@ ROOT=Path('artifacts/bounded-annual-20261107');PROTOCOL=Path('docs/BOUNDED_VOLAT
 MODELS=('gaussian_scale_mixture','bounded_ewma_mixture')
 
 
+def data_evidence(c):
+    return dict(manifests={k:json.loads(Path(v).read_text()) for k,v in c['history_manifests'].items()},fx=c.get('fx_evidence'),property_assumptions=c['real_estate'])
+
+
 def metadata():
     return dict(code_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),code_dirty=bool(subprocess.check_output(['git','status','--porcelain'],text=True).strip()),source_sha256=source_tree_hash(),protocol_sha256=hashlib.sha256(PROTOCOL.read_bytes()).hexdigest())
 
@@ -46,7 +50,7 @@ def weekly():
         d=df.loc[df.year.isin(years)]
         for (method,asset),a in d.groupby(['method','asset']):summary.append(dict(stage=stage,method=method,asset=asset,crps=float(a.normalized_crps.mean()),qlike=float(a.qlike.mean()),exceptions1=int(a.exception1.sum()),exceptions5=int(a.exception5.sum()),n=len(a),squared_lag=float(np.corrcoef(a.standardized.to_numpy()[:-1]**2,a.standardized.to_numpy()[1:]**2)[0,1])))
     final=df.loc[df.year>=2019].groupby(['date','method']).normalized_crps.mean().unstack();difference=final.bounded9-final.iid
-    return dict(**metadata(),records=records,summary=summary,fits=fits,initial_scales=initial.to_dict(),paired={str(b):bootstrap_difference(difference,b) for b in [10,20,40]},seconds=time.perf_counter()-started,scope='Retrospective fixed-cap weekly marginals. No model selection or promotion.2008development;2014-2018validation;2019-2025final.')
+    return dict(**metadata(),data_evidence=data_evidence(c),records=records,summary=summary,fits=fits,initial_scales=initial.to_dict(),paired={str(b):bootstrap_difference(difference,b) for b in [10,20,40]},seconds=time.perf_counter()-started,scope='Retrospective fixed-cap weekly marginals. No model selection or promotion.2008development;2014-2018validation;2019-2025final.')
 
 
 def batches(c,fitted,n,seed,count,model,cap=9.):
@@ -74,7 +78,7 @@ def snapshot(c,fitted=None,sensitivity=True):
                 a,status=solve(cc,dr,p,ps,1.);statuses[model+':'+name]=status
                 if a is not None:raw[model+':'+name]=a
             except Exception as e:statuses[model+':'+name]=dict(error=str(e),traceback=traceback.format_exc())
-    rows=[];frozen={}
+    rows=[];frozen={};specifications=[]
     for name,a in raw.items():
         trials=[];chosen=None
         for fraction in [1.,.75,.5,.25,0.]:
@@ -83,7 +87,11 @@ def snapshot(c,fitted=None,sensitivity=True):
         variants=[('raw',a)]+([('cross_validated',chosen)] if chosen is not None else [])
         for variant,allocation in variants:
             key=name+':'+variant;frozen[key]=allocation
-            rows.append(dict(method=key,weights=(allocation/c['wealth']).tolist(),validation_trials=trials,calibrated_fraction=trials[-1]['fraction'] if variant=='cross_validated' else None,judges={model:judged(c,draws,ps,allocation) for model,(draws,ps) in judges.items()}))
+            specifications.append(dict(method=key,weights=(allocation/c['wealth']).tolist(),validation_trials=copy.deepcopy(trials),calibrated_fraction=trials[-1]['fraction'] if variant=='cross_validated' else None))
+    lock=dict(**metadata(),config_sha256=digest(c),fit_last=str(fitted[0].index[-1].date()),selection_time_utc=pd.Timestamp.now(tz='UTC').isoformat(),final_scored=False,portfolios=specifications)
+    lock_path=ROOT/'locks'/(digest(dict(config=c,fit_last=lock['fit_last']))+'.json');save(lock,lock_path)
+    for spec in specifications:
+        allocation=frozen[spec['method']];rows.append(dict(**spec,judges={model:judged(c,draws,ps,allocation) for model,(draws,ps) in judges.items()}))
     fixture=[]
     if sensitivity:
         for label,payments in [('95M_final',[dict(name='Counterfactual95M',week=52,amount=95e6)]),('60M_early30M_final',[dict(name='Counterfactual60M',week=4,amount=60e6),dict(name='Counterfactual30M',week=52,amount=30e6)])]:
@@ -96,7 +104,7 @@ def snapshot(c,fitted=None,sensitivity=True):
                     for dr in judges[model][0]:
                         amounts=np.array([p['amount'] for p in payments]);steps=np.array([p['week'] for p in payments]);ds.append(ScenarioDraw((dr[0],np.broadcast_to(amounts,(len(dr[0]),len(amounts))).copy(),steps,amounts,dr[4]),dr.funding_paths,dr.re_price_logs))
                     fixture.append(dict(schedule=label,portfolio=name,model=model,**judged(cc,ds,judges[model][1],raw[name])))
-    result=dict(**metadata(),config=c,config_sha256=digest(c),fit_first=str(fitted[0].index[0].date()),fit_last=str(fitted[0].index[-1].date()),fit_rows=len(fitted[0]),statuses=statuses,rows=rows,train_diagnostics=train_info,judge_diagnostics={k:[d.bounded_diagnostics for d in draws if getattr(d,'bounded_diagnostics',None) is not None] for k,(draws,_) in judges.items()},fixtures=fixture,seconds=time.perf_counter()-started,scope='Research cross-law final budgets and cash-first ledger. Both-law validation selects blends once. Final sets never repair. Counts are conditional model samples, not full-funding guarantees.')
+    result=dict(**metadata(),data_evidence=data_evidence(c),selection_lock=lock,selection_lock_path=str(lock_path),config=c,config_sha256=digest(c),fit_first=str(fitted[0].index[0].date()),fit_last=str(fitted[0].index[-1].date()),fit_rows=len(fitted[0]),statuses=statuses,rows=rows,train_diagnostics=train_info,judge_diagnostics={k:[d.bounded_diagnostics for d in draws if getattr(d,'bounded_diagnostics',None) is not None] for k,(draws,_) in judges.items()},fixtures=fixture,seconds=time.perf_counter()-started,scope='Research cross-law final budgets and cash-first ledger. Both-law validation selects blends once. Final sets never repair. Counts are conditional model samples, not full-funding guarantees.')
     return result,frozen,judges
 
 
