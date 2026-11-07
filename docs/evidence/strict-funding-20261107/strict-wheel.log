@@ -1,0 +1,9 @@
+Processing /home/sandbox/repo
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: emfin-v2
+  Building wheel for emfin-v2 (pyproject.toml): started
+  Building wheel for emfin-v2 (pyproject.toml): finished with status 'done'
+  Created wheel for emfin-v2: filename=emfin_v2-2.1.0-py3-none-any.whl size=607855 sha256=b9ec3c2bab8252d76691e27f08bda9a4406fc96ed3c0c615dd728ae2eb5f9d19
+  Stored in directory: /tmp/pip-ephem-wheel-cache-veqiwiek/wheels/ad/28/41/5916815b975dce6e1c57afaf8fe67945dc970daaf379d5928c
+Successfully built emfin-v2

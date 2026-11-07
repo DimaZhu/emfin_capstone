@@ -88,3 +88,10 @@ returns for the bounded model. The coarse2-batch all-risk judge accepted no
 historical blend, including the cash/property anchor; these remain failures,
 not certified investments. A current4-batch cross-law study validates frozen
 cash blends, not raw bounded CARA. BOUNDED_VOLATILITY.md gives scope and limits.
+
+## Optional strict funding / empirical radius (7 November 2026)
+`pay_all_99` screens the joint cash-first all-date event. It does not transform
+a tail allowance into an economic guarantee or integrate the ledger optimizer.
+Strict funding and final all-risk verdicts can disagree. `past_empirical` W1
+radius currently conflicts with funding budgets, without truncation or fallback.
+See STRICT_FUNDING_RESULTS.md. Defaults unchanged.

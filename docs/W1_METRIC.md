@@ -42,3 +42,7 @@ independently, including the nominally deterministic cash sleeve. That is a
 conservative modeling relaxation, not a claim that every perturbed scenario is
 an economically executable path. The bound does not transfer automatically to
 the nonlinear cash-first sales ledger.
+
+Optional `past_empirical` policy and its large budget conflicts are documented
+in STRICT_FUNDING_PROTOCOL.md and STRICT_FUNDING_RESULTS.md. Half-split
+historical discrepancies are a shift-stress policy, not future-law coverage.

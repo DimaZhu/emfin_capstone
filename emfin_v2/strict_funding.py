@@ -11,6 +11,7 @@ def lower_bound(successes,n,alpha=.05):
 
 def check(c,draws,allocation,nominal=None,stressed=None):
     if not draws:raise ValueError('nonempty generated scenario sets required')
+    if any(not np.array_equal(d[2],draws[0][2]) or not np.array_equal(d[3],draws[0][3]) for d in draws):raise ValueError('same dated payment event required across batches')
     audits=[cash_first(c,d,allocation) for d in draws];flags=[a['funded'] for a in audits];flat=np.concatenate(flags);n=len(flat);s=int(flat.sum());target=.99
     ref=float(flat.mean());bound=lower_bound(s,n);rates={}
     for name,probabilities in [('nominal',nominal),('stressed',stressed)]:
