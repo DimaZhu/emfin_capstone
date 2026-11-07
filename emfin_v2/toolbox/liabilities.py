@@ -304,6 +304,7 @@ def optimization_multiperiod(
     minimum_weights: np.ndarray | None = None,
     wasserstein_radius: float = 0.,
     wasserstein_liability_scale: float = .01,
+    funding_market_paths: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
     """Multi-period, stochastic-liability allocation.
 
@@ -330,6 +331,9 @@ def optimization_multiperiod(
     """
     paths = np.asarray(market_paths, dtype=float)[:n_optimization_scenarios]
     n_scenarios, n_steps, n_assets = paths.shape
+    funding = paths if funding_market_paths is None else np.asarray(funding_market_paths,float)[:n_scenarios]
+    if funding.shape!=paths.shape or not np.isfinite(funding).all() or (funding<0).any():
+        raise ValueError('funding-market paths must align and be finite/nonnegative')
     liabilities = np.atleast_2d(np.asarray(liability_scenarios, dtype=float))[:n_scenarios]
     base = np.asarray(liability_base, dtype=float).ravel()
     steps = np.asarray(payout_steps, dtype=int).ravel()
@@ -382,7 +386,7 @@ def optimization_multiperiod(
     # Scale each funding budget to one. A nonnegative threshold makes the
     # extra positive-part layer on the gap redundant, reducing cone size.
     for i, step in enumerate(steps):
-        value_at_step = (paths[:, step - 1, :] / prices) @ weights
+        value_at_step = (funding[:, step - 1, :] / prices) @ weights
         required = liabilities[:, i].copy()
         for j, previous_step in enumerate(steps):
             if previous_step < step or (previous_step == step and j < i):

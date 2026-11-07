@@ -13,14 +13,17 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
         qualifications=['Illustrative, not client-calibrated. All dollar amounts are USD.',
         'Expected return and volatility are model estimates over this horizon, not annual forecasts. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
         'CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.',
-        'The fan is after cumulative payouts and configured synthetic liquidity haircuts, with money-market opportunity costs. No dynamic asset-sale policy is modeled.',
+        'The fan is marked wealth, not available cash, after cumulative payouts and configured synthetic liquidity haircuts, with money-market opportunity costs. RE follows an explicit fixed sale/settlement plan, not a dynamic asset-sale policy.',
         'Stress cards are deterministic simplified shocks, not calibrated historical crisis replays or probability forecasts.',
         'Time-to-cash has not been calibrated. A liquid-market label does not guarantee same-day sale or settlement.',
         'Wasserstein risk bounds use a development radius and unrestricted-support L1 transport; utility is nominal. No probability coverage is guaranteed by the radius.',
         'Zero observed losses is not a bound on unseen tails.'])
     from emfin_v2.abu_dhabi import local_calibration
-    observed=local_calibration()
-    result['re_data']=dict(available=observed is not None,source=c['real_estate'].get('source','synthetic'),enabled=c['real_estate']['enabled'],observed=observed)
+    observed=local_calibration() if c['real_estate'].get('source')=='abu_dhabi_private' else None
+    from emfin_v2.real_estate import calibration,assumptions
+    result['re_data']=dict(available=observed is not None,source=c['real_estate'].get('source','synthetic'),enabled=c['real_estate']['enabled'],observed=observed,
+        assumptions=assumptions(c['real_estate']),calibration=calibration(c['real_estate']) if c['real_estate']['enabled'] else None)
+
     result['sfo_inputs']=dict(status='Default placeholder, not real SFO/client evidence',
         investable_wealth=c['wealth'],currency='USD',horizon_weeks=c['horizon_weeks'],payouts=c['liabilities'],
         wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],company_value=0.,company_note='Not provided; excluded, not measured as zero',
@@ -67,14 +70,18 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
         path=1+np.arange(1,h+1)[:,None]/h*changes
         path[:,c['cash_index']]=growth
         path[:,:6]*=1-np.asarray(c['liquidity_haircuts'])
-        if len(w)>6:path[:,6]*=1-c['real_estate']['liquidation_haircut']
-        values=path@a;due=np.array([p['amount'] for p in c['liabilities']],float);due[-1]*=last_call
+        spendable=path.copy()
+        if len(w)>6:
+            from emfin_v2.real_estate import cash_and_mark
+            mark,cash=cash_and_mark(path[:,6][None,:],growth[None,:],c['real_estate'])
+            path[:,6]=mark[0];spendable[:,6]=cash[0]
+        values=path@a;available=spendable@a;due=np.array([p['amount'] for p in c['liabilities']],float);due[-1]*=last_call
         payments=[]
         for i,pay in enumerate(c['liabilities']):
             step=pay['week'];need=due[i]
             for j,prior in enumerate(c['liabilities']):
                 if prior['week']<step or (prior['week']==step and j<i):need+=due[j]*growth[step-1]/growth[prior['week']-1]
-            gap=float(max(need-values[step-1],0))
+            gap=float(max(need-available[step-1],0))
             payments.append(dict(name=pay['name'],week=step,shortfall=gap,funded=gap<.01))
         net=float(values[-1]-sum(due[i]*growth[-1]/growth[p['week']-1] for i,p in enumerate(c['liabilities'])))
         shocks.append(dict(name=name,shocks=dict(zip(assets,changes.tolist())),final_call_multiplier=last_call,

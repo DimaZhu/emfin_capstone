@@ -31,6 +31,14 @@ class Controls:
     re_source: str='abu_dhabi_private'
     dro: bool=True
     dro_radius: float=.00002
+    re_alpha: float=0.
+    re_rent: float=0.
+    re_correlation: float=.3
+    re_sale_week: int=0
+    re_sale_delay: int=12
+    re_history: str='central'
+    re_haircut: float=10.
+
 
 
     def validate(self):
@@ -41,6 +49,10 @@ class Controls:
         if self.profile not in ('Preserve','Balanced','Growth','Aggressive'):raise ValueError('unknown risk profile')
         if self.re_source not in ('abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
         if not np.isfinite(self.dro_radius) or not 0<=self.dro_radius<=.001:raise ValueError('Wasserstein radius must be 0-.001')
+        from emfin_v2.real_estate import validate
+        validate(dict(smoothing_alpha=self.re_alpha,net_rental_yield=self.re_rent/100,sale_week=self.re_sale_week,sale_delay_weeks=self.re_sale_delay,history_case=self.re_history))
+        if not np.isfinite(self.re_correlation) or not -1<=self.re_correlation<=1:raise ValueError('RE dependence must be -1 to 1')
+        if not np.isfinite(self.re_haircut) or not 0<=self.re_haircut<100:raise ValueError('RE sale haircut must be 0 to below 100%')
         if not 1<=self.cml<=40:raise ValueError('path-loss tail budget must be 1-40%')
         if self.payouts is not None:
             if not 1<=len(self.payouts)<=6:raise ValueError('provide one to six payouts')
@@ -82,6 +94,7 @@ def compute(c=Controls()):
         config['real_estate']['enabled']=c.real_estate
         config['real_estate']['source']=c.re_source
         config['real_estate']['minimum_weight']=c.re_min/100 if c.real_estate else 0.
+        config['real_estate'].update(smoothing_alpha=c.re_alpha,net_rental_yield=c.re_rent/100,equity_correlation=c.re_correlation,sale_week=c.re_sale_week,sale_delay_weeks=c.re_sale_delay,history_case=c.re_history,liquidation_haircut=c.re_haircut/100)
         with TemporaryDirectory() as folder:
             result=run(config,folder)
         data=from_default(result);data['controls']=asdict(c)
@@ -144,12 +157,15 @@ def from_default(result):
     return dict(controls=dict(liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
-        multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100),
+        multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,
+        re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
+        re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
+        re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; drops at weeks 10 and 13.',
         seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture') else {'proposed':result['status']['kind']},
-        caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE is synthetic if enabled. '+result['caveats'][0])
+        caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE source and sale/rent assumptions are explicit; no measured cross-asset dependence. '+result['caveats'][0])
 
 
 def template(result, static=False):

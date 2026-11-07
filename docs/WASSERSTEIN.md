@@ -8,6 +8,11 @@ objective. No GPL or third-party DRO implementation is used.
 
 Each sample consists of normalized gross-price path coordinates r[t,j] and
 normalized cumulative payout requirements b[i] = required[i] / initial wealth.
+When spendable funding paths differ from marked paths (RE), the sample also
+contains normalized spendable coordinates f[t,j]. These are separate coordinates
+with scale 1 in the same L1 metric. Funding hinges use f, market-risk hinges use r.
+The same infinity-norm slope bound holds; duplicate/economic relationships are
+not imposed on the unrestricted support.
 The L1 ground cost is the sum of absolute changes in all price coordinates plus
 the sum of absolute changes in b divided by `wasserstein_liability_scale`.
 A zero liability scale freezes payout-requirement coordinates. The scale is a
@@ -42,7 +47,7 @@ common-threshold envelope over both balls and mixtures. Evaluation reports
 per-measure bounds separately; no claim that statistical coverage follows.
 
 For market path loss max(0, max_t(1-r[t]·w)), L=||w||_infinity. For a funding gap
-max(0,b[i]-r[t_i]·w), L=max(||w||_infinity, liability_scale). Both are convex in
+max(0,b[i]-f[t_i]·w), L=max(||w||_infinity, liability_scale). Both are convex in
 weights. Terminal initial-loss risk uses the same market slope. Funding penalties
 are converted back to dollars and included in calibration and held-out checks,
 not hidden from the risk budgets. Utility is not made robust because exponential

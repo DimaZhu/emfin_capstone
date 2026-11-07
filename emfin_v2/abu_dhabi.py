@@ -36,10 +36,18 @@ def load_observed(path,mtime=None):
         annual_log_drift=float(ret.mean()*12),annual_vol=float(ret.std(ddof=1)*np.sqrt(12)),
         sha256=hashlib.sha256(raw).hexdigest(),
         provenance='Synthetic test fixture, not Abu Dhabi data' if synthetic else 'Local private import from user-provided Google Sheet, gid=8 AD_Apt_Monthly; observed values only, not independently re-extracted from REIDIN PDFs',
-        limitations='Index price returns only. Unsmoothing, dependence, rental income and liquidity remain assumptions. Earlier proxies/backcasts and future extrapolations are excluded.')
+        limitations='Index price returns only. Unsmoothing, dependence, rental income and sale timing are user assumptions, not calibrated by this index. Earlier proxies/backcasts and future extrapolations are excluded.')
 
 
 def local_calibration():
     path=default_path()
     if not path.is_file():return None
     return load_observed(str(path),path.stat().st_mtime_ns)
+
+
+def monthly_returns(path):
+    """Private raw returns for local calibration only; never serialized in reports."""
+    doc=json.loads(Path(path).read_text())
+    tab=next(t for t in doc['tabs'] if t.get('range','').startswith('AD_Apt_Monthly!'))
+    rows=sorted((str(r[0]),float(r[1])) for r in tab['values'][6:] if len(r)>5 and isinstance(r[1],(int,float)) and str(r[4]).startswith('Observed'))
+    return np.diff(np.log([v for _,v in rows]))
