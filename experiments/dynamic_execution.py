@@ -12,7 +12,9 @@ ROOT=Path('artifacts/dynamic-policy-20261107')
 
 
 def initial_weights(c):
-    study=json.loads(Path('artifacts/utility-comparison-20261107/summary.json').read_text());s=next(x for x in study['studies'] if x['model']=='gaussian_scale_mixture' and x['name']=='3M-monthly');raw=next(x for x in s['rows'] if x['kind']=='cara' and x['variant']=='raw');selected=next(x for x in s['rows'] if x['kind']=='cara' and x['variant']=='validated');return np.array(selected['weights'])*c['wealth'],np.array(raw['weights'])*c['wealth']
+    source=Path('artifacts/utility-comparison-20261107/summary.json')
+    if not source.exists():source=Path('docs/evidence/dynamic-policy-20261107/prerequisites/utility-summary.json')
+    study=json.loads(source.read_text());s=next(x for x in study['studies'] if x['model']=='gaussian_scale_mixture' and x['name']=='3M-monthly');raw=next(x for x in s['rows'] if x['kind']=='cara' and x['variant']=='raw');selected=next(x for x in s['rows'] if x['kind']=='cara' and x['variant']=='validated');return np.array(selected['weights'])*c['wealth'],np.array(raw['weights'])*c['wealth']
 
 
 def training_score(c,r):

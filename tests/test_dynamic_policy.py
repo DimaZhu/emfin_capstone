@@ -102,3 +102,14 @@ def test_frozen_frequency_snapshot_matches_declared_scope():
     assert all(x['judge']['overall_pass'] and x['judge']['fully_paid_paths']==1600 for x in s['rows'])
     assert all(not x['judge']['wasserstein_certified'] for x in s['rows'])
     assert 'NONE' in s['dynamic_takeaway']
+
+
+def test_multiyear_schedule_and_actual_annual_rebalancing():
+    import json
+    from pathlib import Path
+    c=json.loads((Path(__file__).parents[1]/'emfin_v2/resources/data/science/dynamic-policy-20261107.json').read_text())
+    assert len(c['multiyear'])==2 and all(s['selected'] is None for s in c['multiyear'])
+    # Two identical paths, price drift before the first annual boundary forces a real rebalance.
+    cc,d=fixture(h=104);steps=np.array([round(4+k*52/12) for k in range(24)]);prices=np.ones((3,104,6));prices[:,45:,0]=1.2
+    dd=ScenarioDraw((prices,np.full((3,24),1.),steps,np.ones(24),np.ones((3,104))),prices.copy());a=np.array([20.,20.,20.,20.,10.,10.]);r=execute(cc,dd,a,mode='static_frequency',rebalance_months=12)
+    assert (r['turnover']>0).all() and r['funded'].all()
