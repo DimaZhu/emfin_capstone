@@ -36,3 +36,25 @@ which is the point of the machinery.  Validated on synthetic geometric
 paths (tests/test_mpep.py): per-horizon views bind at their own horizon,
 the cross-horizon ripple the article predicts is present, and ML/CML
 constraints achieve their targets within the discrete-path approximation.
+
+## Time- and State-Dependent Resampling (Kristensen & Vorobets 2025)
+
+`toolbox/tsdr.py`, behind `--tsdr`.  Implemented from the PUBLIC
+descriptions (Substack summary, SSRN 5117589 abstract, and the MPEP case
+study's parameters) - the definitions PDF is access-gated and the
+accompanying code is GPL-3.0; neither was consulted.  Construction:
+per-state probability vectors (exponential time decay x crisp 25%/90%
+quantile classification of the trailing-vol state, half-life tau = T/2 as
+in the article), and Markov-chain path resampling where the next weekly
+invariant is drawn conditional on the current state and the chain
+transitions to the empirical successor state.  Where ffr.py produces ONE
+state-conditioned prior, TSDR keeps regime persistence inside the
+simulated paths; tests verify the article's headline stationarity property
+(initial-state dependence fades with horizon) and that simulated
+transitions match the empirical transition matrix.
+
+Reference-run finding (real data): the current state is LOW vol, yet the
+resampled paths carry a fatter DFUS tail than the i.i.d. Gaussian (95%
+CVaR 11.7% vs 8.9% of terminal return) - history's tails are fatter than
+the parametric fit - and the multi-period allocation shifts accordingly
+(29.2% vs 18.7% US equity).
