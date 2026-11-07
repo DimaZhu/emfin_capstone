@@ -79,3 +79,17 @@ def test_entropy_projection_matches_hand_binary_group_solution():
     got=mpep.mpep(paths,[mpep.MPView('mean',0,value=1.1)],np.ones(1)).posterior_probs
     # Mean 1.1 requires mass .75 at 1.2 and .25 at .8; symmetry splits each group.
     np.testing.assert_allclose(got,[.125,.125,.375,.375],atol=1e-7)
+
+
+def test_feasible_two_asset_optimizer_matches_explicit_balance_sheet():
+    # At final date, bad risky path yields 100-20*w; cumulative payouts=90.
+    # Zero funding gap requires w<=.5; holding floor w>=.5 fixes w=.5.
+    paths=np.array([[[1.,1.],[1.5,1.]],[[1.,1.],[.8,1.]]])
+    amounts=np.tile([40.,50.],(2,1));steps=np.array([1,2]);growth=np.ones((2,2))
+    alloc,_=liabilities.optimization_multiperiod(paths,np.ones(2),100.,amounts,steps,
+        np.array([40.,50.]),growth,10.,.5,1.,0.,minimum_weights=np.array([.5,0.]))
+    np.testing.assert_allclose(alloc,[50.,50.],atol=.001)
+    values=paths@alloc
+    got=liabilities.multiperiod_gap_metrics(values,amounts,steps,growth,.5)
+    np.testing.assert_allclose(got.terminal_net,[35.,0.],atol=.001)
+    np.testing.assert_allclose(got.shortfall_cvar,[0.,0.],atol=.001)

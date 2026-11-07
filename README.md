@@ -6,7 +6,7 @@ The original notebook is retained as background, not the current entry point.
 
 ## Quickstart: one default, offline
 
-Python 3.10-3.12, from this clone:
+Python >=3.10,<3.14 (dependency support; tests run on 3.10 here), from this clone:
 
 ```bash
 pip install -r requirements.txt

@@ -1,7 +1,7 @@
 """Shared pinned weekly invariants, no downloads or implicit data refreshes."""
 from pathlib import Path
 import pandas as pd
-from emfin_capstone.toolbox import snapshot, moneymarket, bonds
+from emfin_capstone.toolbox import snapshot, moneymarket, bonds, raw_data
 import numpy as np
 
 COLUMNS = ['DFUS', 'DFAI', 'DFAE', snapshot.YIELD_TICKER, 'DSPREAD', 'MMKT']
@@ -11,11 +11,10 @@ def weekly_dataset():
     snap = snapshot.load_snapshot()
     joint = snapshot.weekly_log_returns(snap).join(snapshot.weekly_yield_changes(snap), how='inner')
     joint[snapshot.YIELD_TICKER] /= 100
-    root = Path(__file__).resolve().parents[2] / 'data/raw/fred/2026-11-07'
-    oas = pd.read_csv(root / 'ice_bofa_ig_oas_bamlc0a0cm.csv', index_col=0, parse_dates=True).iloc[:, 0].astype(float)
+    oas = pd.read_csv(raw_data.series_file('BAMLC0A0CM'), index_col=0, parse_dates=True).iloc[:, 0].astype(float)
     ow = oas[oas.index.weekday == 2] / 100
     joint = joint.join(ow.diff().rename('DSPREAD'), how='inner')
-    mm = pd.read_csv(root / 'dgs3mo_3m_treasury.csv', index_col=0, parse_dates=True).iloc[:, 0].astype(float)
+    mm = pd.read_csv(raw_data.series_file('DGS3MO'), index_col=0, parse_dates=True).iloc[:, 0].astype(float)
     joint = joint.join((mm[mm.index.weekday == 2]/100).rename('MMRATE'), how='inner')
     joint['MMKT'] = moneymarket.money_market_weekly_returns(joint['MMRATE'])
     # Levels are lag-safe pricing anchors for fold-specific bond repricing.

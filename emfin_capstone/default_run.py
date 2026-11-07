@@ -287,14 +287,19 @@ def run(c,output='artifacts/default'):
     return result
 
 
-def main():
-    import argparse
+def main(argv=None):
+    import argparse,sys
+    argv=list(sys.argv[1:] if argv is None else argv)
+    if '--research' in argv and ('--help' in argv or '-h' in argv):
+        from emfin_capstone.engine import main as research
+        research([a for a in argv if a!='--research'])
+        return
     p=argparse.ArgumentParser();p.add_argument('--config',default=str(DEFAULT_CONFIG));p.add_argument('--output',default='artifacts/default');p.add_argument('--research',action='store_true')
-    args,extra=p.parse_known_args()
+    args,extra=p.parse_known_args(argv)
     if args.research:
         from emfin_capstone.engine import main as research
         try:
-            research()
+            research(extra)
         except (ValueError,RuntimeError) as error:
             dest=Path('artifacts/research');dest.mkdir(parents=True,exist_ok=True)
             (dest/'status.json').write_text(json.dumps(dict(status='unavailable',reason=str(error),superseded='Older multi-period figures are invalid after cumulative payout correction.'),indent=2)+'\n')

@@ -17,8 +17,9 @@ _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 import numpy as np
 
 from emfin_capstone.toolbox import real_estate as re_
+from emfin_capstone.toolbox.raw_data import series_file
 
-RAW = _Path(__file__).resolve().parents[1] / "data" / "raw" / "fred" / "2026-11-07" / "uae_rppi_qaen628bis.csv"
+RAW = series_file("QAEN628BIS")
 
 
 def main() -> None:
