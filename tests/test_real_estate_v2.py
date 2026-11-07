@@ -71,3 +71,21 @@ def test_optimizer_does_not_spend_marked_property():
     cash=mark.copy();cash[:,:,1]=0.
     a,_=optimization_multiperiod(mark,np.ones(2),100.,np.full((4,1),90.),np.array([2]),np.array([90.]),np.ones((4,2)),100.,.5,1.,0.,funding_market_paths=cash)
     assert a[0]>=90.-1e-4 and a[1]<=10.+1e-4
+
+
+def test_forward_re_view_pins_mean_in_nominal_and_stress():
+    from emfin_v2.default_run import probabilities
+    c=load_config();c['real_estate'].update(enabled=True,source='synthetic',annual_drift=.15,forward_log_drift=.02,forward_mode='view')
+    draw=draw_paths(c,setup(c),400,52)
+    q,qs=probabilities(c,draw[0],draw.re_price_logs)
+    target=.02*c['horizon_weeks']/52
+    assert q@draw.re_price_logs[:,-1]==pytest.approx(target,abs=1e-7)
+    assert qs@draw.re_price_logs[:,-1]==pytest.approx(target,abs=1e-7)
+    with pytest.raises(ValueError):probabilities(c,draw[0])
+
+
+def test_sample_drift_requires_explicit_sample_mode():
+    from emfin_v2.real_estate import calibration
+    r=dict(source='synthetic',annual_drift=.15,annual_vol=.12)
+    assert calibration(r)['annual_log_drift']==.04
+    assert calibration(dict(r,forward_mode='sample'))['annual_log_drift']==.15

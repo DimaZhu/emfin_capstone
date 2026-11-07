@@ -3,7 +3,7 @@ from functools import lru_cache
 import numpy as np
 
 DEFAULTS = dict(smoothing_alpha=0., net_rental_yield=0., sale_week=0,
-                sale_delay_weeks=12, history_case='central')
+                sale_delay_weeks=12, history_case='central',forward_mode='view',forward_log_drift=.04)
 
 
 def assumptions(re):
@@ -12,13 +12,15 @@ def assumptions(re):
 
 def validate(re):
     r=assumptions(re)
-    for k in ['smoothing_alpha','net_rental_yield']:
+    for k in ['smoothing_alpha','net_rental_yield','forward_log_drift']:
         if not isinstance(r[k],(int,float)) or not np.isfinite(r[k]):
             raise ValueError('RE '+k+' must be finite')
     if not 0<=r['smoothing_alpha']<=.8:raise ValueError('RE smoothing alpha must be 0-.8')
     if not 0<=r['net_rental_yield']<=.2:raise ValueError('RE net rental yield must be 0-20%')
     for k in ['sale_week','sale_delay_weeks']:
         if type(r[k]) is not int or not 0<=r[k]<=260:raise ValueError('RE '+k+' must be 0-260 whole weeks')
+    if r['forward_mode'] not in ('view','sample'):raise ValueError('unknown RE forward mode')
+    if not -.2<=r['forward_log_drift']<=.3:raise ValueError('RE forward log drift must be -20% to 30%')
     if r['history_case'] not in ('central','cautious','optimistic'):raise ValueError('unknown RE history case')
 
 
@@ -68,6 +70,10 @@ def calibration(re):
         result['history_note']='Central uses sample moments. Cautious/optimistic combine opposite marginal bootstrap endpoints as sensitivity cases, not a joint probability statement. A short growth window is not a long-run expected return.'
     else:
         result['history_note']='Synthetic annual drift/vol are explicit inputs. No observed-history uncertainty or unsmoothing is inferred for synthetic data.'
+    result['sample_implied_log_drift']=result['annual_log_drift']
+    result['forward_log_drift']=r['forward_log_drift'] if r['forward_mode']=='view' else result['annual_log_drift']
+    result['annual_log_drift']=result['forward_log_drift']
+    result['forward_note']='4% default is an illustrative long-run price-log-return view, not a data estimate, calibrated prior, conservative bound or promised return. Net rent is separate. View mode pins the terminal log-price mean through entropy pooling; sample mode is an explicitly optional boom-window sensitivity.'
     return result
 
 
@@ -100,8 +106,8 @@ def cash_and_mark(price_paths,growth,re):
 
 class ScenarioDraw(tuple):
     """Five legacy-compatible fields plus a distinct funding-price path."""
-    def __new__(cls,values,funding_paths):
-        obj=super().__new__(cls,values);obj.funding_paths=funding_paths;return obj
+    def __new__(cls,values,funding_paths,re_price_logs=None):
+        obj=super().__new__(cls,values);obj.funding_paths=funding_paths;obj.re_price_logs=re_price_logs;return obj
 
 
 def funding_paths(draw):

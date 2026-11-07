@@ -55,7 +55,9 @@
     "net_rental_yield": 0.0,
     "sale_week": 0,
     "sale_delay_weeks": 12,
-    "history_case": "central"
+    "history_case": "central",
+    "forward_mode": "view",
+    "forward_log_drift": 0.04
   },
   "client_evidence": {
     "status": "illustrative",
