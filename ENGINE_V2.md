@@ -59,9 +59,19 @@ change only scenario probabilities and scenario values, upstream.
 - **Bonds**: weekly changes in 10Y yield as the invariant; exact flat-curve
   repricing, roll-down falls out of the pricing equation. No credit-spread
   layer yet (second factor, same machinery).
-- **Liquidity**: liquid assets get a random-cost convolution (beta cost,
-  documented mean/cap); illiquid assets get a time-to-cash haircut, matching
-  the Ballast mockup. Cost parameters are placeholders - calibrate with data.
+- **Liquidity**: Meucci (2012, FAJ 68(6), doi:10.2469/faj.v68.n6.6)
+  integrated liquidity+market risk overlay (`toolbox/meucci_liquidity.py`):
+  per-scenario liquidity adjustment ~ N(mu(j), sigma(j)^2) with VWAP
+  square-root impact in the liquidated amount (superlinear in size),
+  state-dependent parameters (stressed scenarios pay up to ~3x), liquidity
+  correlations shrunk toward 1 (gamma=0.9), and the analytic Eq. 10 total
+  P&L density with CVaR decomposition (market vs liquidity contribution)
+  and liquidity score.  Reference schedule: full liquidation of the
+  documented reference portfolio; allocation-dependent schedules need an
+  outer loop (future work).  alpha/beta/delta/ADV are PLACEHOLDERS -
+  calibrate with volume data.  The earlier state-independent beta-cost
+  convolution and the illiquid time-to-cash haircut remain in
+  `toolbox/liquidity.py` (tests + illiquid holdings).
 - **Liabilities**: deterministic schedule, aggregated to one outflow at the
   horizon. Key finding: with translation-invariant preferences (CARA, CVaR),
   deterministic liabilities change the optimal mix ONLY through

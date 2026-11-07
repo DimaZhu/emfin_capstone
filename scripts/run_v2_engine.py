@@ -45,7 +45,7 @@ from emfin_capstone.toolbox import (
     entropy_pooling as ep,
     ffr,
     liabilities as liab,
-    liquidity as liq,
+    meucci_liquidity as mliq,
     snapshot,
 )
 
@@ -194,11 +194,35 @@ def main() -> None:
         print(f"  {name}: achieved {np.round(achieved, 5)} vs target {view.target}")
 
     _tick("entropy pooling (views)")
-    # ---- Liquidity convolution (upstream of every optimizer) -------------
-    cost_params = [liq.LiquidationCostParams(mean_cost=0.002, max_cost=0.02)] * 3 + \
-                  [liq.LiquidationCostParams(mean_cost=0.0005, max_cost=0.005),
-                   liq.LiquidationCostParams(mean_cost=0.0, max_cost=0.0)]  # cash settles at par
-    market_net = liq.apply_liquidation_cost(market, cost_params, seed=COST_SEED)
+    # ---- Liquidity overlay: Meucci (2012) integrated liquidity+market risk
+    # Scenario-dependent, size-dependent, correlated liquidity adjustment
+    # (toolbox/meucci_liquidity.py).  Amounts: full liquidation of the
+    # reference portfolio (BL market weights - documented placeholder; an
+    # allocation-dependent schedule would need an outer loop, flagged as
+    # future work).  State multiplier: liquidity costs scale up in scenarios
+    # with a severe equity drawdown (funding-risk stress), 1x in calm ones.
+    # Calibration parameters are PLACEHOLDERS (no volume data in the
+    # snapshot) - communicable inputs for the client conversation.
+    meucci_params = [
+        mliq.MeucciLiquidityParams(alpha=0.001, beta=0.12, delta=2e-7, ann_vol=0.20, adv=2e7),   # DFUS
+        mliq.MeucciLiquidityParams(alpha=0.0015, beta=0.15, delta=2e-7, ann_vol=0.22, adv=1e7),  # DFAI
+        mliq.MeucciLiquidityParams(alpha=0.002, beta=0.2, delta=5e-7, ann_vol=0.25, adv=5e6),   # DFAE
+        mliq.MeucciLiquidityParams(alpha=0.0005, beta=0.05, delta=1e-7, ann_vol=0.08, adv=5e7),  # UST10
+        mliq.MeucciLiquidityParams(alpha=0.0, beta=0.0, delta=0.0, ann_vol=0.001, adv=1e12),    # CASH
+    ]
+    ref_weights = np.array([0.40, 0.22, 0.09, 0.18, 0.11])  # same documented assumption as BL
+    ref_amounts = WEALTH * ref_weights / prices_vector  # units per asset, full liquidation
+    market_corr = np.corrcoef(market.T)
+    eq_stress = np.clip(-inv_scen[:, :3].mean(axis=1) / 0.05, 0.0, None)  # 0 calm, ~1+ in a >5% equity drawdown
+    state_mult = 1.0 + 2.0 * eq_stress  # stressed scenarios pay up to ~3x liquidity parameters
+    market_net = mliq.apply_meucci_liquidity(
+        market, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+        gamma=0.9, state_multiplier=state_mult, seed=COST_SEED)
+    mu_l, sig_l = mliq.adjustment_moments(
+        np.tile(ref_amounts, (N_SCENARIOS, 1)), market.mean(axis=0), meucci_params,
+        market_corr, gamma=0.9, state_multiplier=state_mult)
+    print(f"Meucci liquidity overlay: mean cost {mu_l.mean()/WEALTH:.2%} of wealth, "
+          f"cost std {sig_l.mean()/WEALTH:.2%} (placeholder calibration, state-dependent)")
 
     liability_due = LIABILITIES.amount_due_by(HORIZON_WEEKS)
     print(f"liabilities due within {HORIZON_WEEKS} weeks: ${liability_due:,.0f}")
@@ -279,7 +303,11 @@ def main() -> None:
     def judge_sample_fn(seed: int) -> np.ndarray:
         rng_j = np.random.default_rng(seed)
         inv_j = mu_tau + rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
-        return liq.apply_liquidation_cost(market_from_invariants(inv_j), cost_params, seed=seed + 50_000)
+        market_j = market_from_invariants(inv_j)
+        stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
+        return mliq.apply_meucci_liquidity(
+            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+            gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 50_000)
 
     _tick("allocation table")
     result = benchmark.judge_allocations(
