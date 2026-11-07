@@ -58,7 +58,7 @@ Zero observed Monte Carlo losses are not an upper bound on unseen tail losses.
 Older multi-period results were withdrawn after correcting cumulative payouts.
 
 Read [model details](docs/ENGINE_V2.md), [client input format](docs/CLIENT_INPUTS.md)
-and [paper scope](docs/PAPER_STRUCTURE.md). Optional research catalogue:
+and [paper scope](docs/PAPER_STRUCTURE.md). The [book-based review](docs/BOOK_AUDIT.md) records errors fixed and unresolved model-adequacy gaps against Meucci (2005). Optional research catalogue:
 `python -m emfin_v2 --research --help`. Its original payout example is infeasible under corrected accounting and reports unavailable; the unvalidated stochastic-liability option is disabled at the final boundary.
 
 ## Package and test it

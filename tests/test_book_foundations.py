@@ -56,3 +56,13 @@ def test_mean_variance_approximation_is_not_exact_cara_for_skewed_market():
     exact=scenario_market.empirical_certainty_equivalent(outcomes,tolerance)
     approximation=outcomes.mean()-np.var(outcomes)/(2*tolerance)
     assert exact>100. and approximation<100.
+
+
+def test_cara_matches_gaussian_price_closed_form_not_a_lognormal_identity():
+    # Independent Gauss-Hermite integration of a normal *wealth* distribution.
+    from numpy.polynomial.hermite import hermgauss
+    from scipy.special import logsumexp
+    nodes,weights=hermgauss(40);mean=100.;sd=17.;tolerance=23.
+    outcomes=mean+np.sqrt(2)*sd*nodes
+    ce=-tolerance*logsumexp(-outcomes/tolerance,b=weights/np.sqrt(np.pi))
+    assert ce==pytest.approx(mean-sd**2/(2*tolerance),abs=1e-10)

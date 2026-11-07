@@ -3,8 +3,9 @@
 Here the market distribution is represented only by a matrix of sampled
 horizon prices — the optimization and the satisfaction/risk evaluators work
 for any distribution that can produce such samples (Sample Average
-Approximation).  Under normal invariants the samples are exactly lognormal,
-and the ``normal_market`` closed forms serve as validation anchors.
+Approximation).  Under normal log invariants the horizon prices are lognormal. The
+``normal_market`` closed forms are exact only for normally distributed horizon
+prices, not for these lognormal prices. They are separate analytical anchors.
 
 "Scenario" is used in the stochastic-programming sense: any row of a
 discrete representation of the market distribution, with a probability
