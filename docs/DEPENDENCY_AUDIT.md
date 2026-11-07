@@ -86,3 +86,7 @@ not a lockfile, so future resolutions and platforms need fresh scans.
 - https://github.com/tornadoweb/tornado/security/advisories/GHSA-pw9p-v7r6-gx4p
 - https://pypi.org/project/tornado/
 - https://github.com/jupyter/nbconvert/security/advisories/GHSA-pjvx-prjx-h659
+
+## Final reproducibility check, 7 November 2026
+
+The newest CI run at viewer commit 387641a returned a verified cash fallback on the multithreaded hosted linear-algebra stack. Three pre-existing tests assumed the default was always an optimized/non-cash allocation. Local single-threaded rerun passed all 224 tests in 52.42 seconds. The test bootstrap now fixes OPENBLAS_NUM_THREADS, OMP_NUM_THREADS and MKL_NUM_THREADS to 1, matching the grid execution environment; no risk tolerances or solver feasibility checks were weakened. A verified fallback remains a supported, explicitly reported outcome, not an optimized allocation. A new CI result is still required after this change.
