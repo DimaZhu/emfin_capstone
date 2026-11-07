@@ -84,7 +84,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
             guards.append(g)
         else:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[re_index],0.,'Minimum holding, NOT an illiquid-asset cap'))
     for check in row['evaluation']['checks']:
-        g=dict(name=check['name'],current=check['upper'],limit=check['limit'],state='Met' if check['passed'] else 'Breached',note=row['evaluation']['interval']['scope'],unit=check['unit'],scope='Evaluation',kind=check['kind'],payout_index=check['payout_index'])
+        g=dict(name=check['name'],current=check['upper'],limit=check['limit'],state='Met' if check['passed'] else 'Breached',note=(row['evaluation']['strict_funding']['scope'] if check['kind']=='strict_all_payments' else row['evaluation']['interval']['scope']),unit=check['unit'],scope='Evaluation',kind=check['kind'],payout_index=check['payout_index'])
         guards.append(g)
     for check in row['evaluation']['holdings']:
         guards.append(dict(name=check['name'],current=check['current'],limit=check['limit'],state='Met' if check['passed'] else 'Breached',note='Independent final holdings check',unit='fraction',scope='Final holdings'))

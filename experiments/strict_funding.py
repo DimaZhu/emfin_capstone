@@ -7,7 +7,7 @@ from emfin_v2.default_run import run,setup
 from emfin_v2.radius_calibration import calibrate
 from experiments.robustness import config,source_tree_hash,save
 
-ROOT=Path('artifacts/strict-funding-20261107')
+ROOT=Path('artifacts/strict-funding-20261107/corrected')
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     confirm=run(c,ROOT/'confirm')
     fixtures=[]
     for name,schedule in [('95M-final',[dict(name='Counterfactual95M',week=52,amount=95e6)]),('60M-early-30M-final',[dict(name='Counterfactual early',week=13,amount=60e6),dict(name='Counterfactual final',week=52,amount=30e6)])]:
-        cc=copy.deepcopy(c);cc['liabilities']=schedule
+        cc=copy.deepcopy(c);cc['recurring_payout']=None;cc.pop('one_off_liabilities',None);cc['liabilities']=schedule
         z=run(cc,ROOT/name);fixtures.append(dict(name=name,status=z['status'],rows=z['rows'],weights=z['weights'],tradeoff=z['strict_tradeoff']))
     empirical=copy.deepcopy(c);empirical['radius_calibration_mode']='past_empirical'
     empirical_result=run(empirical,ROOT/'empirical-current')
@@ -27,6 +27,6 @@ def main():
     for year in range(2006,2025):
         cc=copy.deepcopy(c);cc['history_end']=str(frame.loc[frame.index<pd.Timestamp(f'{year+1}-01-01')].index[-1].date());history.append(dict(year=year,**calibrate(cc,frame)))
     result=dict(**metadata,seconds=time.perf_counter()-started,pilot_seconds=pilot['seconds'],confirm_seconds=confirm['seconds'],current=dict(status=confirm['status'],rows=confirm['rows'],weights=confirm['weights'],tradeoff=confirm['strict_tradeoff']),fixtures=fixtures,radius_history=history,radius_current=empirical_result['config']['radius_calibration'],radius_status=empirical_result['status'],scope='Prespecified bounded research diagnostics.3Mdefault/95M/60M+30Mfixtures are illustrative, not user obligations. No default or budget replacement. No empirical99%orW1cash-ledger guarantee. Latest-vintage property, assumed45day release lag.')
-    save(result,ROOT/'summary.json');print(json.dumps(dict(seconds=result['seconds'],status=confirm['status'],radius=result['radius_current']),indent=2))
+    save(result,ROOT/'summary.json');print(json.dumps(dict(seconds=result['seconds'],status=confirm['status']['kind'],radius=result['radius_current']),indent=2))
 
 if __name__=='__main__':main()

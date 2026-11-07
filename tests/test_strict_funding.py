@@ -37,3 +37,23 @@ def test_joint_date_event_not_per_date_and_weighted_stress_screen():
     p=np.ones(400);p[:2]=100
     r=check(c,[d],[100.],stressed=[p]);assert r['weighted']['stressed']['minimum_batch']<.99 and not r['passed']
     with pytest.raises(ValueError):check(c,[d],[100.],stressed=[[-1]*400])
+
+
+def test_strict_final_verdict_distinct_from_tail_budget():
+    from emfin_v2.evaluation import evaluate
+    c,d=fixture(property=True,amounts=(95.,));c.update(confidence=.95,funding_budget_fraction=.2,cml_budget=.06,loss_budget=.2,wasserstein_radius=0.,wasserstein_metric='max_path',minimum_weights=[0.,0.],fixed_weights={'1':.1});c['real_estate'].update(holding_mode='fixed',fixed_weight=.1)
+    p=np.ones(400)/400
+    original=evaluate(c,[d,d],[90.,10.],[p,p],[p,p]);assert original['funding_pass'] and original['overall_pass']
+    c['funding_mode']='pay_all_99';strict=evaluate(c,[d,d],[90.,10.],[p,p],[p,p])
+    assert strict['funding_pass'] and not strict['funding_rule_pass'] and not strict['overall_pass']
+    assert strict['strict_funding']['reference_fraction']==0
+
+
+def test_default_modes_unchanged_and_control_mapping():
+    from emfin_v2.default_run import load_config,validate_config
+    from emfin_v2.explorer import Controls
+    c=load_config();assert c['funding_mode']=='tail_allowance' and c['radius_calibration_mode']=='manual'
+    assert Controls().funding_mode=='tail_allowance'
+    for key in ['funding_mode','radius_calibration_mode']:
+        bad=dict(c);bad[key]='unknown'
+        with pytest.raises(ValueError):validate_config(bad)
