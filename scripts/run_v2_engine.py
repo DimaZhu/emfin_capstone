@@ -53,6 +53,7 @@ from emfin_capstone.toolbox import (
     moneymarket,
     meucci_liquidity as mliq,
     scenario_market,
+    seqep,
     snapshot,
 )
 
@@ -293,22 +294,37 @@ def main() -> None:
           f"rate risk std {0.25*joint['MMRATE'].diff().std()*1e4:.2f}bp/wk)")
 
     _tick("market map (equities + bond repricing)")
-    # ---- Views via entropy pooling (on the invariant scenarios) ----------
-    views = [
-        ep.relative_mean_view(inv_scen, 1, 0, min_spread=VIEWS[0][2], name=VIEWS[0][0]),
-        ep.volatility_view(inv_scen, 2, VIEWS[1][2], pin_mean=float(inv_scen[:, 2].mean()),
-                           name=VIEWS[1][0]),
+    # ---- Views via Sequential Entropy Pooling (Vorobets H1) --------------
+    # Moment views are nonlinear in the probabilities, so EP linearizes them
+    # by pinning other parameters.  Original EP pins at PRIOR values (strong
+    # implicit views); SeqEP H1 processes views by parameter class (C0 means,
+    # C1 variances, C2 skew) and carries the UPDATED parameters forward.
+    # The original-EP pooling is kept as the benchmark, RE/ENS side by side
+    # (the paper's protocol).
+    seq_views = [
+        seqep.SeqView(0, lambda th: ep.relative_mean_view(
+            inv_scen, 1, 0, min_spread=VIEWS[0][2], name=VIEWS[0][0]), name=VIEWS[0][0]),
+        seqep.SeqView(1, lambda th: ep.volatility_view(
+            inv_scen, 2, VIEWS[1][2], pin_mean=th[("mean", 2)], name=VIEWS[1][0]), name=VIEWS[1][0]),
         # Inequality view (skewness floor): binds only if the view is violated
         # by the prior - the Gq <= h block of the classic EP formulation.
-        ep.skewness_view(inv_scen, 0, VIEWS[2][2], sense="ge", name=VIEWS[2][0]),
+        seqep.SeqView(2, lambda th: ep.skewness_view(
+            inv_scen, 0, VIEWS[2][2], pin_mean=th[("mean", 0)],
+            pin_vol=float(np.sqrt(th[("var", 0)])), sense="ge", name=VIEWS[2][0]), name=VIEWS[2][0]),
     ]
-    pooled = ep.joint_entropy_pooling(N_SCENARIOS, views)
+    pooled = seqep.sequential_entropy_pooling(inv_scen, seq_views, heuristic="H1", sweeps=4)
     q = pooled.posterior_probs
-    print(f"views pooled: KL {pooled.kl_divergence:.3f} nats, "
-          f"effective scenarios {pooled.effective_n_scenarios:,.0f} / {N_SCENARIOS:,} "
-          f"(ENS ratio {pooled.effective_n_scenarios_ratio:.1%})")
-    for name, achieved, view in zip(pooled.view_names, pooled.per_view_achieved, views):
-        print(f"  {name}: achieved {np.round(achieved, 5)} vs target {view.target}")
+    # benchmark: the same views under original EP (prior-pinned parameters)
+    views_orig = [sv.build(seqep._extract_params(inv_scen, np.full(N_SCENARIOS, 1.0 / N_SCENARIOS)))
+                  for sv in seq_views]
+    orig = ep.joint_entropy_pooling(N_SCENARIOS, views_orig)
+    print(f"views pooled (SeqEP H1, {len(pooled.stage_relative_entropy)} passes): "
+          f"RE {pooled.relative_entropy:.3f} nats, ENS ratio {pooled.ens_ratio:.1%}")
+    print(f"  benchmark original EP (prior-pinned): RE {orig.kl_divergence:.3f} nats, "
+          f"ENS ratio {orig.effective_n_scenarios_ratio:.1%} "
+          f"({orig.kl_divergence - pooled.relative_entropy:+.3f} nats of implicit views removed)")
+    for name, achieved in zip(pooled.view_names, pooled.per_view_achieved):
+        print(f"  {name}: achieved {np.round(achieved, 5)}")
 
     _tick("entropy pooling (views)")
     # ---- Liquidity overlay: Meucci (2012) integrated liquidity+market risk
