@@ -1,0 +1,12 @@
+[
+  {
+    "source": "BIS residential property prices, UAE series, via FRED (St. Louis Fed)",
+    "url": "https://fred.stlouisfed.org/series/QAEN628BIS",
+    "access_date": "2026-11-07",
+    "licence": "BIS statistics: may be downloaded, reproduced and disseminated provided the national source (REIDIN) is quoted and the BIS Terms of permitted use are observed (bis.org/statistics/pp-sources.pdf). FRED series updated through 2024 Q1 - stale by ~2.5 years; refresh from the BIS Data Portal when a current pull route is confirmed.",
+    "sha256": "02b25069fe22c97a7833215d5be0fcec2c13dc65ec2c36926645cebfc92f4fa0",
+    "path": "data/raw/fred/2026-11-07/uae_rppi_qaen628bis.csv",
+    "series": "QAEN628BIS: Residential Property Prices for United Arab Emirates, Index 2010=100, quarterly, not seasonally adjusted, nominal",
+    "notes": "BIS lists REIDIN as the UAE national source, so this is the REIDIN-derived free backbone (verified 2026-11-07). UAE-wide, not Abu Dhabi-only: composition effects vs Abu Dhabi; base year 2010; nominal."
+  }
+]

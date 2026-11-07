@@ -34,6 +34,37 @@ repo yet.
 - REIDIN PDF stitching, ValuStrat extraction: terms-of-use review pending
   before any download.
 
+## Real-data status (as of 2026-11-07)
+
+Landed: BIS UAE residential property price index (REIDIN-derived national
+source - verified against bis.org/statistics/pp-sources.pdf) via FRED
+series QAEN628BIS, quarterly 2003Q1-2024Q1, nominal, 2010=100, at
+data/raw/fred/2026-11-07/ with a manifest entry.  BIS terms allow download,
+reproduction and dissemination with the national source quoted.  Caveats:
+UAE-wide not Abu Dhabi (composition effects), stale by ~2.5 years (refresh
+from the BIS Data Portal), nominal.
+scripts/build_re_observer.py runs the Layer 2/3 machinery on it: raw lag-1
+ACF 0.68 (heavy smoothing/momentum signature), FGW unsmoothing lifts vol
+1.81x (consistent with the pension-LDI desmoothing literature), and the
+crude moment-fit state-space leaves Ljung-Box rejections on the invariant -
+the honest finding is that separating smoothing from genuine momentum needs
+joint (EM/Bayesian) estimation, which is deferred; FGW passes its own
+diagnostic by construction but risks over-unsmoothing (Delfim).
+
+Terms findings for the other sources (2026-11-07):
+- REIDIN (reidin.com/terms-conditions): standard website terms, materials
+  copyright-protected; no licence to redistribute stitched data - their
+  public PDFs can inform analysis but a stitched index must NOT be
+  committed or redistributed.
+- ValuStrat (valustrat.com VPI page): proprietary research/valuations; free
+  quarterly reviews to read, no reproduction rights stated - observer only
+  with permission.
+- ADREC (adrec.gov.ae market reports): biannual reports published; terms
+  not found - read/cite only until terms are confirmed.
+- DLD Dubai Pulse (dubaipulse.gov.ae dld-transactions): access appears
+  gated (the page mentions a confirmation step within 14 days); not clearly
+  open for bulk download - request access first; not pulled.
+
 ## Data status (as of 2026-11-07)
 
 - All tests validate against simulate_smoothed_observations (known truth).

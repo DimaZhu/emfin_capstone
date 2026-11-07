@@ -183,7 +183,14 @@ def moment_fit(observations: np.ndarray) -> LatentReturnModel:
     mu = float(series.mean())
     var_obs = float(series.var(ddof=1))
     q = max(var_obs * (1 - c) ** 2, 1e-8)
-    return LatentReturnModel(mu=mu, rho=0.0, q=q, smoothing=(c,), obs_var=(var_obs * 0.05,))
+    # Momentum estimate: FGW-unsmooth first (removes the smoothing-induced
+    # ACF), then take the residual lag-1 autocorrelation as rho.  Still
+    # crude - the smoothing split between c and rho is exactly what EM
+    # would estimate jointly - but it stops rho from being pinned at zero
+    # when the market genuinely trends.
+    unsmoothed, c_fgw = fgw_unsmooth(series)
+    rho = float(np.clip(np.corrcoef(unsmoothed[1:], unsmoothed[:-1])[0, 1], -0.9, 0.9))
+    return LatentReturnModel(mu=mu, rho=rho, q=q, smoothing=(c_fgw,), obs_var=(var_obs * 0.05,))
 
 
 # ---------------------------------------------------------------------------
@@ -345,3 +352,29 @@ def simulate_smoothed_observations(
         for c, rv in zip(smoothing, obs_var)
     ])
     return obs, r[1:]
+
+
+class CsvIndexAdapter(MarketAdapter):
+    """Adapter for a licensed/open CSV price-index drop with a DataManifest.
+
+    First concrete adapter: the BIS UAE residential property price index
+    (REIDIN-derived national source) via FRED, landed at
+    data/raw/fred/2026-11-07/ with its manifest entry.  Converts index
+    levels to quarterly log returns - the observer series for the
+    state-space layer.  UAE-wide, not Abu Dhabi-only: composition effects
+    are a known data-quality caveat (see docs/ABU_DHABI_REAL_ESTATE.md).
+    """
+
+    name = "bis-uae-rppi"
+
+    def __init__(self, csv_path):
+        self._path = Path(csv_path)
+
+    def observer_series(self) -> dict[str, np.ndarray]:
+        import pandas as pd
+
+        frame = pd.read_csv(self._path, index_col=0, parse_dates=True)
+        values = frame.iloc[:, 0].astype(float)
+        log_levels = np.log(values.to_numpy())
+        returns = np.diff(log_levels)  # quarterly log returns
+        return {self.name: returns}
