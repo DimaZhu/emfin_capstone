@@ -40,3 +40,16 @@ def test_convex_utility_solver_matches_independent_two_sleeve_grid(kind):
     for risky in grid:
         outcome=100*(gross@np.array([1-risky,risky]));r=native_ce(kind,outcome,outcome-30,p,100,10,np.full(3,30.));values.append(r['ce'] if r['available'] else -np.inf)
     assert abs(float(weights.value[1])-grid[np.argmax(values)])<.003
+
+
+def test_frozen_science_snapshot_labels_all_six_shared_cases():
+    from emfin_v2.utility_science import load
+    from emfin_v2.explorer import Controls
+    s=load();assert s['available'] and len(s['studies'])==12
+    assert Controls().objective_kind=='cara'
+    for case in s['studies']:
+        assert len(case['utilities'])==4
+        h=next(x for x in case['utilities'] if x['kind']=='hara_payment_floor')
+        if case['name']=='95M-final':
+            assert all(x['selected'] is None for x in case['utilities'])
+            assert h['raw']['native']['domain_violations']>0

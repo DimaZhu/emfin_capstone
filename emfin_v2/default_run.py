@@ -435,6 +435,10 @@ def run(c,output='artifacts/default'):
             rows[-1]['execution_audit']=summarize_execution(c,evaluation,a)
         except ValueError as error:
             rows[-1]['execution_audit']=dict(available=False,error=str(error),scope='Execution audit unavailable, not passed.')
+        if c.get('objective_kind','cara')!='mean_variance':
+            from emfin_v2.utilities import native_ce
+            gross=np.concatenate([v[0][:,-1]@a for v in evaluation]);provision=np.concatenate([sum(v[1][:,i]*v[4][:,-1]/v[4][:,step-1] for i,step in enumerate(v[2])) for v in evaluation]);p_native=np.concatenate([p/len(evaluation) for p in evaluation_nominal])
+            rows[-1]['native_utility']=native_ce(c.get('objective_kind','cara'),gross,gross-provision,p_native,c['wealth'],c['risk_tolerance'],provision,c.get('utility_settings'))
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
         v=evaluation[0];values=v[0]@a
         paid=np.zeros_like(values)

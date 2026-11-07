@@ -1,0 +1,4776 @@
+{
+  "name": "60M-early-30M-final",
+  "model": "gaussian_scale_mixture",
+  "config": {
+    "label": "Private research: actual VTI/VWO/GLD/IEF histories, cash account, SGD property with USD FX. Not client-calibrated.",
+    "seed": 20261107,
+    "wealth": 100000000,
+    "horizon_weeks": 52,
+    "liabilities": [
+      {
+        "name": "Counterfactual60M",
+        "week": 13,
+        "amount": 60000000.0
+      },
+      {
+        "name": "Counterfactual30M",
+        "week": 52,
+        "amount": 30000000.0
+      }
+    ],
+    "liability_vol": 0.0,
+    "risk_tolerance": 10000000,
+    "confidence": 0.95,
+    "funding_budget_fraction": 0.2,
+    "loss_budget": 0.15,
+    "cml_budget": 0.06,
+    "student_nu": null,
+    "train_scenarios": 100,
+    "validation_scenarios": 200,
+    "evaluation_scenarios": 400,
+    "validation_seeds": 4,
+    "evaluation_seeds": 4,
+    "multiplier_grid": [
+      1.0
+    ],
+    "view_spread": 0.0,
+    "stress_mean_path_loss_increment": 0.01,
+    "liquidity_haircuts": [
+      0.001,
+      0.002,
+      0.001,
+      0.0005,
+      0.0
+    ],
+    "real_estate": {
+      "enabled": true,
+      "minimum_weight": 0.0,
+      "annual_drift": 0.04,
+      "annual_vol": 0.12,
+      "equity_correlation": 0.3,
+      "liquidation_haircut": 0.1,
+      "source": "singapore_ura",
+      "smoothing_alpha": 0.0,
+      "net_rental_yield": 0.0,
+      "sale_week": 0,
+      "sale_delay_weeks": 12,
+      "history_case": "central",
+      "forward_mode": "view",
+      "forward_log_drift": 0.04,
+      "sg_property_type": "All Residential",
+      "holding_mode": "fixed",
+      "fixed_weight": 0.1,
+      "history_end": "2026-10-30"
+    },
+    "client_evidence": {
+      "status": "illustrative",
+      "holdings": null,
+      "family_company": null,
+      "sources": []
+    },
+    "sequential_ep": true,
+    "view_vol_cap": null,
+    "wasserstein_radius": 2e-05,
+    "wasserstein_liability_scale": 0.01,
+    "recurring_payout": null,
+    "asset_registry": {
+      "schema_version": 1,
+      "status": "target universe; runtime supports private histories, default cutover blocked on VTI/VWO data",
+      "assets": [
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [
+            "equity"
+          ],
+          "cash": false,
+          "id": "us_equity",
+          "ticker": "VTI",
+          "name": "US equity",
+          "asset_class": "equity",
+          "haircut": 0.001,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.vanguardoffshore.com/en/product/etf/equity/0970/vanguard-total-stock-market-etf",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [
+            "equity"
+          ],
+          "cash": false,
+          "id": "em_equity",
+          "ticker": "VWO",
+          "name": "Emerging-market equity",
+          "asset_class": "equity",
+          "haircut": 0.002,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://workplace.vanguard.com/investments/product-details/fund/0964",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [],
+          "cash": false,
+          "id": "gold",
+          "ticker": "GLD",
+          "name": "Gold",
+          "asset_class": "gold",
+          "haircut": 0.001,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.spdrgoldshares.com/usa/gld/",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          }
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "etf_total_return",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": true,
+          "factors": [],
+          "cash": false,
+          "id": "treasury",
+          "ticker": "IEF",
+          "name": "US Treasuries",
+          "asset_class": "treasury",
+          "haircut": 0.0005,
+          "source": {
+            "kind": "issuer_nav_and_distributions",
+            "url": "https://www.ishares.com/us/products/etf-investments",
+            "status": "download_and_adjustment_check_pending",
+            "redistribution": "not_cleared"
+          },
+          "limitations": "IEF candidate for the requested Treasury sleeve, not the former synthetic ten-year bond. Historical total-return data are still required."
+        },
+        {
+          "enabled": true,
+          "currency": "USD",
+          "return_model": "cash_account",
+          "liquidity": "listed",
+          "minimum_weight": 0.0,
+          "mean_view": false,
+          "factors": [],
+          "cash": true,
+          "id": "cash",
+          "ticker": null,
+          "name": "Cash / money market",
+          "asset_class": "cash_like",
+          "haircut": 0.0,
+          "source": {
+            "kind": "explicit_cash_rate",
+            "annual_rate": 0.0,
+            "status": "zero-rate uncalibrated placeholder"
+          },
+          "limitations": "Cash-account model, not SHV or guaranteed investable yield. Set explicit rate/currency and validate account terms before client use."
+        },
+        {
+          "enabled": true,
+          "currency": "SGD",
+          "return_model": "quarterly_property",
+          "liquidity": "planned_sale_only",
+          "minimum_weight": 0.0,
+          "mean_view": false,
+          "factors": [],
+          "cash": false,
+          "id": "sg_property",
+          "ticker": null,
+          "name": "Singapore URA All Residential",
+          "asset_class": "real_estate",
+          "haircut": 0.1,
+          "source": {
+            "kind": "ura_quarterly_index",
+            "url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+            "property_type": "All Residential",
+            "redistribution": "Singapore Open Data Licence with attribution"
+          },
+          "limitations": "Price index only, not rent/total return. Registry adapter converts SGD marks/rent/sale proceeds using the explicit SGD/USD factor. Legacy default is separately labelled if no FX model runs."
+        }
+      ],
+      "relative_mean_view": null,
+      "reporting_currency": "USD"
+    },
+    "history_bundle": "actual_etfs",
+    "history_end": "2026-10-30",
+    "scenario_model": "gaussian_scale_mixture",
+    "innovation_mixture": {
+      "probabilities": [
+        0.9,
+        0.1
+      ],
+      "variance_scales": [
+        0.75,
+        3.25
+      ]
+    },
+    "wasserstein_metric": "max_path",
+    "history_manifests": {
+      "us_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/us_equity-manifest.json",
+      "em_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/em_equity-manifest.json",
+      "gold": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/gold-manifest.json",
+      "treasury": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/treasury-manifest.json"
+    },
+    "funding_mode": "pay_all_99",
+    "radius_calibration_mode": "manual",
+    "cash_index": 4,
+    "view_instruments": [
+      0,
+      1
+    ],
+    "minimum_weights": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scenario_archives": null,
+    "asset_layout": {
+      "ids": [
+        "us_equity",
+        "em_equity",
+        "gold",
+        "treasury",
+        "cash",
+        "sg_property"
+      ],
+      "names": [
+        "US equity",
+        "Emerging-market equity",
+        "Gold",
+        "US Treasuries",
+        "Cash / money market",
+        "Singapore URA All Residential"
+      ],
+      "index": {
+        "us_equity": 0,
+        "em_equity": 1,
+        "gold": 2,
+        "treasury": 3,
+        "cash": 4,
+        "sg_property": 5
+      },
+      "cash_index": 4,
+      "liquid_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "property_indices": [
+        5
+      ],
+      "view_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "factor_indices": {
+        "equity": [
+          0,
+          1
+        ]
+      },
+      "minimum_weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "haircuts": [
+        0.001,
+        0.002,
+        0.001,
+        0.0005,
+        0.0,
+        0.1
+      ]
+    },
+    "asset_names": [
+      "US equity",
+      "Emerging-market equity",
+      "Gold",
+      "US Treasuries",
+      "Cash / money market",
+      "Singapore URA All Residential"
+    ],
+    "fx": {
+      "mean_policy": "zero",
+      "enabled": true
+    },
+    "scenario_tier": "bounded research pilot",
+    "cash_mix_grid": [
+      1.0,
+      0.75,
+      0.5,
+      0.25,
+      0.0
+    ],
+    "history_evidence": {
+      "label": "PRIVATE RESEARCH. Yahoo-adjusted ETF histories plus issuer Treasury NAV returns. Terms risk accepted; not cleared for public distribution. Parametric scenarios, not an actual-history backtest.",
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "weekly_returns": 1129,
+      "sources": [
+        {
+          "asset_id": "us_equity",
+          "source_url": "https://finance.yahoo.com/quote/VTI/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "e7222fa5bc257b56c6f1f81c0eafb4057f7a7a14e99c0f65e1e561defa1e0fa4"
+        },
+        {
+          "asset_id": "em_equity",
+          "source_url": "https://finance.yahoo.com/quote/VWO/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "99f2625bb86aa461631711b87fb6f316a818278a792b20986b9de7528a290d5b"
+        },
+        {
+          "asset_id": "gold",
+          "source_url": "https://finance.yahoo.com/quote/GLD/history/",
+          "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+          "sha256": "09badf00545dace214b5e532ddb99886eb140dcf91b291be9e3aeed31bdc054c"
+        },
+        {
+          "asset_id": "treasury",
+          "source_url": "https://www.blackrock.com/us/financial-professionals/products/239456/ishares-710-year-treasury-bond-etf",
+          "use_terms": "Personal non-commercial analysis only, notices retained in source workbook. No redistribution or public/commercial use.",
+          "sha256": "866f3b508fa05cf9416dc4c1d89e7740592d9fca950b6fa3ffc4647a06ddb8dd"
+        }
+      ]
+    },
+    "fx_evidence": {
+      "series": "RXI_N.B.SI",
+      "currency_pair": "SGD_per_USD",
+      "source_url": "https://www.federalreserve.gov/releases/h10/data/FRB_h10_xml.zip",
+      "release_page": "https://www.federalreserve.gov/releases/h10/hist/dat00_si.htm",
+      "terms_url": "https://www.federalreserve.gov/disclaimer.htm",
+      "attribution": "Source: Board of Governors of the Federal Reserve System (US), H.10 Foreign Exchange Rates.",
+      "use_terms": "Federal Reserve Board website information is public domain unless otherwise indicated. No exception marked for this series. Attribution requested. No logo or seal used.",
+      "prepared": "2026-11-02T16:52:42",
+      "first_date": "1981-01-02",
+      "last_date": "2026-10-30",
+      "observations": 11499,
+      "file": "sgd-per-usd.csv",
+      "sha256": "7597bf52e44fd46304d7556f24c0313b0750cc3833217a6ecee4acc41a8b2fd2",
+      "limitations": "SGD per USD noon New York buying rate for cable transfers. Reference rate, not executable spot or FX total return. Latest vintage, not point-in-time revision-safe data. FX return uses inverse quote: USD per SGD. No FX hedge, rate differential or conversion fee model.",
+      "annual_log_vol": 0.05024173219677656,
+      "annual_sample_log_drift": 0.010890738552295942,
+      "mean_policy": "zero",
+      "correlations": {
+        "us_equity": 0.40788496229963905,
+        "em_equity": 0.5762342430262468,
+        "gold": 0.4315965240625469,
+        "treasury": 0.09994959688669017
+      },
+      "first_week": "2005-03-18",
+      "last_week": "2026-10-30",
+      "dependence_note": "Joint listed-ETF/FX covariance fitted on common weekly dates. Weekly property dependence is assumed through its user-set equity shock correlation; property/FX correlation is induced, not separately estimated from quarterly property data. Daily FX is NY noon while ETF NAV is close, so observations are not synchronous.",
+      "model_annual_log_vol": 0.050241732196776565,
+      "model_correlations": {
+        "us_equity": 0.39736912345525954,
+        "em_equity": 0.5613781267278841,
+        "gold": 0.42046936833891446,
+        "treasury": 0.09737275794785008
+      }
+    },
+    "invariance_evidence": {
+      "available": true,
+      "rows": [
+        {
+          "name": "us_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014024196749697667,
+          "late_mean": 0.0025549929254922695,
+          "early_vol": 0.025977394941897783,
+          "late_vol": 0.024024110957981,
+          "sample_skewness": -0.9885851179670224,
+          "sample_excess_kurtosis": 9.055984523808808,
+          "mean_shift_in_full_sample_sd": 0.046076190406745786,
+          "split_cdf_distance": 0.03460114228331135,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.07052763599901916,
+              "squared_returns": 0.3286983557475859
+            },
+            {
+              "lag": 4,
+              "returns": -0.02746958939324597,
+              "squared_returns": 0.16132523129728155
+            },
+            {
+              "lag": 8,
+              "returns": 0.04156541838977456,
+              "squared_returns": 0.06036885143474273
+            }
+          ]
+        },
+        {
+          "name": "em_equity",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0009454539538046416,
+          "late_mean": 0.0014607828404532106,
+          "early_vol": 0.03654283944014308,
+          "late_vol": 0.02450127185924515,
+          "sample_skewness": -0.6918497311233737,
+          "sample_excess_kurtosis": 7.180610303426668,
+          "mean_shift_in_full_sample_sd": 0.016574188218000184,
+          "split_cdf_distance": 0.0923743174543401,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.032442081662946036,
+              "squared_returns": 0.343978004946072
+            },
+            {
+              "lag": 4,
+              "returns": -0.005618641576819779,
+              "squared_returns": 0.19681760069574356
+            },
+            {
+              "lag": 8,
+              "returns": 0.08001524038355477,
+              "squared_returns": 0.07522409716709409
+            }
+          ]
+        },
+        {
+          "name": "gold",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0014640952115221805,
+          "late_mean": 0.00222061581548858,
+          "early_vol": 0.02645620509912645,
+          "late_vol": 0.021440489615339405,
+          "sample_skewness": -0.27922277501772974,
+          "sample_excess_kurtosis": 2.044574332854946,
+          "mean_shift_in_full_sample_sd": 0.031430821327590806,
+          "split_cdf_distance": 0.06575346764576662,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.0003234729309989343,
+              "squared_returns": 0.11936935605896909
+            },
+            {
+              "lag": 4,
+              "returns": -0.004941464534606933,
+              "squared_returns": 0.14518422403711398
+            },
+            {
+              "lag": 8,
+              "returns": -0.032791284313892104,
+              "squared_returns": 0.11322883946751086
+            }
+          ]
+        },
+        {
+          "name": "treasury",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0010157644252539906,
+          "late_mean": 0.00019062077816785675,
+          "early_vol": 0.00903190554573737,
+          "late_vol": 0.00869757943548711,
+          "sample_skewness": -0.1309482554564808,
+          "sample_excess_kurtosis": 0.9990239219599069,
+          "mean_shift_in_full_sample_sd": -0.0930069853894397,
+          "split_cdf_distance": 0.08023912634155528,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": -0.060370106297258364,
+              "squared_returns": 0.11179182639645495
+            },
+            {
+              "lag": 4,
+              "returns": 0.04601268134002484,
+              "squared_returns": 0.15463430220187024
+            },
+            {
+              "lag": 8,
+              "returns": 0.03267518255273232,
+              "squared_returns": 0.13128842938461954
+            }
+          ]
+        },
+        {
+          "name": "cash",
+          "observations": 1129,
+          "deterministic": true,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.0,
+          "late_mean": 0.0,
+          "early_vol": 0.0,
+          "late_vol": 0.0,
+          "sample_skewness": null,
+          "sample_excess_kurtosis": null,
+          "mean_shift_in_full_sample_sd": null,
+          "split_cdf_distance": 0.0,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 4,
+              "returns": null,
+              "squared_returns": null
+            },
+            {
+              "lag": 8,
+              "returns": null,
+              "squared_returns": null
+            }
+          ]
+        },
+        {
+          "name": "__fx_usd_per_sgd",
+          "observations": 1129,
+          "deterministic": false,
+          "early_count": 564,
+          "late_count": 565,
+          "early_mean": 0.00023613186619505928,
+          "late_mean": 0.00018278994056410554,
+          "early_vol": 0.007601123743469994,
+          "late_vol": 0.006277719998702824,
+          "sample_skewness": -0.22985423994918625,
+          "sample_excess_kurtosis": 2.3968054795385925,
+          "mean_shift_in_full_sample_sd": -0.007656067559180611,
+          "split_cdf_distance": 0.06055042992531223,
+          "lagged": [
+            {
+              "lag": 1,
+              "returns": 0.017829225848633203,
+              "squared_returns": 0.13760266427499526
+            },
+            {
+              "lag": 4,
+              "returns": -0.0175538492263167,
+              "squared_returns": 0.13135597035797467
+            },
+            {
+              "lag": 8,
+              "returns": 0.06895380872891475,
+              "squared_returns": 0.08363316678115204
+            }
+          ]
+        }
+      ],
+      "observations": 1129,
+      "assumption": "Raw weekly log returns are modeled iid by the Gaussian-mixture default; this assumption has not been established.",
+      "scope": "Descriptive split-distribution and lag diagnostics, inspired by Meucci (2005), pp.103-105. No p-values, multiple-test pass label or economic coverage claim. Low linear autocorrelation alone does not imply independence; squared-return dependence can remain. No data cleaning, parameter adjustment or model selection is performed.",
+      "book": {
+        "title": "Risk and Asset Allocation",
+        "author": "Attilio Meucci",
+        "year": 2005,
+        "printed_pages": "103-105",
+        "pdf_pages": "125-127"
+      },
+      "prior_weekly_shape": {
+        "skewness": 0.0,
+        "excess_kurtosis": 1.6875,
+        "scope": "Before entropy-pooling views. Development-selected mixture shape, not fitted to historical skewness or kurtosis. Sample shape estimates are noisy descriptive statistics, not population truths."
+      }
+    }
+  },
+  "specifications": [
+    {
+      "kind": "cara",
+      "status": {
+        "kind": "optimized",
+        "status": "optimal",
+        "solver": "CLARABEL",
+        "ce_in_solver": 13128677.063852051,
+        "objective_kind": "cara",
+        "objective_formulation": "log_cara",
+        "first_formulation_failure": null,
+        "weights": [
+          0.18324915095051908,
+          4.8668145160844514e-11,
+          7.58066266045117e-09,
+          0.3613373061074109,
+          0.35541353521823965,
+          0.09999999998949932
+        ],
+        "funding_presolve_certificates": [
+          {
+            "payout_index": 0,
+            "week": 13,
+            "pointwise_gap_bound": 0.0,
+            "worst_holdings_w1": 0.0003999999999999997,
+            "budget": 0.12,
+            "upper_bound": 0.0003999999999999997,
+            "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+          }
+        ],
+        "native_utility": {
+          "available": true,
+          "ce": 13128677.063852053,
+          "domain_violations": 0,
+          "kind": "cara",
+          "gamma": null,
+          "shortfall_penalty": 4.0,
+          "domain_margin": 1e-08,
+          "terminal_payment_floor": 90000000.0,
+          "initial_surplus": 10000000.0,
+          "argument": "terminal surplus after payments",
+          "scale": 100000000,
+          "local_absolute_aversion": 1e-07,
+          "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+        },
+        "cara_ce_at_solution": 13128677.063852051
+      },
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 655,
+            "reference_fraction": 0.81875,
+            "reference_lower95": 0.7948600359264941,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8208574296614138,
+                "minimum_batch": 0.8006897184741162,
+                "batches": [
+                  0.8433232267269395,
+                  0.8006897184741162,
+                  0.8341881547388507,
+                  0.8052286187057488
+                ]
+              },
+              "stressed": {
+                "mean": 0.7986703455103373,
+                "minimum_batch": 0.772393460890309,
+                "batches": [
+                  0.8225883495777265,
+                  0.772393460890309,
+                  0.8211753600498801,
+                  0.7785242115234338
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22760653910969098,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 4483209.314061791,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.75,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 661,
+            "reference_fraction": 0.82625,
+            "reference_lower95": 0.8027059129855234,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8281925396400769,
+                "minimum_batch": 0.8005351552389455,
+                "batches": [
+                  0.8632184119874773,
+                  0.8005351552389455,
+                  0.8387846299416168,
+                  0.8102319613922679
+                ]
+              },
+              "stressed": {
+                "mean": 0.8061391979575225,
+                "minimum_batch": 0.771163134048534,
+                "batches": [
+                  0.8444645894241137,
+                  0.771163134048534,
+                  0.8253707247025712,
+                  0.7835583436548709
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22883686595146602,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3835771.8212099,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.5,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3254216.239278272,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.25,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 1627108.1196391433,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.0,
+          "passed": true,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 800,
+            "reference_fraction": 1.0,
+            "reference_lower95": 0.9962623371738993,
+            "weighted": {
+              "nominal": {
+                "mean": 1.0,
+                "minimum_batch": 0.9999999999999999,
+                "batches": [
+                  0.9999999999999999,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "stressed": {
+                "mean": 1.0,
+                "minimum_batch": 1.0,
+                "batches": [
+                  1.0000000000000002,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "passed": true,
+            "upper_failure": 0.003737662826100663,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 0.0,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": []
+        }
+      ],
+      "selected": true
+    },
+    {
+      "kind": "crra_gross",
+      "status": {
+        "kind": "optimized",
+        "status": "optimal",
+        "solver": "CLARABEL",
+        "ce_in_solver": 13128676.930183392,
+        "objective_kind": "crra_gross",
+        "objective_formulation": "crra_gross",
+        "first_formulation_failure": null,
+        "weights": [
+          0.18324917758383624,
+          4.208304867222271e-10,
+          2.0734628954632744e-08,
+          0.36133708972656775,
+          0.35541371153413476,
+          0.10000000000000023
+        ],
+        "funding_presolve_certificates": [
+          {
+            "payout_index": 0,
+            "week": 13,
+            "pointwise_gap_bound": 0.0,
+            "worst_holdings_w1": 0.0003999999999999997,
+            "budget": 0.12,
+            "upper_bound": 0.0003999999999999997,
+            "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+          }
+        ],
+        "native_utility": {
+          "available": true,
+          "ce": 103161555.40550616,
+          "domain_violations": 0,
+          "kind": "crra_gross",
+          "gamma": 10.0,
+          "shortfall_penalty": 4.0,
+          "domain_margin": 1e-08,
+          "terminal_payment_floor": 90000000.0,
+          "initial_surplus": 10000000.0,
+          "argument": "gross terminal marked wealth",
+          "scale": 100000000,
+          "local_absolute_aversion": 1e-07,
+          "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+        },
+        "cara_ce_at_solution": 13128676.930183392
+      },
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 655,
+            "reference_fraction": 0.81875,
+            "reference_lower95": 0.7948600359264941,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8208574296614138,
+                "minimum_batch": 0.8006897184741162,
+                "batches": [
+                  0.8433232267269395,
+                  0.8006897184741162,
+                  0.8341881547388507,
+                  0.8052286187057488
+                ]
+              },
+              "stressed": {
+                "mean": 0.7986703455103373,
+                "minimum_batch": 0.772393460890309,
+                "batches": [
+                  0.8225883495777265,
+                  0.772393460890309,
+                  0.8211753600498801,
+                  0.7785242115234338
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22760653910969098,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 4483209.315963522,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.75,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 661,
+            "reference_fraction": 0.82625,
+            "reference_lower95": 0.8027059129855234,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8281925396400769,
+                "minimum_batch": 0.8005351552389455,
+                "batches": [
+                  0.8632184119874773,
+                  0.8005351552389455,
+                  0.8387846299416168,
+                  0.8102319613922679
+                ]
+              },
+              "stressed": {
+                "mean": 0.8061391979575225,
+                "minimum_batch": 0.771163134048534,
+                "batches": [
+                  0.8444645894241137,
+                  0.771163134048534,
+                  0.8253707247025712,
+                  0.7835583436548709
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22883686595146602,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3835771.6625439078,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.5,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3254215.9940642826,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.25,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 1627107.9970321432,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.0,
+          "passed": true,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 800,
+            "reference_fraction": 1.0,
+            "reference_lower95": 0.9962623371738993,
+            "weighted": {
+              "nominal": {
+                "mean": 1.0,
+                "minimum_batch": 0.9999999999999999,
+                "batches": [
+                  0.9999999999999999,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "stressed": {
+                "mean": 1.0,
+                "minimum_batch": 1.0,
+                "batches": [
+                  1.0000000000000002,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "passed": true,
+            "upper_failure": 0.003737662826100663,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 0.0,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": []
+        }
+      ],
+      "selected": true
+    },
+    {
+      "kind": "hara_payment_floor",
+      "status": {
+        "kind": "optimized",
+        "status": "optimal",
+        "solver": "CLARABEL",
+        "ce_in_solver": 13128677.054302255,
+        "objective_kind": "hara_payment_floor",
+        "objective_formulation": "hara_payment_floor",
+        "first_formulation_failure": null,
+        "weights": [
+          0.18324915802418745,
+          3.45349991134584e-11,
+          7.929290929573383e-10,
+          0.3613372969867301,
+          0.35541354407632775,
+          0.09999999999052306
+        ],
+        "funding_presolve_certificates": [
+          {
+            "payout_index": 0,
+            "week": 13,
+            "pointwise_gap_bound": 0.0,
+            "worst_holdings_w1": 0.0003999999999999997,
+            "budget": 0.12,
+            "upper_bound": 0.0003999999999999997,
+            "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+          }
+        ],
+        "native_utility": {
+          "available": true,
+          "ce": 13369569.287317317,
+          "domain_violations": 0,
+          "kind": "hara_payment_floor",
+          "gamma": 1.0,
+          "shortfall_penalty": 4.0,
+          "domain_margin": 1e-08,
+          "terminal_payment_floor": 90000000.0,
+          "initial_surplus": 10000000.0,
+          "argument": "terminal surplus after payments",
+          "scale": 10000000.0,
+          "local_absolute_aversion": 1e-07,
+          "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+        },
+        "cara_ce_at_solution": 13128677.054302255
+      },
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 655,
+            "reference_fraction": 0.81875,
+            "reference_lower95": 0.7948600359264941,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8208574296614138,
+                "minimum_batch": 0.8006897184741162,
+                "batches": [
+                  0.8433232267269395,
+                  0.8006897184741162,
+                  0.8341881547388507,
+                  0.8052286187057488
+                ]
+              },
+              "stressed": {
+                "mean": 0.7986703455103373,
+                "minimum_batch": 0.772393460890309,
+                "batches": [
+                  0.8225883495777265,
+                  0.772393460890309,
+                  0.8211753600498801,
+                  0.7785242115234338
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22760653910969098,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 4483209.303913526,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.75,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 661,
+            "reference_fraction": 0.82625,
+            "reference_lower95": 0.8027059129855234,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8281925396400769,
+                "minimum_batch": 0.8005351552389455,
+                "batches": [
+                  0.8632184119874773,
+                  0.8005351552389455,
+                  0.8387846299416168,
+                  0.8102319613922679
+                ]
+              },
+              "stressed": {
+                "mean": 0.8061391979575225,
+                "minimum_batch": 0.771163134048534,
+                "batches": [
+                  0.8444645894241137,
+                  0.771163134048534,
+                  0.8253707247025712,
+                  0.7835583436548709
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.22883686595146602,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3835771.7898147404,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.5,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3254216.242482908,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.25,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 662,
+            "reference_fraction": 0.8275,
+            "reference_lower95": 0.8040149891649746,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8294051283207122,
+                "minimum_batch": 0.8056215370468479,
+                "batches": [
+                  0.8625201378363989,
+                  0.8056215370468479,
+                  0.8292360472331222,
+                  0.8202427911664797
+                ]
+              },
+              "stressed": {
+                "mean": 0.8088556517698399,
+                "minimum_batch": 0.7754022978681483,
+                "batches": [
+                  0.8464586933780446,
+                  0.7754022978681483,
+                  0.8158114760857857,
+                  0.797750139747381
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2245977021318517,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 1627108.121241454,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.0,
+          "passed": true,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 800,
+            "reference_fraction": 1.0,
+            "reference_lower95": 0.9962623371738993,
+            "weighted": {
+              "nominal": {
+                "mean": 1.0,
+                "minimum_batch": 0.9999999999999999,
+                "batches": [
+                  0.9999999999999999,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "stressed": {
+                "mean": 1.0,
+                "minimum_batch": 1.0,
+                "batches": [
+                  1.0000000000000002,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "passed": true,
+            "upper_failure": 0.003737662826100663,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 0.0,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": []
+        }
+      ],
+      "selected": true
+    },
+    {
+      "kind": "kinked_shortfall",
+      "status": {
+        "kind": "optimized",
+        "status": "optimal",
+        "solver": "CLARABEL",
+        "ce_in_solver": 13124902.211008374,
+        "objective_kind": "kinked_shortfall",
+        "objective_formulation": "kinked_shortfall",
+        "first_formulation_failure": null,
+        "weights": [
+          0.18748347145756114,
+          2.15770804146342e-10,
+          1.606418833306657e-09,
+          0.34412090754143704,
+          0.3683956191788173,
+          0.09999999999999934
+        ],
+        "funding_presolve_certificates": [
+          {
+            "payout_index": 0,
+            "week": 13,
+            "pointwise_gap_bound": 0.0,
+            "worst_holdings_w1": 0.0003999999999999997,
+            "budget": 0.12,
+            "upper_bound": 0.0003999999999999997,
+            "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+          }
+        ],
+        "native_utility": {
+          "available": true,
+          "ce": 14217062.668392925,
+          "domain_violations": 0,
+          "kind": "kinked_shortfall",
+          "gamma": null,
+          "shortfall_penalty": 4.0,
+          "domain_margin": 1e-08,
+          "terminal_payment_floor": 90000000.0,
+          "initial_surplus": 10000000.0,
+          "argument": "terminal surplus after payments",
+          "scale": 100000000,
+          "local_absolute_aversion": null,
+          "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+        },
+        "cara_ce_at_solution": 13124902.211008374
+      },
+      "validation_trials": [
+        {
+          "fraction": 1.0,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 649,
+            "reference_fraction": 0.81125,
+            "reference_lower95": 0.7870283595983392,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8132519850924194,
+                "minimum_batch": 0.7952760594363947,
+                "batches": [
+                  0.832471733825617,
+                  0.80062833200058,
+                  0.8246318151070857,
+                  0.7952760594363947
+                ]
+              },
+              "stressed": {
+                "mean": 0.7892734645615022,
+                "minimum_batch": 0.7669256186366252,
+                "batches": [
+                  0.808801308069313,
+                  0.7718877318356215,
+                  0.809479199704449,
+                  0.7669256186366252
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.23307438136337477,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 4506091.0054648295,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.75,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 660,
+            "reference_fraction": 0.825,
+            "reference_lower95": 0.8013972510689327,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8267871271637377,
+                "minimum_batch": 0.8104278357748943,
+                "batches": [
+                  0.8479153827074688,
+                  0.8104278357748943,
+                  0.8335365220637803,
+                  0.8152687681088074
+                ]
+              },
+              "stressed": {
+                "mean": 0.803383819994886,
+                "minimum_batch": 0.7804804846120501,
+                "batches": [
+                  0.827158635192347,
+                  0.7804804846120501,
+                  0.8183496639075583,
+                  0.7875464962675889
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.2195195153879499,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3825324.6167183593,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Held-out path-loss tail",
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.5,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 664,
+            "reference_fraction": 0.83,
+            "reference_lower95": 0.8066343985281372,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8319061748983847,
+                "minimum_batch": 0.8106599581502463,
+                "batches": [
+                  0.857485568762307,
+                  0.8106599581502463,
+                  0.8292360472331222,
+                  0.8302431254478636
+                ]
+              },
+              "stressed": {
+                "mean": 0.8108450216980575,
+                "minimum_batch": 0.7806115055784782,
+                "batches": [
+                  0.8398962406675151,
+                  0.7806115055784782,
+                  0.8158114760857857,
+                  0.8070608644604511
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.21938849442152175,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 3251638.1708050445,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.25,
+          "passed": false,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 664,
+            "reference_fraction": 0.83,
+            "reference_lower95": 0.8066343985281372,
+            "weighted": {
+              "nominal": {
+                "mean": 0.8319061748983847,
+                "minimum_batch": 0.8106599581502463,
+                "batches": [
+                  0.857485568762307,
+                  0.8106599581502463,
+                  0.8292360472331222,
+                  0.8302431254478636
+                ]
+              },
+              "stressed": {
+                "mean": 0.8108450216980575,
+                "minimum_batch": 0.7806115055784782,
+                "batches": [
+                  0.8398962406675151,
+                  0.7806115055784782,
+                  0.8158114760857857,
+                  0.8070608644604511
+                ]
+              }
+            },
+            "passed": false,
+            "upper_failure": 0.21938849442152175,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 1625819.0854025222,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": [
+            "Joint all-payments cash-ledger99%model check"
+          ]
+        },
+        {
+          "fraction": 0.0,
+          "passed": true,
+          "strict": {
+            "mode": "pay_all_99",
+            "target": 0.99,
+            "paths": 800,
+            "fully_funded_paths": 800,
+            "reference_fraction": 1.0,
+            "reference_lower95": 0.9962623371738993,
+            "weighted": {
+              "nominal": {
+                "mean": 1.0,
+                "minimum_batch": 0.9999999999999999,
+                "batches": [
+                  0.9999999999999999,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "stressed": {
+                "mean": 1.0,
+                "minimum_batch": 1.0,
+                "batches": [
+                  1.0000000000000002,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "passed": true,
+            "upper_failure": 0.003737662826100663,
+            "generated_iid_assumption": true,
+            "roundoff_dollars": 1e-06,
+            "largest_unpaid": 0.0,
+            "wasserstein_certified": false,
+            "economic_probability_guarantee": false,
+            "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+          },
+          "breaches": []
+        }
+      ],
+      "selected": true
+    }
+  ],
+  "rows": [
+    {
+      "kind": "cara",
+      "variant": "raw",
+      "fraction": null,
+      "weights": [
+        0.18324915095051908,
+        4.866814516084452e-11,
+        7.58066266045117e-09,
+        0.3613373061074109,
+        0.35541353521823965,
+        0.09999999998949932
+      ],
+      "cash_weight": 0.35541353521823965,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1311,
+          "reference_fraction": 0.819375,
+          "reference_lower95": 0.8028119729842454,
+          "weighted": {
+            "nominal": {
+              "mean": 0.8177319893578322,
+              "minimum_batch": 0.7880959978167608,
+              "batches": [
+                0.8322297493606754,
+                0.7880959978167608,
+                0.8321362167700982,
+                0.8184659934837945
+              ]
+            },
+            "stressed": {
+              "mean": 0.7968118954234154,
+              "minimum_batch": 0.7647628037201367,
+              "batches": [
+                0.8101634293345645,
+                0.7647628037201367,
+                0.8154076541697464,
+                0.7969136944692138
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.23523719627986328,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 5922220.877916664,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999579996,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999579996,
+              "nominal": 39999.99999579996,
+              "stressed": 39999.99999579996,
+              "common_hull": 39999.99999579996
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999579996
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 5082385.836091568,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 4909151.61384634,
+              "nominal": 4844434.548683035,
+              "stressed": 5082385.836091568,
+              "common_hull": 5082385.836091568
+            },
+            "mean": {
+              "reference": 3598110.3486309513,
+              "nominal": 3608537.5579059892,
+              "stressed": 3882427.307210378,
+              "common_hull": 3882427.307210378
+            },
+            "buffer": 39999.99999579996
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.07768770473576928,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.07458515286778776,
+              "nominal": 0.07332458364348504,
+              "stressed": 0.07768770473576928,
+              "common_hull": 0.07768770473576928
+            },
+            "mean": {
+              "reference": 0.0639389838910435,
+              "nominal": 0.06403795873948576,
+              "stressed": 0.0663458627454498,
+              "common_hull": 0.0663458627454498
+            },
+            "buffer": 0.0003999999999579996
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.06975853843656239,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.06666293597843478,
+              "nominal": 0.06360654242619687,
+              "stressed": 0.06975853843656239,
+              "common_hull": 0.06975853843656239
+            },
+            "mean": {
+              "reference": 0.04868963335847948,
+              "nominal": 0.048988500174703825,
+              "stressed": 0.05200853897673243,
+              "common_hull": 0.05200853897673243
+            },
+            "buffer": 0.0003999999999579996
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.23523719627986328,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 1.0500023073234388e-10,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 1.050068365593404e-11,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03778979033072933,
+              0.03740487085499434,
+              0.04074542447870201,
+              0.04074542447870201
+            ],
+            [
+              0.06561356072622175,
+              0.06492433576914838,
+              0.06739055075474308,
+              0.06739055075474308
+            ],
+            [
+              0.05339720564180448,
+              0.05229290611397607,
+              0.0557559058070583,
+              0.0557559058070583
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.039940957972526885,
+              0.04012426164409514,
+              0.04181898315150915,
+              0.04181898315150915
+            ],
+            [
+              0.0656466186440552,
+              0.06593042072515527,
+              0.06813163561358523,
+              0.06813163561358523
+            ],
+            [
+              0.04843152012510095,
+              0.04919603935020647,
+              0.051364711585492794,
+              0.051364711585492794
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03470711456108711,
+              0.03476397996504817,
+              0.03851321364252171,
+              0.03851321364252171
+            ],
+            [
+              0.06499175380153821,
+              0.06506765559540115,
+              0.06824211280903353,
+              0.06824211280903353
+            ],
+            [
+              0.051251274545889666,
+              0.051349178545042944,
+              0.0557814208623261,
+              0.0557814208623261
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03148655108089474,
+              0.03204838985210193,
+              0.03421947101568224,
+              0.03421947101568224
+            ],
+            [
+              0.05950400239235884,
+              0.060229422868238215,
+              0.061619151804437396,
+              0.061619151804437396
+            ],
+            [
+              0.04167853312112278,
+              0.043115876689589806,
+              0.04513211765205252,
+              0.04513211765205252
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 13037249.610105315,
+        "domain_violations": 0,
+        "kind": "cara",
+        "gamma": null,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 100000000,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 12339184.865779921,
+      "ledger_net_mean": 13015071.765400648,
+      "ledger_quantiles": [
+        7290925.173759088,
+        12782405.609243874,
+        19666521.908103757
+      ],
+      "largest_unpaid": 5922220.877916664,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "cara",
+      "variant": "validated",
+      "fraction": 0.0,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "cash_weight": 0.9,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1600,
+          "reference_fraction": 1.0,
+          "reference_lower95": 0.9981294190504052,
+          "weighted": {
+            "nominal": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "stressed": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "passed": true,
+          "upper_failure": 0.0018705809495948023,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 0.0,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": true,
+        "funding_pass": true,
+        "overall_pass": true,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999999997,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 39999.99999999997,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.035291035663172966,
+            "limit": 0.06,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.035291035663172966,
+              "nominal": 0.03410093879877742,
+              "stressed": 0.03426355760747959,
+              "common_hull": 0.034780547218014844
+            },
+            "mean": {
+              "reference": 0.02947305796340588,
+              "nominal": 0.02967762114867562,
+              "stressed": 0.029882302537758722,
+              "common_hull": 0.029969316749005756
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.03350444415830167,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.03350444415830167,
+              "nominal": 0.03207961901373734,
+              "stressed": 0.032153839679011836,
+              "common_hull": 0.0326912655425049
+            },
+            "mean": {
+              "reference": 0.026254226089267987,
+              "nominal": 0.02648658842822845,
+              "stressed": 0.026749878063623667,
+              "common_hull": 0.026825811682097658
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0018705809495948023,
+            "limit": 0.01,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03145567305477404,
+              0.030971473503729453,
+              0.031119246772614944,
+              0.03145567305477404
+            ],
+            [
+              0.028947169916316007,
+              0.028411431926643988,
+              0.028643435442420033,
+              0.028947169916316007
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.027785204163324775,
+              0.028140710717072928,
+              0.028389123341718607,
+              0.028389123341718607
+            ],
+            [
+              0.02423945887568795,
+              0.02473119784386283,
+              0.02511672214430402,
+              0.02511672214430402
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.029866934748280782,
+              0.02989885111896202,
+              0.030333021344592273,
+              0.030333021344592273
+            ],
+            [
+              0.026304138366068607,
+              0.026348247631721302,
+              0.026748630998598755,
+              0.026748630998598755
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.028784419887243926,
+              0.029699449254938094,
+              0.02968781869210907,
+              0.029699449254938094
+            ],
+            [
+              0.025526137198999384,
+              0.02645547631068568,
+              0.026490723669171854,
+              0.026490723669171854
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 10408853.782408949,
+        "domain_violations": 0,
+        "kind": "cara",
+        "gamma": null,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 100000000,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 10459597.605876364,
+      "ledger_net_mean": 10634483.467307685,
+      "ledger_quantiles": [
+        7861060.867719817,
+        10447656.799338935,
+        13978459.244685855
+      ],
+      "largest_unpaid": 0.0,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "crra_gross",
+      "variant": "raw",
+      "fraction": null,
+      "weights": [
+        0.18324917758383624,
+        4.208304867222271e-10,
+        2.0734628954632744e-08,
+        0.3613370897265677,
+        0.35541371153413476,
+        0.10000000000000023
+      ],
+      "cash_weight": 0.35541371153413476,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1311,
+          "reference_fraction": 0.819375,
+          "reference_lower95": 0.8028119729842454,
+          "weighted": {
+            "nominal": {
+              "mean": 0.8177319893578322,
+              "minimum_batch": 0.7880959978167608,
+              "batches": [
+                0.8322297493606754,
+                0.7880959978167608,
+                0.8321362167700982,
+                0.8184659934837945
+              ]
+            },
+            "stressed": {
+              "mean": 0.7968118954234154,
+              "minimum_batch": 0.7647628037201367,
+              "batches": [
+                0.8101634293345645,
+                0.7647628037201367,
+                0.8154076541697464,
+                0.7969136944692138
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.23523719627986328,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 5922221.018956777,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.9999999999,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.9999999999,
+              "nominal": 39999.9999999999,
+              "stressed": 39999.9999999999,
+              "common_hull": 39999.9999999999
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.9999999999
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 5082385.375003869,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 4909151.072284974,
+              "nominal": 4844433.903476661,
+              "stressed": 5082385.375003869,
+              "common_hull": 5082385.375003869
+            },
+            "mean": {
+              "reference": 3598110.0918463967,
+              "nominal": 3608537.3380497103,
+              "stressed": 3882427.1305621536,
+              "common_hull": 3882427.1305621536
+            },
+            "buffer": 39999.9999999999
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.07768770995049364,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.07458515654495004,
+              "nominal": 0.07332458657821664,
+              "stressed": 0.07768770995049364,
+              "common_hull": 0.07768770995049364
+            },
+            "mean": {
+              "reference": 0.06393898274296281,
+              "nominal": 0.06403795784357807,
+              "stressed": 0.06634586243661142,
+              "common_hull": 0.06634586243661142
+            },
+            "buffer": 0.000399999999999999
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.06975854298308756,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.06666294017618657,
+              "nominal": 0.06360654342930955,
+              "stressed": 0.06975854298308756,
+              "common_hull": 0.06975854298308756
+            },
+            "mean": {
+              "reference": 0.04868963488705714,
+              "nominal": 0.0489885022389701,
+              "stressed": 0.052008541741283436,
+              "common_hull": 0.052008541741283436
+            },
+            "buffer": 0.000399999999999999
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.23523719627986328,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 1.6653345369377348e-15,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 2.220446049250313e-16,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0377897876527725,
+              0.0374048683694664,
+              0.040745423291963866,
+              0.040745423291963866
+            ],
+            [
+              0.06561356096083366,
+              0.06492433624654464,
+              0.06739055181029034,
+              0.06739055181029034
+            ],
+            [
+              0.0533972103375336,
+              0.05229291033136764,
+              0.055755910436862566,
+              0.055755910436862566
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03994095490568952,
+              0.040124258610785536,
+              0.041818980313929104,
+              0.041818980313929104
+            ],
+            [
+              0.0656466175784666,
+              0.06593041990828873,
+              0.06813163606411074,
+              0.06813163606411074
+            ],
+            [
+              0.04843151942662421,
+              0.04919603953966662,
+              0.05136471457935524,
+              0.05136471457935524
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0347071106819097,
+              0.03476397608711372,
+              0.03851321095115579,
+              0.03851321095115579
+            ],
+            [
+              0.06499175329563116,
+              0.06506765504955929,
+              0.06824211286777447,
+              0.06824211286777447
+            ],
+            [
+              0.05125127500510141,
+              0.051349179131364324,
+              0.055781422364631614,
+              0.055781422364631614
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.031486550433484146,
+              0.032048390454622745,
+              0.03421947066543736,
+              0.03421947066543736
+            ],
+            [
+              0.059503999136919755,
+              0.06022942016991963,
+              0.061619149004270124,
+              0.061619149004270124
+            ],
+            [
+              0.041678534778969344,
+              0.04311587995348178,
+              0.045132119584284335,
+              0.045132119584284335
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 103067016.19321693,
+        "domain_violations": 0,
+        "kind": "crra_gross",
+        "gamma": 10.0,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "gross terminal marked wealth",
+        "scale": 100000000,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 12339184.985899348,
+      "ledger_net_mean": 13015072.044194765,
+      "ledger_quantiles": [
+        7290924.610701228,
+        12782407.637739662,
+        19666520.36485034
+      ],
+      "largest_unpaid": 5922221.018956777,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "crra_gross",
+      "variant": "validated",
+      "fraction": 0.0,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "cash_weight": 0.9,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1600,
+          "reference_fraction": 1.0,
+          "reference_lower95": 0.9981294190504052,
+          "weighted": {
+            "nominal": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "stressed": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "passed": true,
+          "upper_failure": 0.0018705809495948023,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 0.0,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": true,
+        "funding_pass": true,
+        "overall_pass": true,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999999997,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 39999.99999999997,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.035291035663172966,
+            "limit": 0.06,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.035291035663172966,
+              "nominal": 0.03410093879877742,
+              "stressed": 0.03426355760747959,
+              "common_hull": 0.034780547218014844
+            },
+            "mean": {
+              "reference": 0.02947305796340588,
+              "nominal": 0.02967762114867562,
+              "stressed": 0.029882302537758722,
+              "common_hull": 0.029969316749005756
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.03350444415830167,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.03350444415830167,
+              "nominal": 0.03207961901373734,
+              "stressed": 0.032153839679011836,
+              "common_hull": 0.0326912655425049
+            },
+            "mean": {
+              "reference": 0.026254226089267987,
+              "nominal": 0.02648658842822845,
+              "stressed": 0.026749878063623667,
+              "common_hull": 0.026825811682097658
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0018705809495948023,
+            "limit": 0.01,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03145567305477404,
+              0.030971473503729453,
+              0.031119246772614944,
+              0.03145567305477404
+            ],
+            [
+              0.028947169916316007,
+              0.028411431926643988,
+              0.028643435442420033,
+              0.028947169916316007
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.027785204163324775,
+              0.028140710717072928,
+              0.028389123341718607,
+              0.028389123341718607
+            ],
+            [
+              0.02423945887568795,
+              0.02473119784386283,
+              0.02511672214430402,
+              0.02511672214430402
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.029866934748280782,
+              0.02989885111896202,
+              0.030333021344592273,
+              0.030333021344592273
+            ],
+            [
+              0.026304138366068607,
+              0.026348247631721302,
+              0.026748630998598755,
+              0.026748630998598755
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.028784419887243926,
+              0.029699449254938094,
+              0.02968781869210907,
+              0.029699449254938094
+            ],
+            [
+              0.025526137198999384,
+              0.02645547631068568,
+              0.026490723669171854,
+              0.026490723669171854
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 100409946.81050567,
+        "domain_violations": 0,
+        "kind": "crra_gross",
+        "gamma": 10.0,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "gross terminal marked wealth",
+        "scale": 100000000,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 10459597.605876364,
+      "ledger_net_mean": 10634483.467307685,
+      "ledger_quantiles": [
+        7861060.867719817,
+        10447656.799338935,
+        13978459.244685855
+      ],
+      "largest_unpaid": 0.0,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "hara_payment_floor",
+      "variant": "raw",
+      "fraction": null,
+      "weights": [
+        0.18324915802418745,
+        3.45349991134584e-11,
+        7.929290929573383e-10,
+        0.3613372969867301,
+        0.35541354407632775,
+        0.09999999999052307
+      ],
+      "cash_weight": 0.35541354407632775,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1311,
+          "reference_fraction": 0.819375,
+          "reference_lower95": 0.8028119729842454,
+          "weighted": {
+            "nominal": {
+              "mean": 0.8177319893578322,
+              "minimum_batch": 0.7880959978167608,
+              "batches": [
+                0.8322297493606754,
+                0.7880959978167608,
+                0.8321362167700982,
+                0.8184659934837945
+              ]
+            },
+            "stressed": {
+              "mean": 0.7968118954234154,
+              "minimum_batch": 0.7647628037201367,
+              "batches": [
+                0.8101634293345645,
+                0.7647628037201367,
+                0.8154076541697464,
+                0.7969136944692138
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.23523719627986328,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 5922220.94648429,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999620926,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999620926,
+              "nominal": 39999.99999620926,
+              "stressed": 39999.99999620926,
+              "common_hull": 39999.99999620926
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999620926
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 5082385.877445581,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 4909151.6688254895,
+              "nominal": 4844434.590107865,
+              "stressed": 5082385.877445581,
+              "common_hull": 5082385.877445581
+            },
+            "mean": {
+              "reference": 3598110.4393467023,
+              "nominal": 3608537.651038433,
+              "stressed": 3882427.4040169283,
+              "common_hull": 3882427.4040169283
+            },
+            "buffer": 39999.99999620926
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.07768770638276136,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.07458515457655773,
+              "nominal": 0.0733245851943014,
+              "stressed": 0.07768770638276136,
+              "common_hull": 0.07768770638276136
+            },
+            "mean": {
+              "reference": 0.06393898493600986,
+              "nominal": 0.06403795978354682,
+              "stressed": 0.06634586376349526,
+              "common_hull": 0.06634586376349526
+            },
+            "buffer": 0.0003999999999620926
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.06975854059838127,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.06666293767972792,
+              "nominal": 0.06360654400649501,
+              "stressed": 0.06975854059838127,
+              "common_hull": 0.06975854059838127
+            },
+            "mean": {
+              "reference": 0.04868963443035855,
+              "nominal": 0.048988501240210605,
+              "stressed": 0.052008540124743825,
+              "common_hull": 0.052008540124743825
+            },
+            "buffer": 0.0003999999999620926
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.23523719627986328,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 9.476752715897874e-11,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 9.476933127139375e-12,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03778979137765972,
+              0.03740487192312318,
+              0.0407454256512441,
+              0.0407454256512441
+            ],
+            [
+              0.06561356199353113,
+              0.0649243369803053,
+              0.06739055194536075,
+              0.06739055194536075
+            ],
+            [
+              0.05339720713610568,
+              0.052292907533006215,
+              0.05575590732862965,
+              0.05575590732862965
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.039940958661562276,
+              0.040124262319693293,
+              0.0418189837559416,
+              0.0418189837559416
+            ],
+            [
+              0.06564661941463648,
+              0.06593042151798147,
+              0.06813163646521586,
+              0.06813163646521586
+            ],
+            [
+              0.04843152091026542,
+              0.04919604017641109,
+              0.05136471259930482,
+              0.05136471259930482
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03470711541129936,
+              0.034763980812289604,
+              0.03851321456529683,
+              0.03851321456529683
+            ],
+            [
+              0.06499175521891132,
+              0.06506765700827638,
+              0.06824211410259497,
+              0.06824211410259497
+            ],
+            [
+              0.051251275594543004,
+              0.05134917961760165,
+              0.05578142213309829,
+              0.05578142213309829
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03148655212334673,
+              0.03204839098643122,
+              0.03421947218819459,
+              0.03421947218819459
+            ],
+            [
+              0.05950400311696047,
+              0.060229423627624096,
+              0.061619152540809456,
+              0.061619152540809456
+            ],
+            [
+              0.041678534080520115,
+              0.04311587763382348,
+              0.045132118437942535,
+              0.045132118437942535
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": false,
+        "domain_violations": 2,
+        "ce": null,
+        "kind": "hara_payment_floor",
+        "gamma": 1.0,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 10000000.0,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 12339184.849723112,
+      "ledger_net_mean": 13015071.77093619,
+      "ledger_quantiles": [
+        7290925.079520879,
+        12782405.612297684,
+        19666521.602389857
+      ],
+      "largest_unpaid": 5922220.94648429,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "hara_payment_floor",
+      "variant": "validated",
+      "fraction": 0.0,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "cash_weight": 0.9,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1600,
+          "reference_fraction": 1.0,
+          "reference_lower95": 0.9981294190504052,
+          "weighted": {
+            "nominal": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "stressed": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "passed": true,
+          "upper_failure": 0.0018705809495948023,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 0.0,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": true,
+        "funding_pass": true,
+        "overall_pass": true,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999999997,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 39999.99999999997,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.035291035663172966,
+            "limit": 0.06,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.035291035663172966,
+              "nominal": 0.03410093879877742,
+              "stressed": 0.03426355760747959,
+              "common_hull": 0.034780547218014844
+            },
+            "mean": {
+              "reference": 0.02947305796340588,
+              "nominal": 0.02967762114867562,
+              "stressed": 0.029882302537758722,
+              "common_hull": 0.029969316749005756
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.03350444415830167,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.03350444415830167,
+              "nominal": 0.03207961901373734,
+              "stressed": 0.032153839679011836,
+              "common_hull": 0.0326912655425049
+            },
+            "mean": {
+              "reference": 0.026254226089267987,
+              "nominal": 0.02648658842822845,
+              "stressed": 0.026749878063623667,
+              "common_hull": 0.026825811682097658
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0018705809495948023,
+            "limit": 0.01,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03145567305477404,
+              0.030971473503729453,
+              0.031119246772614944,
+              0.03145567305477404
+            ],
+            [
+              0.028947169916316007,
+              0.028411431926643988,
+              0.028643435442420033,
+              0.028947169916316007
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.027785204163324775,
+              0.028140710717072928,
+              0.028389123341718607,
+              0.028389123341718607
+            ],
+            [
+              0.02423945887568795,
+              0.02473119784386283,
+              0.02511672214430402,
+              0.02511672214430402
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.029866934748280782,
+              0.02989885111896202,
+              0.030333021344592273,
+              0.030333021344592273
+            ],
+            [
+              0.026304138366068607,
+              0.026348247631721302,
+              0.026748630998598755,
+              0.026748630998598755
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.028784419887243926,
+              0.029699449254938094,
+              0.02968781869210907,
+              0.029699449254938094
+            ],
+            [
+              0.025526137198999384,
+              0.02645547631068568,
+              0.026490723669171854,
+              0.026490723669171854
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 10417283.533130141,
+        "domain_violations": 0,
+        "kind": "hara_payment_floor",
+        "gamma": 1.0,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 10000000.0,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 10459597.605876364,
+      "ledger_net_mean": 10634483.467307685,
+      "ledger_quantiles": [
+        7861060.867719817,
+        10447656.799338935,
+        13978459.244685855
+      ],
+      "largest_unpaid": 0.0,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "kinked_shortfall",
+      "variant": "raw",
+      "fraction": null,
+      "weights": [
+        0.18748347145756114,
+        2.15770804146342e-10,
+        1.606418833306657e-09,
+        0.3441209075414371,
+        0.36839561917881725,
+        0.09999999999999935
+      ],
+      "cash_weight": 0.36839561917881725,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1305,
+          "reference_fraction": 0.815625,
+          "reference_lower95": 0.798940611270294,
+          "weighted": {
+            "nominal": {
+              "mean": 0.8138882797337068,
+              "minimum_batch": 0.7777893334693188,
+              "batches": [
+                0.8299165080385966,
+                0.7777893334693188,
+                0.8321288438435286,
+                0.8157184335833829
+              ]
+            },
+            "stressed": {
+              "mean": 0.7917446542755142,
+              "minimum_batch": 0.7520602846572293,
+              "batches": [
+                0.8070745894410162,
+                0.7520602846572293,
+                0.8145323555813349,
+                0.7933113874224762
+              ]
+            }
+          },
+          "passed": false,
+          "upper_failure": 0.2479397153427707,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 5961177.62518356,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": false,
+        "funding_pass": true,
+        "overall_pass": false,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 40000.000000000146,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 40000.000000000146,
+              "nominal": 40000.000000000146,
+              "stressed": 40000.000000000146,
+              "common_hull": 40000.000000000146
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 40000.000000000146
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 5086251.3344438635,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 4891731.77157616,
+              "nominal": 4824895.157415211,
+              "stressed": 5086251.3344438635,
+              "common_hull": 5086251.3344438635
+            },
+            "mean": {
+              "reference": 3617336.6486837124,
+              "nominal": 3628507.123524742,
+              "stressed": 3906640.0543980496,
+              "common_hull": 3906640.0543980496
+            },
+            "buffer": 40000.000000000146
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0786676549282513,
+            "limit": 0.06,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.07540975785452791,
+              "nominal": 0.07415012920914198,
+              "stressed": 0.0786676549282513,
+              "common_hull": 0.0786676549282513
+            },
+            "mean": {
+              "reference": 0.06429424313122695,
+              "nominal": 0.06439307919689427,
+              "stressed": 0.06674107096062074,
+              "common_hull": 0.06674107096062074
+            },
+            "buffer": 0.00040000000000000143
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0706692044283639,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.06749318720920976,
+              "nominal": 0.06427056640067737,
+              "stressed": 0.0706692044283639,
+              "common_hull": 0.0706692044283639
+            },
+            "mean": {
+              "reference": 0.04924180971432058,
+              "nominal": 0.049553974275388935,
+              "stressed": 0.052646636104548894,
+              "common_hull": 0.052646636104548894
+            },
+            "buffer": 0.00040000000000000143
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.2479397153427707,
+            "limit": 0.01,
+            "passed": false,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 4.440892098500626e-15,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 6.522560269672795e-16,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [
+          "Held-out path-loss tail",
+          "Joint all-payments cash-ledger99%model check"
+        ],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03800087722316149,
+              0.03761886386125455,
+              0.04112755968310727,
+              0.04112755968310727
+            ],
+            [
+              0.06608315927410005,
+              0.0654019837480926,
+              0.06791026159292053,
+              0.06791026159292053
+            ],
+            [
+              0.054194304519432045,
+              0.05304773463601079,
+              0.05664556005980903,
+              0.05664556005980903
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0400106251291788,
+              0.040195498891515996,
+              0.04190463742031669,
+              0.04190463742031669
+            ],
+            [
+              0.06600727436838286,
+              0.06629735947890732,
+              0.06857385934777777,
+              0.06857385934777777
+            ],
+            [
+              0.04891693117577136,
+              0.049708297797242305,
+              0.05196953964459231,
+              0.05196953964459231
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03481565459074215,
+              0.034873323837622386,
+              0.03867499100141495,
+              0.03867499100141495
+            ],
+            [
+              0.06543413811063414,
+              0.06550659794468726,
+              0.06872590313898064,
+              0.06872590313898064
+            ],
+            [
+              0.05167623872146259,
+              0.05178258614001816,
+              0.056296838674283076,
+              0.056296838674283076
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03186630900426607,
+              0.03245259835059677,
+              0.03455841407108306,
+              0.03455841407108306
+            ],
+            [
+              0.059652400771790764,
+              0.060366375615889895,
+              0.061754259762804,
+              0.061754259762804
+            ],
+            [
+              0.04217976444061634,
+              0.04367727852828448,
+              0.045674606039511186,
+              0.045674606039511186
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 14127155.748416461,
+        "domain_violations": 0,
+        "kind": "kinked_shortfall",
+        "gamma": null,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 100000000,
+        "local_absolute_aversion": null,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 12347474.786109239,
+      "ledger_net_mean": 13042882.29617899,
+      "ledger_quantiles": [
+        7253809.542250817,
+        12815293.790774938,
+        19691346.47921394
+      ],
+      "largest_unpaid": 5961177.62518356,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "kinked_shortfall",
+      "variant": "validated",
+      "fraction": 0.0,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "cash_weight": 0.9,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1600,
+          "reference_fraction": 1.0,
+          "reference_lower95": 0.9981294190504052,
+          "weighted": {
+            "nominal": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "stressed": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "passed": true,
+          "upper_failure": 0.0018705809495948023,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 0.0,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": true,
+        "funding_pass": true,
+        "overall_pass": true,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999999997,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 39999.99999999997,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.035291035663172966,
+            "limit": 0.06,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.035291035663172966,
+              "nominal": 0.03410093879877742,
+              "stressed": 0.03426355760747959,
+              "common_hull": 0.034780547218014844
+            },
+            "mean": {
+              "reference": 0.02947305796340588,
+              "nominal": 0.02967762114867562,
+              "stressed": 0.029882302537758722,
+              "common_hull": 0.029969316749005756
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.03350444415830167,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.03350444415830167,
+              "nominal": 0.03207961901373734,
+              "stressed": 0.032153839679011836,
+              "common_hull": 0.0326912655425049
+            },
+            "mean": {
+              "reference": 0.026254226089267987,
+              "nominal": 0.02648658842822845,
+              "stressed": 0.026749878063623667,
+              "common_hull": 0.026825811682097658
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0018705809495948023,
+            "limit": 0.01,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03145567305477404,
+              0.030971473503729453,
+              0.031119246772614944,
+              0.03145567305477404
+            ],
+            [
+              0.028947169916316007,
+              0.028411431926643988,
+              0.028643435442420033,
+              0.028947169916316007
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.027785204163324775,
+              0.028140710717072928,
+              0.028389123341718607,
+              0.028389123341718607
+            ],
+            [
+              0.02423945887568795,
+              0.02473119784386283,
+              0.02511672214430402,
+              0.02511672214430402
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.029866934748280782,
+              0.02989885111896202,
+              0.030333021344592273,
+              0.030333021344592273
+            ],
+            [
+              0.026304138366068607,
+              0.026348247631721302,
+              0.026748630998598755,
+              0.026748630998598755
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.028784419887243926,
+              0.029699449254938094,
+              0.02968781869210907,
+              0.029699449254938094
+            ],
+            [
+              0.025526137198999384,
+              0.02645547631068568,
+              0.026490723669171854,
+              0.026490723669171854
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 10580149.258395215,
+        "domain_violations": 0,
+        "kind": "kinked_shortfall",
+        "gamma": null,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 100000000,
+        "local_absolute_aversion": null,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 10459597.605876364,
+      "ledger_net_mean": 10634483.467307685,
+      "ledger_quantiles": [
+        7861060.867719817,
+        10447656.799338935,
+        13978459.244685855
+      ],
+      "largest_unpaid": 0.0,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    },
+    {
+      "kind": "cara",
+      "variant": "anchor_comparator",
+      "fraction": null,
+      "weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.9,
+        0.1
+      ],
+      "cash_weight": 0.9,
+      "verdict": {
+        "strict_funding": {
+          "mode": "pay_all_99",
+          "target": 0.99,
+          "paths": 1600,
+          "fully_funded_paths": 1600,
+          "reference_fraction": 1.0,
+          "reference_lower95": 0.9981294190504052,
+          "weighted": {
+            "nominal": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "stressed": {
+              "mean": 1.0,
+              "minimum_batch": 1.0,
+              "batches": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "passed": true,
+          "upper_failure": 0.0018705809495948023,
+          "generated_iid_assumption": true,
+          "roundoff_dollars": 1e-06,
+          "largest_unpaid": 0.0,
+          "wasserstein_certified": false,
+          "economic_probability_guarantee": false,
+          "scope": "Joint event: every dated payment in full under the fixed cash-first rule. Exact one-sided95%binomial bound assumes independent generated paths conditional on the fitted model and frozen portfolio. Not coverage for EP-weighted estimates, validation-selected models, historical/economic uncertainty or W1 cash-ledger robustness."
+        },
+        "funding_mode": "pay_all_99",
+        "funding_rule_pass": true,
+        "funding_pass": true,
+        "overall_pass": true,
+        "checks": [
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 13",
+            "payout_index": 0,
+            "week": 13,
+            "upper": 39999.99999999997,
+            "limit": 12000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "funding",
+            "name": "Held-out funding: week 52",
+            "payout_index": 1,
+            "week": 52,
+            "upper": 39999.99999999997,
+            "limit": 6000000.0,
+            "passed": true,
+            "unit": "usd",
+            "measure_upper": {
+              "reference": 39999.99999999997,
+              "nominal": 39999.99999999997,
+              "stressed": 39999.99999999997,
+              "common_hull": 39999.99999999997
+            },
+            "mean": {
+              "reference": 0.0,
+              "nominal": 0.0,
+              "stressed": 0.0,
+              "common_hull": 0.0
+            },
+            "buffer": 39999.99999999997
+          },
+          {
+            "kind": "path_loss",
+            "name": "Held-out path-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.035291035663172966,
+            "limit": 0.06,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.035291035663172966,
+              "nominal": 0.03410093879877742,
+              "stressed": 0.03426355760747959,
+              "common_hull": 0.034780547218014844
+            },
+            "mean": {
+              "reference": 0.02947305796340588,
+              "nominal": 0.02967762114867562,
+              "stressed": 0.029882302537758722,
+              "common_hull": 0.029969316749005756
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "terminal_loss",
+            "name": "Held-out terminal-loss tail",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.03350444415830167,
+            "limit": 0.15,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {
+              "reference": 0.03350444415830167,
+              "nominal": 0.03207961901373734,
+              "stressed": 0.032153839679011836,
+              "common_hull": 0.0326912655425049
+            },
+            "mean": {
+              "reference": 0.026254226089267987,
+              "nominal": 0.02648658842822845,
+              "stressed": 0.026749878063623667,
+              "common_hull": 0.026825811682097658
+            },
+            "buffer": 0.0003999999999999997
+          },
+          {
+            "kind": "strict_all_payments",
+            "name": "Joint all-payments cash-ledger99%model check",
+            "payout_index": null,
+            "week": null,
+            "upper": 0.0018705809495948023,
+            "limit": 0.01,
+            "passed": true,
+            "unit": "fraction",
+            "measure_upper": {},
+            "mean": {},
+            "buffer": 0.0
+          }
+        ],
+        "holdings": [
+          {
+            "name": "Fully invested",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "No shorting",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Minimum holdings residual",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          },
+          {
+            "name": "Fixed holding 5",
+            "current": 0.0,
+            "limit": 1e-07,
+            "passed": true
+          }
+        ],
+        "breaches": [],
+        "worst_funding_week": 52,
+        "worst_funding_index": 1,
+        "batch_estimates": [
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.03145567305477404,
+              0.030971473503729453,
+              0.031119246772614944,
+              0.03145567305477404
+            ],
+            [
+              0.028947169916316007,
+              0.028411431926643988,
+              0.028643435442420033,
+              0.028947169916316007
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.027785204163324775,
+              0.028140710717072928,
+              0.028389123341718607,
+              0.028389123341718607
+            ],
+            [
+              0.02423945887568795,
+              0.02473119784386283,
+              0.02511672214430402,
+              0.02511672214430402
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.029866934748280782,
+              0.02989885111896202,
+              0.030333021344592273,
+              0.030333021344592273
+            ],
+            [
+              0.026304138366068607,
+              0.026348247631721302,
+              0.026748630998598755,
+              0.026748630998598755
+            ]
+          ],
+          [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.028784419887243926,
+              0.029699449254938094,
+              0.02968781869210907,
+              0.029699449254938094
+            ],
+            [
+              0.025526137198999384,
+              0.02645547631068568,
+              0.026490723669171854,
+              0.026490723669171854
+            ]
+          ]
+        ],
+        "measure_names": [
+          "reference",
+          "nominal",
+          "stressed",
+          "common_hull"
+        ],
+        "interval": {
+          "confidence": 0.95,
+          "adjustment": "Bonferroni one-sided conditional batch Student-t bounds",
+          "comparisons": 16,
+          "batches": 4,
+          "scope": "Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails."
+        },
+        "scope": "Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger."
+      },
+      "native_provisioning_ce": {
+        "available": true,
+        "ce": 10408853.782408949,
+        "domain_violations": 0,
+        "kind": "cara",
+        "gamma": null,
+        "shortfall_penalty": 4.0,
+        "domain_margin": 1e-08,
+        "terminal_payment_floor": 90000000.0,
+        "initial_surplus": 10000000.0,
+        "argument": "terminal surplus after payments",
+        "scale": 100000000,
+        "local_absolute_aversion": 1e-07,
+        "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+      },
+      "common_cara_ledger_ce": 10459597.605876364,
+      "ledger_net_mean": 10634483.467307685,
+      "ledger_quantiles": [
+        7861060.867719817,
+        10447656.799338935,
+        13978459.244685855
+      ],
+      "largest_unpaid": 0.0,
+      "model_support_domain_caveat": "Finite-sample utility domain only; all-support admissibility unproven. Final native CE absent on nonpositive wealth/surplus. No clipping."
+    }
+  ],
+  "lock_sha256": "397965a5bb59bee59688810d49998dfaa543ceefeafa5130c6a77119d91ff931"
+}

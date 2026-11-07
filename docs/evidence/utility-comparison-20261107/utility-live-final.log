@@ -1,0 +1,4 @@
+strict result Frozen final reference paths: 600/600 fully paid; one-sided 95% binomial lower bound 99.5%. Strict model screen passed. Separate final all-risk check FAILED. Weighted nominal/stress rates are descriptive, not binomial confidence bounds. Minimum batch rates: 100.0% / 100.0%. Largest unpaid $0.
+mode pay_all_99 utility hara_payment_floor errors []
+empirical: Past-only empirical radius 0.406744 from 21 annual blocks through 2026-10-30; implied funding buffer $813.49M versus smallest payment budget $0.05M. INCOMPATIBLE with funding budget. No radius truncation. Half-split 90th percentile is a shift-stress policy, NOT 90% coverage. Property uses latest vintage/assumed 45-day lag. Deterministic liabilities have no observed displacement, not no uncertainty.
+run-config 200

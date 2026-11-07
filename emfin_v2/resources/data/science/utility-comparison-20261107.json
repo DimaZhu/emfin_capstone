@@ -1,0 +1,3255 @@
+{
+  "available": true,
+  "date": "2026-11-07",
+  "definitions": [
+    {
+      "kind": "cara",
+      "name": "CARA surplus",
+      "formula": "-exp(-X/T)",
+      "rewards": "Risk-adjusted surplus after payments; constant dollar absolute aversion.",
+      "ignores": "No special increase in aversion near payment floor. No direct path/consumption preference."
+    },
+    {
+      "kind": "crra_gross",
+      "name": "CRRA gross",
+      "formula": "(G/W0)^(1-gamma)/(1-gamma)",
+      "rewards": "Relative-risk preference on total marked terminal wealth.",
+      "ignores": "Payment reserve absent from objective, but present in shared constraints. Domain G>0."
+    },
+    {
+      "kind": "hara_payment_floor",
+      "name": "HARA payment floor",
+      "formula": "((G-L)/S0)^(1-gamma)/(1-gamma)",
+      "rewards": "Surplus above the terminal payment reserve, cautious near floor.",
+      "ignores": "Undefined at/below floor; training feasibility is not all-support admissibility. Same as CRRA on net surplus at matched gamma."
+    },
+    {
+      "kind": "kinked_shortfall",
+      "name": "Kinked shortfall",
+      "formula": "X/W0 - 4*max(-X/W0,0)",
+      "rewards": "Ending surplus; marginal downside penalty5times upside below target.",
+      "ignores": "Risk-neutral above target. Not an all-payment probability objective or S-shaped prospect theory."
+    }
+  ],
+  "studies": [
+    {
+      "name": "3M-monthly",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554135355212836,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 100107292.30827911,
+            "mean": 101221954.44879459,
+            "quantiles": [
+              93831752.7815096,
+              100860583.11441118,
+              109689036.49173081
+            ],
+            "native": {
+              "available": true,
+              "ce": 100037249.60159083,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.763853383880321,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98252659.98688143,
+            "mean": 98531351.2126794,
+            "quantiles": [
+              94860050.789316,
+              98378529.99541897,
+              102755876.98766997
+            ],
+            "native": {
+              "available": true,
+              "ce": 98196593.32629478,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554137829614588,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 100107291.85382415,
+            "mean": 101221954.03384075,
+            "quantiles": [
+              93831755.7015521,
+              100860584.19454685,
+              109689032.40363978
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.05895463,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534457403646,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98252659.86350964,
+            "mean": 98531351.10894094,
+            "quantiles": [
+              94860051.03403983,
+              98378529.66393328,
+              102755877.48118551
+            ],
+            "native": {
+              "available": true,
+              "ce": 101200185.10859556,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.355414287731111,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 100107291.06102046,
+            "mean": 101221953.26585302,
+            "quantiles": [
+              93831762.00386925,
+              100860586.42630588,
+              109689024.05042072
+            ],
+            "native": {
+              "available": true,
+              "ce": 100067891.67527245,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.7,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 97000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638535719327778,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98252659.63561131,
+            "mean": 98531350.91694403,
+            "quantiles": [
+              94860051.691226,
+              98378528.90803054,
+              102755878.52521437
+            ],
+            "native": {
+              "available": true,
+              "ce": 98200292.83766463,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.7,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 97000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.36839582014570915,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 100079404.47928411,
+            "mean": 101209451.96271251,
+            "quantiles": [
+              93815302.05917557,
+              100850776.02564394,
+              109686384.9364412
+            ],
+            "native": {
+              "available": true,
+              "ce": 101129762.38473955,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7670989550364272,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98247165.87597176,
+            "mean": 98528225.59115891,
+            "quantiles": [
+              94852188.42905694,
+              98367799.0119758,
+              102786843.7517878
+            ],
+            "native": {
+              "available": true,
+              "ce": 98467552.5399813,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "60M-early-30M-final",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.35541353521823965,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.819375,
+            "funded_lower": 0.8028119729842454,
+            "common_ce": 12339184.865779921,
+            "mean": 13015071.765400648,
+            "quantiles": [
+              7290925.173759088,
+              12782405.609243874,
+              19666521.908103757
+            ],
+            "native": {
+              "available": true,
+              "ce": 13037249.610105315,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10459597.605876364,
+            "mean": 10634483.467307685,
+            "quantiles": [
+              7861060.867719817,
+              10447656.799338935,
+              13978459.244685855
+            ],
+            "native": {
+              "available": true,
+              "ce": 10408853.782408949,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.35541371153413476,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.819375,
+            "funded_lower": 0.8028119729842454,
+            "common_ce": 12339184.985899348,
+            "mean": 13015072.044194765,
+            "quantiles": [
+              7290924.610701228,
+              12782407.637739662,
+              19666520.36485034
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.19321693,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10459597.605876364,
+            "mean": 10634483.467307685,
+            "quantiles": [
+              7861060.867719817,
+              10447656.799338935,
+              13978459.244685855
+            ],
+            "native": {
+              "available": true,
+              "ce": 100409946.81050567,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.35541354407632775,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.819375,
+            "funded_lower": 0.8028119729842454,
+            "common_ce": 12339184.849723112,
+            "mean": 13015071.77093619,
+            "quantiles": [
+              7290925.079520879,
+              12782405.612297684,
+              19666521.602389857
+            ],
+            "native": {
+              "available": false,
+              "domain_violations": 2,
+              "ce": null,
+              "kind": "hara_payment_floor",
+              "gamma": 1.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 10000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10459597.605876364,
+            "mean": 10634483.467307685,
+            "quantiles": [
+              7861060.867719817,
+              10447656.799338935,
+              13978459.244685855
+            ],
+            "native": {
+              "available": true,
+              "ce": 10417283.533130141,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 1.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 10000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.36839561917881725,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.815625,
+            "funded_lower": 0.798940611270294,
+            "common_ce": 12347474.786109239,
+            "mean": 13042882.29617899,
+            "quantiles": [
+              7253809.542250817,
+              12815293.790774938,
+              19691346.47921394
+            ],
+            "native": {
+              "available": true,
+              "ce": 14127155.748416461,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10459597.605876364,
+            "mean": 10634483.467307685,
+            "quantiles": [
+              7861060.867719817,
+              10447656.799338935,
+              13978459.244685855
+            ],
+            "native": {
+              "available": true,
+              "ce": 10580149.258395215,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "95M-final",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.35541353505487233,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.345,
+            "funded_lower": 0.32536182026555904,
+            "common_ce": 8107292.31440356,
+            "mean": 9221954.453350564,
+            "quantiles": [
+              1831752.7884176031,
+              8860583.115118366,
+              17689036.50006731
+            ],
+            "native": {
+              "available": true,
+              "ce": 8037249.607722314,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554137542587841,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.345,
+            "funded_lower": 0.32536182026555904,
+            "common_ce": 8107291.978732309,
+            "mean": 9221954.113312535,
+            "quantiles": [
+              1831755.5224248013,
+              8860584.048565561,
+              17689032.878094215
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.18524583,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554135196695255,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.345,
+            "funded_lower": 0.32536182026555904,
+            "common_ce": 8107292.328687405,
+            "mean": 9221954.491803037,
+            "quantiles": [
+              1831752.56920358,
+              8860583.100075848,
+              17689036.768324863
+            ],
+            "native": {
+              "available": false,
+              "domain_violations": 30,
+              "ce": null,
+              "kind": "hara_payment_floor",
+              "gamma": 0.5,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 5000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.36839560329473225,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.343125,
+            "funded_lower": 0.323514655362098,
+            "common_ce": 8079404.948439875,
+            "mean": 9209452.152759636,
+            "quantiles": [
+              1815302.7306807442,
+              8850773.982200384,
+              17686387.73853002
+            ],
+            "native": {
+              "available": true,
+              "ce": 9013320.133260164,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "3M-monthly",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270491804923,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 101658052.74691688,
+            "mean": 103103405.2195846,
+            "quantiles": [
+              94718326.07721123,
+              102763666.17052528,
+              112638078.10291888
+            ],
+            "native": {
+              "available": true,
+              "ce": 101579427.65694372,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281762295122,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98693485.54870859,
+            "mean": 98985824.97575322,
+            "quantiles": [
+              95213400.203125,
+              98820239.44729409,
+              103220344.800596
+            ],
+            "native": {
+              "available": true,
+              "ce": 98635606.120835,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271390907127,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 101658052.68306778,
+            "mean": 103103405.03788853,
+            "quantiles": [
+              94718326.38351113,
+              102763666.1468007,
+              112638077.63695638
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.82492241,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281784772677,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98693485.51387042,
+            "mean": 98985824.93032919,
+            "quantiles": [
+              95213400.21463175,
+              98820239.41348618,
+              103220344.73511381
+            ],
+            "native": {
+              "available": true,
+              "ce": 101640478.72051351,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.2129127180009223,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 101658052.58707646,
+            "mean": 103103404.71284261,
+            "quantiles": [
+              94718327.03678891,
+              102763666.19605395,
+              112638076.85162507
+            ],
+            "native": {
+              "available": true,
+              "ce": 101633984.68099013,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.7,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 97000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281795002306,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98693485.45340319,
+            "mean": 98985824.84906773,
+            "quantiles": [
+              95213400.24469267,
+              98820239.36313224,
+              103220344.61318868
+            ],
+            "native": {
+              "available": true,
+              "ce": 98640625.02773596,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.7,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 97000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271266938952,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 101658052.74430746,
+            "mean": 103103405.24153952,
+            "quantiles": [
+              94718326.00248915,
+              102763666.08869243,
+              112638078.11310071
+            ],
+            "native": {
+              "available": true,
+              "ce": 103012085.57353234,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281781673473,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98693485.55174564,
+            "mean": 98985824.98124196,
+            "quantiles": [
+              95213400.1907271,
+              98820239.44069716,
+              103220344.81506884
+            ],
+            "native": {
+              "available": true,
+              "ce": 98923288.43945763,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 3000000.0,
+              "initial_surplus": 97000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "60M-early-30M-final",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.212912707131094,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.87625,
+            "funded_lower": 0.8618821371920911,
+            "common_ce": 13035900.007469153,
+            "mean": 13780167.3393369,
+            "quantiles": [
+              7685579.385367319,
+              13537534.611616999,
+              20567078.25444357
+            ],
+            "native": {
+              "available": true,
+              "ce": 14579427.648518814,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out funding: week 52",
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10453949.860650722,
+            "mean": 10613298.227809425,
+            "quantiles": [
+              7924851.282783412,
+              10447343.034879755,
+              13807694.285804454
+            ],
+            "native": {
+              "available": true,
+              "ce": 10404123.702873403,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271614701449,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.87625,
+            "funded_lower": 0.8618821371920911,
+            "common_ce": 13035899.971535895,
+            "mean": 13780167.24868179,
+            "quantiles": [
+              7685579.471473706,
+              13537534.54796336,
+              20567077.807089947
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.8088403,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out funding: week 52",
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10453949.860650722,
+            "mean": 10613298.227809425,
+            "quantiles": [
+              7924851.282783412,
+              10447343.034879755,
+              13807694.285804454
+            ],
+            "native": {
+              "available": true,
+              "ce": 100405084.11126247,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.2129127120435447,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.87625,
+            "funded_lower": 0.8618821371920911,
+            "common_ce": 13035900.005862001,
+            "mean": 13780167.334203279,
+            "quantiles": [
+              7685579.411896274,
+              13537534.591181079,
+              20567078.222240306
+            ],
+            "native": {
+              "available": false,
+              "domain_violations": 2,
+              "ce": null,
+              "kind": "hara_payment_floor",
+              "gamma": 1.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 10000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out funding: week 52",
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10453949.860650722,
+            "mean": 10613298.227809425,
+            "quantiles": [
+              7924851.282783412,
+              10447343.034879755,
+              13807694.285804454
+            ],
+            "native": {
+              "available": true,
+              "ce": 10411616.90313998,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 1.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 10000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291272379187606,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.87625,
+            "funded_lower": 0.8618821371920911,
+            "common_ce": 13035899.99623406,
+            "mean": 13780167.310991183,
+            "quantiles": [
+              7685579.476005171,
+              13537534.536215514,
+              20567078.098236788
+            ],
+            "native": {
+              "available": true,
+              "ce": 15999380.65294498,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out funding: week 52",
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": {
+            "fraction": 0.0,
+            "cash": 0.9,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 10453949.860650722,
+            "mean": 10613298.227809425,
+            "quantiles": [
+              7924851.282783412,
+              10447343.034879755,
+              13807694.285804454
+            ],
+            "native": {
+              "available": true,
+              "ce": 10560356.061432708,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 90000000.0,
+              "initial_surplus": 10000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "95M-final",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270834737794,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.519375,
+            "funded_lower": 0.498503215924578,
+            "common_ce": 9658052.734688409,
+            "mean": 11103405.199099317,
+            "quantiles": [
+              2718326.082453167,
+              10763666.148907835,
+              20638078.044119023
+            ],
+            "native": {
+              "available": true,
+              "ce": 9579427.644786956,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.2129127110464106,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.519375,
+            "funded_lower": 0.498503215924578,
+            "common_ce": 9658052.693827948,
+            "mean": 11103405.051173149,
+            "quantiles": [
+              2718326.393387638,
+              10763666.16949764,
+              20638077.67465348
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.83589585,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.20851382163733953,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.519375,
+            "funded_lower": 0.498503215924578,
+            "common_ce": 9664380.514176179,
+            "mean": 11086371.327945162,
+            "quantiles": [
+              2779490.8218894526,
+              10761303.53514444,
+              20520347.48175074
+            ],
+            "native": {
+              "available": false,
+              "domain_violations": 23,
+              "ce": null,
+              "kind": "hara_payment_floor",
+              "gamma": 0.5,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 5000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291272379205795,
+            "all_risk": false,
+            "strict": false,
+            "funded": 0.519375,
+            "funded_lower": 0.498503215924578,
+            "common_ce": 9658052.666281955,
+            "mean": 11103405.067466555,
+            "quantiles": [
+              2718326.19176945,
+              10763666.045549467,
+              20638077.687529486
+            ],
+            "native": {
+              "available": true,
+              "ce": 10863805.657740884,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 95000000.0,
+              "initial_surplus": 5000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail",
+              "Joint all-payments cash-ledger99%model check"
+            ]
+          },
+          "selected": null,
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "2x-monthly",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554135355212836,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 97107292.30827913,
+            "mean": 98221954.44879459,
+            "quantiles": [
+              90831752.7815096,
+              97860583.11441118,
+              106689036.49173081
+            ],
+            "native": {
+              "available": true,
+              "ce": 97037249.60159083,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.763853383880321,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95252659.98688145,
+            "mean": 95531351.2126794,
+            "quantiles": [
+              91860050.789316,
+              95378529.99541897,
+              99755876.98766997
+            ],
+            "native": {
+              "available": true,
+              "ce": 95196593.32629478,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554137829614588,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 97107291.85382415,
+            "mean": 98221954.03384075,
+            "quantiles": [
+              90831755.7015521,
+              97860584.19454685,
+              106689032.40363978
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.05895463,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534457403646,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95252659.86350964,
+            "mean": 95531351.10894094,
+            "quantiles": [
+              91860051.03403983,
+              95378529.66393328,
+              99755877.48118551
+            ],
+            "native": {
+              "available": true,
+              "ce": 101200185.10859556,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.35541377645922156,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 97107291.84943187,
+            "mean": 98221954.03286153,
+            "quantiles": [
+              90831755.58495702,
+              97860584.15720771,
+              106689032.5105491
+            ],
+            "native": {
+              "available": true,
+              "ce": 97068822.04869203,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.4,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 94000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534441148055,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95252659.86350007,
+            "mean": 95531351.10869613,
+            "quantiles": [
+              91860051.01106325,
+              95378529.68011695,
+              99755877.46112727
+            ],
+            "native": {
+              "available": true,
+              "ce": 95200407.72707309,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.4,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 94000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.36839569670772043,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 97079404.74214596,
+            "mean": 98209452.07458973,
+            "quantiles": [
+              90815302.43036126,
+              97850774.8992318,
+              106686386.50744404
+            ],
+            "native": {
+              "available": true,
+              "ce": 98129762.50686446,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7670989241769302,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95247165.92672302,
+            "mean": 95528225.61912821,
+            "quantiles": [
+              91852188.54310064,
+              95367799.36723007,
+              99786843.9127454
+            ],
+            "native": {
+              "available": true,
+              "ce": 95467552.57051253,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "4x-monthly",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554135355212836,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 91107292.30827911,
+            "mean": 92221954.44879459,
+            "quantiles": [
+              84831752.7815096,
+              91860583.11441118,
+              100689036.49173081
+            ],
+            "native": {
+              "available": true,
+              "ce": 91037249.60159083,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.763853383880321,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89252659.98688143,
+            "mean": 89531351.2126794,
+            "quantiles": [
+              85860050.789316,
+              89378529.99541897,
+              93755876.98766997
+            ],
+            "native": {
+              "available": true,
+              "ce": 89196593.3262948,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554137829614588,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 91107291.85382414,
+            "mean": 92221954.03384075,
+            "quantiles": [
+              84831755.7015521,
+              91860584.19454685,
+              100689032.40363978
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.05895463,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534457403646,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89252659.86350965,
+            "mean": 89531351.10894094,
+            "quantiles": [
+              85860051.03403983,
+              89378529.66393328,
+              93755877.48118551
+            ],
+            "native": {
+              "available": true,
+              "ce": 101200185.10859556,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554138098871151,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 91107291.80433896,
+            "mean": 92221953.98815174,
+            "quantiles": [
+              84831756.0204079,
+              91860584.31140572,
+              100689031.95867527
+            ],
+            "native": {
+              "available": true,
+              "ce": 91070861.0107462,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 8.8,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 88000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534524717787,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89252659.84999631,
+            "mean": 89531351.0975187,
+            "quantiles": [
+              85860051.06169727,
+              89378529.62709968,
+              93755877.53468785
+            ],
+            "native": {
+              "available": true,
+              "ce": 89200659.74703495,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 8.8,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 88000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3683957206345214,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 91079404.69022658,
+            "mean": 92209452.04555653,
+            "quantiles": [
+              84815302.36572345,
+              91850775.09346613,
+              100686386.20302795
+            ],
+            "native": {
+              "available": true,
+              "ce": 92129762.47602677,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7670989301586303,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89247165.91573241,
+            "mean": 89528225.61186989,
+            "quantiles": [
+              85852188.52331968,
+              89367799.30280632,
+              93786843.88025959
+            ],
+            "native": {
+              "available": true,
+              "ce": 89467552.5628031,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "10x-monthly",
+      "model": "gaussian_scale_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554135355212836,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 73107292.30827911,
+            "mean": 74221954.44879462,
+            "quantiles": [
+              66831752.7815096,
+              73860583.11441118,
+              82689036.49173081
+            ],
+            "native": {
+              "available": true,
+              "ce": 73037249.60159083,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.763853383880321,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71252659.98688145,
+            "mean": 71531351.21267943,
+            "quantiles": [
+              67860050.789316,
+              71378529.99541897,
+              75755876.98766997
+            ],
+            "native": {
+              "available": true,
+              "ce": 71196593.32629478,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554137829614588,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 73107291.85382414,
+            "mean": 74221954.03384075,
+            "quantiles": [
+              66831755.70155209,
+              73860584.19454686,
+              82689032.40363978
+            ],
+            "native": {
+              "available": true,
+              "ce": 103067016.05895463,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534457403646,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71252659.86350965,
+            "mean": 71531351.10894094,
+            "quantiles": [
+              67860051.03403983,
+              71378529.66393328,
+              75755877.48118551
+            ],
+            "native": {
+              "available": true,
+              "ce": 101200185.10859556,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.3554136091395112,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 73107292.17286469,
+            "mean": 74221954.3322592,
+            "quantiles": [
+              66831753.642221354,
+              73860583.45276925,
+              82689035.28392285
+            ],
+            "native": {
+              "available": true,
+              "ce": 73078934.43077324,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 7.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 70000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7638534022848777,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71252659.95123275,
+            "mean": 71531351.18354556,
+            "quantiles": [
+              67860050.85380927,
+              71378529.90389085,
+              75755877.14193049
+            ],
+            "native": {
+              "available": true,
+              "ce": 71201665.14787053,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 7.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 70000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.36839565116309336,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 73079404.85026136,
+            "mean": 74209452.13287105,
+            "quantiles": [
+              66815302.567240775,
+              73850774.49749462,
+              82686387.12835439
+            ],
+            "native": {
+              "available": true,
+              "ce": 74129762.56865273,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7670989127907734,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71247165.94894575,
+            "mean": 71528225.63369852,
+            "quantiles": [
+              67852188.58523516,
+              71367799.49991038,
+              75786843.97849643
+            ],
+            "native": {
+              "available": true,
+              "ce": 71467552.58595961,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "2x-monthly",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270491804923,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98658052.74691688,
+            "mean": 100103405.2195846,
+            "quantiles": [
+              91718326.07721123,
+              99763666.17052528,
+              109638078.10291888
+            ],
+            "native": {
+              "available": true,
+              "ce": 98579427.65694371,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281762295122,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95693485.5487086,
+            "mean": 95985824.97575322,
+            "quantiles": [
+              92213400.203125,
+              95820239.44729409,
+              100220344.800596
+            ],
+            "native": {
+              "available": true,
+              "ce": 95635606.12083499,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271390907127,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98658052.6830678,
+            "mean": 100103405.03788853,
+            "quantiles": [
+              91718326.38351113,
+              99763666.1468007,
+              109638077.63695638
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.82492241,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281784772677,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95693485.5138704,
+            "mean": 95985824.93032919,
+            "quantiles": [
+              92213400.21463175,
+              95820239.41348618,
+              100220344.73511381
+            ],
+            "native": {
+              "available": true,
+              "ce": 101640478.72051351,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270999265663,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98658052.61686787,
+            "mean": 100103404.74127728,
+            "quantiles": [
+              91718327.10231699,
+              99763666.25622436,
+              109638076.92844321
+            ],
+            "native": {
+              "available": true,
+              "ce": 98635621.0725514,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.4,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 94000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281774981642,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95693485.4607298,
+            "mean": 95985824.85617638,
+            "quantiles": [
+              92213400.2501509,
+              95820239.37381375,
+              100220344.62099141
+            ],
+            "native": {
+              "available": true,
+              "ce": 95640780.46796024,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 9.4,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 94000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271377338314,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 98658052.73626827,
+            "mean": 100103405.22311795,
+            "quantiles": [
+              91718326.02312306,
+              99763666.085134,
+              109638078.06734051
+            ],
+            "native": {
+              "available": true,
+              "ce": 100012085.55533433,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281784433458,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 95693485.54808098,
+            "mean": 95985824.97663654,
+            "quantiles": [
+              92213400.19180194,
+              95820239.43738641,
+              100220344.8083174
+            ],
+            "native": {
+              "available": true,
+              "ce": 95923288.43490812,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 6000000.0,
+              "initial_surplus": 94000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "4x-monthly",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270491804923,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 92658052.74691686,
+            "mean": 94103405.21958461,
+            "quantiles": [
+              85718326.07721123,
+              93763666.17052528,
+              103638078.10291888
+            ],
+            "native": {
+              "available": true,
+              "ce": 92579427.65694374,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281762295122,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89693485.54870859,
+            "mean": 89985824.97575322,
+            "quantiles": [
+              86213400.203125,
+              89820239.44729409,
+              94220344.800596
+            ],
+            "native": {
+              "available": true,
+              "ce": 89635606.12083499,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271390907127,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 92658052.68306778,
+            "mean": 94103405.03788853,
+            "quantiles": [
+              85718326.38351113,
+              93763666.1468007,
+              103638077.63695638
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.82492241,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281784772677,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89693485.5138704,
+            "mean": 89985824.93032919,
+            "quantiles": [
+              86213400.21463175,
+              89820239.41348618,
+              94220344.73511381
+            ],
+            "native": {
+              "available": true,
+              "ce": 101640478.72051351,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.2129127065795245,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 92658052.63963628,
+            "mean": 94103404.7941526,
+            "quantiles": [
+              85718327.03603835,
+              93763666.2722862,
+              103638077.06221661
+            ],
+            "native": {
+              "available": true,
+              "ce": 92639206.21145299,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 8.8,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 88000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.728228176644881,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89693485.4712487,
+            "mean": 89985824.86939521,
+            "quantiles": [
+              86213400.24825405,
+              89820239.38433929,
+              94220344.63957912
+            ],
+            "native": {
+              "available": true,
+              "ce": 89641122.13291664,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 8.8,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 88000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271411744456,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 92658052.73260874,
+            "mean": 94103405.21126102,
+            "quantiles": [
+              85718326.04692326,
+              93763666.0845437,
+              103638078.0363617
+            ],
+            "native": {
+              "available": true,
+              "ce": 94012085.54365279,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281785293612,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 89693485.54585806,
+            "mean": 89985824.97367233,
+            "quantiles": [
+              86213400.1925994,
+              89820239.4353058,
+              94220344.80411218
+            ],
+            "native": {
+              "available": true,
+              "ce": 89923288.43198773,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 12000000.0,
+              "initial_surplus": 88000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    },
+    {
+      "name": "10x-monthly",
+      "model": "bounded_ewma_mixture",
+      "utilities": [
+        {
+          "kind": "cara",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291270491804923,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 74620166.32501589,
+            "mean": 76032069.32158716,
+            "quantiles": [
+              67727266.48338427,
+              75675119.2562185,
+              85489583.63641167
+            ],
+            "native": {
+              "available": true,
+              "ce": 74579427.65694372,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281762295122,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71693485.5487086,
+            "mean": 71985824.97575322,
+            "quantiles": [
+              68213400.20312501,
+              71820239.44729409,
+              76220344.800596
+            ],
+            "native": {
+              "available": true,
+              "ce": 71635606.12083499,
+              "domain_violations": 0,
+              "kind": "cara",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "crra_gross",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271390907127,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 74620166.26926291,
+            "mean": 76032069.15799375,
+            "quantiles": [
+              67727266.60664353,
+              75675119.07163137,
+              85489583.0141686
+            ],
+            "native": {
+              "available": true,
+              "ce": 104632440.82492241,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281784772677,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71693485.51387042,
+            "mean": 71985824.93032919,
+            "quantiles": [
+              68213400.21463174,
+              71820239.41348618,
+              76220344.73511381
+            ],
+            "native": {
+              "available": true,
+              "ce": 101640478.72051351,
+              "domain_violations": 0,
+              "kind": "crra_gross",
+              "gamma": 10.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "gross terminal marked wealth",
+              "scale": 100000000,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "hara_payment_floor",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291269989541697,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 74620166.3336812,
+            "mean": 76032069.29143876,
+            "quantiles": [
+              67727266.57305725,
+              75675119.21689667,
+              85489583.37968422
+            ],
+            "native": {
+              "available": true,
+              "ce": 74653340.46765898,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 7.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 70000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281749738543,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71693485.54660302,
+            "mean": 71985824.97031091,
+            "quantiles": [
+              68213400.21405813,
+              71820239.44946417,
+              76220344.78908278
+            ],
+            "native": {
+              "available": true,
+              "ce": 71642484.74430025,
+              "domain_violations": 0,
+              "kind": "hara_payment_floor",
+              "gamma": 7.0,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 70000000.0,
+              "local_absolute_aversion": 1e-07,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        },
+        {
+          "kind": "kinked_shortfall",
+          "raw": {
+            "fraction": null,
+            "cash": 0.21291271575824647,
+            "all_risk": false,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 74620166.31119914,
+            "mean": 76032069.30821414,
+            "quantiles": [
+              67727266.445499,
+              75675119.21336307,
+              85489583.7130612
+            ],
+            "native": {
+              "available": true,
+              "ce": 76012085.51940884,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": [
+              "Held-out path-loss tail"
+            ]
+          },
+          "selected": {
+            "fraction": 0.25,
+            "cash": 0.7282281789395616,
+            "all_risk": true,
+            "strict": true,
+            "funded": 1.0,
+            "funded_lower": 0.9981294190504052,
+            "common_ce": 71693485.54097675,
+            "mean": 71985824.96754049,
+            "quantiles": [
+              68213400.19327936,
+              71820239.43025282,
+              76220344.79562926
+            ],
+            "native": {
+              "available": true,
+              "ce": 71923288.42592673,
+              "domain_violations": 0,
+              "kind": "kinked_shortfall",
+              "gamma": null,
+              "shortfall_penalty": 4.0,
+              "domain_margin": 1e-08,
+              "terminal_payment_floor": 30000000.0,
+              "initial_surplus": 70000000.0,
+              "argument": "terminal surplus after payments",
+              "scale": 100000000,
+              "local_absolute_aversion": null,
+              "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+            },
+            "breaches": []
+          },
+          "status": "optimized",
+          "solver": "CLARABEL",
+          "first_failure": null
+        }
+      ]
+    }
+  ],
+  "scope": "FROZEN RETROSPECTIVE RESEARCH. User confirmed $250k/month; 12 modeled monthly calls total $3M. Due weeks are approximate, not calendar settlement dates. Other amounts are labelled sensitivities or check stress tests, NOT user obligations. Fixed research inputs: $100M wealth, 10% unsold property, zero rent/cash, 100 train / 200 validation / 400 final paths x4. Not recomputed when controls change. Same paths, EP and all-risk+strict judge. Default remains CARA; native gross/net CEs are not cross-family rankings.",
+  "takeaway": "No utility winner established for the confirmed $250k/month schedule: all four choose a 25% candidate / 75% anchor blend and pass this final fitted-model judge. Hard constraints mostly dominate. Sensitivities are not obligations. Extreme check stress tests establish limits, not realistic payment scenarios. Raw HARA has domain failures there; the family name cannot cure infeasibility.",
+  "sources": [
+    "https://arxiv.org/pdf/1809.05961",
+    "https://ar5iv.labs.arxiv.org/html/1501.07480",
+    "https://www.cvxgrp.org/cvx_short_course/docs/applications/notebooks/portfolio_optimization.html"
+  ]
+}
