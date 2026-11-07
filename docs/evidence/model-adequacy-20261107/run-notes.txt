@@ -1,0 +1,16 @@
+Protocol frozen f1b6fd6 before study outputs. Implementation4be65c0 tested330pass.
+Fixed-annual pilot2014:0.142s,1040 records, zero annual GARCH failures.
+Estimate validation2014-2018:5xpilot, allow3s; hard30s. Final2019-2025:
+7xpilot plus bootstrap/report, allow5s, hard30s. Development2007-2013 similar.
+No parameter grid or allocation solve. Three fixed GARCH starts fit each asset;
+all optimizer statuses saved. SLSQP internal proposed-step bound clipping warning
+is retained, not a relaxation of final parameter checks.
+Validation measured0.566s, final0.789s, no failed annual fits; selection locked
+22:04:02UTC+8 before final execution. All3 starts converged in each25validation
+and35final marginal GARCH fits. Development first attempted whole2007-2013,
+aborted on2007's94 past rows<104 minimum. Raw failure preserved separately.
+After results, runner amended ONLY to retain unavailable annual fits and refuse
+incomplete comparative summaries. No forecast, objective, parameter, score,
+selection or final result changed; original validation/final basis4be65c0 remains.
+Development then completed2008-2013 in0.665s,2007 explicitly unavailable.
+No post-result candidate additions or score/tail thresholds changed.

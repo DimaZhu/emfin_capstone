@@ -1,6 +1,6 @@
 # Why a better one-week GARCH score is not an annual price model
 
-Original mathematical domain check for this project,7 November2026. This is
+Original mathematical domain check for this project,7 November 2026. This is
 not a claim that all models called GARCH fail or that one-week forecasts are
 undefined. It concerns unbounded Gaussian log innovations with positive ARCH
 variance feedback, including the experimental Gaussian-mixture candidate.

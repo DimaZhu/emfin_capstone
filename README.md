@@ -133,3 +133,5 @@ due obligation. See [assumptions, equations and limits](docs/REAL_ESTATE.md).
 - [Final config boundary](docs/CONFIG_BOUNDARY.md): validate after all edits; unsafe stochastic calls are disabled.
 - [W1 metric](docs/W1_METRIC.md): duplicate-sleeve/time-grid invariant, but the radius remains uncalibrated.
 - `python -m experiments.robustness --help`: bounded private research studies from a clone, not an installed runtime requirement. Annual episodes use latest data vintages and an assumed property publication lag; they are not revision-safe point-in-time backtests.
+
+See the [conditional-volatility forecast study](docs/MODEL_ADEQUACY_RESULTS.md) for the fixed retrospective one-week comparison and multistep price-moment blocker. No production model was promoted.
