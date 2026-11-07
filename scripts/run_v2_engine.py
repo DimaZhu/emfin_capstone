@@ -54,6 +54,7 @@ from emfin_capstone.toolbox import (
     moneymarket,
     meucci_liquidity as mliq,
     mpep as mpep_mod,
+    tsdr as tsdr_mod,
     scenario_market,
     seqep,
     shrinkage,
@@ -600,6 +601,44 @@ def main() -> None:
           f"l={mpep_res.cml_tail_counts[mpep_views[0].name]}, "
           f"RE={mpep_res.relative_entropy:.3f}, ENS={mpep_res.ens_ratio:.2%}")
     _tick("optimize: EP + liabilities (MPEP posterior paths)")
+
+    # 5c. TSDR (Kristensen & Vorobets 2025, public descriptions only - the
+    #     definitions PDF is gated and the code is GPL, neither consulted):
+    #     Markov-chain resampling of historical weekly invariants, per-state
+    #     probability vectors (time decay x crisp vol-state classification).
+    #     Unlike the i.i.d. Gaussian paths, regime persistence survives into
+    #     the simulated paths.  --tsdr enables the contrast allocation.
+    alloc_tsdr = None
+    if "--tsdr" in sys.argv:
+        tsdr_labels = tsdr_mod.state_labels(eq_vol_state)  # 25%/90% quantiles
+        tsdr_pv = tsdr_mod.state_probability_vectors(tsdr_labels, half_life=len(invariants) / 2)
+        inv_paths, _ = tsdr_mod.resample_invariant_paths(
+            invariants, tsdr_labels, tsdr_pv, n_scenarios=n_opt, n_steps=HORIZON_WEEKS,
+            initial_state=int(tsdr_labels[-1]), seed=PATH_SEED + 7)
+        cum_tsdr = np.cumsum(inv_paths, axis=1)
+        paths_tsdr = np.stack(
+            [market_from_invariants(cum_tsdr[:, t, :], weeks_elapsed=t + 1)
+             for t in range(HORIZON_WEEKS)], axis=1)
+        for step in eval_steps:
+            paths_tsdr[:, step - 1, :] = mliq.apply_meucci_liquidity(
+                paths_tsdr[:, step - 1, :], np.tile(ref_amounts, (n_opt, 1)), meucci_params,
+                market_corr, gamma=0.9,
+                state_multiplier=1.0 + 2.0 * np.clip(-cum_tsdr[:, step - 1, :3].mean(axis=1) / 0.05, 0.0, None),
+                seed=COST_SEED + step)
+        alloc_tsdr, _ = liab.optimization_multiperiod(
+            market_paths=paths_tsdr, prices_vector=prices_vector, wealth=WEALTH,
+            liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
+            liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
+            risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
+            gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL,
+            n_optimization_scenarios=n_opt)
+        _iid = paths_opt[:, -1, 0] / prices_vector[0] - 1.0
+        _ts = paths_tsdr[:, -1, 0] / prices_vector[0] - 1.0
+        print(f"TSDR paths (state={tsdr_mod.STATE_NAMES[int(tsdr_labels[-1])]} vol, "
+              f"half-life {len(invariants)//2}w): DFUS terminal return mean "
+              f"{_ts.mean():+.1%} vs iid {_iid.mean():+.1%}, 95% CVaR "
+              f"{-np.sort(_ts)[:int(0.05*n_opt)].mean():.1%} vs {-np.sort(_iid)[:int(0.05*n_opt)].mean():.1%}")
+        _tick("optimize: EP + liabilities (TSDR resampled paths)")
     # Uniform-prior contrast: the same EP+liabilities optimization on
     # scenarios generated from the uniform (full-sample) moments.  The judge
     # below draws from a third, fresh distribution, so neither prior is the
@@ -614,6 +653,8 @@ def main() -> None:
     if alloc_crra is not None:
         allocations["EP+liab (CRRA)"] = alloc_crra
     allocations["EP+liab (MPEP)"] = alloc_mpep
+    if alloc_tsdr is not None:
+        allocations["EP+liab (TSDR)"] = alloc_tsdr
     if calibration is not None and calibration.best_multiplier < 1.0:
         # honest contrast: what the un-calibrated (nominal-budget) allocation
         # costs and buys - its OOS breach is visible in the judge table
@@ -718,6 +759,7 @@ def main() -> None:
         "EP+liab (multi-per)": "optimize: EP + liabilities (multi-period, stochastic)",
         "EP+liab (CRRA)": "optimize: EP + liabilities (CRRA-on-surplus)",
         "EP+liab (MPEP)": "optimize: EP + liabilities (MPEP posterior paths)",
+        "EP+liab (TSDR)": "optimize: EP + liabilities (TSDR resampled paths)",
         "EP+liab (nominal)": "optimize: EP + liabilities (tail-budget calibrated)",
     }
     print(f"{'method':>22} {'solve(s)':>9} {'CE($)':>15} {'shortfall':>10} {'gapCVaR($)':>12}")
