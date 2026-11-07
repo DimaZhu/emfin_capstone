@@ -1,0 +1,23 @@
+[
+  {
+    "tolerance": 0.0001,
+    "weight_error": 0.0002726085990131799,
+    "seconds": 0.005285629000354675,
+    "status": "optimal",
+    "max_constraint_residual": 2.220446049250313e-16
+  },
+  {
+    "tolerance": 1e-06,
+    "weight_error": 2.725269086845117e-06,
+    "seconds": 0.00447764099953929,
+    "status": "optimal",
+    "max_constraint_residual": 0.0
+  },
+  {
+    "tolerance": 1e-08,
+    "weight_error": 2.725262210345747e-08,
+    "seconds": 0.004290556999876571,
+    "status": "optimal",
+    "max_constraint_residual": 5.995204332975845e-15
+  }
+]

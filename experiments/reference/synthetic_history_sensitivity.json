@@ -1,0 +1,87 @@
+[
+  {
+    "annual_log_drift": 0.031181098997928394,
+    "annual_vol": 0.048277806229395974,
+    "drift_range": [
+      -0.019448076716384086,
+      0.030563788223578178,
+      0.08134311119569546
+    ],
+    "vol_range": [
+      0.04033005665536061,
+      0.04733135629307469,
+      0.0541918287842476
+    ],
+    "return_count": 45,
+    "method": "Circular moving-block bootstrap, 3-month blocks, 2000 resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+    "smoothing_alpha": 0.0
+  },
+  {
+    "annual_log_drift": 0.039292968057183346,
+    "annual_vol": 0.05618298124258144,
+    "drift_range": [
+      -0.016139366705943924,
+      0.039104801825726954,
+      0.09456789775857102
+    ],
+    "vol_range": [
+      0.047200634931360064,
+      0.05509827768897631,
+      0.06353204814794203
+    ],
+    "return_count": 44,
+    "method": "Circular moving-block bootstrap, 3-month blocks, 2000 resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+    "smoothing_alpha": 0.2
+  },
+  {
+    "annual_log_drift": 0.04416590825880951,
+    "annual_vol": 0.07334256620684582,
+    "drift_range": [
+      -0.017798015641908187,
+      0.04375650881096083,
+      0.10804153806290787
+    ],
+    "vol_range": [
+      0.060211502471501796,
+      0.07169732104208168,
+      0.08493759221091321
+    ],
+    "return_count": 44,
+    "method": "Circular moving-block bootstrap, 3-month blocks, 2000 resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+    "smoothing_alpha": 0.4
+  },
+  {
+    "annual_log_drift": 0.05391178866206185,
+    "annual_vol": 0.11265533730238851,
+    "drift_range": [
+      -0.029970964820481838,
+      0.0528573208591276,
+      0.140672258036548
+    ],
+    "vol_range": [
+      0.09029033442100362,
+      0.11015170755269169,
+      0.13331459066680895
+    ],
+    "return_count": 44,
+    "method": "Circular moving-block bootstrap, 3-month blocks, 2000 resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+    "smoothing_alpha": 0.6
+  },
+  {
+    "annual_log_drift": 0.08314942987181882,
+    "annual_vol": 0.23992201627340734,
+    "drift_range": [
+      -0.076565484974744,
+      0.08130409621106416,
+      0.2574787172921254
+    ],
+    "vol_range": [
+      0.18729824685710486,
+      0.2346557178251436,
+      0.2884306607937036
+    ],
+    "return_count": 44,
+    "method": "Circular moving-block bootstrap, 3-month blocks, 2000 resamples, fixed seed; marginal 5/50/95 percentiles, not a joint confidence region or forecast",
+    "smoothing_alpha": 0.8
+  }
+]

@@ -1,0 +1,664 @@
+{
+  "config_id": "79339ed4200b8670a93478f9d9c829f3f8d301e17dac6cbf7cea487164834f94",
+  "point": {
+    "profile": "Balanced",
+    "payout_ratio": 0.75,
+    "timing": "late",
+    "re_min": 0.1,
+    "radius": 2e-05,
+    "rho": 0.3
+  },
+  "evidence": {
+    "summary": [
+      {
+        "method": "1/N",
+        "net_ce": {
+          "mean": [
+            27368821.927877814
+          ],
+          "low": [
+            26958357.897642937
+          ],
+          "high": [
+            27779285.95811269
+          ]
+        },
+        "paired_ce_difference": {
+          "mean": [
+            0.0
+          ],
+          "low": [
+            0.0
+          ],
+          "high": [
+            0.0
+          ]
+        },
+        "paired_reference": "1/N",
+        "expected_return": 0.030723745957056986,
+        "volatility": 0.035781973487077894,
+        "cml": 0.05033344252773438,
+        "cash_weight": 0.14285714285714285,
+        "funding_upper": [
+          5714.285714285709,
+          5714.285714285709
+        ],
+        "funding_budgets": [
+          55263.15789473684,
+          94736.84210526316
+        ],
+        "heldout_funding_pass": true,
+        "allocation": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285
+        ]
+      },
+      {
+        "method": "shrunk MV",
+        "net_ce": {
+          "mean": [
+            28148148.60891238
+          ],
+          "low": [
+            27388422.273977
+          ],
+          "high": [
+            28907874.943847757
+          ]
+        },
+        "paired_ce_difference": {
+          "mean": [
+            779326.6810345625
+          ],
+          "low": [
+            422932.9798884188
+          ],
+          "high": [
+            1135720.3821807061
+          ]
+        },
+        "paired_reference": "1/N",
+        "expected_return": 0.04901143308499111,
+        "volatility": 0.058540064562540184,
+        "cml": 0.08420973336315601,
+        "cash_weight": 5.383096458608327e-07,
+        "funding_upper": [
+          16489.260961666176,
+          219594.30575080015
+        ],
+        "funding_budgets": [
+          55263.15789473684,
+          94736.84210526316
+        ],
+        "heldout_funding_pass": false,
+        "allocation": [
+          0.41223152404165475,
+          0.3824354510997104,
+          0.10533241594100423,
+          2.7736665911314894e-08,
+          4.059097806375247e-08,
+          5.383096458608327e-07,
+          0.10000000228034094
+        ]
+      },
+      {
+        "method": "proposed",
+        "net_ce": {
+          "mean": [
+            27835539.678275887
+          ],
+          "low": [
+            27370825.289370254
+          ],
+          "high": [
+            28300254.06718152
+          ]
+        },
+        "paired_ce_difference": {
+          "mean": [
+            466717.75039807707
+          ],
+          "low": [
+            402654.9539102551
+          ],
+          "high": [
+            530780.546885899
+          ]
+        },
+        "paired_reference": "1/N",
+        "expected_return": 0.037282048838919966,
+        "volatility": 0.04082115973775563,
+        "cml": 0.056137586476281566,
+        "cash_weight": 0.2815585402538086,
+        "funding_upper": [
+          16705.661957065866,
+          16705.661957065866
+        ],
+        "funding_budgets": [
+          55263.15789473684,
+          94736.84210526316
+        ],
+        "heldout_funding_pass": true,
+        "allocation": [
+          0.13994903025408176,
+          0.417641548926647,
+          0.06085080859081602,
+          1.0017435263056275e-08,
+          1.2140134510916363e-08,
+          0.2815585402538086,
+          0.10000004980101664
+        ]
+      },
+      {
+        "method": "cash + RE floor",
+        "net_ce": {
+          "mean": [
+            26183723.265325356
+          ],
+          "low": [
+            26064460.553536925
+          ],
+          "high": [
+            26302985.977113787
+          ]
+        },
+        "paired_ce_difference": {
+          "mean": [
+            -1185098.6625524547
+          ],
+          "low": [
+            -1511434.4999266968
+          ],
+          "high": [
+            -858762.8251782127
+          ]
+        },
+        "paired_reference": "1/N",
+        "expected_return": 0.01275921658548976,
+        "volatility": 0.006108688456777568,
+        "cml": 0.004452464145552646,
+        "cash_weight": 0.9,
+        "funding_upper": [
+          35999.99999999997,
+          35999.99999999997
+        ],
+        "funding_budgets": [
+          55263.15789473684,
+          94736.84210526316
+        ],
+        "heldout_funding_pass": true,
+        "allocation": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9,
+          0.1
+        ]
+      },
+      {
+        "method": "minimum variance",
+        "net_ce": {
+          "mean": [
+            26183725.34257686
+          ],
+          "low": [
+            26064462.3685795
+          ],
+          "high": [
+            26302988.316574223
+          ]
+        },
+        "paired_ce_difference": {
+          "mean": [
+            -1185096.5853009485
+          ],
+          "low": [
+            -1511432.006200734
+          ],
+          "high": [
+            -858761.1644011628
+          ]
+        },
+        "paired_reference": "1/N",
+        "expected_return": 0.012759238177875781,
+        "volatility": 0.006108702029743798,
+        "cml": 0.004452474030675661,
+        "cash_weight": 0.8999988338673068,
+        "funding_upper": [
+          35999.95335469224,
+          35999.95335469224
+        ],
+        "funding_budgets": [
+          55263.15789473684,
+          94736.84210526316
+        ],
+        "heldout_funding_pass": true,
+        "allocation": [
+          1.8496054264712313e-07,
+          2.1259145638458246e-07,
+          1.2754376929709993e-07,
+          3.440152041137815e-07,
+          2.6576780480681244e-07,
+          0.8999988338673068,
+          0.10000003125391575
+        ]
+      }
+    ],
+    "batches": [
+      {
+        "method": "1/N",
+        "seed": 20271107,
+        "net_ce": 27261937.258484297,
+        "expected_return": 0.029621118086953006,
+        "volatility": 0.0359785497731471,
+        "cml": 0.049419970075604454,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285
+        ],
+        "cash_weight": 0.14285714285714285,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "shrunk MV",
+        "seed": 20271107,
+        "net_ce": 27988998.16536575,
+        "expected_return": 0.04697084409340015,
+        "volatility": 0.058189546194750995,
+        "cml": 0.08265567485259348,
+        "gap_cvar": [
+          0.0,
+          17534.252859742923
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          114907.60670693923
+        ],
+        "allocation": [
+          0.41223152404165475,
+          0.3824354510997104,
+          0.10533241594100423,
+          2.7736665911314894e-08,
+          4.059097806375247e-08,
+          5.383096458608327e-07,
+          0.10000000228034094
+        ],
+        "cash_weight": 5.383096458608327e-07,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "proposed",
+        "seed": 20271107,
+        "net_ce": 27728845.380049128,
+        "expected_return": 0.03610037881874783,
+        "volatility": 0.04057593709867869,
+        "cml": 0.055538605554323064,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.13994903025408176,
+          0.417641548926647,
+          0.06085080859081602,
+          1.0017435263056275e-08,
+          1.2140134510916363e-08,
+          0.2815585402538086,
+          0.10000004980101664
+        ],
+        "cash_weight": 0.2815585402538086,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "cash + RE floor",
+        "seed": 20271107,
+        "net_ce": 26130721.09768714,
+        "expected_return": 0.012216962866701632,
+        "volatility": 0.005861357161905092,
+        "cml": 0.004508624777346744,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9,
+          0.1
+        ],
+        "cash_weight": 0.9,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "minimum variance",
+        "seed": 20271107,
+        "net_ce": 26130723.102507655,
+        "expected_return": 0.012216983832553414,
+        "volatility": 0.005861372965249315,
+        "cml": 0.0045086317754840025,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          1.8496054264712313e-07,
+          2.1259145638458246e-07,
+          1.2754376929709993e-07,
+          3.440152041137815e-07,
+          2.6576780480681244e-07,
+          0.8999988338673068,
+          0.10000003125391575
+        ],
+        "cash_weight": 0.8999988338673068,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "1/N",
+        "seed": 20271108,
+        "net_ce": 27285391.957316056,
+        "expected_return": 0.030067493077584048,
+        "volatility": 0.03627505648299783,
+        "cml": 0.051632356341423345,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285
+        ],
+        "cash_weight": 0.14285714285714285,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "shrunk MV",
+        "seed": 20271108,
+        "net_ce": 27954711.090412658,
+        "expected_return": 0.048059675296135126,
+        "volatility": 0.06027506423642387,
+        "cml": 0.08988622040207074,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.41223152404165475,
+          0.3824354510997104,
+          0.10533241594100423,
+          2.7736665911314894e-08,
+          4.059097806375247e-08,
+          5.383096458608327e-07,
+          0.10000000228034094
+        ],
+        "cash_weight": 5.383096458608327e-07,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "proposed",
+        "seed": 20271108,
+        "net_ce": 27726226.303122833,
+        "expected_return": 0.03637742534478651,
+        "volatility": 0.04138309260791277,
+        "cml": 0.05864300521633336,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.13994903025408176,
+          0.417641548926647,
+          0.06085080859081602,
+          1.0017435263056275e-08,
+          1.2140134510916363e-08,
+          0.2815585402538086,
+          0.10000004980101664
+        ],
+        "cash_weight": 0.2815585402538086,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "cash + RE floor",
+        "seed": 20271108,
+        "net_ce": 26196152.775830295,
+        "expected_return": 0.012889524586132284,
+        "volatility": 0.006231451137657564,
+        "cml": 0.003993583773711566,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9,
+          0.1
+        ],
+        "cash_weight": 0.9,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "minimum variance",
+        "seed": 20271108,
+        "net_ce": 26196154.73378347,
+        "expected_return": 0.012889544949039301,
+        "volatility": 0.00623146376610988,
+        "cml": 0.003993593442931781,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          1.8496054264712313e-07,
+          2.1259145638458246e-07,
+          1.2754376929709993e-07,
+          3.440152041137815e-07,
+          2.6576780480681244e-07,
+          0.8999988338673068,
+          0.10000003125391575
+        ],
+        "cash_weight": 0.8999988338673068,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "1/N",
+        "seed": 20271109,
+        "net_ce": 27559136.56783309,
+        "expected_return": 0.03248262670663391,
+        "volatility": 0.035092314205088744,
+        "cml": 0.049948001166175336,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285,
+          0.14285714285714285
+        ],
+        "cash_weight": 0.14285714285714285,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "shrunk MV",
+        "seed": 20271109,
+        "net_ce": 28500736.57095872,
+        "expected_return": 0.052003779865438055,
+        "volatility": 0.057155583256445694,
+        "cml": 0.0800873048348038,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.41223152404165475,
+          0.3824354510997104,
+          0.10533241594100423,
+          2.7736665911314894e-08,
+          4.059097806375247e-08,
+          5.383096458608327e-07,
+          0.10000000228034094
+        ],
+        "cash_weight": 5.383096458608327e-07,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "proposed",
+        "seed": 20271109,
+        "net_ce": 28051547.35165571,
+        "expected_return": 0.03936834235322557,
+        "volatility": 0.040504449506675415,
+        "cml": 0.05423114865818828,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.13994903025408176,
+          0.417641548926647,
+          0.06085080859081602,
+          1.0017435263056275e-08,
+          1.2140134510916363e-08,
+          0.2815585402538086,
+          0.10000004980101664
+        ],
+        "cash_weight": 0.2815585402538086,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "cash + RE floor",
+        "seed": 20271109,
+        "net_ce": 26224295.92245864,
+        "expected_return": 0.013171162303635364,
+        "volatility": 0.006233257070770049,
+        "cml": 0.0048551838855996265,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9,
+          0.1
+        ],
+        "cash_weight": 0.9,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      },
+      {
+        "method": "minimum variance",
+        "seed": 20271109,
+        "net_ce": 26224298.191439472,
+        "expected_return": 0.013171185752034624,
+        "volatility": 0.0062332693578721985,
+        "cml": 0.0048551968736112,
+        "gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "stressed_gap_cvar": [
+          0.0,
+          0.0
+        ],
+        "allocation": [
+          1.8496054264712313e-07,
+          2.1259145638458246e-07,
+          1.2754376929709993e-07,
+          3.440152041137815e-07,
+          2.6576780480681244e-07,
+          0.8999988338673068,
+          0.10000003125391575
+        ],
+        "cash_weight": 0.8999988338673068,
+        "constraint_scope": "Common minima and no leverage. Benchmarks do not enforce funding or loss budgets; all are evaluated against those budgets."
+      }
+    ],
+    "minimum_variance_seconds": 0.022878262999711296,
+    "interval_note": "95% Student-t intervals across batch estimates, conditional on fitted scenario model. Paired differences share scenario seeds. These do not measure parameter uncertainty or economic forecast coverage."
+  }
+}

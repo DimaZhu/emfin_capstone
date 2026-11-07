@@ -1,0 +1,92 @@
+[
+  {
+    "test": "Cumulative terminal payout accounting",
+    "expected": 30.0,
+    "observed": 30.0,
+    "absolute_error": 0.0,
+    "tolerance": 1e-10,
+    "passed": true,
+    "claim": "Identity for a deterministic unit cash account, not a funding guarantee"
+  },
+  {
+    "test": "Smoothing inversion",
+    "expected": 0.0,
+    "observed": 0.0,
+    "absolute_error": 0.0,
+    "tolerance": 1e-12,
+    "passed": true,
+    "claim": "Algebraic inverse under the assumed first-order log-return model"
+  },
+  {
+    "test": "Unsettled proceeds are not cash",
+    "expected": 0.0,
+    "observed": 0.0,
+    "absolute_error": 0.0,
+    "tolerance": 1e-12,
+    "passed": true,
+    "claim": "Contract settlement convention, not an actual transaction guarantee"
+  },
+  {
+    "test": "Sale cost deducted once",
+    "expected": 0.9,
+    "observed": 0.9,
+    "absolute_error": 0.0,
+    "tolerance": 1e-12,
+    "passed": true,
+    "claim": "One fixed sale with no rent or interest"
+  },
+  {
+    "test": "Entropy-pooling probability normalization",
+    "expected": 1.0,
+    "observed": 0.9999999999999998,
+    "absolute_error": 2.220446049250313e-16,
+    "tolerance": 1e-10,
+    "passed": true,
+    "claim": "Numerical feasibility on a tiny known feature set"
+  },
+  {
+    "test": "Entropy-pooling mean view",
+    "expected": 0.2,
+    "observed": 0.19999999999905682,
+    "absolute_error": 9.431899705703017e-13,
+    "tolerance": 1e-08,
+    "passed": true,
+    "claim": "Numerical constraint residual, not a general proof of the solver"
+  },
+  {
+    "test": "Known-solution portfolio risky weight",
+    "expected": 0.25,
+    "observed": 0.24999989623135946,
+    "absolute_error": 1.0376864054140178e-07,
+    "tolerance": 1e-05,
+    "passed": true,
+    "claim": "Deterministic two-asset problem with binding cash funding; analytic optimum"
+  },
+  {
+    "test": "Exhaustive simplex reference weight",
+    "expected": 0.25,
+    "observed": 0.24999989623135946,
+    "absolute_error": 1.0376864054140178e-07,
+    "tolerance": 1e-05,
+    "passed": true,
+    "claim": "10,001-point two-asset grid under the same deterministic funding constraint"
+  },
+  {
+    "test": "W1 zero-radius identity",
+    "expected": 0.0,
+    "observed": 0.0,
+    "absolute_error": 0.0,
+    "tolerance": 1e-12,
+    "passed": true,
+    "claim": "Penalty identity only; optimization equivalence is also unit-tested"
+  },
+  {
+    "test": "W1 transport bound at far support",
+    "expected": 0.005,
+    "observed": 0.0049999,
+    "absolute_error": 1.0000000000027348e-07,
+    "tolerance": 1e-06,
+    "passed": true,
+    "claim": "Finite transport approaches fixed-threshold unrestricted-support dual bound; not a coverage claim"
+  }
+]
