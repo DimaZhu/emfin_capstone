@@ -27,7 +27,7 @@ def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=T
                 # Only the known dated requirement, no future price, is used.
                 next_decision=min([z for z in decisions if z>t]+[h+1]);need=amounts[:,(steps>=t+delay)&(steps<next_decision+delay)].sum(1)+arrears
                 if mode=='cash_first':sale=np.minimum(np.maximum(need-cash,0)/(1-fee),values.sum(1))
-                else:sale=np.minimum(need/(1-fee),values.sum(1))
+                else:sale=np.minimum(need*np.divide(values.sum(1),spendable,out=np.zeros(n),where=spendable>0)/(1-fee),values.sum(1))
                 fraction=np.divide(sale,values.sum(1),out=np.zeros(n),where=values.sum(1)>0);target=np.c_[cash+sale,values*(1-fraction[:,None])]
             sell=np.maximum(values-target[:,1:],0);sell=np.minimum(sell,values);units[:,risky]-=np.divide(sell,px[:,risky],out=np.zeros_like(sell),where=px[:,risky]>0);proceeds=sell.sum(1)*(1-fee);cost+=sell.sum(1)*fee;turnover+=sell.sum(1);numtrades+=(sell>1e-6).sum(1)
             if delay:pending[:,t+delay]+=proceeds

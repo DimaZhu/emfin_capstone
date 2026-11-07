@@ -51,3 +51,11 @@ def test_tiny_two_period_bellman_equals_full_nonanticipative_enumeration():
     # Cheating with the as-yet unseen second return gives a larger value.
     clairvoyant=max(np.mean([max(-np.exp(-step(step(100,a,observed),b,r)/T) for b in actions) for observed in returns for r in returns]) for a in actions)
     assert clairvoyant>exhaustive[0]
+
+
+def test_pro_rata_means_cash_and_risky_both_used():
+    c,d=fixture(h=8,payment=10.);initial=np.array([45.,0.,0.,0.,45.,10.])
+    r=execute(c,d,initial,mode='pro_rata',fee=0,delay=0)
+    # Each10withdrawal consumes halfcash/halfrisky on flat prices.
+    assert r['units_terminal'][0,0]==pytest.approx(35.)
+    assert r['cash_paths'][0,-1]==pytest.approx(35.)
