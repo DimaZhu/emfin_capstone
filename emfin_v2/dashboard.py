@@ -9,9 +9,9 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(assets)==7 and c['real_estate']['enabled'] else []),
         status={k:status[k] for k in ('kind','risky_fraction','optimality_claim','reason') if k in status},confidence=c['confidence'],loss_budget=c['loss_budget'],cml_budget=c['cml_budget'],
         cash_index=c['cash_index'],wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],profile=c.get('risk_profile','Balanced'),
-        liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
+        price_moments_finite=c['student_nu'] is None,liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
         qualifications=['Illustrative, not client-calibrated. All dollar amounts are USD.',
-        'Expected return and volatility are model estimates over this horizon, not annual forecasts. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
+        'Displayed sample return and volatility describe finite simulated paths; the current exponentiated Student-t model does not have finite population price moments. They are not population expected returns or annual forecasts. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
         'CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.',
         'The fan is marked wealth, not available cash, after cumulative payouts and configured synthetic liquidity haircuts, with money-market opportunity costs. RE follows an explicit fixed sale/settlement plan, not a dynamic asset-sale policy.',
         'Stress cards are deterministic simplified shocks, not calibrated historical crisis replays or probability forecasts.',
@@ -49,7 +49,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     if selected is None:return dict(result,unavailable='No proposed allocation passed calibration. Baselines are comparators, not approved alternatives.',guardrails=[],shocks=[])
     a=allocations[selected];w=a/wealth;v=evaluation[0]
     gross=v[0]@a/wealth;returns=np.concatenate([item[0][:,-1]@a/wealth-1 for item in evaluation])
-    losses=np.maximum(0,1-gross).max(1)
+    losses=np.concatenate([np.maximum(0,1-item[0]@a/wealth).max(1) for item in evaluation])
     train_loss=np.maximum(0,1-draw[0]@a/wealth).max(1)
     cmls=[mpep.cml_of_paths(train_loss,p,c['confidence']) for p in (q,qs)]
     row=next(r for r in rows if r['method']==selected)
@@ -78,10 +78,11 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
             if g['state']!='Breached':g['state']='Met'
             guards.append(g)
         else:guards.append(guard('RE minimum',c['real_estate']['minimum_weight']-w[re_index],0.,'Minimum holding, NOT an illiquid-asset cap'))
-    for i in range(len(c['liabilities'])):
-        current=row['wasserstein_gap_upper'][i]
-        g=guard('Held-out funding: week '+str(c['liabilities'][i]['week']),current,row['budgets'][i],'Conditional batch-mean upper interval plus W1 buffer; no distribution-coverage guarantee','usd')
-        g['scope']='Evaluation';guards.append(g)
+    for check in row['evaluation']['checks']:
+        g=dict(name=check['name'],current=check['upper'],limit=check['limit'],state='Met' if check['passed'] else 'Breached',note=row['evaluation']['interval']['scope'],unit=check['unit'],scope='Evaluation',kind=check['kind'],payout_index=check['payout_index'])
+        guards.append(g)
+    for check in row['evaluation']['holdings']:
+        guards.append(dict(name=check['name'],current=check['current'],limit=check['limit'],state='Met' if check['passed'] else 'Breached',note='Independent final holdings check',unit='fraction',scope='Final holdings'))
     # These are deliberately transparent deterministic shocks, not event returns.
     specs=[('2008-style equity shock',[-.40,-.45,-.50,-.03,-.15,0.,-.25],1.),
            ('2022-style rate shock',[-.20,-.20,-.25,-.15,-.18,0.,-.15],1.),
@@ -113,7 +114,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
             capital_change=float(values[-1]-wealth),terminal_net=net,payouts=payments,
             funded=all(p['funded'] for p in payments),kind='Simplified deterministic shock, not a historical replay'))
     return dict(result,expected_return=float(returns.mean()),volatility=float(returns.std(ddof=1)),
-        cml=float(mpep.cml_of_paths(losses,np.full(len(losses),1/len(losses)),c['confidence'])),
+        cml=next(z['mean']['reference'] for z in row['evaluation']['checks'] if z['kind']=='path_loss'),
         observed_max_loss=float(losses.max()),guardrails=guards,shocks=shocks,
-        evaluation_pass=row['evaluation_pass'],liquidity_amount=float(a[c['cash_index']]),
+        evaluation_pass=row['overall_pass'],funding_pass=row['funding_pass'],overall_pass=row['overall_pass'],final_evaluation=row['evaluation'],liquidity_amount=float(a[c['cash_index']]),
         payout_coverage=float(a[c['cash_index']]/sum(p['amount'] for p in c['liabilities'])) if sum(p['amount'] for p in c['liabilities']) else None)
