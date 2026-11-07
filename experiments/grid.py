@@ -24,8 +24,8 @@ def provenance():
 
 
 def configs(spec):
-    from emfin_v2.default_run import load_config
-    base=load_config();base.update(spec.get('engine',{}))
+    from emfin_v2.default_run import load_config,LEGACY_CONFIG
+    base=load_config(LEGACY_CONFIG);base.update(spec.get('engine',{}))
     base['real_estate'].update(spec.get('real_estate',{}))
     base['real_estate'].update(source='synthetic',enabled=True)
     if base.get('scenario_archives'):raise ValueError('shared grid forbids private scenario archives')
