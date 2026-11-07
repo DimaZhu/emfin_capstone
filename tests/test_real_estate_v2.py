@@ -42,7 +42,7 @@ def test_settlement_after_horizon_keeps_receivable_not_cash():
 
 
 def test_generated_mark_vs_funding_and_dependence():
-    c=load_config(LEGACY_CONFIG);c['student_nu']=None;c['horizon_weeks']=13
+    c=load_config(LEGACY_CONFIG);c['student_nu']=None;c['scenario_model']='gaussian';c['horizon_weeks']=13
     c['real_estate'].update(enabled=True,source='synthetic',equity_correlation=.6,net_rental_yield=0.,sale_week=0)
     d=draw_paths(c,setup(c),5000,45)
     assert len(d)==5 and d[0].shape==funding_paths(d).shape

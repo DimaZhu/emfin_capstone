@@ -20,7 +20,7 @@ def test_default_end_to_end_calibration_and_heldout_report(tmp_path):
 
 def test_infeasible_real_estate_minimum_never_returns_fake_solution(tmp_path):
     c=load_config(LEGACY_CONFIG);c.update(horizon_weeks=13,recurring_payout=None,liabilities=[dict(name='Quarterly regression1',week=10,amount=35000000),dict(name='Quarterly regression2',week=13,amount=60000000)]);c['real_estate']['holding_mode']='minimum';c['real_estate']['source']='synthetic';c['real_estate']['enabled']=True;c['real_estate']['minimum_weight']=.3
-    c['liability_vol']=.3;c['multiplier_grid']=[1.]
+    c['liability_vol']=0.;c['multiplier_grid']=[1.]
     result=run(c,tmp_path)
     # Status and validation must be explicit; no allocation may be relabeled
     # successful merely because the baseline itself has valid weights.

@@ -72,7 +72,7 @@ budget. Holdings residuals have explicit absolute weight tolerances only.
     x=np.asarray(batches);familysize=x.shape[1]*x.shape[2]
     critical=t.ppf(1-.05/familysize,len(draws)-1)
     mean=x.mean(0);high=mean+critical*x.std(0,ddof=1)/np.sqrt(len(draws))
-    checks=[];market_buffer=penalty(w,c.get('wasserstein_radius',0),c['confidence']);funding_buffer=penalty(w,c.get('wasserstein_radius',0),c['confidence'],c.get('wasserstein_liability_scale',.01))
+    checks=[];market_buffer=penalty(w,c.get('wasserstein_radius',0),c['confidence'],metric=c.get('wasserstein_metric','legacy_l1'));funding_buffer=penalty(w,c.get('wasserstein_radius',0),c['confidence'],c.get('wasserstein_liability_scale',.01),metric=c.get('wasserstein_metric','legacy_l1'))
     for k in range(n_dates+2):
         funding=k<n_dates;scale=wealth if funding else 1.
         limit=draws[0][3][k]*c['funding_budget_fraction'] if funding else c['cml_budget'] if k==n_dates else c['loss_budget']

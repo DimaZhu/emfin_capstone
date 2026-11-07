@@ -4,21 +4,22 @@ from emfin_v2.toolbox import mpep
 
 
 def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
+    from emfin_v2.innovations import describe
     selected='proposed' if 'proposed' in allocations else None
     h=c['horizon_weeks'];wealth=c['wealth']
     result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(assets)==7 and c['real_estate']['enabled'] else []),
         status={k:status[k] for k in ('kind','risky_fraction','optimality_claim','reason') if k in status},confidence=c['confidence'],loss_budget=c['loss_budget'],cml_budget=c['cml_budget'],
         cash_index=c['cash_index'],wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],profile=c.get('risk_profile','Balanced'),
-        price_moments_finite=c['student_nu'] is None,liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
+        innovation_evidence=describe(c),price_moments_finite=bool(c.get('asset_registry')) and c.get('scenario_model') in ('gaussian','gaussian_scale_mixture'),liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
         qualifications=['Illustrative, not client-calibrated. All dollar amounts are USD.',
-        'Displayed sample return and volatility describe finite simulated paths; the current exponentiated Student-t model does not have finite population price moments. They are not population expected returns or annual forecasts. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
+        'Displayed return and volatility describe finite simulated paths, not economic forecasts. Explicit legacy log-Student-t modes do not have finite population price moments. The new Gaussian-mixture default does. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
         'CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.',
         'The fan is marked wealth, not available cash, after cumulative payouts and configured synthetic liquidity haircuts, with money-market opportunity costs. RE follows an explicit fixed sale/settlement plan, not a dynamic asset-sale policy.',
         'Stress cards are deterministic simplified shocks, not calibrated historical crisis replays or probability forecasts.',
         'Time-to-cash has not been calibrated. A liquid-market label does not guarantee same-day sale or settlement.',
-        'Wasserstein risk bounds use a development radius and unrestricted-support L1 transport; utility is nominal. No probability coverage is guaranteed by the radius.',
+        'Wasserstein risk bounds use a development radius and explicit unrestricted-support transport metric; utility is nominal. No probability coverage is guaranteed by the radius.',
         'Zero observed losses is not a bound on unseen tails.'])
-    lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])/len(assets)
+    lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])*(max(1.,c.get('wasserstein_liability_scale',.01)) if c.get('wasserstein_metric')=='max_path' else max(1/len(assets),c.get('wasserstein_liability_scale',.01)))
     smallest=min(p['amount']*c['funding_budget_fraction'] for p in c['liabilities'])
     result['budget_warning']=f'Incompatible risk settings: W1 buffer is at least ${lower_buffer:,.0f}, above the smallest per-payment tail-gap budget ${smallest:,.0f}. No solver can fix this parameter conflict.' if lower_buffer>smallest+1e-8 else None
     result['registry_mode']=bool(c.get('asset_registry'))
@@ -34,7 +35,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     observed=local_calibration() if c['real_estate'].get('source')=='abu_dhabi_private' else None
     if c['real_estate'].get('source')=='singapore_ura':
         from emfin_v2.singapore import history
-        _,observed=history(c['real_estate'].get('sg_property_type','All Residential'))
+        _,observed=history(c['real_estate'].get('sg_property_type','All Residential'),c['real_estate'].get('history_end'))
     from emfin_v2.real_estate import calibration,assumptions
     result['re_data']=dict(available=observed is not None,source=c['real_estate'].get('source','synthetic'),enabled=c['real_estate']['enabled'],observed=observed,
         assumptions=assumptions(c['real_estate']),calibration=calibration(c['real_estate']) if c['real_estate']['enabled'] else None)

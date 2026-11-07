@@ -31,7 +31,7 @@ def test_presolve_certificate_uses_whole_holdings_domain_not_current_solution():
 def test_new_universe_clarabel_regression_and_original_guardrails():
     from emfin_v2.default_run import load_config,setup,draw_paths,probabilities,solve,metrics,dro_buffer
     from emfin_v2.toolbox.mpep import cml_of_paths
-    c=load_config();d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
+    c=load_config();c.update(scenario_model='legacy_student_t',student_nu=8.,wasserstein_metric='legacy_l1');d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
     a,status=solve(c,d,q,qs,1.)
     assert status['kind']=='optimized' and status['solver']=='CLARABEL'
     assert status['status']=='optimal'
@@ -42,3 +42,16 @@ def test_new_universe_clarabel_regression_and_original_guardrails():
         assert np.all(gaps+dro_buffer(c,a)<=d[3]*c['funding_budget_fraction']+1.)
         losses=np.maximum(0,1-d[0]@a/c['wealth']).max(1)
         assert cml_of_paths(losses,prob,c['confidence'])+dro_buffer(c,a,False)/c['wealth']<=c['cml_budget']+1e-6
+
+
+def test_finite_moment_maxpath_default_solver_passes_original_guards():
+    from emfin_v2.default_run import load_config,setup,draw_paths,probabilities,solve,metrics,dro_buffer
+    from emfin_v2.toolbox.mpep import cml_of_paths
+    c=load_config();d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
+    a,status=solve(c,d,q,qs,1.)
+    assert status['kind']=='optimized' and status['status']=='optimal'
+    assert a[-1]==pytest.approx(c['wealth']*.1,abs=1.)
+    for p in [q,qs]:
+        assert np.all(metrics(c,d,a,p)[0]+dro_buffer(c,a)<=d[3]*c['funding_budget_fraction']+1.)
+        loss=np.maximum(0,1-d[0]@a/c['wealth']).max(1)
+        assert cml_of_paths(loss,p,c['confidence'])+dro_buffer(c,a,False)/c['wealth']<=c['cml_budget']+1e-6

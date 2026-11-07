@@ -304,6 +304,8 @@ def optimization_multiperiod(
     minimum_weights: np.ndarray | None = None,
     fixed_weights: dict | None = None,
     wasserstein_radius: float = 0.,
+    wasserstein_metric: str = 'legacy_l1',
+    objective_kind: str = 'cara',
     wasserstein_liability_scale: float = .01,
     funding_market_paths: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
@@ -376,9 +378,13 @@ def optimization_multiperiod(
     t_loss = cp.Variable()
     cvar_loss = t_loss + cp.sum(cp.multiply(probs, cp.pos(rel_loss - t_loss))) / (1 - confidence_level)
     from emfin_v2.toolbox.wasserstein import cvx_penalty
-    market_dro=cvx_penalty(weights,wasserstein_radius,confidence_level)
-    funding_dro=cvx_penalty(weights,wasserstein_radius,confidence_level,wasserstein_liability_scale)
-    constraints = [cp.sum(weights) == 1, cvar_loss + market_dro <= gamma_loss]
+    market_dro=cvx_penalty(weights,wasserstein_radius,confidence_level,metric=wasserstein_metric)
+    funding_dro=cvx_penalty(weights,wasserstein_radius,confidence_level,wasserstein_liability_scale,metric=wasserstein_metric)
+    if wasserstein_metric=='max_path' and long_only:
+        # Exact on the fully invested long-only domain, avoids redundant norm cones.
+        market_dro=wasserstein_radius/(1-confidence_level)
+        funding_dro=wasserstein_radius*max(1.,wasserstein_liability_scale)/(1-confidence_level)
+    constraints = [cp.sum(weights) == 1, (cvar_loss + market_dro)/gamma_loss <= 1. if gamma_loss>0 else cvar_loss + market_dro <= 0.]
     if long_only:
         constraints.append(weights >= 0)
 
@@ -399,7 +405,7 @@ def optimization_multiperiod(
     free=[i for i in range(n_assets) if i not in fixed]
     remaining=1-base_weights.sum()
     largest_weight=max(float(base_weights.max()),max((base_weights[i]+remaining for i in free),default=0.))
-    max_funding_dro=wasserstein_radius*max(largest_weight,wasserstein_liability_scale)/(1-confidence_level)
+    max_funding_dro=wasserstein_radius*max(1. if wasserstein_metric=='max_path' else largest_weight,wasserstein_liability_scale)/(1-confidence_level)
     funding_certificates=[]
     # Scale each funding budget to one. A nonnegative threshold makes the
     # extra positive-part layer on the gap redundant, reducing cone size.
@@ -458,18 +464,41 @@ def optimization_multiperiod(
             constraints.append(excess_cml >= 1. - value_paths[:,step] - eta_cml)
         for ps in measures:
             cml = eta_cml + ps @ excess_cml / (1-confidence_level)
-            constraints.append(cml + market_dro <= cml_budget)
+            constraints.append((cml + market_dro)/cml_budget <= 1. if cml_budget>0 else cml + market_dro <= 0.)
     elif stress_probabilities:
         raise ValueError("stress_probabilities requires cml_budget")
 
-    problem = cp.Problem(cp.Minimize(expected_disutility), constraints)
-    used_solver = solvers.solve_capped(problem, name="multi-period optimization")
+    if objective_kind=='mean_variance':
+        centered=rel_net-probs@rel_net
+        objective=-probs@rel_net+cp.sum(cp.multiply(probs,cp.square(centered)))/(2*rel_risk_tolerance)
+    elif objective_kind=='cara':objective=expected_disutility
+    else:raise ValueError('unknown allocation objective')
+    problem = cp.Problem(cp.Minimize(objective), constraints)
+    formulation='log_cara' if objective_kind=='cara' else objective_kind
+    first_failure=None
+    try:
+        used_solver = solvers.solve_capped(problem, name="multi-period optimization")
+    except RuntimeError as error:
+        if objective_kind!='cara':raise
+        # Same CARA minimizer, constraints and acceptance. Try a second exact
+        # cone representation, never a risk/utility approximation.
+        first_failure=str(error)
+        direct=cp.sum(cp.multiply(probs[support],cp.exp(-(rel_net[support]-reference_net)/rel_risk_tolerance)))
+        problem=cp.Problem(cp.Minimize(direct),constraints)
+        try:
+            used_solver=solvers.solve_capped(problem,name="equivalent exponential CARA optimization")
+        except RuntimeError as retry_error:
+            raise RuntimeError(first_failure+'; exact representation retry: '+str(retry_error)) from retry_error
+        formulation='equivalent_centered_exp_cara'
 
     allocations = weights.value * wealth / prices
     diagnostics = {
         "status": problem.status,
         "solver": used_solver,
-        "ce_in_solver": float(reference_net - rel_risk_tolerance * problem.value) * wealth,
+        "ce_in_solver": float(reference_net - rel_risk_tolerance * expected_disutility.value) * wealth,
+        "objective_kind": objective_kind,
+        "objective_formulation": formulation,
+        "first_formulation_failure": first_failure,
         "weights": weights.value.copy(),
         "funding_presolve_certificates": funding_certificates,
     }

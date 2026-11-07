@@ -32,7 +32,7 @@ class Controls:
     liability: float=3.
     budget: float=20.
     view: float=50.
-    student: bool=True
+    fat_tails: bool=True
     sequential: bool=True
     stress: bool=True
     multiperiod: bool=True
@@ -132,7 +132,8 @@ def compute(c=Controls(),config_path=None):
         view_indices=config.get('asset_layout',{}).get('view_indices',list(range(5)))
         if c.asset_views is not None and len(c.asset_views)!=len(view_indices):raise ValueError('expected horizon targets must match the active registry view membership')
         config['market_return_views']={str(i):v/100 for i,v in zip(view_indices,c.asset_views)} if c.asset_views is not None else {}
-        config['student_nu']=8. if c.student else None
+        config['scenario_model']='gaussian_scale_mixture' if c.fat_tails else 'gaussian'
+        config['student_nu']=None
         config['real_estate']['enabled']=c.real_estate
         config['real_estate'].update(holding_mode=c.re_holding_mode,fixed_weight=c.re_fixed/100)
         config['real_estate']['source']=c.re_source
@@ -148,7 +149,7 @@ def compute(c=Controls(),config_path=None):
     chol=np.linalg.cholesky(c.horizon*cov+1e-12*np.eye(6))
     def draw(n):
         z=rng.normal(size=(n,6))@chol.T
-        if c.student:z/=np.sqrt(rng.chisquare(8,(n,1))/6)
+        if c.fat_tails:z/=np.sqrt(rng.chisquare(8,(n,1))/6)
         return dataset.gross_market(c.horizon*mean+z,anchor.YIELD_LEVEL,anchor.SPREAD_LEVEL,c.horizon)
     market=draw(1000);judge=draw(8000)
     # A fixed synthetic proportional liquidity haircut, not calibrated costs.
@@ -203,7 +204,7 @@ def from_default(result):
     return dict(controls=dict(scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
         recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
-        student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
+        fat_tails=cfg.get('scenario_model','legacy_student_t' if cfg['student_nu'] is not None else 'gaussian')!='gaussian',sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,re_holding_mode=cfg['real_estate'].get('holding_mode','minimum'),re_fixed=cfg['real_estate'].get('fixed_weight',.1)*100,
         re_sg_type=cfg['real_estate'].get('sg_property_type','All Residential'),re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
