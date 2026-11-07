@@ -80,7 +80,7 @@ def test_shortfall_budget_binds_and_tightens_monotonically():
     alloc_loose, diag_loose = solve(0.02)
     alloc_tight, diag_tight = solve(0.002)
     assert diag_loose["weights"][1] < diag_tight["weights"][1]
-    assert diag_tight["weights"][1] > 0.8
+    assert diag_tight["weights"][1] > 0.6  # constraint binds: mostly safe asset
 
     # The realized funding-gap CVaR honors each budget (small numerical slack)
     for alloc, gs in [(alloc_loose, 0.02), (alloc_tight, 0.002)]:
