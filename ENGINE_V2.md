@@ -42,6 +42,20 @@ change only scenario probabilities and scenario values, upstream.
   dependency - copyleft; used only as a one-off local check. Their
   sequential-EP heuristics are proprietary and not in either open-source
   package - ours is our own implementation).
+- **FFR prior (Fully Flexible Resampling)**: the moment estimates behind the
+  scenario set are computed under flexible probabilities over the 276
+  historical weeks - exponential time decay (156-week half-life) combined
+  with a Gaussian kernel on trailing 13-week DFUS realized vol, so recent
+  weeks in a similar vol regime count more.  Kish effective sample size is
+  reported (103/276 in the pinned run).  `toolbox/ffr.py` also provides the
+  non-parametric option: weighted block-free bootstrap of weekly invariants
+  into horizon scenarios.  Honest caveat: the judge's data-generating
+  process is the full-sample Gaussian, so it cannot reward a better prior -
+  FFR's value is a real-data non-stationarity property, and its CE gap
+  under the judge is the price of regime robustness.  The uniform-prior
+  contrast allocation is available via `--with-uniform-contrast` (off by
+  default: its unweighted solve intermittently falls back to the slow SCS
+  path - an open solver-robustness item).
 - **Bonds**: weekly changes in 10Y yield as the invariant; exact flat-curve
   repricing, roll-down falls out of the pricing equation. No credit-spread
   layer yet (second factor, same machinery).
@@ -74,4 +88,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 45 tests covering every module.
+`python -m pytest tests/` - 59 tests covering every module.
