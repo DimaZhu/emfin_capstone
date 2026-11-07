@@ -120,7 +120,9 @@ def optimization_liability_aware(
 
     # weighted CE: -zeta * log sum_s q_s exp(-net_s / zeta); for uniform q
     # this is exactly the unweighted form above
-    ce_rel = -rel_risk_tolerance * cp.log_sum_exp(-rel_net / rel_risk_tolerance + log_probs)
+    # Center on the no-market-move surplus to avoid exp(-40) scaling.
+    reference_net = 1.0 - liability_due / wealth
+    expected_disutility = cp.sum(cp.multiply(probs, cp.exp(-(rel_net - reference_net) / rel_risk_tolerance)))
 
     # portfolio loss budget (as in the asset-only engine)
     rel_loss = 1 - rel_wealth
@@ -140,14 +142,14 @@ def optimization_liability_aware(
         cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
         constraints.append(cvar_gap <= gamma_shortfall * rel_liability)
 
-    problem = cp.Problem(cp.Maximize(ce_rel), constraints)
+    problem = cp.Problem(cp.Minimize(expected_disutility), constraints)
     used_solver = solvers.solve_capped(problem, name="liability-aware optimization")
 
     allocations = weights.value * wealth / prices_vector.ravel()
     diagnostics = {
         "status": problem.status,
         "solver": used_solver,
-        "ce_in_solver": float(problem.value) * wealth,
+        "ce_in_solver": float(reference_net - rel_risk_tolerance * np.log(problem.value)) * wealth,
         "weights": weights.value.copy(),
     }
     return allocations, diagnostics
@@ -339,7 +341,8 @@ def optimization_multiperiod(
         provision += liabilities[:, i] * growth[:, -1] / growth[:, step - 1]
     rel_net = value_terminal - provision / wealth
 
-    ce_rel = -rel_risk_tolerance * cp.log_sum_exp(-rel_net / rel_risk_tolerance + log_probs)
+    reference_net = 1.0 - float(np.mean(provision)) / wealth
+    expected_disutility = cp.sum(cp.multiply(probs, cp.exp(-(rel_net - reference_net) / rel_risk_tolerance)))
 
     rel_loss = 1 - value_terminal
     t_loss = cp.Variable()
@@ -356,14 +359,14 @@ def optimization_multiperiod(
         cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
         constraints.append(cvar_gap <= gamma_shortfall * base[i] / wealth)
 
-    problem = cp.Problem(cp.Maximize(ce_rel), constraints)
+    problem = cp.Problem(cp.Minimize(expected_disutility), constraints)
     used_solver = solvers.solve_capped(problem, name="multi-period optimization")
 
     allocations = weights.value * wealth / prices
     diagnostics = {
         "status": problem.status,
         "solver": used_solver,
-        "ce_in_solver": float(problem.value) * wealth,
+        "ce_in_solver": float(reference_net - rel_risk_tolerance * np.log(problem.value)) * wealth,
         "weights": weights.value.copy(),
     }
     return allocations, diagnostics

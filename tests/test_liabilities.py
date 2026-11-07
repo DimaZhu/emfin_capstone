@@ -239,3 +239,13 @@ def test_crra_tolerance_tracks_surplus_ratio():
     assert richer == 2 * base and poorer == 0.5 * base  # proportional, like CRRA
     # negative surplus floors instead of producing a negative tolerance
     assert crra_scaled_tolerance(base, -0.5, f0) > 0
+
+
+def test_centered_exponential_ce_matches_logsumexp_value():
+    from scipy.special import logsumexp
+    samples, prices = _toy_market(n=1000)
+    alloc, diag = liab.optimization_liability_aware(
+        samples, prices, 1e6, 950_000, 50_000, 0.95, 0.2, 0.2)
+    net = samples @ alloc - 950_000
+    expected = -50_000 * (logsumexp(-net / 50_000) - np.log(len(net)))
+    assert diag['ce_in_solver'] == pytest.approx(expected, abs=0.1)

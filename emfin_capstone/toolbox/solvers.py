@@ -33,7 +33,8 @@ def solve_capped(problem: cp.Problem, name: str = "optimization") -> str:
     used_solver = "CLARABEL"
     try:
         problem.solve(solver="CLARABEL", max_iter=CLARABEL_MAX_ITER,
-                      time_limit=CLARABEL_TIME_LIMIT_SECS)
+                      time_limit=CLARABEL_TIME_LIMIT_SECS, max_threads=1,
+                      tol_gap_abs=1e-7, tol_gap_rel=1e-7, tol_feas=1e-7)
     except cp.SolverError:
         used_solver = "SCS"
         problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6,
