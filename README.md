@@ -112,3 +112,10 @@ are reported, not replaced silently by synthetic data.
 The SFO section contains a default placeholder and evidence checklist, template
 download, and a live-local full JSON config runner. Real client evidence remains
 absent until supplied. The small public synthetic fixture is only for testing.
+
+## RE sensitivity and sale timing
+
+The RE panel now includes assumed monthly unsmoothing, explicit equity dependence,
+net rent, a planned sale/settlement schedule and short-history bootstrap cases.
+Property marks are separate from spendable funding: unsold property cannot pay a
+due obligation. See [assumptions, equations and limits](docs/REAL_ESTATE.md).

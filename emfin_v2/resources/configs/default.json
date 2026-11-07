@@ -50,7 +50,12 @@
     "annual_vol": 0.12,
     "equity_correlation": 0.3,
     "liquidation_haircut": 0.1,
-    "source": "abu_dhabi_private"
+    "source": "abu_dhabi_private",
+    "smoothing_alpha": 0.0,
+    "net_rental_yield": 0.0,
+    "sale_week": 0,
+    "sale_delay_weeks": 12,
+    "history_case": "central"
   },
   "client_evidence": {
     "status": "illustrative",

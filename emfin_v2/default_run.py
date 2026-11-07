@@ -10,6 +10,7 @@ import numpy as np
 from scipy.stats import t as student
 from emfin_v2.toolbox import dataset,shrinkage,liabilities,entropy_pooling as ep,benchmark,risk_stats,mpep,seqep
 
+from emfin_v2.real_estate import ScenarioDraw, funding_paths
 from emfin_v2.config import CONFIG_DIR
 DEFAULT_CONFIG=CONFIG_DIR/'default.json'
 
@@ -63,6 +64,8 @@ def load_config(path=DEFAULT_CONFIG):
     if any(not isinstance(re[k],(int,float)) or not np.isfinite(re[k]) for k in ('minimum_weight','equity_correlation','annual_vol','annual_drift','liquidation_haircut')):raise ValueError('RE assumptions must be finite')
     if not 0<=re['minimum_weight']<=1 or not -1<=re['equity_correlation']<=1 or re['annual_vol']<0 or not 0<=re['liquidation_haircut']<1:
         raise ValueError('invalid RE assumptions')
+    from emfin_v2.real_estate import validate
+    validate(re)
     return c
 
 
@@ -70,6 +73,7 @@ def load_archive(path,c):
     with np.load(path,allow_pickle=False) as f:
         required=['market_paths','prices_vector','liability_scenarios','payout_steps','liability_base','mm_growth_paths']
         arrays={key:np.array(f[key]) for key in required}
+        funding=np.array(f['funding_paths']) if 'funding_paths' in f else None
     paths=arrays['market_paths'];prices=arrays['prices_vector'].ravel()
     if paths.ndim!=3 or any(size<1 for size in paths.shape):raise ValueError('archive needs nonempty (scenario,week,asset) paths')
     if not np.equal(arrays['payout_steps'],np.round(arrays['payout_steps'])).all():raise ValueError('archive payout steps must be whole weeks')
@@ -82,7 +86,11 @@ def load_archive(path,c):
         raise ValueError('archive has nonfinite/negative values or invalid payout steps')
     if h!=c['horizon_weeks'] or not 0<=c['cash_index']<d:
         raise ValueError('archive horizon/cash index disagrees with config')
-    return paths/prices,liabilities_,steps,base,growth
+    if c['real_estate']['enabled'] and funding is None:
+        raise ValueError('RE archive mode requires separate funding_paths; marked property is not cash')
+    if funding is not None and (funding.shape!=paths.shape or not np.isfinite(funding).all() or (funding<0).any()):
+        raise ValueError('archive funding_paths must align and be finite/nonnegative')
+    return ScenarioDraw((paths/prices,liabilities_,steps,base,growth),paths/prices if funding is None else funding/prices)
 
 
 def interval(values):
@@ -101,23 +109,24 @@ def setup(c):
 def draw_paths(c,fit,n,seed,stressed=False):
     frame,mu,cov=fit;h=c['horizon_weeks'];rng=np.random.default_rng(seed)
     z=rng.normal(size=(n,h,6))@np.linalg.cholesky(cov+1e-12*np.eye(6)).T
+    equity_gaussian=z[:,:,:3].mean(2)/max(np.sqrt(cov[:3,:3].sum()/9),1e-12)
+    scale=np.ones((n,h,1))
     if c['student_nu'] is not None:
-        z/=np.sqrt(rng.chisquare(c['student_nu'],(n,h,1))/(c['student_nu']-2))
+        scale=np.sqrt(rng.chisquare(c['student_nu'],(n,h,1))/(c['student_nu']-2))
+        z/=scale
     cumul=np.cumsum(mu+z,axis=1);last=frame.iloc[-1]
     paths=np.stack([dataset.gross_market(cumul[:,j],last.YIELD_LEVEL,last.SPREAD_LEVEL,j+1) for j in range(h)],1)
     growth=paths[:,:,5].copy() # no haircut on MMKT
     paths*=1-np.asarray(c['liquidity_haircuts'])
-    re=c['real_estate']
+    re=c['real_estate'];funding=paths
     if re['enabled']:
-        if re.get('source')=='abu_dhabi_private':
-            from emfin_v2.abu_dhabi import local_calibration
-            observed=local_calibration()
-            if observed is None:raise ValueError('Abu Dhabi private import unavailable; import the sheet locally or choose the synthetic sample')
-            re=dict(re,annual_drift=observed['annual_log_drift'],annual_vol=observed['annual_vol'])
-        rho=re['equity_correlation']
-        equity=z[:,:,:3].mean(2);equity/=max(equity.std(),1e-9)
-        re_log=np.cumsum(re['annual_drift']/52+re['annual_vol']/np.sqrt(52)*(rho*equity+np.sqrt(1-rho*rho)*rng.normal(size=(n,h))),1)
-        paths=np.concatenate([paths,((1-re['liquidation_haircut'])*np.exp(re_log))[:,:,None]],axis=2)
+        from emfin_v2.real_estate import calibration,cash_and_mark
+        cal=calibration(re);rho=re['equity_correlation']
+        shock=(rho*equity_gaussian+np.sqrt(1-rho*rho)*rng.normal(size=(n,h)))/scale[:,:,0]
+        re_log=np.cumsum(cal['annual_log_drift']/52+cal['annual_vol']/np.sqrt(52)*shock,axis=1)
+        mark,spendable=cash_and_mark(np.exp(re_log),growth,re)
+        funding=np.concatenate([paths,spendable[:,:,None]],axis=2)
+        paths=np.concatenate([paths,mark[:,:,None]],axis=2)
     steps=np.array([i['week'] for i in c['liabilities']],int)
     bases=np.array([i['amount'] for i in c['liabilities']],float)
     # Explicit optional liability model: same amount shock per payout, correlated
@@ -125,7 +134,7 @@ def draw_paths(c,fit,n,seed,stressed=False):
     vol=c['liability_vol'];stress=-cumul[:,-1,:3].mean(1)
     stress=(stress-stress.mean())/max(stress.std(),1e-9)
     amounts=bases[None,:]*np.exp(vol*(.3*stress[:,None]+np.sqrt(.91)*rng.normal(size=(n,len(bases))))-.5*vol*vol)
-    return paths,amounts,steps,bases,growth
+    return ScenarioDraw((paths,amounts,steps,bases,growth),funding)
 
 
 def probabilities(c,paths):
@@ -165,7 +174,7 @@ def metrics(c,draw,a,probs=None):
         required=amounts[:,i].copy()
         for j,prior in enumerate(steps):
             if prior<step or (prior==step and j<i):required+=amounts[:,j]*growth[:,step-1]/growth[:,prior-1]
-        gaps.append(mpep.cml_of_paths(np.maximum(required-paths[:,step-1]@a,0),p,c['confidence']))
+        gaps.append(mpep.cml_of_paths(np.maximum(required-funding_paths(draw)[:,step-1]@a,0),p,c['confidence']))
     return np.array(gaps),float(ce)
 
 
@@ -182,6 +191,7 @@ def solve(c,draw,q,qs,mult):
             scenario_probs=q,n_optimization_scenarios=n,cml_budget=c['cml_budget'],
             stress_probabilities=[qs],funding_stress_probabilities=[qs],
             wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),
+            funding_market_paths=funding_paths(draw),
             minimum_weights=c.get('minimum_weights') if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else None)
         return a,dict(kind='optimized',**diag)
     except RuntimeError as err:
@@ -197,7 +207,7 @@ def solve(c,draw,q,qs,mult):
             for j in range(len(steps)):
                 if steps[j]<steps[i] or (steps[j]==steps[i] and j<i):
                     need+=amounts[:,j]*growth[:,steps[i]-1]/growth[:,steps[j]-1]
-            pointwise.append(float(np.maximum(need-paths[:,steps[i]-1]@a,0).max()) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
+            pointwise.append(float(np.maximum(need-funding_paths(draw)[:,steps[i]-1]@a,0).max()) <= c['funding_budget_fraction']*mult*bases[i]+1e-6)
         if (not c.get('minimum_weights') or all(v==0 for j,v in enumerate(c['minimum_weights']) if j!=c['cash_index'])) and (d!=7 or c['real_estate']['minimum_weight']==0) and all(pointwise) and max_loss+dro_buffer(c,a,False)/c['wealth']<=min(c['loss_budget'],c['cml_budget']):
             return a,dict(kind='verified pointwise cash fallback',reason=str(err))
         return None,dict(kind='unavailable',reason=str(err),cash_fallback_rejected=True)
@@ -242,7 +252,7 @@ def run(c,output='artifacts/default'):
             need=draw[1][:,k].copy()
             for j,prior in enumerate(draw[2]):
                 if prior<step or (prior==step and j<k):need+=draw[1][:,j]*draw[4][:,step-1]/draw[4][:,prior-1]
-            cash_safe &= bool(np.maximum(need-draw[0][:,step-1]@cash,0).max()+dro_buffer(c,cash) <= c['funding_budget_fraction']*mult*draw[3][k])
+            cash_safe &= bool(np.maximum(need-funding_paths(draw)[:,step-1]@cash,0).max()+dro_buffer(c,cash) <= c['funding_budget_fraction']*mult*draw[3][k])
         cash_safe &= bool(np.maximum(0,1-draw[0]@cash/c['wealth']).max()+dro_buffer(c,cash,False)/c['wealth']<=min(c['cml_budget'],c['loss_budget']))
         if np.any(mins[np.arange(d)!=c['cash_index']]>0):cash_safe=False
         grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
@@ -304,7 +314,7 @@ def run(c,output='artifacts/default'):
                  'Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.',
                  'Liabilities and views are illustrative; Student-t nu=8 is development-selected, not client evidence.',
                  'Default weekly t shocks aggregate by summation; quarterly shocks are not assumed to preserve t degrees of freedom.',
-                 'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing or asset-specific sales.',
+                 'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
                  'With minimum holdings, 1/N is equal-weighted over the remaining free budget; all methods honor the same minima.'])
     from emfin_v2.dashboard import summarize
