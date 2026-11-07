@@ -129,3 +129,36 @@ paired4batchCEdifferences. If robust feedback equals/loses to its static
 first-action comparator or matches cash-first, say so. No final repair.
 Preserve all earlier results and source/selection locks.360evaluationsx4laws,
 search budget180s, whole study300s; estimate before execution.
+
+## Post-result sample relaxation bound, not an executable policy
+After the robust search failed validation, add an analytical diagnostic only:
+remove nonanticipativity, all trading fees/delays, loss limits and monthly
+frequency restrictions. Each week a clairvoyant liquid portfolio invests in
+the next realized best gross-return sleeve (including free unit cash), pays
+the fixed liability; property units stay fixed. Induction gives a PATHWISE
+upper terminal wealth bound for every admissible experimental policy. Its
+sampleCE is an upper bound on the sample utility problem, not an implementable
+strategy or a confidence bound on the true-law optimum. A large gap explicitly
+means no near-optimality certificate. This does not select/change any policy.
+
+## Rebalancing frequency follow-up, frozen before new paths
+
+User request 7 Nov 2026 23:17 Singapore: compare monthly, quarterly,
+semiannual and annual rebalancing. Fixed target = the original common starting
+holdings, not the learned time-zero target. All retain 12 monthly 250k payments,
+unsold 10% property, 5bps per buy/sell, one-week settlement and the same judge.
+At time zero and months k=1..11 divisible by the frequency, rebalance the liquid
+portfolio. Execution is one week before the modeled month boundary so receipts
+can settle. At all other monthly decision dates use cash-first funding. There
+is no gratuitous end-of-horizon rebalance. Annual thus means hold over the
+one-year window, not evidence for multi-year annual rebalancing.
+
+No new fitting. Four already fixed return laws from robust extension. Fresh
+4x200 validation paths with offset310000; select highest worst-model CE among
+frequencies passing all four laws, ties under $100 labelled practically tied.
+Then freeze before fresh 4x400 final paths with offset320000. Compare all four
+on shared paths within each law. Report paired4batch MC intervals only as
+conditional diagnostics, not economic confidence or global horizon proof.
+Compute budget 60seconds. This is a new exploratory question, not a repair of
+the failed feedback search. Frequency is conditional on this unusually
+cash-heavy starting target and one-year horizon.

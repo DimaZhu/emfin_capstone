@@ -3,13 +3,15 @@ import numpy as np
 from scipy.special import softmax,logsumexp
 
 
-def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=True):
+def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=True,rebalance_months=None):
     prices,amounts,steps,bases,growth=draw;n,h,d=prices.shape;a=np.asarray(initial,float);cash_ix=c['cash_index'];prop=c.get('asset_layout',{}).get('property_indices',[]);risky=[i for i in range(d) if i!=cash_ix and i not in prop];liquid=[cash_ix,*risky]
     if len(risky)!=4 or a.shape!=(d,) or (a<-1e-6).any() or not np.isfinite(a).all():raise ValueError('four liquid risky sleeves and finite long-only initial holdings required')
-    if type(delay) is not int or delay<0 or not 0<=fee<1 or mode not in ('feedback','cash_first','pro_rata','static_target','feedback_initial_only','feedback_static_target'):raise ValueError('valid fee/delay/policy required')
+    if type(delay) is not int or delay<0 or not 0<=fee<1 or mode not in ('feedback','cash_first','pro_rata','static_target','feedback_initial_only','feedback_static_target','static_frequency'):raise ValueError('valid fee/delay/policy required')
+    if mode=='static_frequency' and rebalance_months not in (1,3,6,12):raise ValueError('frequency must be 1,3,6 or12months')
     if c['real_estate'].get('sale_week',0) or c['real_estate'].get('annual_rent_yield',0):raise ValueError('dynamic study requires unsold property and zero rent')
     if theta is not None and (np.asarray(theta).shape!=(8,) or not np.isfinite(theta).all()):raise ValueError('eight finite feedback parameters required')
     units=np.broadcast_to(np.maximum(a,0),(n,d)).copy();units[:,cash_ix]=0.;cash=np.full(n,max(a[cash_ix],0));pending=np.zeros((n,h+delay+2));arrears=np.zeros(n);paid_carry=np.zeros(n);short=np.zeros_like(amounts);cost=np.zeros(n);turnover=np.zeros(n);netpath=np.zeros((n,h));shadow=np.zeros((n,h));cashpath=np.zeros((n,h)) if record else None;decisions=sorted(set([0,*[max(0,int(t)-delay) for t in steps if int(t)-delay<h]]));base_liquid=float(a[liquid].sum());weights=a[liquid]/base_liquid;running=np.ones(n);numtrades=np.zeros(n,int);initial_prices=np.ones((n,d))
+    rebalance_dates=set([0,*[max(0,int(steps[k-1])-delay) for k in range(1,len(steps)) if rebalance_months and k%rebalance_months==0]])
     for t in range(h+1):
         px=initial_prices if t==0 else prices[:,t-1,:]
         if t:
@@ -19,6 +21,7 @@ def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=T
         running=np.maximum(running,px[:,risky[0]])
         if t in decisions:
             active_mode=mode
+            if mode=='static_frequency':active_mode='static_target' if t in rebalance_dates else 'cash_first'
             if mode=='feedback_initial_only':active_mode='feedback' if t==0 else 'cash_first'
             if mode=='feedback_static_target':active_mode='feedback' if t==0 else 'static_target'
             values=units[:,risky]*px[:,risky];spendable=cash+values.sum(1)
@@ -53,3 +56,19 @@ def logits(allocation,c):
 
 
 def ce(outcome,tolerance):return float(-tolerance*(logsumexp(-np.asarray(outcome)/tolerance)-np.log(len(outcome))))
+
+
+def perfect_foresight_relaxation(c,draw,initial):
+    """Pathwise upper wealth bound, NOT implementable or a fitted-model CI.
+
+    Drop nonanticipativity, costs, delays, risky limits and the monthly action
+    restriction. Frictionless weekly liquid investment selects the next week's
+    best realized gross factor, including free unit cash. Property stays fixed.
+    Induction dominates every admissible real policy in the experiment pathwise.
+    """
+    prices,amounts,steps,bases,growth=draw;a=np.asarray(initial,float);cash=c['cash_index'];prop=c.get('asset_layout',{}).get('property_indices',[]);liquid=[i for i in range(len(a)) if i not in prop];n,h,d=prices.shape
+    if not np.isfinite(prices).all() or (prices[:,:,liquid]<=0).any():raise ValueError('positive finite liquid price primitives required')
+    value=np.full(n,a[liquid].sum());previous=np.ones((n,len(liquid)))
+    for t in range(h):
+        current=prices[:,t,liquid];best=np.maximum(1.,(current/previous).max(1));value=value*best-amounts[:,steps==t+1].sum(1);previous=current
+    return value+prices[:,-1,prop]@a[prop]
