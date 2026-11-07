@@ -299,14 +299,64 @@ def main() -> None:
     )
 
     _tick("optimize: EP (views)")
-    # 4. entropy-pooled + liability-aware
-    alloc_lace, _ = liab.optimization_liability_aware(
-        market_samples=market_net, prices_vector=prices_vector, wealth=WEALTH,
-        liability_due=liability_due, risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
-        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL, scenario_probs=q,
-    )
 
-    _tick("optimize: EP + liabilities")
+    # ---- Judging: paired fresh seeds under the prior (no views) ----------
+    def judge_sample_fn(seed: int) -> np.ndarray:
+        rng_j = np.random.default_rng(seed)
+        inv_j = mu_tau + rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
+        market_j = market_from_invariants(inv_j)
+        stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
+        return mliq.apply_meucci_liquidity(
+            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
+            gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 50_000)
+
+    # 4. entropy-pooled + liability-aware, with the shortfall budget
+    #    calibrated against out-of-sample reality.  SAA tail noise: a CVaR
+    #    constraint that binds in-solver on 10k scenarios realizes ~2x looser
+    #    on fresh draws, so the nominal budget cannot be trusted directly.
+    #    Binary-search the budget multiplier for the loosest in-solver budget
+    #    whose realized OOS gap CVaR (paired judge seeds) still respects the
+    #    target.  --no-tail-calibration skips the loop (single nominal solve).
+    target_gap_cvar = GAMMA_SHORTFALL * liability_due
+    _lace_cache: dict[float, np.ndarray] = {}
+
+    def _solve_lace(mult: float) -> np.ndarray:
+        if mult not in _lace_cache:
+            a, _ = liab.optimization_liability_aware(
+                market_samples=market_net, prices_vector=prices_vector, wealth=WEALTH,
+                liability_due=liability_due, risk_tolerance=RISK_TOLERANCE,
+                confidence_level=CONFIDENCE, gamma_loss=GAMMA_LOSS,
+                gamma_shortfall=GAMMA_SHORTFALL * mult, scenario_probs=q)
+            _lace_cache[mult] = a
+        return _lace_cache[mult]
+
+    def _realized_gap_cvar(alloc: np.ndarray) -> float:
+        res = benchmark.judge_allocations(
+            {"calibration probe": alloc}, judge_sample_fn, N_JUDGE_SEEDS, JUDGE_SEED_BASE,
+            WEALTH, RISK_TOLERANCE, liability_due=liability_due, confidence_level=CONFIDENCE)
+        return float(res.shortfall_cvar_by_seed.mean())
+
+    if "--no-tail-calibration" in sys.argv:
+        alloc_lace = _solve_lace(1.0)
+        calibration = None
+    else:
+        calibration = liab.calibrate_shortfall_budget(
+            _solve_lace, _realized_gap_cvar, target_gap_cvar)
+        alloc_lace = calibration.best_allocation
+        print(f"\nTail-budget calibration (target: OOS gap CVaR <= ${target_gap_cvar:,.0f}):")
+        nominal_realized = None
+        for mult, realized in calibration.history:
+            verdict = "ok" if realized <= target_gap_cvar else "FAIL"
+            print(f"  in-solver budget x{mult:.2f}: realized OOS gap CVaR ${realized:,.0f}  [{verdict}]")
+            if mult == 1.0:
+                nominal_realized = realized
+        if calibration.best_multiplier < 1.0 and nominal_realized is not None:
+            print(f"  -> calibrated in-solver multiplier x{calibration.best_multiplier:.2f}: "
+                  f"the nominal budget realized ~{nominal_realized / target_gap_cvar:.1f}x over target OOS")
+        else:
+            print("  -> nominal budget already respects the target out-of-sample; no tightening")
+
+    _tick("optimize: EP + liabilities (tail-budget calibrated)")
     # Uniform-prior contrast: the same EP+liabilities optimization on
     # scenarios generated from the uniform (full-sample) moments.  The judge
     # below draws from a third, fresh distribution, so neither prior is the
@@ -317,6 +367,10 @@ def main() -> None:
         "EP (views)": alloc_ep,
         "EP + liabilities": alloc_lace,
     }
+    if calibration is not None and calibration.best_multiplier < 1.0:
+        # honest contrast: what the un-calibrated (nominal-budget) allocation
+        # costs and buys - its OOS breach is visible in the judge table
+        allocations["EP+liab (nominal)"] = _lace_cache[1.0]
     # Optional honest contrast: same optimization on uniform-prior scenarios.
     # Off by default - its unweighted solve intermittently falls back to the
     # slow SCS path; run with --with-uniform-contrast when needed.
@@ -335,16 +389,6 @@ def main() -> None:
         _tick("optimize: EP+liab (uniform prior)")
     for name, a in allocations.items():
         print(f"{name:>18}: " + ", ".join(f"{n} {w:+.1%}" for n, w in zip(names, a * prices_vector / WEALTH)))
-
-    # ---- Judging: paired fresh seeds under the prior (no views) ----------
-    def judge_sample_fn(seed: int) -> np.ndarray:
-        rng_j = np.random.default_rng(seed)
-        inv_j = mu_tau + rng_j.standard_normal((N_SCENARIOS, len(mu_tau))) @ chol.T
-        market_j = market_from_invariants(inv_j)
-        stress_j = np.clip(-inv_j[:, :3].mean(axis=1) / 0.05, 0.0, None)
-        return mliq.apply_meucci_liquidity(
-            market_j, np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params, market_corr,
-            gamma=0.9, state_multiplier=1.0 + 2.0 * stress_j, seed=seed + 50_000)
 
     _tick("allocation table")
     result = benchmark.judge_allocations(
@@ -367,7 +411,10 @@ def main() -> None:
         print("\nShortfall probability vs ${:,.0f} due:".format(liability_due))
         for name, sf in zip(result.names, result.shortfall_prob_by_seed.mean(axis=0)):
             print(f"{name:>18}: {sf:.1%}")
-        print("\nFunding-gap CVaR (95%) - budget was ${:,.0f}:".format(GAMMA_SHORTFALL * liability_due))
+        cal_note = ("" if calibration is None else
+                    f" - in-solver multiplier x{calibration.best_multiplier:.2f} after OOS calibration")
+        print("\nFunding-gap CVaR (95%) - budget ${:,.0f}{}:".format(
+            GAMMA_SHORTFALL * liability_due, cal_note))
         for name, sc in zip(result.names, result.shortfall_cvar_by_seed.mean(axis=0)):
             print(f"{name:>18}: ${sc:,.0f}")
 
