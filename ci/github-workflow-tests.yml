@@ -1,3 +1,7 @@
+# GitHub Actions workflow for the pytest suite.
+# INSTALL: move to .github/workflows/tests.yml (web UI: Actions -> set up a
+# workflow yourself -> paste).  It lives here because the repo-scope push
+# token cannot create files under .github/workflows (needs `workflow` scope).
 name: tests
 on: [push, pull_request]
 jobs:
