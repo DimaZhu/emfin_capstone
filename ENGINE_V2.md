@@ -8,7 +8,7 @@ number here is reproducible byte-for-byte: `python scripts/run_v2_engine.py`.
 
 ```
 pinned snapshot (CSV, manifest, scripts/pin_data_snapshot.py)
-  -> weekly invariants (toolbox/snapshot.py: equity log returns, 10Y yield changes, cash accrual)
+  -> weekly invariants (toolbox/snapshot.py: equity log returns, 10Y yield changes, IG OAS changes, cash accrual)
   -> joint moments -> horizon projection (square-root rule)
   -> Gaussian invariant scenarios (seeded)
   -> market map (equities lognormal; bond exact repricing with roll-down - toolbox/bonds.py)
@@ -43,11 +43,18 @@ change only scenario probabilities and scenario values, upstream.
   sequential-EP heuristics are proprietary and not in either open-source
   package - ours is our own implementation).
 - **FFR prior (Fully Flexible Resampling)**: the moment estimates behind the
-  scenario set are computed under flexible probabilities over the 276
-  historical weeks - exponential time decay (156-week half-life) combined
-  with a Gaussian kernel on trailing 13-week DFUS realized vol, so recent
-  weeks in a similar vol regime count more.  Kish effective sample size is
-  reported (103/276 in the pinned run).  `toolbox/ffr.py` also provides the
+  scenario set are computed under flexible probabilities over the historical
+  weeks - exponential time decay (half-life scaled to ~half the estimation
+  window) combined with a Gaussian kernel on trailing 13-week DFUS realized
+  vol, so recent weeks in a similar vol regime count more.  Kish effective
+  sample size is reported.  **ESS floor**: an over-tight kernel on a short
+  window burns the effective sample below what the covariance needs and the
+  prior collapses into chasing the latest rally (this actually happened on
+  the OAS-shortened window: ESS 28/151, 100% corner allocations).  The
+  runner therefore widens the kernel bandwidth until ESS >= 60 and reports
+  the widening.  **Window note**: with the credit sleeve, the estimation
+  window shortens to the common history of the FRED OAS series (151 weeks
+  from 2023-11; OAS is the binding constraint).  `toolbox/ffr.py` also provides the
   non-parametric option: weighted block-free bootstrap of weekly invariants
   into horizon scenarios.  Honest caveat: the judge's data-generating
   process is the full-sample Gaussian, so it cannot reward a better prior -
@@ -56,9 +63,20 @@ change only scenario probabilities and scenario values, upstream.
   contrast allocation is available via `--with-uniform-contrast` (off by
   default: its unweighted solve intermittently falls back to the slow SCS
   path - an open solver-robustness item).
-- **Bonds**: weekly changes in 10Y yield as the invariant; exact flat-curve
-  repricing, roll-down falls out of the pricing equation. No credit-spread
-  layer yet (second factor, same machinery).
+- **Bonds**: two sleeves, same machinery.  *Government* (`UST10`): weekly
+  changes in 10Y yield as the invariant; exact flat-curve repricing,
+  roll-down falls out of the pricing equation.  *Credit* (`USIG`): weekly
+  changes in the IG option-adjusted spread as the invariant (FRED
+  `BAMLC0A0CM`, ICE BofA US Corporate Master, in the pinned snapshot);
+  the excess-return scenario stacks spread repricing (same
+  duration/convexity engine), carry (earned spread) and roll-down, so
+  Treasury and credit premia stay separable.  Cash flows accrue between
+  coupon dates (fractional-period interest compounded, not dropped).
+  Honest finding at current placeholder calibration: the IG sleeve earns a
+  ~90bp spread with equity-correlated downside and gets zero weight in
+  every optimized allocation - equity + Treasury barbells dominate it on a
+  CE basis.  That is a property of the premia, not a bug; the paper should
+  say so.
 - **Liquidity**: Meucci (2012, FAJ 68(6), doi:10.2469/faj.v68.n6.6)
   integrated liquidity+market risk overlay (`toolbox/meucci_liquidity.py`):
   per-scenario liquidity adjustment ~ N(mu(j), sigma(j)^2) with VWAP
@@ -92,10 +110,10 @@ change only scenario probabilities and scenario values, upstream.
 
 - Views (currently illustrative: DFAI +50bp vs DFUS, DFAE vol 6.5%)
 - Liability schedule (currently an example $95M funding event)
-- BL market weights (40/22/9/18/11), risk aversion 2.5, tau 0.05
+- BL market weights (6-sleeve, illustrative), risk aversion 2.5, tau 0.05
 - Liquidity cost parameters; quarterly CVaR budget (0.15) and gap budget
   (0.2% of liability)
 
 ## Tests
 
-`python -m pytest tests/` - 59 tests covering every module.
+`python -m pytest tests/` - 73 tests covering every module.

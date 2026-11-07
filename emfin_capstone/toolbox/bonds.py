@@ -49,9 +49,14 @@ def price_from_ytm(ytm: float | np.ndarray, years_to_maturity: float, coupon_rat
     invalid here.
     """
     y = np.atleast_1d(np.asarray(ytm, dtype=float))
-    n_periods = max(1, int(round(years_to_maturity * COUPONS_PER_YEAR)))
+    n_periods = max(1, int(np.ceil(years_to_maturity * COUPONS_PER_YEAR - 1e-9)))
     coupon = coupon_rate * face_value / COUPONS_PER_YEAR
-    times = (np.arange(n_periods) + 1) / COUPONS_PER_YEAR  # years
+    # Cashflow times measured from the pricing date: the last cashflow lands
+    # at the remaining maturity and earlier ones step back in coupon periods,
+    # so a fractional remaining maturity (mid-period pricing) carries the
+    # accrued-interest drift - with unchanged yield the price accretes
+    # toward the next coupon instead of sitting flat.
+    times = years_to_maturity - (n_periods - 1 - np.arange(n_periods)) / COUPONS_PER_YEAR
     discount = (1 + y[:, None] / COUPONS_PER_YEAR) ** (-COUPONS_PER_YEAR * times[None, :])
     cashflows = np.full(n_periods, coupon)
     cashflows[-1] += face_value
@@ -60,9 +65,9 @@ def price_from_ytm(ytm: float | np.ndarray, years_to_maturity: float, coupon_rat
 
 def macaulay_duration_years(ytm: float, years_to_maturity: float, coupon_rate: float, face_value: float) -> float:
     """Sanity anchor for tests and for communicating rate sensitivity."""
-    n_periods = max(1, int(round(years_to_maturity * COUPONS_PER_YEAR)))
+    n_periods = max(1, int(np.ceil(years_to_maturity * COUPONS_PER_YEAR - 1e-9)))
     coupon = coupon_rate * face_value / COUPONS_PER_YEAR
-    times = (np.arange(n_periods) + 1) / COUPONS_PER_YEAR
+    times = years_to_maturity - (n_periods - 1 - np.arange(n_periods)) / COUPONS_PER_YEAR
     discount = (1 + ytm / COUPONS_PER_YEAR) ** (-COUPONS_PER_YEAR * times)
     cashflows = np.full(n_periods, coupon)
     cashflows[-1] += face_value
@@ -112,3 +117,27 @@ def bond_price_scenarios(
     """
     remaining = max(bond.years_to_maturity - horizon_weeks / 52.0, 1e-6)
     return price_from_ytm(yield_scenarios, remaining, bond.coupon_rate, bond.face_value)
+
+
+def credit_price_scenarios(
+    bond: Bond,
+    treasury_yield_scenarios: np.ndarray,
+    spread_scenarios: np.ndarray,
+    horizon_weeks: int,
+) -> np.ndarray:
+    """Credit sleeve pricing: reprice at treasury yield + spread, rolled down.
+
+    A corporate bond is priced off its own yield to maturity, which splits
+    into a treasury component and a credit spread.  Both components are
+    invariants-driven (weekly changes in each), and the bond is repriced
+    exactly at the combined scenario yield with rolled-down maturity - so
+    duration, convexity, carry and roll-down all fall out of the pricing
+    equation, and a spread widening scenario hits the price through the
+    same discounting a treasury move does.  No separate spread-duration
+    approximation anywhere.
+    """
+    tsy = np.asarray(treasury_yield_scenarios, dtype=float).ravel()
+    spr = np.asarray(spread_scenarios, dtype=float).ravel()
+    if tsy.shape != spr.shape:
+        raise ValueError("treasury and spread scenarios must align scenario-for-scenario")
+    return bond_price_scenarios(bond, tsy + spr, horizon_weeks)
