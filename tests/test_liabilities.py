@@ -195,8 +195,9 @@ def test_multiperiod_metrics_per_date():
     steps = np.array([1, 3])
     growth = np.ones((2, 3))
     m = multiperiod_gap_metrics(values, liabilities, steps, growth, 0.95)
-    np.testing.assert_allclose(m.shortfall_probability, [0.5, 0.0])
-    assert m.shortfall_cvar[0] > 0 and m.shortfall_cvar[1] == 0.0
+    np.testing.assert_allclose(m.shortfall_probability, [0.5, 1.0])
+    assert m.shortfall_cvar[0] == pytest.approx(10.)
+    assert m.shortfall_cvar[1] == pytest.approx(80.)
     # terminal net = final value minus each payout (growth factors are 1)
     np.testing.assert_allclose(m.terminal_net, [120.0 - 200.0, 130.0 - 200.0])
 
@@ -271,3 +272,18 @@ def test_cml_budget_detects_intermediate_losses_and_covers_mixtures():
     for mix in (0.,.2,.7,1.):
         p=(1-mix)*np.full(n,1/n)+mix*stress
         assert cml_of_paths(losses,p,.8) <= .06001
+
+
+def test_second_payout_counts_prior_withdrawals():
+    values=np.full((20,2),100.)
+    payouts=np.tile([60.,60.],(20,1))
+    m=liab.multiperiod_gap_metrics(values,payouts,np.array([1,2]),np.ones((20,2)),.95)
+    np.testing.assert_allclose(m.shortfall_cvar,[0.,20.])
+    np.testing.assert_allclose(m.terminal_net,-20.)
+
+
+def test_same_date_payouts_are_not_double_funded():
+    values=np.full((20,1),100.)
+    payouts=np.tile([60.,60.],(20,1))
+    m=liab.multiperiod_gap_metrics(values,payouts,np.array([1,1]),np.ones((20,1)),.95)
+    np.testing.assert_allclose(m.shortfall_cvar,[0.,20.])

@@ -1,112 +1,128 @@
-# Illustrative funding-risk engine: current status
+# Current default: one funding-risk argument
 
 This is an illustrative implementation, not a calibrated SFO recommendation.
-The default branch is `engine-v2` in TijsdeBoer/emfin_capstone. The dated development
-history is in CHANGELOG_ENGINE.md; its old numbers are superseded, not current results.
+The active/default branch is `engine-v2` in TijsdeBoer/emfin_capstone.
 
-## One argument
+## One command, one config
 
-How do scenario-tail and liquidity assumptions change funding-risk allocations
-for an illiquid family balance sheet? Compare 1/N, a common shrunk MV benchmark
-and a liability-aware model, then test one stress. See PAPER_STRUCTURE.md.
+After installing `requirements.txt`, run:
 
-## Current pipeline
+```
+python -m emfin_capstone --config configs/default.json
+```
 
-Pinned weekly equity/yield/spread/cash invariants -> time/state flexible weights
--> unit-invariant correlation shrinkage and structural mean shrinkage -> scenarios
--> exact synthetic-bond repricing and illustrative liquidity overlay -> view pooling
--> CARA allocation with CVaR/funding constraints -> paired fresh Monte Carlo evaluation.
+The compatibility script `python scripts/run_v2_engine.py` and installed
+`emfin-run` use the same default. Outputs: `artifacts/default/results.json`,
+`benchmarks.csv`, `report.md` and self-contained `report.html`. Keep the cloned
+repo and its pinned inputs available. Everything runs offline.
 
-- SeqEP implements class-ordered view heuristics from the public paper.
-- MPEP applies views to actual path probabilities, including multiple CML views.
-  Its tail-count search is our approximate coordinate search, not proprietary code.
-- TSDR is empirical successor-state resampling. Transition updates are simultaneous.
-  Chosen-state convergence is not strict stationary initialization.
-- Robust CML constrains maximum loss from initial wealth, not peak-to-trough drawdown,
-  under a finite convex hull of nominal/stressed measures using one shared tail threshold.
-  It is not unrestricted entropy-ball or Wasserstein DRO. The reference uses 500 paths.
-- Surplus-scaled CARA is a one-step preference sensitivity, not exact CRRA power utility.
-  A separate experimental finite-scenario positive-domain CRRA solver now exists
-  in toolbox/power_utility.py; it is not the default CARA model. The surrogate
-  negative-surplus floor is numerical and has no economic interpretation.
-- Real-estate observation/unsmoothing machinery is merged. Client-calibrated real estate
-  is not part of the default six-sleeve optimization. A seven-sleeve synthetic RE
-  example now runs through the actual optimizer with optional minimum holdings;
-  the family company remains absent because no inputs were supplied.
+The main comparison is 1/N, common shrunk MV, and ONE proposed model, with a
+single 'without posterior stress' sensitivity. Additional methods belong to
+research/appendices (`--research`), not the main comparison. See PAPER_STRUCTURE.md.
 
-## Evidence versus assumptions
+## Proposed model
 
-|Input|Status|What it establishes|
-|---|---|---|
-|Pinned DFUS/DFAI/DFAE, Treasury yield, IG OAS, 3-month rate|Real historical series|Reproducible historical inputs, not predictive truth|
-|BIS/FRED UAE RPPI|Real, UAE-wide, ends 2024Q1|Observer-method example, not current Abu Dhabi pricing|
-|$35M/$60M obligations, payout dates and stochastic shocks|Illustrative|Exercises funding constraints, not a real client's needs|
-|Committee views, BL/reference weights, risk tolerance and budgets|Illustrative|Sensitivity experiments only|
-|Liquidity costs/volume parameters and state multipliers|Illustrative|Model behavior, not an execution-cost estimate|
-|Real estate latent truth tests|Synthetic known truth|Method checks, not empirical calibration|
-|Family company holdings/cash flows|Not supplied|No conclusion about client exposure|
+- Joint weekly Student-t shocks (nu=8 selected on development folds), summed
+  into paths. Quarterly shocks are NOT assumed to retain Student-t nu.
+- Unit-invariant correlation shrinkage and structural mean shrinkage.
+- Exact synthetic fixed-coupon bond repricing; stated illustrative haircuts.
+- Views pooled on the very same scenario paths being optimized.
+- CARA utility of terminal wealth NET of all provisioned payouts.
+- Cumulative funding requirements at each due date, not separate claims on
+  the same gross wealth. Earlier payouts accrue at money-market opportunity cost.
+- Shared-threshold funding/CML constraints under nominal and stressed posterior
+  measures, covering their finite convex hull. This is not unrestricted KL/Wasserstein DRO.
+- Funding-budget multiplier selected on independent validation seeds; final
+  evaluation seeds are untouched by selection. Failed final evaluation stays
+  reported as a failure, never silently retuned.
 
-## Validation and limits
+The default preserves the illustrative $35M/$60M schedule but explicitly sets
+amount uncertainty to ZERO. The older 15%/8% stochastic case becomes infeasible
+once cumulative payouts are correctly counted. It is not made feasible by
+loosening solver checks or pretending every payment can use the original cash.
 
-Fresh paired Gaussian/Student-t Monte Carlo draws test allocations under a fitted
-model. The empirical regime judge overlaps estimation history; its differing
-rankings show model sensitivity, not proven predictive edge. The SAA study uses
-12 independent 2k training sets and one 50k common holdout. Its t intervals are
-conditional on that holdout and model, not generalization guarantees.
+## Corrected result and uncertainty
 
-Chronological development folds reserve the final 26 weeks without evaluating
-them in that protocol. The current-allocation runner uses full history, so its
-outputs are not a sealed historical test. Development-fold tail estimates have
-only 1-2 nonoverlapping quarterly paths: insufficient for a 95% tail guarantee.
-Failed candidate solves are explicitly unavailable, never treated as safe scores.
+On the current pinned example, calibration mixes 50% of the optimized
+allocation with 50% verified cash after the unblended model fails fresh stressed
+validation. It is explicitly a calibrated mixture, not globally optimal weights.
+The final evaluation reports net CE about $6.866M for the proposed model, with
+no observed funding gap under nominal or freshly tilted stress measures in the
+8 evaluation batches. 1/N and shrunk MV fail the final-date risk budgets.
+The without-posterior-stress comparison uses the SAME cash-mixing fraction.
+Regenerate JSON for exact values. Budget multiplier=1 is accepted; no tightening
+of that multiplier is falsely claimed. The exposure mix, not just the in-solver
+budget, is part of the calibration protocol.
 
-Correlation shrinkage preserves each invariant's units/variance. The former raw
-scaled-identity target inflated money-market variance and is superseded. Refit nu:
-development conditional fits are about 6.3-7.3; validation selects nu=8. Conditional
-MLE is not joint t MLE, and weekly t draws do not aggregate to a t with unchanged nu.
+Zero observed tail loss gives a degenerate batch-mean interval at zero; it is
+NOT a distribution-free upper bound on unseen losses. The JSON and report state
+this limit rather than equating an empty observed tail with guaranteed safety.
 
-Solver results must pass status, finite-value and normalized residual checks.
-Some optional TSDR/fat-tail/large-path robust cases remain numerically unavailable.
-The CML row's funding target may fail fresh Monte Carlo evaluation: path-loss risk
-and liability funding risk are separate constraints. No blanket safety claim.
+These intervals are across independent Monte Carlo batches conditional on the
+fitted model. They exclude parameter, model and economic forecast uncertainty.
+Historical development has only 1-2 nonoverlapping quarterly outcomes per fold;
+that cannot establish a credible real-world 95% tail guarantee. The empirical
+regime judge overlaps estimation history and shows sensitivity, not predictive edge.
 
-## Run and inspect
+## Safety and numerical status
 
-- `python scripts/run_v2_engine.py`: current illustrative comparison.
-- `--student-t=8` or `--student-t=auto`: fat-tail sensitivity (auto is constrained nu MLE).
-- `--tsdr`: optional resampled-path contrast; numerical failure is reported honestly.
-- `--no-surplus-cara`: skip the preference approximation (`--no-crra` remains an alias).
-- `python scripts/validate_chronological.py`: development selection, sealed final window.
-- `python scripts/surplus_sensitivity.py`: imposed CARA-preference sensitivity, not a causal client effect.
-- `python scripts/run_real_estate_allocation.py`: seven-sleeve synthetic RE allocation.
-- `artifacts/report/`: structured JSON, benchmark/allocation CSV and appendix text.
+Solver status, finite outputs and normalized constraint residuals are checked.
+Funding epigraphs are scaled to their budgets and unnecessary positive-part layers
+were removed. The tested default runs in about 2 seconds here. If an optimizer
+fails, a cash allocation is used ONLY after stronger pointwise budget/CML checks;
+its status says 'verified cash fallback', never 'optimal'. If that fails too,
+no proposed allocation is returned. Invalid cases write an unavailable report.
+No software can promise every possible input or machine will solve successfully.
 
-After installing the package, `emfin-run` is the same engine entry point. The
-repo-root CI workflow is still blocked by the token's missing workflow scope;
-the misplaced template remains at ci/.github/workflows/tests.yml until web-UI repair.
-No GPL dependency or source has been incorporated. Nothing is pushed upstream.
+The independent `test_reference_balance_sheet.py` suite covers hand-computable
+payout netting, accrual, one-period reduction, MPEP binary-group probabilities,
+weighted CML atoms, and deterministic TSDR transitions. Infeasible cumulative
+funding has an explicit regression test. ALL multi-period results from before
+this correction are withdrawn. Historical artifacts under `artifacts/report/`
+are superseded; use `artifacts/default/` for the current main comparison.
 
-## Visual companion
+## Client evidence versus assumptions
 
-`python -m emfin_capstone.explorer --precompute` starts the local explorer.
-`--export artifacts/report/explorer.html` creates a standalone static snapshot.
-It offers views, funding-tail budget, liability, Student-t, SeqEP and stress controls,
-allocation bars, a mean/variance frontier with benchmark points, CE/gap tables,
-and a gross funding-ratio fan. Nine main-slider configurations can be precomputed;
-all repeated configurations are cached in memory. The example uses a 1k training
-set and 8k fresh nominal evaluation set, so it is fast but not the full engine.
-It does not contain the full multi-period liability, robust CML or RE pipeline.
+|Input|Status|
+|---|---|
+|Pinned equities, Treasury yield, IG OAS, 3-month rate|Real historical data, not predictive truth|
+|$35M/$60M schedule, views, haircuts, budgets, preferences|Illustrative, not client-approved inputs|
+|BIS/FRED UAE RPPI|Real UAE-wide observer series through 2024Q1, not current Abu Dhabi prices|
+|RE allocation sleeve|Synthetic stated assumptions; optional minimum holding|
+|Family-company model|Requires supplied scenario data; no fabricated calibration|
 
-## Exact positive-surplus utility experiment
+See CLIENT_INPUTS.md for the exact checklist, JSON format and private NPZ path
+interface. Arbitrary property/company columns can enter without optimizer changes;
+source data, currencies, sale restrictions and scenario alignment remain essential.
+Default benchmarks honor the same minimum holdings; equal weight is adjusted
+across the remaining free budget when a minimum binds.
 
-`python scripts/power_utility_sensitivity.py` exercises a separate exact CRRA
-objective on strictly positive surplus. Power and log utilities are expressed
-directly as concave CVXPY objectives, with explicit surplus >= epsilon constraints
-on every supplied scenario. Infeasible domains fail loudly; there is no clipping
-of negative surplus into the utility. Tests verify risk-aversion comparative
-statics and rejection of an impossible funding domain.
+## Explorer
 
-This is a different economic model: it forbids every simulated shortfall, whereas
-CARA can assign utility to negative surplus and permit a funding-gap budget.
-Finite-scenario feasibility does not guarantee positive surplus for an unbounded
-population model. Results use a synthetic two-asset example, not a client case.
+```
+python -m emfin_capstone.explorer --precompute
+```
+
+Open http://127.0.0.1:8765. Multi-period mode now runs the default cumulative-payout
+pipeline, with optional synthetic RE and minimum-holding controls. Single-date
+companion mode remains available by unchecking multi-period. Repeated settings
+are cached; main liability/budget grids can be precomputed. Exported HTML is
+self-contained and disables controls rather than pretending to run Python.
+
+The multi-period fan is NET wealth / initial wealth AFTER cumulative payouts,
+not gross wealth falsely labeled as a post-payment funding ratio. Table figures
+show the final payout; JSON contains all payout dates and uncertainty intervals.
+SeqEP and ordinary EP coincide for the default single-class rank view; use a
+non-null `view_vol_cap` for a mixed-class sensitivity rather than inventing a gap.
+
+## Appendix methods and provenance
+
+SeqEP, MPEP/CML, TSDR, positive-domain CRRA, real-estate observers and the legacy
+full research run remain available. TSDR transitions are simultaneous; all path
+probabilities belong to their actual path rows. Positive-surplus CRRA is exact
+on its explicit finite-scenario domain, not equivalent to the surplus-scaled
+CARA approximation. It prohibits simulated shortfalls, a different economic model.
+
+No GPL code/dependency or upstream changes. CI still needs root `.github/workflows/`
+installation via web UI because the token lacks workflow scope. Historical notes
+in CHANGELOG_ENGINE.md are not current claims or reusable result tables.

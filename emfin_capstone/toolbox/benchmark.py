@@ -49,6 +49,7 @@ def mean_variance_allocation(
     wealth: float,
     risk_tolerance: float,
     long_only: bool = True,
+    minimum_weights: np.ndarray | None = None,
 ) -> np.ndarray:
     """Vanilla mean-variance: max w'mu - w' Sigma w / (2 zeta_rel), sum w = 1.
 
@@ -73,6 +74,11 @@ def mean_variance_allocation(
     constraints = [cp.sum(w) == 1]
     if long_only:
         constraints.append(w >= 0)
+    if minimum_weights is not None:
+        mins=np.asarray(minimum_weights,float).ravel()
+        if mins.shape!=(n,) or (mins<0).any() or not np.isfinite(mins).all() or mins.sum()>1:
+            raise ValueError("invalid minimum benchmark holdings")
+        constraints.append(w>=mins)
     cp.Problem(objective, constraints).solve(solver="CLARABEL")
     if w.value is None:
         raise RuntimeError("mean-variance optimization failed")

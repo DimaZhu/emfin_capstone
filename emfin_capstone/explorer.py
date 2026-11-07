@@ -17,13 +17,17 @@ class Controls:
     liability: float=95.
     budget: float=.2
     view: float=50.
-    student: bool=False
+    student: bool=True
     sequential: bool=True
-    stress: bool=False
+    stress: bool=True
+    multiperiod: bool=True
+    real_estate: bool=False
+    re_min: float=0.
 
     def validate(self):
         if not 0<=self.liability<=105 or not .01<=self.budget<=5 or not 0<=self.view<=100:
             raise ValueError('controls outside supported range')
+        if not 0<=self.re_min<=30:raise ValueError('RE minimum must be 0-30%')
 
 @lru_cache(maxsize=1)
 def base_inputs():
@@ -35,7 +39,25 @@ def base_inputs():
 
 @lru_cache(maxsize=128)
 def compute(c=Controls()):
-    c.validate();start=time.perf_counter();frame,mean,cov=base_inputs()
+    c.validate()
+    if c.multiperiod:
+        from emfin_capstone.default_run import load_config,run
+        from tempfile import TemporaryDirectory
+        config=load_config()
+        ratio=c.liability/95
+        for payout in config['liabilities']:payout['amount']*=ratio
+        config['funding_budget_fraction']=c.budget/100
+        config['view_spread']=.005*c.view/50
+        config['sequential_ep']=c.sequential
+        config['stress_mean_path_loss_increment']=.01 if c.stress else 0.
+        config['student_nu']=8. if c.student else None
+        config['real_estate']['enabled']=c.real_estate
+        config['real_estate']['minimum_weight']=c.re_min/100 if c.real_estate else 0.
+        with TemporaryDirectory() as folder:
+            result=run(config,folder)
+        data=from_default(result);data['controls']=asdict(c)
+        return data
+    start=time.perf_counter();frame,mean,cov=base_inputs()
     anchor=frame.iloc[-1];rng=np.random.default_rng(20261107)
     chol=np.linalg.cholesky(13*cov+1e-12*np.eye(6))
     def draw(n):
@@ -81,6 +103,24 @@ def compute(c=Controls()):
         points=points,frontier=reporting.efficient_frontier(market),fan=fan,errors=errors,
         seconds=time.perf_counter()-start,snapshot=str(frame.index[-1].date()),
         caveat='Illustrative single-date companion. Fixed synthetic haircuts; nominal fresh Monte Carlo, not historical OOS. Fan: gross wealth / total planned liability, before payouts; Gaussian paths even with Student-t selected. Stress is an equity mean-loss tilt, not CML. No client calibration.')
+
+
+def from_default(result):
+    """Same data for CLI static export and the live multi-period panel."""
+    cfg=result['config'];rows=[]
+    for r in result['rows']:
+        rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][-1],
+            gap_upper=max(r['gap_cvar']['high'][-1],r['stressed_gap_cvar']['high'][-1]),stress_gap=r['stressed_gap_cvar']['mean'][-1],nominal_gap=r['training_gap'][-1],budget=r['budgets'][-1]))
+    selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
+    return dict(controls=dict(liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
+        budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
+        student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
+        multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100),
+        assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
+        training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
+        fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; drops at weeks 10 and 13.',
+        seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture') else {'proposed':result['status']['kind']},
+        caveat='Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE is synthetic if enabled. '+result['caveats'][0])
 
 
 def template(result, static=False):

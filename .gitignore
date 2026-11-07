@@ -20,3 +20,6 @@ __pycache__/
 # IDE
 .idea/
 .vscode/
+
+# Generated model output is local, not versioned evidence.
+artifacts/

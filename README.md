@@ -1,23 +1,36 @@
 # emfin_capstone
 
-Portfolio optimization capstone project. The analysis lives in
-`notebooks/portfolio_optimization.ipynb` and builds on a small library
-(`emfin_capstone/`) for live price fetching and portfolio data types.
+Scenario-based funding-risk capstone engine. The default is an offline,
+config-driven comparison with cumulative payouts and explicit validation.
+The original notebook is retained as background, not the current entry point.
 
-## Quickstart (standalone, two commands)
+## Quickstart: one default, offline
 
-The engine runs fully offline from the pinned data snapshot - no live data,
-no Poetry, Python 3.10-3.12:
+Python 3.10-3.12, from this clone:
 
 ```bash
-pip install -r requirements-dev.txt
-python scripts/run_v2_engine.py
+pip install -r requirements.txt
+python -m emfin_capstone --config configs/default.json
 ```
 
-Run the test suite with `python -m pytest tests/`. Runtime-only installs can
-use `requirements.txt` instead (drops pytest, the EP cross-check reference,
-yfinance and the notebook tooling). See `ENGINE_V2.md` for the pipeline,
-design decisions and caveats.
+This compares 1/N, shrunk MV and one funding-aware model plus one stress panel.
+It writes JSON, CSV, a text report and a self-contained HTML chart report to
+`artifacts/default/`. The same config controls all input assumptions.
+`python scripts/run_v2_engine.py` and installed `emfin-run` are equivalent.
+
+For the local interactive multi-period/RE explorer:
+
+```bash
+python -m emfin_capstone.explorer --precompute
+# Open http://127.0.0.1:8765
+```
+
+Tests: install `requirements-dev.txt`, then `python -m pytest tests/`.
+Read [current model/status](docs/ENGINE_V2.md), [real-client input format](docs/CLIENT_INPUTS.md)
+and [paper scope](docs/PAPER_STRUCTURE.md). Default data are real historical series;
+liabilities, views, liquidity and RE assumptions are illustrative, not client evidence.
+Earlier multi-period figures were withdrawn after fixing cumulative payout accounting.
+Optional methods use `--research` and belong in appendices, not the headline default.
 
 ## Prerequisites (Poetry workflow, optional)
 
@@ -124,34 +137,16 @@ jupyter notebook notebooks/portfolio_optimization.ipynb
   (via yfinance) and caches responses under `data/cache/`, which is created
   automatically on first run. The `data/` directory is git-ignored.
 
-## Current illustrative engine
+## Current interfaces
 
-Work is on the default `engine-v2` branch. See [current status](docs/ENGINE_V2.md),
-[evidence and paper scope](docs/PAPER_STRUCTURE.md), and the dated change log.
-Run `python scripts/run_v2_engine.py`; JSON, CSV and appendix text are written
-to `artifacts/report/`. After installation, `emfin-run` is equivalent.
-Client obligations, views, liquidity inputs and alternative-asset calibration
-remain illustrative. The real-estate allocation example is synthetic-labelled,
-not an estimate of the real SFO client's exposure.
+- Default: `python -m emfin_capstone --config configs/default.json`.
+- Explorer: `python -m emfin_capstone.explorer --precompute`.
+- Static explorer export: `python -m emfin_capstone.explorer --export /tmp/explorer.html`.
+- Chronological development study: `python scripts/validate_chronological.py`.
+- Exact positive-domain CRRA experiment: `python scripts/power_utility_sensitivity.py`.
+- Legacy research catalogue: `python scripts/run_v2_engine.py --research` (may be infeasible;
+  its older multi-period headline results are superseded).
 
-## Local visual explorer
-
-```bash
-python -m emfin_capstone.explorer --precompute
-# Open http://127.0.0.1:8765
-python -m emfin_capstone.explorer --export artifacts/report/explorer.html
-```
-
-The explorer needs only the existing Python requirements and a browser. It binds
-only to your own computer and has no analytics/CDN/network dependency. Installed
-entry point: `emfin-explore` (keep the cloned repo and its pinned data available).
-Controls recompute the shared optimizer; nine liability/budget configurations can
-be precomputed and repeated settings use an in-memory cache. The static HTML is
-self-contained, shows the same default charts and disables controls rather than
-pretending to run Python in the browser.
-
-This is a fast **single-date companion**, not the full multi-period research run.
-It uses fixed synthetic liquidity haircuts, an equity mean-loss stress (not CML),
-and nominal Gaussian paths for the fan even if Student-t is selected. Those limits
-are printed beside the charts. Red gap numbers show fresh Monte Carlo breaches;
-training-budget compliance is not hidden or equated with out-of-sample safety.
+No new web framework is required. The app binds only to localhost; no external
+CDN or analytics. Keep private client inputs out of this repository. No live
+account access is needed for any default run.

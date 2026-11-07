@@ -6,7 +6,7 @@ def test_explorer_default_and_cached_result():
     a=compute();b=compute()
     assert a is b
     assert not a['errors']
-    assert {'1/N','shrunk MV','EP','EP+stress','liability-aware'} <= set(a['weights'])
+    assert {'1/N','shrunk MV','proposed','without posterior stress'} <= set(a['weights'])
     for w in a['weights'].values():assert sum(w)==pytest.approx(1.,abs=1e-5)
     assert len(a['fan'])==5
     assert 'const STATIC=true' in template(a,True)
