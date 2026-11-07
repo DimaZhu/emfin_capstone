@@ -285,6 +285,8 @@ def optimization_multiperiod(
     long_only: bool = True,
     n_optimization_scenarios: int = 10_000,
     scenario_probs: np.ndarray | None = None,
+    cml_budget: float | None = None,
+    stress_probabilities: list[np.ndarray] | None = None,
 ) -> tuple[np.ndarray, dict]:
     """Multi-period, stochastic-liability allocation.
 
@@ -358,6 +360,35 @@ def optimization_multiperiod(
         t_gap = cp.Variable()
         cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
         constraints.append(cvar_gap <= gamma_shortfall * base[i] / wealth)
+
+    # CML: CVaR of maximum initial-value loss over each entire path.
+    # Enforce for every supplied posterior and the nominal measure. Because
+    # the common-threshold RU bound is valid under mixtures, feasibility
+    # extends to their convex hull. This is a finite-measure ambiguity set,
+    # NOT an unrestricted entropy/Wasserstein distributional ball.
+    if cml_budget is not None:
+        if cml_budget < 0 or not np.isfinite(cml_budget):
+            raise ValueError("cml_budget must be finite and nonnegative")
+        flat = (paths / prices).reshape(n_scenarios * n_steps, n_assets)
+        value_paths = cp.reshape(flat @ weights, (n_scenarios, n_steps), order="C")
+        measures = [probs]
+        for p_stress in stress_probabilities or []:
+            ps = np.asarray(p_stress, float).ravel()[:n_scenarios]
+            if ps.shape != probs.shape or not np.isfinite(ps).all() or (ps < 0).any() or ps.sum() <= 0:
+                raise ValueError("stress probabilities must align, be finite, nonnegative and sum positively")
+            measures.append(ps / ps.sum())
+        # Shared eta ensures a single RU upper bound for every mixture.
+        # Independent per-measure etas would cover the listed measures only;
+        # CVaR is not convex in the probabilities.
+        eta_cml = cp.Variable(nonneg=True)
+        excess_cml = cp.Variable(n_scenarios, nonneg=True)
+        for step in range(n_steps):
+            constraints.append(excess_cml >= 1. - value_paths[:,step] - eta_cml)
+        for ps in measures:
+            cml = eta_cml + ps @ excess_cml / (1-confidence_level)
+            constraints.append(cml <= cml_budget)
+    elif stress_probabilities:
+        raise ValueError("stress_probabilities requires cml_budget")
 
     problem = cp.Problem(cp.Minimize(expected_disutility), constraints)
     used_solver = solvers.solve_capped(problem, name="multi-period optimization")

@@ -102,3 +102,22 @@ def test_stack_paths_layout():
     # column i*H + h holds asset i at step h
     assert x[0, 0 * 3 + 1] == paths[0, 1, 0]
     assert x[1, 1 * 3 + 2] == paths[1, 2, 1]
+
+
+def test_multiple_cml_views_solve_jointly():
+    paths,p0=_paths(n=400)
+    views=[]
+    for j in range(2):
+        losses=mpep.max_path_loss(paths[:,:,j],p0[j])
+        target=mpep.cml_of_paths(losses,np.full(400,1/400),.9)*1.05
+        views.append(mpep.MPView('cml',j,value=target,sense='ge',alpha=.9,name=f'tail{j}'))
+    result=mpep.mpep(paths,views,p0)
+    assert len(result.cml_tail_counts)==2
+    for view in views:
+        assert result.achieved[view.name] >= view.value-1e-4
+
+
+def test_invalid_kind_is_rejected_not_silently_ignored():
+    paths,p0=_paths(n=50)
+    with pytest.raises(ValueError):
+        mpep.mpep(paths,[mpep.MPView('typo',0)],p0)

@@ -575,12 +575,19 @@ def main() -> None:
             market_corr, gamma=0.9,
             state_multiplier=1.0 + 2.0 * np.clip(-cum_all[:n_opt, step - 1, :3].mean(axis=1) / 0.05, 0.0, None),
             seed=COST_SEED + step)
+    # Path probabilities must be computed on THESE paths, never borrowed
+    # by row number from the independent one-period scenario set.
+    path_views = [mpep_mod.MPView("rank",1,horizon=HORIZON_WEEKS-1,
+                    instrument2=0,horizon2=HORIZON_WEEKS-1,value=.005,sense="ge",name="path equity rank"),
+                  mpep_mod.MPView("vol",2,horizon=HORIZON_WEEKS-1,value=.065,name="path EM vol")]
+    path_pool = mpep_mod.mpep(paths_opt/prices_vector, path_views, np.ones(len(prices_vector)))
+    q_path = path_pool.posterior_probs
     alloc_mp, diag_mp = liab.optimization_multiperiod(
         market_paths=paths_opt, prices_vector=prices_vector, wealth=WEALTH,
         liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
         liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
         risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
-        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL, scenario_probs=q[:n_opt],
+        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL, scenario_probs=q_path,
         n_optimization_scenarios=n_opt)
     print(f"stochastic liabilities: mean amounts ${liab_scen.mean(axis=0)/1e6}M, "
           f"p90 ${np.quantile(liab_scen, 0.9, axis=0)/1e6}M "
@@ -616,6 +623,16 @@ def main() -> None:
           f"l={mpep_res.cml_tail_counts[mpep_views[0].name]}, "
           f"RE={mpep_res.relative_entropy:.3f}, ENS={mpep_res.ens_ratio:.2%}")
     _tick("optimize: EP + liabilities (MPEP posterior paths)")
+    alloc_robust, robust_diag = liab.optimization_multiperiod(
+        market_paths=paths_opt, prices_vector=prices_vector, wealth=WEALTH,
+        liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
+        liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
+        risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
+        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL,
+        scenario_probs=q_path, cml_budget=.06, stress_probabilities=[q_mp],
+        n_optimization_scenarios=500)
+    _tick("optimize: finite-posterior robust CML (6% placeholder budget)")
+
 
     # 5c. TSDR (Kristensen & Vorobets 2025, public descriptions only - the
     #     definitions PDF is gated and the code is GPL, neither consulted):
@@ -639,10 +656,13 @@ def main() -> None:
                 market_corr, gamma=0.9,
                 state_multiplier=1.0 + 2.0 * np.clip(-cum_tsdr[:, step - 1, :3].mean(axis=1) / 0.05, 0.0, None),
                 seed=COST_SEED + step)
+        tsdr_growth = paths_tsdr[:,:,5] / prices_vector[5]
+        tsdr_liab = stochastic_liabilities(base_amounts, cum_tsdr, payout_steps,
+                                           LIAB_VOL, LIAB_STRESS_CORR, seed=LIAB_SEED)
         alloc_tsdr, _ = liab.optimization_multiperiod(
             market_paths=paths_tsdr, prices_vector=prices_vector, wealth=WEALTH,
-            liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
-            liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
+            liability_scenarios=tsdr_liab, payout_steps=payout_steps,
+            liability_base=base_amounts, mm_growth_paths=tsdr_growth,
             risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
             gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL,
             n_optimization_scenarios=n_opt)
@@ -668,6 +688,7 @@ def main() -> None:
         allocations["EP+liab (CRRA)"] = alloc_crra
     allocations["1/N"] = (WEALTH / len(prices_vector)) / prices_vector  # equal dollars per sleeve
     allocations["EP+liab (MPEP)"] = alloc_mpep
+    allocations["robust CML"] = alloc_robust
     if alloc_tsdr is not None:
         allocations["EP+liab (TSDR)"] = alloc_tsdr
     if calibration is not None and calibration.best_multiplier < 1.0:
@@ -822,7 +843,7 @@ def main() -> None:
     print("\n=== Multi-period funding check (out-of-sample paths) ===")
     print(f"(payouts at weeks {list(payout_steps)}; stochastic amounts re-drawn per seed; "
           "provisioning at the money-market rate)")
-    mp_names = ["EP + liabilities", "EP+liab (multi-per)"]
+    mp_names = ["EP + liabilities", "EP+liab (multi-per)", "EP+liab (MPEP)", "robust CML"]
     mp_stats = {n: [] for n in mp_names}
     for seed in range(JUDGE_SEED_BASE + 500, JUDGE_SEED_BASE + 500 + N_JUDGE_SEEDS):
         jp, jc = build_scenario_paths(inv_mean, inv_cov, HORIZON_WEEKS, N_SCENARIOS, seed)
@@ -864,6 +885,7 @@ def main() -> None:
         "EP+liab (multi-per)": "optimize: EP + liabilities (multi-period, stochastic)",
         "EP+liab (CRRA)": "optimize: EP + liabilities (CRRA-on-surplus)",
         "EP+liab (MPEP)": "optimize: EP + liabilities (MPEP posterior paths)",
+        "robust CML": "optimize: finite-posterior robust CML (6% placeholder budget)",
         "EP+liab (TSDR)": "optimize: EP + liabilities (TSDR resampled paths)",
         "EP+liab (nominal)": "optimize: EP + liabilities (tail-budget calibrated)",
     }

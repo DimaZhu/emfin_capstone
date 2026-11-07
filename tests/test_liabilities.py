@@ -249,3 +249,25 @@ def test_centered_exponential_ce_matches_logsumexp_value():
     net = samples @ alloc - 950_000
     expected = -50_000 * (logsumexp(-net / 50_000) - np.log(len(net)))
     assert diag['ce_in_solver'] == pytest.approx(expected, abs=0.1)
+
+
+def test_cml_budget_detects_intermediate_losses_and_covers_mixtures():
+    from emfin_capstone.toolbox.mpep import cml_of_paths
+    n=200
+    # All terminal risky outcomes recover, but half lose 30% mid-path.
+    paths=np.ones((n,2,2))
+    paths[:100,0,0]=.7
+    paths[:,1,0]=1.08
+    paths[:,:,1]=1.001
+    stress=np.r_[np.full(100,.009),np.full(100,.001)]
+    a,diag=liab.optimization_multiperiod(
+        market_paths=paths,prices_vector=np.ones(2),wealth=1e6,
+        liability_scenarios=np.zeros((n,1)),payout_steps=np.array([2]),liability_base=np.array([1.]),
+        mm_growth_paths=np.ones((n,2)),risk_tolerance=1e6,confidence_level=.8,
+        gamma_loss=.2,gamma_shortfall=1.,cml_budget=.06,stress_probabilities=[stress])
+    w=a/1e6
+    assert w[0] <= .061/.301 + 1e-5
+    losses=np.maximum(0.,1.-paths@w).max(1)
+    for mix in (0.,.2,.7,1.):
+        p=(1-mix)*np.full(n,1/n)+mix*stress
+        assert cml_of_paths(losses,p,.8) <= .06001
