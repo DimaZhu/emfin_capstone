@@ -538,9 +538,9 @@ def optimization_with_cvar_and_liquidity(
     sales = None
     if n_funded > 0:
         funding_need = cp.pos(1 + relative_threshold - funded_returns @ weights)
-        costless_value = (
-            funded_returns[:, costless_assets] @ weights[costless_assets] if len(costless_assets) else np.zeros(n_funded)
-        )
+        costless_value = np.zeros(n_funded)
+        if len(costless_assets):
+            costless_value = funded_returns[:, costless_assets] @ weights[costless_assets]
         if len(costly) == 0:
             constraints.append(costless_value >= funding_need)  # nothing costly to sell
     if n_funded > 0 and len(costly) > 0:
@@ -579,7 +579,8 @@ def optimization_with_cvar_and_liquidity(
     solver_sales = np.zeros((n_scenarios, n_assets))
     remaining_need = np.clip(1 + relative_threshold - gross_return_scenarios @ weights.value, 0, None) * wealth
     for asset in costless_assets:
-        solver_sales[:, asset] = np.minimum(remaining_need, gross_return_scenarios[:, asset] * weights.value[asset] * wealth)
+        asset_value = gross_return_scenarios[:, asset] * weights.value[asset] * wealth
+        solver_sales[:, asset] = np.minimum(remaining_need, asset_value)
         remaining_need -= solver_sales[:, asset]
     if sales is not None:
         solver_sales[np.ix_(may_need_funding, costly)] = np.clip(sales.value, 0, None) * wealth
