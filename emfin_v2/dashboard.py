@@ -29,6 +29,9 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     result['market_views']=evidence(c,draw,q,qs)
     from emfin_v2.abu_dhabi import local_calibration
     observed=local_calibration() if c['real_estate'].get('source')=='abu_dhabi_private' else None
+    if c['real_estate'].get('source')=='singapore_ura':
+        from emfin_v2.singapore import history
+        _,observed=history(c['real_estate'].get('sg_property_type','All Residential'))
     from emfin_v2.real_estate import calibration,assumptions
     result['re_data']=dict(available=observed is not None,source=c['real_estate'].get('source','synthetic'),enabled=c['real_estate']['enabled'],observed=observed,
         assumptions=assumptions(c['real_estate']),calibration=calibration(c['real_estate']) if c['real_estate']['enabled'] else None)

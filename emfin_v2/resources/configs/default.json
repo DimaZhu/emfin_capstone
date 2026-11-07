@@ -39,14 +39,15 @@
     "annual_vol": 0.12,
     "equity_correlation": 0.3,
     "liquidation_haircut": 0.1,
-    "source": "abu_dhabi_private",
+    "source": "singapore_ura",
     "smoothing_alpha": 0.0,
     "net_rental_yield": 0.0,
     "sale_week": 0,
     "sale_delay_weeks": 12,
     "history_case": "central",
     "forward_mode": "view",
-    "forward_log_drift": 0.04
+    "forward_log_drift": 0.04,
+    "sg_property_type": "All Residential"
   },
   "client_evidence": {
     "status": "illustrative",

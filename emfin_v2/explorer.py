@@ -33,7 +33,8 @@ class Controls:
     profile: str='Balanced'
     payouts: tuple | None=None
     cml: float=6.
-    re_source: str='abu_dhabi_private'
+    re_source: str='singapore_ura'
+    re_sg_type: str='All Residential'
     dro: bool=True
     dro_radius: float=.00002
     re_alpha: float=0.
@@ -57,10 +58,10 @@ class Controls:
         if not np.isfinite(self.wealth) or not 1<=self.wealth<=1000 or type(self.horizon) is not int or not 1<=self.horizon<=52:raise ValueError('capital $1-1000M; horizon 1-52 whole weeks')
         if self.scenario_tier not in ('interactive','full'):raise ValueError('unknown scenario tier')
         if self.profile not in ('Preserve','Balanced','Growth','Aggressive'):raise ValueError('unknown risk profile')
-        if self.re_source not in ('abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
+        if self.re_source not in ('singapore_ura','abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
         if not np.isfinite(self.dro_radius) or not 0<=self.dro_radius<=.001:raise ValueError('Wasserstein radius must be 0-.001')
         from emfin_v2.real_estate import validate
-        validate(dict(smoothing_alpha=self.re_alpha,net_rental_yield=self.re_rent/100,sale_week=self.re_sale_week,sale_delay_weeks=self.re_sale_delay,history_case=self.re_history,forward_mode=self.re_forward_mode,forward_log_drift=self.re_forward_drift/100))
+        validate(dict(sg_property_type=self.re_sg_type,smoothing_alpha=self.re_alpha,net_rental_yield=self.re_rent/100,sale_week=self.re_sale_week,sale_delay_weeks=self.re_sale_delay,history_case=self.re_history,forward_mode=self.re_forward_mode,forward_log_drift=self.re_forward_drift/100))
         if not np.isfinite(self.re_correlation) or not -1<=self.re_correlation<=1:raise ValueError('RE dependence must be -1 to 1')
         if not np.isfinite(self.re_haircut) or not 0<=self.re_haircut<100:raise ValueError('RE sale haircut must be 0 to below 100%')
         if not np.isfinite(self.stress_increment) or not 0<=self.stress_increment<=10:raise ValueError('stress increment must be 0-10 percentage points')
@@ -114,6 +115,7 @@ def compute(c=Controls()):
         config['student_nu']=8. if c.student else None
         config['real_estate']['enabled']=c.real_estate
         config['real_estate']['source']=c.re_source
+        config['real_estate']['sg_property_type']=c.re_sg_type
         config['real_estate']['minimum_weight']=c.re_min/100 if c.real_estate else 0.
         config['real_estate'].update(smoothing_alpha=c.re_alpha,net_rental_yield=c.re_rent/100,equity_correlation=c.re_correlation,sale_week=c.re_sale_week,sale_delay_weeks=c.re_sale_delay,history_case=c.re_history,liquidation_haircut=c.re_haircut/100,forward_mode=c.re_forward_mode,forward_log_drift=c.re_forward_drift/100)
         with TemporaryDirectory() as folder:
@@ -180,7 +182,7 @@ def from_default(result):
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,
-        re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
+        re_sg_type=cfg['real_estate'].get('sg_property_type','All Residential'),re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
         re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in range(5)) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],

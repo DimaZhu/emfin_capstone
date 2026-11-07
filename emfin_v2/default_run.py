@@ -337,7 +337,7 @@ def run(c,output='artifacts/default'):
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
     result=dict(frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
         status=status,calibration=calibration,rows=rows,weights={k:(a/c['wealth']).tolist() for k,a in allocations.items()},
-        assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['RE synthetic'] if d==7 else [])),
+        assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['Singapore URA private residential price index'] if d==7 and c['real_estate'].get('source')=='singapore_ura' else ['RE synthetic'] if d==7 else [])),
         net_wealth_fan=fan, supersedes='All earlier multi-period figures before cumulative payout correction.',
         caveats=['Wasserstein risk bounds use an explicit L1 transport metric on normalized path prices and cumulative payout requirements, unrestricted support and a development-selected radius, not a confidence-calibrated ambiguity set. Utility remains nominal.',
                  'Monte Carlo t intervals describe batch estimates conditional on the fitted model, not economic forecast uncertainty. Zero observed losses yield zero-width intervals, not a bound on unseen tails.',
