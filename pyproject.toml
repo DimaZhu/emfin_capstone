@@ -9,14 +9,12 @@ description = "Standalone scenario-based funding-risk engine with cumulative pay
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 authors = [{name = "Tijs de Boer"}]
+license-files = ["NOTICE.md", "legacy/ATTRIBUTION.md"]
 dependencies = ["numpy==2.2.6", "pandas==2.3.3", "scipy==1.15.3", "cvxpy==1.7.5"]
 
 [project.scripts]
 emfin-run = "emfin_v2.default_run:main"
 emfin-explore = "emfin_v2.explorer:main"
-
-[tool.setuptools]
-license-files = ["NOTICE.md", "legacy/ATTRIBUTION.md"]
 
 [tool.setuptools.packages.find]
 include = ["emfin_v2*", "emfin_capstone*"]
