@@ -28,3 +28,6 @@ artifacts/
 dist/
 build/
 *.egg-info/
+
+# Private client / licensed source imports never ship.
+.private/

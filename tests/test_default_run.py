@@ -16,7 +16,7 @@ def test_default_end_to_end_calibration_and_heldout_report(tmp_path):
 
 
 def test_infeasible_real_estate_minimum_never_returns_fake_solution(tmp_path):
-    c=load_config();c['real_estate']['enabled']=True;c['real_estate']['minimum_weight']=.3
+    c=load_config();c['real_estate']['source']='synthetic';c['real_estate']['enabled']=True;c['real_estate']['minimum_weight']=.3
     c['liability_vol']=.3;c['multiplier_grid']=[1.]
     result=run(c,tmp_path)
     # Status and validation must be explicit; no allocation may be relabeled

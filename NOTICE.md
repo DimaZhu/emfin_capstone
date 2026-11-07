@@ -1,6 +1,6 @@
 # Notice and attribution
 
-EMFin V2, version 2.0.0, is Tijs de Boer's V2 project. New V2 work is attributed
+EMFin V2, version 2.1.0, is Tijs de Boer's V2 project. New V2 work is attributed
 to Tijs de Boer. This attribution does not reassign rights in inherited material
 or imply that he personally authored every underlying utility.
 

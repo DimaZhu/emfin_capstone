@@ -1,9 +1,9 @@
-# GitHub Actions workflow for the pytest suite.
-# INSTALL: move to .github/workflows/tests.yml (web UI: Actions -> set up a
-# workflow yourself -> paste).  It lives here because the repo-scope push
-# token cannot create files under .github/workflows (needs `workflow` scope).
+# Activate by copying/moving to repository-root .github/workflows/tests.yml.
+# This template is inactive here; current push credential lacks workflow scope.
 name: tests
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   pytest:
     runs-on: ubuntu-latest
@@ -11,7 +11,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: pip install -r requirements.txt
-        # standalone packaging: plain pinned requirements, no poetry needed
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip setuptools wheel
+      - run: python -m pip install . pytest==9.2.0 entropy-pooling==1.0.11
       - run: python -m pytest tests/ -q
+      - run: python scripts/smoke_installed.py

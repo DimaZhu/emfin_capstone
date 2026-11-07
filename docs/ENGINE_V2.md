@@ -46,7 +46,7 @@ loosening solver checks or pretending every payment can use the original cash.
 On the current pinned example, calibration mixes 50% of the optimized
 allocation with 50% verified cash after the unblended model fails fresh stressed
 validation. It is explicitly a calibrated mixture, not globally optimal weights.
-The final evaluation reports net CE about $6.866M for the proposed model, with
+The final evaluation reports net CE about $6.857M with the illustrative W1 risk buffer enabled for the proposed model, with
 no observed funding gap under nominal or freshly tilted stress measures in the
 8 evaluation batches. 1/N and shrunk MV fail the final-date risk budgets.
 The without-posterior-stress comparison uses the SAME cash-mixing fraction.
@@ -141,12 +141,13 @@ liquidity haircuts. The appendix research funding fan is gross of its Meucci
 liquidity overlay; it must not be read as liquid cash available to pay obligations.
 The old single-date companion fan is also before payouts.
 
-The unused `liquidity.IlliquidHolding` time-to-cash helper remains an isolated
-research example, not an active client valuation model. The synthetic RE sleeve
+The unused `IlliquidHolding` time-to-cash helper was moved intact to
+`legacy/research/liquidity_time_to_cash.py`, outside the installed V2 package.
+It is not an active client valuation model. The synthetic RE sleeve
 uses an explicit configured proportional haircut. Do not interpret it as an
 empirically validated property sale-delay model.
 
-See NOTICE.md and legacy/ATTRIBUTION.md. V2 is packaged as emfin-v2 2.0.0;
+See NOTICE.md and legacy/ATTRIBUTION.md. V2 is packaged as emfin-v2 2.1.0;
 config/data/template resources travel with its wheel. The old emfin_capstone
 command is a launch alias, not a dependency on the notebook.
 
@@ -155,3 +156,32 @@ needed before choosing a project licence. Dependency/data provenance does not
 settle that choice. No GPL dependency has been added. The CI workflow remains a
 template under `ci/`; activating a root GitHub workflow needs separate GitHub
 workflow-write permission, which the current credential does not have.
+
+## Ballast presentation and Wasserstein extension
+
+The active UI now follows the Ballast design reference, but every model number
+and plain-language verdict is generated from engine results. Capital, whole-week
+horizon, named payout batches, risk-tolerance presets, RE source/minimum, EP
+view strength and W1 risk-buffer controls are real local model inputs. No
+instant solve or annual/ten-year forecast is implied by the 13-week default.
+
+Named crisis-style cards are transparent simplified deterministic shocks, not
+historically calibrated replays. The 2008-style illustrative equity shock can
+produce a payout shortfall even when the stochastic calibration passes. That
+conflict is displayed in red, not hidden. No invented time-to-cash or recurring
+payout runway is supplied. Cash coverage is a ratio to the finite planned
+payout schedule, not years of income support.
+
+See [Wasserstein formulation](WASSERSTEIN.md): the default epsilon=0.00002 adds
+robust RU risk envelopes under an explicit unrestricted-support L1 metric.
+The current proposed example uses a 50/50 optimizer/cash blend, CE about
+$6.857M, and about $30,979 per-date W1 gap buffer despite zero observed tail
+gaps. Re-run for exact JSON. The radius is illustrative, not coverage-calibrated;
+nominal CARA utility is NOT made distributionally robust.
+
+See [Abu Dhabi private input](ABU_DHABI_PRIVATE_INPUT.md): the local private
+observed apartment index replaces synthetic marginal calibration only when
+selected. No workbook contents are shipped in the wheel or committed. The
+public synthetic fixture stays separate. SFO dashboard inputs are labelled
+placeholders until evidence is supplied; a full private model JSON can be run
+on the local server, including the documented NPZ scenario-archive format.

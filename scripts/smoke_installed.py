@@ -18,7 +18,7 @@ def main():
         root=Path(temp);wheel_dir=root/'wheel';wheel_dir.mkdir()
         env=os.environ.copy();env.pop('PYTHONPATH',None)
         build=run([sys.executable,'-m','pip','wheel',ROOT,'--no-deps','--no-build-isolation','--wheel-dir',wheel_dir],root,env)
-        wheel=next(wheel_dir.glob('emfin_v2-2.0.0-*.whl'))
+        wheel=next(wheel_dir.glob('emfin_v2-*.whl'))
         venv_dir=root/'venv';venv.create(venv_dir,with_pip=True,system_site_packages=True)
         bindir=venv_dir/('Scripts' if os.name=='nt' else 'bin')
         python=bindir/('python.exe' if os.name=='nt' else 'python')
@@ -29,7 +29,7 @@ def main():
         assert Path(info['module']).is_relative_to(venv_dir),info
         assert Path(info['config']).is_relative_to(venv_dir),info
         assert Path(info['data']).is_relative_to(venv_dir),info
-        assert info['version']=='2.0.0'
+        assert info['version']=='2.1.0'
         for name in ['emfin_v2','emfin_capstone']:
             result=run([python,'-m',name,'--output',work/name],work,env)
             report=json.loads((work/name/'results.json').read_text())

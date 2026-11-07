@@ -1,0 +1,216 @@
+{
+  "tabs": [
+    {
+      "range": "AD_Apt_Monthly!A1:F30",
+      "values": [
+        [
+          "Synthetic monthly apartment-index fixture, NOT Abu Dhabi data"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [
+          "Month",
+          "Observed index",
+          "Reported YoY",
+          "Estimated index",
+          "Method",
+          "Confidence"
+        ],
+        [
+          "2020-01",
+          99.2,
+          "",
+          99.2,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-02",
+          99.7992,
+          "",
+          99.7992,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-03",
+          100.40039999999999,
+          "",
+          100.40039999999999,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-04",
+          101.00360560319999,
+          "",
+          101.00360560319999,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-05",
+          101.60882242721281,
+          "",
+          101.60882242721281,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-06",
+          100.19597594393917,
+          "",
+          100.19597594393917,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-07",
+          100.80119195992312,
+          "",
+          100.80119195992312,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-08",
+          101.40842805606725,
+          "",
+          101.40842805606725,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-09",
+          102.0176898918281,
+          "",
+          102.0176898918281,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-10",
+          102.62898314121978,
+          "",
+          102.62898314121978,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-11",
+          101.20195156611328,
+          "",
+          101.20195156611328,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2020-12",
+          101.81324399936344,
+          "",
+          101.81324399936344,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-01",
+          102.42657679454032,
+          "",
+          102.42657679454032,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-02",
+          103.04195566792193,
+          "",
+          103.04195566792193,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-03",
+          103.65938635048988,
+          "",
+          103.65938635048988,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-04",
+          102.21802726409258,
+          "",
+          102.21802726409258,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-05",
+          102.8354571223249,
+          "",
+          102.8354571223249,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-06",
+          103.45494782788106,
+          "",
+          103.45494782788106,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-07",
+          104.07650515443098,
+          "",
+          104.07650515443098,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-08",
+          104.70013489049576,
+          "",
+          104.70013489049576,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-09",
+          103.24430444344696,
+          "",
+          103.24430444344696,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-10",
+          103.86793334689973,
+          "",
+          103.86793334689973,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-11",
+          104.49364378874853,
+          "",
+          104.49364378874853,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ],
+        [
+          "2021-12",
+          105.12144160063133,
+          "",
+          105.12144160063133,
+          "Observed (SYNTHETIC TEST FIXTURE)",
+          "Synthetic"
+        ]
+      ]
+    }
+  ]
+}

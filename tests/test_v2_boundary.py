@@ -7,7 +7,7 @@ from emfin_v2.default_run import DEFAULT_CONFIG
 
 
 def test_v2_identity_and_bundled_resources():
-    assert emfin_v2.__version__=='2.0.0'
+    assert emfin_v2.__version__=='2.1.0'
     assert DEFAULT_CONFIG.is_relative_to(config.PACKAGE_DIR)
     assert (config.DATA_DIR/'raw/manifest.json').is_file()
     assert (config.PACKAGE_DIR/'web/explorer.html').is_file()

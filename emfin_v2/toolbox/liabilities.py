@@ -302,6 +302,8 @@ def optimization_multiperiod(
     stress_probabilities: list[np.ndarray] | None = None,
     funding_stress_probabilities: list[np.ndarray] | None = None,
     minimum_weights: np.ndarray | None = None,
+    wasserstein_radius: float = 0.,
+    wasserstein_liability_scale: float = .01,
 ) -> tuple[np.ndarray, dict]:
     """Multi-period, stochastic-liability allocation.
 
@@ -364,7 +366,10 @@ def optimization_multiperiod(
     rel_loss = 1 - value_terminal
     t_loss = cp.Variable()
     cvar_loss = t_loss + cp.sum(cp.multiply(probs, cp.pos(rel_loss - t_loss))) / (1 - confidence_level)
-    constraints = [cp.sum(weights) == 1, cvar_loss <= gamma_loss]
+    from emfin_v2.toolbox.wasserstein import cvx_penalty
+    market_dro=cvx_penalty(weights,wasserstein_radius,confidence_level)
+    funding_dro=cvx_penalty(weights,wasserstein_radius,confidence_level,wasserstein_liability_scale)
+    constraints = [cp.sum(weights) == 1, cvar_loss + market_dro <= gamma_loss]
     if long_only:
         constraints.append(weights >= 0)
 
@@ -384,17 +389,18 @@ def optimization_multiperiod(
                 required += liabilities[:, j] * growth[:, step-1] / growth[:, previous_step-1]
         budget_rel = gamma_shortfall * base[i] / wealth
         if budget_rel == 0:
+            if wasserstein_radius>0:raise ValueError('Positive unrestricted-support Wasserstein radius cannot guarantee a zero shortfall budget')
             constraints.append(value_at_step >= required/wealth)
             continue
         scaled_gap = (required/wealth - value_at_step) / budget_rel
         t_gap = cp.Variable(nonneg=True)
         excess = cp.pos(scaled_gap-t_gap)
-        constraints.append(t_gap + probs @ excess/(1-confidence_level) <= 1.)
+        constraints.append(t_gap + probs @ excess/(1-confidence_level) + funding_dro/budget_rel <= 1.)
         for stress in funding_stress_probabilities or []:
             ps = np.asarray(stress,float).ravel()[:n_scenarios]
             if ps.shape != probs.shape or not np.isfinite(ps).all() or (ps<0).any() or ps.sum()<=0:
                 raise ValueError("invalid funding-stress probabilities")
-            constraints.append(t_gap + (ps/ps.sum()) @ excess/(1-confidence_level) <= 1.)
+            constraints.append(t_gap + (ps/ps.sum()) @ excess/(1-confidence_level) + funding_dro/budget_rel <= 1.)
 
     # CML: CVaR of maximum initial-value loss over each entire path.
     # Enforce for every supplied posterior and the nominal measure. Because
@@ -421,7 +427,7 @@ def optimization_multiperiod(
             constraints.append(excess_cml >= 1. - value_paths[:,step] - eta_cml)
         for ps in measures:
             cml = eta_cml + ps @ excess_cml / (1-confidence_level)
-            constraints.append(cml <= cml_budget)
+            constraints.append(cml + market_dro <= cml_budget)
     elif stress_probabilities:
         raise ValueError("stress_probabilities requires cml_budget")
 
