@@ -35,7 +35,6 @@ from pathlib import Path
 from typing import Optional, Protocol, runtime_checkable
 
 import pandas as pd
-import yfinance as yf
 
 from emfin_capstone import config
 from emfin_capstone.toolbox.cache import (
@@ -278,6 +277,11 @@ class YahooPriceFetcher:
         return PriceHistory.from_dataframe(symbol, final_frame)
 
     def _download(self, symbol: str, start: date, end: date) -> Optional[pd.DataFrame]:
+        # yfinance is imported lazily: it is only needed for live fetching,
+        # not for the pinned-snapshot pipeline, so the standalone engine
+        # runs without it installed.
+        import yfinance as yf
+
         ticker = symbol + self._suffix
         logger.info("Fetching history for %s via yfinance", ticker)
         try:

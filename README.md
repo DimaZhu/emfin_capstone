@@ -4,7 +4,27 @@ Portfolio optimization capstone project. The analysis lives in
 `notebooks/portfolio_optimization.ipynb` and builds on a small library
 (`emfin_capstone/`) for live price fetching and portfolio data types.
 
-## Prerequisites
+## Quickstart (standalone, two commands)
+
+The engine runs fully offline from the pinned data snapshot - no live data,
+no Poetry, Python 3.10-3.12:
+
+```bash
+pip install -r requirements-dev.txt
+python scripts/run_v2_engine.py
+```
+
+Run the test suite with `python -m pytest tests/`. Runtime-only installs can
+use `requirements.txt` instead (drops pytest, the EP cross-check reference,
+yfinance and the notebook tooling). See `ENGINE_V2.md` for the pipeline,
+design decisions and caveats.
+
+## Prerequisites (Poetry workflow, optional)
+
+The Poetry workflow below remains supported for the notebook and live-data
+work; regenerate the lock file with `poetry lock` on your own Python (the
+committed lock was removed - it pinned Python 3.12-only builds and drifted).
+For the reproducible engine runs prefer the Quickstart above.
 
 Install the tooling once.
 
