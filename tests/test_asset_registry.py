@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import copy
 import pytest
 from emfin_v2.assets import load_registry,layout,validate_registry,wasserstein_minimum_buffer
@@ -34,7 +35,7 @@ def test_runtime_add_remove_paths_holdings_and_views_follow_registry():
     from emfin_v2.market_views import evidence
     d=load_registry();dummy=copy.deepcopy(d['assets'][0]);dummy.update(id='dummy',ticker='DUMMY',name='Dummy test equity');d['assets'].insert(0,dummy)
     for doc in [d,load_registry()]:
-        c=configure(load_config(),doc);n=len(c['asset_names'])-1
+        c=configure(load_config(LEGACY_CONFIG),doc);n=len(c['asset_names'])-1
         dims=n+int(c['fx']['enabled']);mu=np.full(dims,.0003);cov=np.eye(dims)*.00005;
         if c['fx']['enabled']:mu[-1]=0.
         cov[c['cash_index'],:]=0;cov[:,c['cash_index']]=0

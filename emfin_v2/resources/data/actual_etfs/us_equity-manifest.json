@@ -1,0 +1,19 @@
+{
+  "asset_id": "us_equity",
+  "ticker": "VTI",
+  "currency": "USD",
+  "return_type": "total_return",
+  "adjustment_method": "Yahoo adjusted close, provider-adjusted for splits and cash distributions, normalized to100; no splicing or price repair",
+  "source_url": "https://finance.yahoo.com/quote/VTI/history/",
+  "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+  "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+  "library": "yfinance 1.8.0",
+  "file": "us_equity-total-return.csv",
+  "sha256": "e7222fa5bc257b56c6f1f81c0eafb4057f7a7a14e99c0f65e1e561defa1e0fa4",
+  "raw_sha256": "41bc3289ccd691c2e708643549e2828bf3d7f5c7cc72b41896a850e625e7197f",
+  "first": "2001-06-15",
+  "last": "2026-11-06",
+  "observations": 6387,
+  "private_only": true,
+  "crosscheck_note": "Provider-adjusted total return, not an issuer-certified total-return index."
+}

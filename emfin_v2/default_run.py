@@ -13,12 +13,22 @@ from emfin_v2.toolbox import dataset,shrinkage,liabilities,entropy_pooling as ep
 from emfin_v2.real_estate import ScenarioDraw, funding_paths
 from emfin_v2.config import CONFIG_DIR
 DEFAULT_CONFIG=CONFIG_DIR/'default.json'
+LEGACY_CONFIG=CONFIG_DIR/'legacy.json'
 
 
 def load_config(path=DEFAULT_CONFIG):
     try:
         c=json.loads(Path(path).read_text())
     except (OSError,json.JSONDecodeError) as error:raise ValueError('Cannot read model config: '+str(error)) from error
+    if c.get('asset_registry')=='bundled':
+        from emfin_v2.assets import load_registry
+        c['asset_registry']=load_registry()
+    if c.get('history_bundle'):
+        from emfin_v2.config import DATA_DIR
+        name=c['history_bundle']
+        if name!='actual_etfs':raise ValueError('unknown bundled history selection')
+        folder=DATA_DIR/name;index=json.loads((folder/'index.json').read_text())
+        c['history_manifests']={k:str(folder/v) for k,v in index.items()}
     required=['wealth','horizon_weeks','student_nu','confidence','risk_tolerance','liabilities','liquidity_haircuts','evaluation_seeds','validation_seeds','real_estate','funding_budget_fraction','loss_budget','cml_budget','liability_vol','train_scenarios','validation_scenarios','evaluation_scenarios','seed','multiplier_grid','view_spread','stress_mean_path_loss_increment','label']
     if not isinstance(c,dict) or any(key not in c for key in required):raise ValueError('Incomplete model config; copy the bundled default.json and replace its documented inputs')
     if c.get('recurring_payout') is not None:

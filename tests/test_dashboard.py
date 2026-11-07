@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import json
 from pathlib import Path
 import numpy as np
@@ -19,7 +20,7 @@ def test_backcasts_and_forecasts_excluded(tmp_path):
 
 
 def test_dashboard_funding_and_stress_are_generated(tmp_path):
-    c=load_config();c.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.]);r=run(c,tmp_path);d=r['dashboard']
+    c=load_config(LEGACY_CONFIG);c.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.]);r=run(c,tmp_path);d=r['dashboard']
     assert d['wealth']==c['wealth'];assert d['sfo_inputs']['status'].startswith('Default placeholder')
     a=np.array(r['weights']['proposed'])*c['wealth']
     for stress in d['shocks']:
@@ -43,6 +44,6 @@ def test_config_placeholder_fails_helpfully(tmp_path):
 
 def test_nonfinite_config_rejected(tmp_path):
     import pytest
-    c=load_config();c['real_estate']['annual_vol']=float('nan')
+    c=load_config(LEGACY_CONFIG);c['real_estate']['annual_vol']=float('nan')
     p=tmp_path/'bad.json';p.write_text(json.dumps(c))
     with pytest.raises(ValueError,match='finite'):load_config(p)

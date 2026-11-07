@@ -1,7 +1,7 @@
-# Asset registry migration (in progress)
+# Declarative assets and actual-history adapter
 
-`emfin_v2/resources/configs/assets.json` is the target six-asset universe, not
-an assertion that the legacy default data have already been replaced.
+`emfin_v2/resources/configs/assets.json` is the default six-asset universe. The former
+liquid dataset is retained only by the explicit legacy.json configuration.
 The shared runner supports this registry through `asset_registry` and
 `history_manifests` config fields. Missing histories fail explicitly.
 `emfin-explore --config path/to/config.json` uses that config for recomputations.
@@ -14,13 +14,14 @@ Add an ETF by copying a registry row, assigning a unique stable ID and actual
 ticker, setting its factors, views, currency, liquidity and haircut, and
 providing its private data manifest. Remove it with enabled=false. Never reuse
 an old ID to disguise a new instrument. New unsupported return models fail.
-The add/remove dummy tests currently cover metadata/layout and data alignment;
-end-to-end path, solve, fixed-property, factor and view membership add/remove tests now cover a dummy liquid instrument. Fixtures are synthetic TEST DATA, never market evidence. Visual rendering is checked on a test fixture separately.
+Add/remove tests cover metadata, alignment, paths, solve, fixed-property,
+factor and view membership. Fixtures are labelled synthetic TEST DATA.
 
 Each private history manifest names asset_id, ticker, currency, source_url,
 use_terms, adjustment_method, return_type=total_return, file and sha256. CSV
 columns are date,total_return_index. Raw NAVs without verified distributions
-are not total returns. Keep restricted data and manifests in .private/, never git.
+are not total returns. The owner approved private-fork storage of market
+histories on2026-11-07. No client data, credentials or auth caches are bundled.
 
 Cash remains a cash-account model, not a silently substituted SHV ETF. Its
 zero annual rate is an explicit uncalibrated placeholder in the target registry.
@@ -30,10 +31,11 @@ history, not a fabricated observed weekly tradable series. The SGD/USD factor no
 See FX_MODEL.md for its scope and limits.
 
 Source rights: URA data are attributed under the Singapore Open Data Licence.
-GLD's issuer offers a full XLSX archive but restricts reproduction/redistribution;
-its raw private archive is excluded from git. Yahoo is not used as an unofficial
-automated download route. Vanguard and BlackRock download/use terms need to be
-honored independently; available downloads do not grant publication clearance.
+The owner accepted Yahoo automated-access terms risk for private research
+and private-fork storage. This does not claim Yahoo permission or public
+redistribution rights. yfinance is Apache-2.0, an optional import-only
+dependency. Normal default runs are offline and make no market-data requests.
+Source attribution, SHA and notices remain in each manifest.
 
 The adapter uses actual ETF total-return log invariants for all listed legs,
 not yield/spread repricing, with shrinkage over stochastic legs only. An
@@ -44,6 +46,17 @@ registry membership. Property fixed/minimum holdings and cash index follow the
 registry. Simple old-universe shock cards are unavailable until new instrument
 shocks are specified. The allocation frontier also respects fixed holdings.
 
-Current data gap: full verified VTI/VWO weekly total-return histories are not
-yet available by a permitted route. The defaults therefore still use the old
-liquid dataset rather than mislabeling its return models as new tickers.
+Bundled inputs: Yahoo adjusted closes for VTI/VWO/GLD and issuer NAV plus
+matched ex-date distributions for IEF. GLD issuer/Yahoo early closing-price
+differences were found; one consistent Yahoo series is used, not a splice.
+IEF NAV and Yahoo market-close return differences are disclosed rather than
+mislabelled as exact matches. Common weekly sample:2005-03-18 to2026-10-30,
+limited by the latest FedFX release. Actual data calibrate parametric paths;
+this is NOT itself an actual-history backtest. No public data sharing approved.
+
+To refresh explicitly (not automatic):
+`pip install .[market-data]` then
+`python -m emfin_v2.yahoo_import --symbols VTI VWO GLD IEF --folder .private/yahoo-history --ack-yahoo-terms-risk`.
+Existing raw CSVs are reused, with no network request. This importer never
+silently extends or merges an older cache; remove/replace it intentionally
+when an updated snapshot is wanted. Do not mistake a cache hit for fresh data.

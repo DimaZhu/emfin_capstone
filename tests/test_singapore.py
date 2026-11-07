@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import numpy as np
 import pytest
 from emfin_v2.singapore import history
@@ -24,7 +25,7 @@ def test_quarterly_annualization_and_separate_forward_view():
 
 
 def test_singapore_source_is_default_but_rent_remains_an_assumption():
-    c=load_config();assert c['real_estate']['source']=='singapore_ura'
+    c=load_config(LEGACY_CONFIG);assert c['real_estate']['source']=='singapore_ura'
     assert c['real_estate']['net_rental_yield']==0
     c['real_estate']['enabled']=True
     draw=draw_paths(c,setup(c),100,23);q,qs=probabilities(c,draw[0],draw.re_price_logs)
