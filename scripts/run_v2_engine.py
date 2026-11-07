@@ -66,6 +66,7 @@ LIABILITIES = liab.LiabilitySchedule(items=(
 VIEWS = [
     ("DFAI beats DFUS by 50bp over the quarter", "relative_mean", 0.005),
     ("DFAE quarterly vol rises to 6.5%", "vol", 0.065),
+    ("DFUS quarterly skew stays above -0.5", "skew_floor", -0.5),
 ]
 
 
@@ -118,15 +119,19 @@ def main() -> None:
           f"std {joint[snapshot.YIELD_TICKER].std()*1e4:.1f}bp")
 
     # ---- Views via entropy pooling (on the invariant scenarios) ----------
-    views = []
-    rel = inv_scen[:, 1] - inv_scen[:, 0]  # DFAI - DFUS quarterly log return
-    views.append(ep.View(features=rel.reshape(-1, 1), target=[VIEWS[0][2]], name=VIEWS[0][0]))
-    views.append(ep.volatility_view(inv_scen, 2, VIEWS[1][2], pin_mean=float(inv_scen[:, 2].mean()),
-                                    name=VIEWS[1][0]))
+    views = [
+        ep.relative_mean_view(inv_scen, 1, 0, min_spread=VIEWS[0][2], name=VIEWS[0][0]),
+        ep.volatility_view(inv_scen, 2, VIEWS[1][2], pin_mean=float(inv_scen[:, 2].mean()),
+                           name=VIEWS[1][0]),
+        # Inequality view (skewness floor): binds only if the view is violated
+        # by the prior - the Gq <= h block of the classic EP formulation.
+        ep.skewness_view(inv_scen, 0, VIEWS[2][2], sense="ge", name=VIEWS[2][0]),
+    ]
     pooled = ep.joint_entropy_pooling(N_SCENARIOS, views)
     q = pooled.posterior_probs
     print(f"views pooled: KL {pooled.kl_divergence:.3f} nats, "
-          f"effective scenarios {pooled.effective_n_scenarios:,.0f} / {N_SCENARIOS:,}")
+          f"effective scenarios {pooled.effective_n_scenarios:,.0f} / {N_SCENARIOS:,} "
+          f"(ENS ratio {pooled.effective_n_scenarios_ratio:.1%})")
     for name, achieved, view in zip(pooled.view_names, pooled.per_view_achieved, views):
         print(f"  {name}: achieved {np.round(achieved, 5)} vs target {view.target}")
 

@@ -27,6 +27,21 @@ change only scenario probabilities and scenario values, upstream.
   all views hold exactly), sequential mode for priority-ordered/conflicting
   views (later view wins; per-view achieved moments always reported).
   BL is the mean-views-only special case - kept as a benchmark method.
+  Equality AND inequality views (the classic A q = b, G q <= h form):
+  means, vol caps, mean floors, relative (ranking) views, skewness,
+  kurtosis, correlation - pooled in one dual (Newton for pure equalities,
+  bound-constrained L-BFGS-B once inequalities enter). Volatility views use
+  the centered squared feature, so a vol cap bounds the realized std
+  regardless of mean drift. Confidence-in-views blending (Meucci 2010):
+  q = (1-c) p + c q_EP. Diagnostics: relative entropy and the effective
+  number of scenarios (ENS ratio exp(-KL)) - the standard EP stress-test
+  summary. Cross-validated against Fortitudo Technologies' reference
+  implementation (BSD-3-Clause "entropy-pooling" package as a test-only
+  dependency; posteriors match to ~1e-6, incl. a mixed equality+inequality
+  problem. Their GPL-3.0 "fortitudo.tech" package is deliberately NOT a
+  dependency - copyleft; used only as a one-off local check. Their
+  sequential-EP heuristics are proprietary and not in either open-source
+  package - ours is our own implementation).
 - **Bonds**: weekly changes in 10Y yield as the invariant; exact flat-curve
   repricing, roll-down falls out of the pricing equation. No credit-spread
   layer yet (second factor, same machinery).
@@ -59,4 +74,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 33 tests covering every module.
+`python -m pytest tests/` - 45 tests covering every module.
