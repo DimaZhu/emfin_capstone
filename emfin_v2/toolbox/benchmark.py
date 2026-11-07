@@ -50,6 +50,7 @@ def mean_variance_allocation(
     risk_tolerance: float,
     long_only: bool = True,
     minimum_weights: np.ndarray | None = None,
+    fixed_weights: dict | None = None,
 ) -> np.ndarray:
     """Vanilla mean-variance: max w'mu - w' Sigma w / (2 zeta_rel), sum w = 1.
 
@@ -79,6 +80,8 @@ def mean_variance_allocation(
         if mins.shape!=(n,) or (mins<0).any() or not np.isfinite(mins).all() or mins.sum()>1:
             raise ValueError("invalid minimum benchmark holdings")
         constraints.append(w>=mins)
+    from emfin_v2.toolbox.holdings import validate_fixed
+    constraints.extend(w[i]==v for i,v in validate_fixed(fixed_weights,n,minimum_weights).items())
     cp.Problem(objective, constraints).solve(solver="CLARABEL")
     if w.value is None:
         raise RuntimeError("mean-variance optimization failed")

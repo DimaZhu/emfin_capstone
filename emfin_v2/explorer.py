@@ -21,8 +21,10 @@ class Controls:
     sequential: bool=True
     stress: bool=True
     multiperiod: bool=True
-    real_estate: bool=False
+    real_estate: bool=True
     re_min: float=0.
+    re_holding_mode: str='fixed'
+    re_fixed: float=10.
     wealth: float=100.
     scenario_tier: str='interactive'
     recurring_monthly_k: float=250.
@@ -54,6 +56,7 @@ class Controls:
     def validate(self):
         if not 0<=self.liability<=105 or not .01<=self.budget<=50 or not 0<=self.view<=100:
             raise ValueError('controls outside supported range')
+        if self.re_holding_mode not in ('fixed','minimum') or not np.isfinite(self.re_fixed) or not 0<=self.re_fixed<=100:raise ValueError('invalid RE holding mode/percentage')
         if not 0<=self.re_min<=30:raise ValueError('RE minimum must be 0-30%')
         if not np.isfinite(self.wealth) or not 1<=self.wealth<=1000 or type(self.horizon) is not int or not 1<=self.horizon<=52:raise ValueError('capital $1-1000M; horizon 1-52 whole weeks')
         if self.scenario_tier not in ('interactive','full'):raise ValueError('unknown scenario tier')
@@ -114,6 +117,7 @@ def compute(c=Controls()):
         config['market_return_views']={str(i):v/100 for i,v in enumerate(c.asset_views)} if c.asset_views is not None else {}
         config['student_nu']=8. if c.student else None
         config['real_estate']['enabled']=c.real_estate
+        config['real_estate'].update(holding_mode=c.re_holding_mode,fixed_weight=c.re_fixed/100)
         config['real_estate']['source']=c.re_source
         config['real_estate']['sg_property_type']=c.re_sg_type
         config['real_estate']['minimum_weight']=c.re_min/100 if c.real_estate else 0.
@@ -181,14 +185,14 @@ def from_default(result):
         recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
-        multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,
+        multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,re_holding_mode=cfg['real_estate'].get('holding_mode','minimum'),re_fixed=cfg['real_estate'].get('fixed_weight',.1)*100,
         re_sg_type=cfg['real_estate'].get('sg_property_type','All Residential'),re_alpha=cfg['real_estate'].get('smoothing_alpha',0.),re_rent=cfg['real_estate'].get('net_rental_yield',0.)*100,
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
         re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in range(5)) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
         fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.',
-        seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture','verified pointwise cash fallback','verified pointwise minimum-holdings fallback') else {'proposed':result['status']['kind']},
+        seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture','verified pointwise cash fallback','verified pointwise minimum-holdings fallback','verified pointwise fixed-holdings fallback') else {'proposed':result['status']['kind']},
         caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE source and sale/rent assumptions are explicit; no measured cross-asset dependence. '+result['caveats'][0])
 
 

@@ -27,7 +27,7 @@ def test_invalid_or_outside_horizon_never_truncated(change):
 
 
 def test_repeated_payments_are_cumulative_not_twelve_independent_pots():
-    c=load_config();draw=draw_paths(c,setup(c),20,1);a=np.zeros(6);a[5]=c['wealth']
+    c=load_config();c['real_estate']['enabled']=False;draw=draw_paths(c,setup(c),20,1);a=np.zeros(6);a[5]=c['wealth']
     gap,ce=metrics(c,draw,a);assert len(gap)==12;assert (gap==0).all()
     assert ce<c['wealth']*1.1
 

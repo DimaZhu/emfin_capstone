@@ -33,7 +33,7 @@
     0.0
   ],
   "real_estate": {
-    "enabled": false,
+    "enabled": true,
     "minimum_weight": 0.0,
     "annual_drift": 0.04,
     "annual_vol": 0.12,
@@ -47,7 +47,9 @@
     "history_case": "central",
     "forward_mode": "view",
     "forward_log_drift": 0.04,
-    "sg_property_type": "All Residential"
+    "sg_property_type": "All Residential",
+    "holding_mode": "fixed",
+    "fixed_weight": 0.1
   },
   "client_evidence": {
     "status": "illustrative",
