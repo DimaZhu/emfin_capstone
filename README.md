@@ -61,6 +61,8 @@ Read [model details](docs/ENGINE_V2.md), [client input format](docs/CLIENT_INPUT
 and [paper scope](docs/PAPER_STRUCTURE.md). The [book-based review](docs/BOOK_AUDIT.md) records errors fixed and unresolved model-adequacy gaps against Meucci (2005). Optional research catalogue:
 `python -m emfin_v2 --research --help`. Its original payout example is infeasible under corrected accounting and reports unavailable; the unvalidated stochastic-liability option is disabled at the final boundary.
 
+A separate [fixed-protocol conditional-volatility comparison](docs/MODEL_ADEQUACY_RESULTS.md) tests one-week forecast adequacy, not annual funding performance. No model promotion is implied.
+
 ## Package and test it
 
 ```bash

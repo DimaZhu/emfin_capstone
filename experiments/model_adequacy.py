@@ -123,7 +123,14 @@ def run_stage(years,out,stage):
     initial=frame.loc[frame.index<=pd.Timestamp('2006-12-31')];cash=c['asset_layout']['ids'][c['cash_index']];scale={name:float(initial[name].std(ddof=1)) for name in frame if name!=cash}
     records=[];fits=[]
     for year in years:
-        t=time.perf_counter();r,f=annual_forecasts(frame,c,year);f['seconds']=time.perf_counter()-t;records.extend(r);fits.append(f)
+        t=time.perf_counter()
+        try:
+            r,f=annual_forecasts(frame,c,year);records.extend(r)
+        except (ValueError,RuntimeError) as error:
+            # Preserve an unavailable year, never shorten history or silently
+            # remove it from aggregate selection/comparison requirements.
+            f=dict(year=year,error=str(error),garch_available=False)
+        f['seconds']=time.perf_counter()-t;fits.append(f)
     for r in records:
         s=scale[r['asset']];r['normalized_crps']=r['crps']/s;r['qlike']=float(np.log(r['variance']/s**2)+(r['observed']-r['mean'])**2/r['variance'])
     result=dict(stage=stage,years=years,protocol_sha256=hashlib.sha256(PROTOCOL.read_bytes()).hexdigest(),code_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),code_dirty=bool(subprocess.check_output(['git','status','--porcelain'],text=True).strip()),source_sha256=source_hash(),initial_scales=scale,initial_first=str(initial.index[0].date()),initial_last=str(initial.index[-1].date()),data_manifests={k:json.loads(Path(v).read_text()) for k,v in c['history_manifests'].items()},fx_manifest=c.get('fx_evidence'),fits=fits,records=records,seconds=time.perf_counter()-start,scope='One-week marginal forecasts only. Annual refits use past observations; no portfolio optimization, EP stress or annual funding guarantee. Dates were already inspected before this retrospective protocol.')
@@ -147,6 +154,9 @@ def bootstrap_difference(values,block,replicates=2000,seed=20261107):
 
 def summarize(result,locked):
     frame=pd.DataFrame(result['records']);rows=[]
+    if any('error' in f for f in result['fits']):raise ValueError('incomplete years: comparative summary withheld')
+    counts=frame.groupby('method').size()
+    if any(method not in counts or counts[method]!=counts['iid_mix'] for method in MODELS):raise ValueError('incomplete model forecasts: comparative summary withheld')
     for method in MODELS:
         for name in ['ALL',*result['initial_scales']]:
             data=frame.loc[frame.method==method]

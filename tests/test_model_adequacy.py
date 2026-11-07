@@ -52,3 +52,23 @@ def test_selection_never_sees_final_and_disqualifies_missing_candidate(tmp_path)
     result=dict(years=[2014],records=records,protocol_sha256='protocol',source_sha256='source')
     lock=select(result,tmp_path/'lock.json');assert lock['selected']=='ewma_mix'
     assert not lock['final_scores_computed'] and 'garch_mix' not in lock['validation_scores']
+
+
+def test_missing_year_or_candidate_withholds_final_summary():
+    incomplete=dict(fits=[dict(year=2007,error='insufficient past rows')],records=[])
+    with pytest.raises(ValueError,match='incomplete years'):summarize(incomplete,dict(selected='garch_mix'))
+    incomplete=dict(fits=[],records=[dict(method='iid_mix',date='2020-01-03')])
+    with pytest.raises(ValueError,match='incomplete model'):summarize(incomplete,dict(selected='garch_mix'))
+
+
+def test_gaussian_squared_exponential_domain_for_three_step_warning():
+    # E exp(a X^2+b X), X~N(0,h), exists only if1-2*a*h>0.
+    # This test verifies the finite-side formula by independent quadrature;
+    # divergence at/above the threshold follows from the quadratic sign.
+    h=.8;a=.2;b=.4
+    exact=(1-2*a*h)**-.5*np.exp(h*b*b/(2*(1-2*a*h)))
+    integrand=lambda x:np.exp((a-1/(2*h))*x*x+b*x)/np.sqrt(2*np.pi*h)
+    assert quad(integrand,-20,20,epsabs=1e-10)[0]==pytest.approx(exact,rel=1e-9)
+    omega,alpha,beta,h1=1.,.1,.8,1.
+    h2=omega+alpha*10.**2+beta*h1
+    assert alpha*h2>1 and alpha+beta<1
