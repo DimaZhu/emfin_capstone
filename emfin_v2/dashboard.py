@@ -10,7 +10,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(assets)==7 and c['real_estate']['enabled'] else []),
         status={k:status[k] for k in ('kind','risky_fraction','optimality_claim','reason') if k in status},confidence=c['confidence'],loss_budget=c['loss_budget'],cml_budget=c['cml_budget'],
         cash_index=c['cash_index'],wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],profile=c.get('risk_profile','Balanced'),
-        innovation_evidence=describe(c),price_moments_finite=bool(c.get('asset_registry')) and c.get('scenario_model') in ('gaussian','gaussian_scale_mixture'),liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
+        innovation_evidence=describe(c),price_moments_finite=bool(c.get('asset_registry')) and c.get('scenario_model') in ('gaussian','gaussian_scale_mixture','fhs_ewma'),liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
         qualifications=['Illustrative, not client-calibrated. All dollar amounts are USD.',
         'Displayed return and volatility describe finite simulated paths, not economic forecasts. Explicit legacy log-Student-t modes do not have finite population price moments. The new Gaussian-mixture default does. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
         'CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.',
@@ -117,5 +117,5 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     return dict(result,expected_return=float(returns.mean()),volatility=float(returns.std(ddof=1)),
         cml=next(z['mean']['reference'] for z in row['evaluation']['checks'] if z['kind']=='path_loss'),
         observed_max_loss=float(losses.max()),guardrails=guards,shocks=shocks,
-        evaluation_pass=row['overall_pass'],funding_pass=row['funding_pass'],overall_pass=row['overall_pass'],final_evaluation=row['evaluation'],liquidity_amount=float(a[c['cash_index']]),
+        evaluation_pass=row['overall_pass'],funding_pass=row['funding_pass'],overall_pass=row['overall_pass'],final_evaluation=row['evaluation'],execution_audit=row.get('execution_audit'),liquidity_amount=float(a[c['cash_index']]),
         payout_coverage=float(a[c['cash_index']]/sum(p['amount'] for p in c['liabilities'])) if sum(p['amount'] for p in c['liabilities']) else None)
