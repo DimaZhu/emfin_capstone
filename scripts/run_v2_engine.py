@@ -53,6 +53,7 @@ from emfin_capstone.toolbox import (
     liabilities as liab,
     moneymarket,
     meucci_liquidity as mliq,
+    mpep as mpep_mod,
     scenario_market,
     seqep,
     shrinkage,
@@ -569,6 +570,36 @@ def main() -> None:
           f"p90 ${np.quantile(liab_scen, 0.9, axis=0)/1e6}M "
           f"(bases ${base_amounts/1e6}M; placeholder vol/corr)")
     _tick("optimize: EP + liabilities (multi-period, stochastic)")
+
+    # 5b. MPEP (Kristensen & Vorobets 2026, public article): multi-period
+    #     views on the scenario PATHS produce posterior path probabilities
+    #     that feed the path-dependent solver directly.  Demo view: a 95%-CML
+    #     stress on US equity paths (worst-drawdown tail at least 20% deeper
+    #     than the FFR prior) - labeled a stress test, not a forecast.
+    #     The CML tail count l is found by our own coarse-to-fine entropy
+    #     search (the article's search is proprietary; see toolbox/mpep.py).
+    losses_dfus = mpep_mod.max_path_loss(paths_opt[:, :, 0], prices_vector[0])
+    prior_cml95 = mpep_mod.cml_of_paths(losses_dfus, np.full(n_opt, 1.0 / n_opt), CONFIDENCE)
+    cml_target = 1.20 * prior_cml95
+    mpep_views = [mpep_mod.MPView(kind="cml", instrument=0, value=cml_target,
+                                  alpha=CONFIDENCE, sense="ge",
+                                  name=f"CML_95(DFUS) >= 1.2x prior (${cml_target:,.0f})")]
+    mpep_res = mpep_mod.mpep(paths_opt, mpep_views, initial_prices=prices_vector,
+                             cml_search=True)
+    _tick("MPEP: posterior path probabilities (CML stress)")
+    q_mp = mpep_res.posterior_probs
+    alloc_mpep, _ = liab.optimization_multiperiod(
+        market_paths=paths_opt, prices_vector=prices_vector, wealth=WEALTH,
+        liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
+        liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
+        risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
+        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL, scenario_probs=q_mp,
+        n_optimization_scenarios=n_opt)
+    print(f"MPEP: CML stress {mpep_res.achieved[mpep_views[0].name]:,.0f} "
+          f"(target {cml_target:,.0f}, prior {prior_cml95:,.0f}), "
+          f"l={mpep_res.cml_tail_counts[mpep_views[0].name]}, "
+          f"RE={mpep_res.relative_entropy:.3f}, ENS={mpep_res.ens_ratio:.2%}")
+    _tick("optimize: EP + liabilities (MPEP posterior paths)")
     # Uniform-prior contrast: the same EP+liabilities optimization on
     # scenarios generated from the uniform (full-sample) moments.  The judge
     # below draws from a third, fresh distribution, so neither prior is the
@@ -582,6 +613,7 @@ def main() -> None:
     }
     if alloc_crra is not None:
         allocations["EP+liab (CRRA)"] = alloc_crra
+    allocations["EP+liab (MPEP)"] = alloc_mpep
     if calibration is not None and calibration.best_multiplier < 1.0:
         # honest contrast: what the un-calibrated (nominal-budget) allocation
         # costs and buys - its OOS breach is visible in the judge table
@@ -685,6 +717,7 @@ def main() -> None:
         "EP + liabilities": "optimize: EP + liabilities (tail-budget calibrated)",
         "EP+liab (multi-per)": "optimize: EP + liabilities (multi-period, stochastic)",
         "EP+liab (CRRA)": "optimize: EP + liabilities (CRRA-on-surplus)",
+        "EP+liab (MPEP)": "optimize: EP + liabilities (MPEP posterior paths)",
         "EP+liab (nominal)": "optimize: EP + liabilities (tail-budget calibrated)",
     }
     print(f"{'method':>22} {'solve(s)':>9} {'CE($)':>15} {'shortfall':>10} {'gapCVaR($)':>12}")
