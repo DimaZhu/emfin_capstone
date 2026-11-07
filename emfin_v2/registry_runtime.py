@@ -46,6 +46,14 @@ def fit(c):
 def fit_frame(c,frame):
     """Refit all listed/FX moments on exactly the supplied past-only rows."""
     if len(frame)<52:raise ValueError('at least52 rows required for a full moment refit')
+    from emfin_v2.invariance import diagnose
+    # Synthetic bootstrap order is not a physical chronology. Never present
+    # its lag diagnostics as evidence about observed market invariance.
+    c['invariance_evidence']=diagnose(frame.to_numpy(),list(frame.columns)) if frame.index.is_monotonic_increasing and frame.index.is_unique else dict(available=False,scope='Resampled row ordering is not an observed chronology; invariance diagnostics withheld.')
+    if c.get('scenario_model')=='gaussian_scale_mixture' and c['invariance_evidence']['available']:
+        from emfin_v2.innovations import DEFAULT_MIXTURE
+        mixture=c.get('innovation_mixture',DEFAULT_MIXTURE);p=np.asarray(mixture['probabilities']);v=np.asarray(mixture['variance_scales'])
+        c['invariance_evidence']['prior_weekly_shape']=dict(skewness=0.,excess_kurtosis=float(3*(p@(v*v)/(p@v)**2-1)),scope='Before entropy-pooling views. Development-selected mixture shape, not fitted to historical skewness or kurtosis. Sample shape estimates are noisy descriptive statistics, not population truths.')
     x=frame.to_numpy();mu=x.mean(0);cov=np.zeros((x.shape[1],x.shape[1]))
     ids=list(frame.columns);stochastic=[i for i,a in enumerate(active_assets(c['asset_registry'])) if a['return_model']=='etf_total_return']
     if c['fx']['enabled']:stochastic.append(len(mu)-1)
