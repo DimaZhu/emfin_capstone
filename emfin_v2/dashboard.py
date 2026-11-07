@@ -18,6 +18,13 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
         'Time-to-cash has not been calibrated. A liquid-market label does not guarantee same-day sale or settlement.',
         'Wasserstein risk bounds use a development radius and unrestricted-support L1 transport; utility is nominal. No probability coverage is guaranteed by the radius.',
         'Zero observed losses is not a bound on unseen tails.'])
+    lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])/len(assets)
+    smallest=min(p['amount']*c['funding_budget_fraction'] for p in c['liabilities'])
+    result['budget_warning']=f'Incompatible risk settings: W1 buffer is at least ${lower_buffer:,.0f}, above the smallest per-payment tail-gap budget ${smallest:,.0f}. No solver can fix this parameter conflict.' if lower_buffer>smallest+1e-8 else None
+    result['scenario_tier']=c.get('scenario_tier','full')
+    result['scenario_counts']={k:c[k] for k in ('train_scenarios','validation_scenarios','evaluation_scenarios','validation_seeds','evaluation_seeds')}
+    result['recurring_payout']=c.get('recurring_payout')
+    result['one_off_payouts']=c.get('one_off_liabilities',[p for p in c['liabilities'] if p.get('schedule')!='recurring'])
     from emfin_v2.market_views import evidence
     result['market_views']=evidence(c,draw,q,qs)
     from emfin_v2.abu_dhabi import local_calibration
@@ -46,8 +53,9 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
         return dict(name=name,current=float(current),limit=float(limit),state=state,note=note,unit=unit)
     guards=[]
     from emfin_v2.default_run import metrics,dro_buffer
+    training_gaps=np.maximum(metrics(c,draw,a,q)[0],metrics(c,draw,a,qs)[0])+dro_buffer(c,a)
     for i,payout in enumerate(c['liabilities']):
-        current=max(metrics(c,draw,a,p)[0][i] for p in (q,qs))+dro_buffer(c,a)
+        current=training_gaps[i]
         guards.append(guard('Funding: '+payout['name'],current,row['budgets'][i],f"Training nominal/stressed tail gap plus W1 buffer at week {payout['week']}",'usd'))
     guards.append(guard('Path-loss tail',max(cmls)+dro_buffer(c,a,False)/wealth,c['cml_budget'],'Training nominal/stressed CML plus W1 buffer, before payouts'))
     guards.append(guard('Initial-loss tail',mpep.cml_of_paths(1-draw[0][:,-1]@a/wealth,q,c['confidence'])+dro_buffer(c,a,False)/wealth,c['loss_budget'],'Nominal terminal loss tail plus W1 buffer, before payouts'))

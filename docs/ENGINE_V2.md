@@ -1,5 +1,7 @@
 # Current default: one funding-risk argument
 
+> Active default:52-week horizon, editable$250k/month x12 placeholder, W1 on with a visible20% per-payment tail-gap budget. Interactive dashboard uses an explicitly coarse tier. Earlier13-week reference/grid/lookup artifacts are archived, not current one-year evidence. No new grid has been run. See docs/ONE_YEAR_MONTHLY.md (or ONE_YEAR_MONTHLY.md from docs).
+
 This is an illustrative implementation, not a calibrated SFO recommendation.
 The active/default branch is `engine-v2` in TijsdeBoer/emfin_capstone.
 

@@ -5,16 +5,6 @@
       "Balanced",
       "Growth"
     ],
-    "payout_ratio": [
-      0.5,
-      0.75,
-      0.95
-    ],
-    "timing": [
-      "early",
-      "mixed",
-      "late"
-    ],
     "re_min": [
       0.0,
       0.1,
@@ -29,6 +19,16 @@
       -0.2,
       0.3,
       0.7
+    ],
+    "monthly_payout_k": [
+      125.0,
+      250.0,
+      500.0
+    ],
+    "first_due_week": [
+      1,
+      2,
+      4
     ]
   },
   "real_estate": {
@@ -41,6 +41,10 @@
     "history_case": "central"
   },
   "engine": {
-    "horizon_weeks": 13
+    "horizon_weeks": 52
+  },
+  "schedule": {
+    "months": 12,
+    "spacing_weeks": 4.333333333333333
   }
 }

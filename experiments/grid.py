@@ -41,12 +41,14 @@ def configs(spec):
             yield dict(study=case['study'],value=case['value']),c
         return
     # Force approved shared source regardless of a local import on the machine.
-    keys=list(spec['axes']);payouts={'early':[4,8],'mixed':[7,13],'late':[10,13]}
+    keys=list(spec['axes'])
     for values in itertools.product(*(spec['axes'][k] for k in keys)):
         point=dict(zip(keys,values));c=json.loads(canonical(base))
         c['risk_profile']=point['profile'];c['risk_tolerance']=c['wealth']*{'Preserve':.05,'Balanced':.1,'Growth':.2}[point['profile']]
-        weeks=payouts[point['timing']]
-        c['liabilities']=[dict(name='Grid payout '+str(i+1),week=w,amount=c['wealth']*point['payout_ratio']*f) for i,(w,f) in enumerate(zip(weeks,[35/95,60/95]))]
+        from emfin_v2.payouts import expand_recurring
+        c['recurring_payout']=dict(amount=point['monthly_payout_k']*1000,months=spec['schedule']['months'],first_week=point['first_due_week'],spacing_weeks=spec['schedule']['spacing_weeks'])
+        c['one_off_liabilities']=[]
+        c['liabilities']=expand_recurring(c['recurring_payout'],c['horizon_weeks'])
         c['wasserstein_radius']=point['radius'];c['real_estate'].update(minimum_weight=point['re_min'],equity_correlation=point['rho'])
         c['label']='Synthetic RE precomputed grid; not client evidence'
         yield point,c

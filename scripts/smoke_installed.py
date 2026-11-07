@@ -22,6 +22,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='emfin-v2-installed-') as temp:
         root=Path(temp);wheel_dir=root/'wheel';wheel_dir.mkdir()
         env=os.environ.copy();env.pop('PYTHONPATH',None)
+        env.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1')
         build=run([sys.executable,'-m','pip','wheel',ROOT,'--no-deps','--no-build-isolation','--wheel-dir',wheel_dir],root,env)
         wheel=next(wheel_dir.glob('emfin_v2-*.whl'))
         venv_dir=root/'venv';venv.create(venv_dir,with_pip=True)
@@ -36,14 +37,19 @@ def main():
         assert Path(info['config']).is_relative_to(venv_dir),info
         assert Path(info['data']).is_relative_to(venv_dir),info
         assert info['version']=='2.1.0'
+        # Smoke the installed one-year model at an explicit small compute tier.
+        # Full research fidelity is not an installation check.
+        smoke_config=json.loads(Path(info['config']).read_text())
+        smoke_config.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.])
+        config_path=work/'smoke-config.json';config_path.write_text(json.dumps(smoke_config))
         for name in ['emfin_v2','emfin_capstone']:
-            result=run([python,'-m',name,'--output',work/name],work,env)
+            result=run([python,'-m',name,'--config',config_path,'--output',work/name],work,env)
             report=json.loads((work/name/'results.json').read_text())
             assert report['status']['kind'] in ['optimized','calibrated optimizer/cash mixture'],report
             assert (work/name/'report.html').is_file()
             print(name,result.stdout.strip())
         cmd=bindir/('emfin-run.exe' if os.name=='nt' else 'emfin-run')
-        run([cmd,'--output',work/'console'],work,env)
+        run([cmd,'--config',config_path,'--output',work/'console'],work,env)
         explorer=bindir/('emfin-explore.exe' if os.name=='nt' else 'emfin-explore')
         run([explorer,'--export',work/'explorer.html'],work,env)
         assert 'Net wealth after cumulative payouts' in (work/'explorer.html').read_text()

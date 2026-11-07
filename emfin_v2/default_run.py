@@ -21,6 +21,10 @@ def load_config(path=DEFAULT_CONFIG):
     except (OSError,json.JSONDecodeError) as error:raise ValueError('Cannot read model config: '+str(error)) from error
     required=['wealth','horizon_weeks','student_nu','confidence','risk_tolerance','liabilities','liquidity_haircuts','evaluation_seeds','validation_seeds','real_estate','funding_budget_fraction','loss_budget','cml_budget','liability_vol','train_scenarios','validation_scenarios','evaluation_scenarios','seed','multiplier_grid','view_spread','stress_mean_path_loss_increment','label']
     if not isinstance(c,dict) or any(key not in c for key in required):raise ValueError('Incomplete model config; copy the bundled default.json and replace its documented inputs')
+    if c.get('recurring_payout') is not None:
+        from emfin_v2.payouts import expand_recurring
+        c['one_off_liabilities']=c.get('one_off_liabilities',c['liabilities'])
+        c['liabilities']=expand_recurring(c['recurring_payout'],c['horizon_weeks'],c['one_off_liabilities'])
     numbers=['wealth','confidence','risk_tolerance','funding_budget_fraction','loss_budget','cml_budget','liability_vol','view_spread','stress_mean_path_loss_increment']
     if any(not isinstance(c[k],(int,float)) or not np.isfinite(c[k]) for k in numbers):raise ValueError('Model numeric inputs must be finite numbers')
     for key in ['horizon_weeks','train_scenarios','validation_scenarios','evaluation_scenarios','validation_seeds','evaluation_seeds','seed']:
@@ -208,6 +212,10 @@ def dro_buffer(c,a,liability=True):
 
 def solve(c,draw,q,qs,mult):
     paths,amounts,steps,bases,growth=draw;n,d=paths.shape[0],paths.shape[2]
+    lower_buffer=c['wealth']*c.get('wasserstein_radius',0.)/(1-c['confidence'])/d
+    smallest_budget=float(np.min(bases*c['funding_budget_fraction']*mult))
+    if lower_buffer>smallest_budget+1e-8:
+        return None,dict(kind='incompatible risk settings',reason=f'W1 buffer is at least ${lower_buffer:,.0f}, above the smallest payment budget ${smallest_budget:,.0f}; adjust radius or budget explicitly, not solver tolerances',cash_fallback_rejected=True)
     try:
         a,diag=liabilities.optimization_multiperiod(paths,np.ones(d),c['wealth'],amounts,steps,bases,growth,
             c['risk_tolerance'],c['confidence'],c['loss_budget'],c['funding_budget_fraction']*mult,

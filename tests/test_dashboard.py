@@ -19,14 +19,16 @@ def test_backcasts_and_forecasts_excluded(tmp_path):
 
 
 def test_dashboard_funding_and_stress_are_generated(tmp_path):
-    c=load_config();r=run(c,tmp_path);d=r['dashboard']
+    c=load_config();c.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.]);r=run(c,tmp_path);d=r['dashboard']
     assert d['wealth']==c['wealth'];assert d['sfo_inputs']['status'].startswith('Default placeholder')
     a=np.array(r['weights']['proposed'])*c['wealth']
     for stress in d['shocks']:
         assert stress['kind'].startswith('Simplified')
         assert len(stress['payouts'])==len(c['liabilities'])
         assert stress['funded']==all(p['funded'] for p in stress['payouts'])
-    assert not d['shocks'][0]['funded']
+    assert len(d['shocks'])==4
+    assert len(d['payouts'])==12 and d['horizon_weeks']==52
+    assert all(p['shortfall']>=0 for shock in d['shocks'] for p in shock['payouts'])
     assert all(row['wasserstein_buffer']>=0 for row in r['rows'])
     assert next(row for row in r['rows'] if row['method']=='proposed')['evaluation_pass']
 

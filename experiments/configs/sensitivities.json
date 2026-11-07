@@ -1,6 +1,6 @@
 {
   "engine": {
-    "horizon_weeks": 13,
+    "horizon_weeks": 52,
     "train_scenarios": 200,
     "validation_scenarios": 400,
     "evaluation_scenarios": 600,

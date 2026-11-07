@@ -14,8 +14,8 @@ from emfin_v2.toolbox import dataset,shrinkage,entropy_pooling as ep,seqep,liabi
 
 @dataclass(frozen=True)
 class Controls:
-    liability: float=95.
-    budget: float=.2
+    liability: float=3.
+    budget: float=20.
     view: float=50.
     student: bool=True
     sequential: bool=True
@@ -24,7 +24,12 @@ class Controls:
     real_estate: bool=False
     re_min: float=0.
     wealth: float=100.
-    horizon: int=13
+    scenario_tier: str='interactive'
+    recurring_monthly_k: float=250.
+    recurring_months: int=12
+    recurring_first_week: int=4
+    recurring_spacing_weeks: float=52/12
+    horizon: int=52
     profile: str='Balanced'
     payouts: tuple | None=None
     cml: float=6.
@@ -46,10 +51,11 @@ class Controls:
 
 
     def validate(self):
-        if not 0<=self.liability<=105 or not .01<=self.budget<=5 or not 0<=self.view<=100:
+        if not 0<=self.liability<=105 or not .01<=self.budget<=50 or not 0<=self.view<=100:
             raise ValueError('controls outside supported range')
         if not 0<=self.re_min<=30:raise ValueError('RE minimum must be 0-30%')
         if not np.isfinite(self.wealth) or not 1<=self.wealth<=1000 or type(self.horizon) is not int or not 1<=self.horizon<=52:raise ValueError('capital $1-1000M; horizon 1-52 whole weeks')
+        if self.scenario_tier not in ('interactive','full'):raise ValueError('unknown scenario tier')
         if self.profile not in ('Preserve','Balanced','Growth','Aggressive'):raise ValueError('unknown risk profile')
         if self.re_source not in ('abu_dhabi_private','synthetic'):raise ValueError('unknown RE data source')
         if not np.isfinite(self.dro_radius) or not 0<=self.dro_radius<=.001:raise ValueError('Wasserstein radius must be 0-.001')
@@ -59,9 +65,12 @@ class Controls:
         if not np.isfinite(self.re_haircut) or not 0<=self.re_haircut<100:raise ValueError('RE sale haircut must be 0 to below 100%')
         if not np.isfinite(self.stress_increment) or not 0<=self.stress_increment<=10:raise ValueError('stress increment must be 0-10 percentage points')
         if self.asset_views is not None and (len(self.asset_views)!=5 or any(not np.isfinite(v) or not -50<=v<=50 for v in self.asset_views)):raise ValueError('five expected horizon returns must be -50% to 50%')
+        if type(self.recurring_months) is not int or not 0<=self.recurring_months<=60:raise ValueError('recurring months must be0-60')
+        from emfin_v2.payouts import expand_recurring
+        if self.recurring_months:expand_recurring(dict(amount=self.recurring_monthly_k*1000,months=self.recurring_months,first_week=self.recurring_first_week,spacing_weeks=self.recurring_spacing_weeks),self.horizon)
         if not 1<=self.cml<=40:raise ValueError('path-loss tail budget must be 1-40%')
         if self.payouts is not None:
-            if not 1<=len(self.payouts)<=6:raise ValueError('provide one to six payouts')
+            if len(self.payouts)>6:raise ValueError('up to six additional one-off payouts')
             for name,week,amount in self.payouts:
                 if not isinstance(name,str) or len(name)>80 or type(week) is not int or not 1<=week<=self.horizon or not np.isfinite(amount) or not 0<=amount<=2000:raise ValueError('invalid payout name, week or amount')
 
@@ -80,18 +89,23 @@ def compute(c=Controls()):
         from emfin_v2.default_run import load_config,run
         from tempfile import TemporaryDirectory
         config=load_config()
-        ratio=c.liability/95
-        for payout in config['liabilities']:payout['amount']*=ratio
+        config['scenario_tier']=c.scenario_tier
+        if c.scenario_tier=='interactive':
+            config.update(train_scenarios=100,validation_scenarios=200,evaluation_scenarios=300,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.,.25],cash_mix_grid=[1.,.5,0.])
+            config['label']='Interactive COARSE one-year model, 100/200/300 scenarios and two validation/evaluation seeds; not research-grade evidence'
+
         config['wealth']=c.wealth*1e6
         config['horizon_weeks']=c.horizon
         config['risk_profile']=c.profile
         config['risk_tolerance']=config['wealth']*dict(Preserve=.05,Balanced=.1,Growth=.2,Aggressive=.4)[c.profile]
         config['cml_budget']=c.cml/100
         config['wasserstein_radius']=c.dro_radius if c.dro else 0.
-        if c.payouts is not None:
-            config['liabilities']=[dict(name=name,week=week,amount=amount*1e6) for name,week,amount in c.payouts]
-        elif c.horizon!=13:
-            for payout in config['liabilities']:payout['week']=max(1,round(payout['week']*c.horizon/13))
+        from emfin_v2.payouts import expand_recurring
+        one_off=[] if c.payouts is None else [dict(name=name,week=week,amount=amount*1e6) for name,week,amount in c.payouts]
+        config['recurring_payout']=dict(amount=c.recurring_monthly_k*1000,months=c.recurring_months,first_week=c.recurring_first_week,spacing_weeks=c.recurring_spacing_weeks) if c.recurring_months else None
+        config['one_off_liabilities']=one_off
+        config['liabilities']=expand_recurring(config['recurring_payout'],c.horizon,one_off)
+        if not config['liabilities']:config['liabilities']=[dict(name='No payment',week=c.horizon,amount=0)]
         config['funding_budget_fraction']=c.budget/100
         config['view_spread']=.005*c.view/50
         config['sequential_ep']=c.sequential
@@ -108,11 +122,11 @@ def compute(c=Controls()):
         return data
     start=time.perf_counter();frame,mean,cov=base_inputs()
     anchor=frame.iloc[-1];rng=np.random.default_rng(20261107)
-    chol=np.linalg.cholesky(13*cov+1e-12*np.eye(6))
+    chol=np.linalg.cholesky(c.horizon*cov+1e-12*np.eye(6))
     def draw(n):
         z=rng.normal(size=(n,6))@chol.T
         if c.student:z/=np.sqrt(rng.chisquare(8,(n,1))/6)
-        return dataset.gross_market(13*mean+z,anchor.YIELD_LEVEL,anchor.SPREAD_LEVEL)
+        return dataset.gross_market(c.horizon*mean+z,anchor.YIELD_LEVEL,anchor.SPREAD_LEVEL,c.horizon)
     market=draw(1000);judge=draw(8000)
     # A fixed synthetic proportional liquidity haircut, not calibrated costs.
     haircut=np.array([.001,.0015,.002,.0005,.001,0.])
@@ -144,9 +158,9 @@ def compute(c=Controls()):
             gap_cvar=risk_stats.empirical_cvar(gap,.95),nominal_gap=mpep.cml_of_paths(in_gap,stress_q if name=='EP+stress' or (name=='liability-aware' and c.stress) else q if name in ('EP','liability-aware') else uniform,.95),budget=c.liability*1e6*c.budget/100))
     selected=alloc.get('liability-aware',alloc['shrunk MV'])/1e8
     # Fresh Gaussian weekly paths for fan, explicitly nominal even when t is on.
-    weekly=rng.normal(size=(2000,13,6))@np.linalg.cholesky(cov+1e-12*np.eye(6)).T+mean
+    weekly=rng.normal(size=(2000,c.horizon,6))@np.linalg.cholesky(cov+1e-12*np.eye(6)).T+mean
     cumul=np.cumsum(weekly,1)
-    path=np.stack([dataset.gross_market(cumul[:,h,:],anchor.YIELD_LEVEL,anchor.SPREAD_LEVEL,h+1)@selected for h in range(13)],1)
+    path=np.stack([dataset.gross_market(cumul[:,h,:],anchor.YIELD_LEVEL,anchor.SPREAD_LEVEL,h+1)@selected for h in range(c.horizon)],1)
     fan=np.quantile(path/max(c.liability/100,.01),[.05,.25,.5,.75,.95],axis=0).tolist()
     return dict(controls=asdict(c),assets=['DFUS','DFAI','DFAE','UST10','USIG','MMKT'],weights=weights,rows=rows,
         points=points,frontier=reporting.efficient_frontier(market),fan=fan,errors=errors,
@@ -161,7 +175,8 @@ def from_default(result):
         rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][-1],
             gap_upper=r['wasserstein_gap_upper'][-1],stress_gap=r['stressed_gap_cvar']['mean'][-1],nominal_gap=r['training_gap'][-1],budget=r['budgets'][-1]))
     selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
-    return dict(controls=dict(liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
+    return dict(controls=dict(scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
+        recurring_monthly_k=cfg.get('recurring_payout',{}).get('amount',0)/1000 if cfg.get('recurring_payout') else 0,recurring_months=cfg.get('recurring_payout',{}).get('months',0) if cfg.get('recurring_payout') else 0,recurring_first_week=cfg.get('recurring_payout',{}).get('first_week',4) if cfg.get('recurring_payout') else 4,recurring_spacing_weeks=cfg.get('recurring_payout',{}).get('spacing_weeks',52/12) if cfg.get('recurring_payout') else 52/12,
         budget=cfg['funding_budget_fraction']*100,view=cfg['view_spread']/.005*50,
         student=cfg['student_nu'] is not None,sequential=cfg.get('sequential_ep',True),stress=cfg['stress_mean_path_loss_increment']>0,
         multiperiod=True,real_estate=cfg['real_estate']['enabled'],re_min=cfg['real_estate']['minimum_weight']*100,
@@ -170,7 +185,7 @@ def from_default(result):
         re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in range(5)) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
         training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
-        fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; drops at weeks 10 and 13.',
+        fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.',
         seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture') else {'proposed':result['status']['kind']},
         caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE source and sale/rent assumptions are explicit; no measured cross-asset dependence. '+result['caveats'][0])
 
@@ -184,8 +199,8 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--port',type=int,default=8765);p.add_argument('--precompute',action='store_true');p.add_argument('--export',default=None)
     args=p.parse_args()
     if args.precompute:
-        for due in (75.,90.,95.):
-            for budget in (.1,.2,1.):compute(Controls(liability=due,budget=budget))
+        for monthly in (125.,250.,500.):
+            for budget in (.1,.2,1.):compute(Controls(recurring_monthly_k=monthly,budget=budget))
     first=compute()
     if args.export:
         Path(args.export).write_text(template(first,True));print(args.export);return
