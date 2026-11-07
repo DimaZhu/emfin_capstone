@@ -24,6 +24,8 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     result['re_data']=dict(available=observed is not None,source=c['real_estate'].get('source','synthetic'),enabled=c['real_estate']['enabled'],observed=observed,
         assumptions=assumptions(c['real_estate']),calibration=calibration(c['real_estate']) if c['real_estate']['enabled'] else None)
 
+    if c['real_estate']['enabled'] and getattr(draw,'re_price_logs',None) is not None:
+        result['re_data']['ep_achieved_annual_log_drift']={name:float(p@draw.re_price_logs[:,-1]*52/c['horizon_weeks']) for name,p in [('nominal',q),('stressed',qs)]}
     result['sfo_inputs']=dict(status='Default placeholder, not real SFO/client evidence',
         investable_wealth=c['wealth'],currency='USD',horizon_weeks=c['horizon_weeks'],payouts=c['liabilities'],
         wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],company_value=0.,company_note='Not provided; excluded, not measured as zero',

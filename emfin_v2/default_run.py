@@ -74,6 +74,7 @@ def load_archive(path,c):
         required=['market_paths','prices_vector','liability_scenarios','payout_steps','liability_base','mm_growth_paths']
         arrays={key:np.array(f[key]) for key in required}
         funding=np.array(f['funding_paths']) if 'funding_paths' in f else None
+        re_logs=np.array(f['re_price_log_paths']) if 're_price_log_paths' in f else None
     paths=arrays['market_paths'];prices=arrays['prices_vector'].ravel()
     if paths.ndim!=3 or any(size<1 for size in paths.shape):raise ValueError('archive needs nonempty (scenario,week,asset) paths')
     if not np.equal(arrays['payout_steps'],np.round(arrays['payout_steps'])).all():raise ValueError('archive payout steps must be whole weeks')
@@ -90,7 +91,8 @@ def load_archive(path,c):
         raise ValueError('RE archive mode requires separate funding_paths; marked property is not cash')
     if funding is not None and (funding.shape!=paths.shape or not np.isfinite(funding).all() or (funding<0).any()):
         raise ValueError('archive funding_paths must align and be finite/nonnegative')
-    return ScenarioDraw((paths/prices,liabilities_,steps,base,growth),paths/prices if funding is None else funding/prices)
+    if c['real_estate']['enabled'] and (re_logs is None or re_logs.shape!=(n,h) or not np.isfinite(re_logs).all()):raise ValueError('RE archives need finite re_price_log_paths with shape (scenario,week)')
+    return ScenarioDraw((paths/prices,liabilities_,steps,base,growth),paths/prices if funding is None else funding/prices,re_logs)
 
 
 def interval(values):
@@ -118,7 +120,7 @@ def draw_paths(c,fit,n,seed,stressed=False):
     paths=np.stack([dataset.gross_market(cumul[:,j],last.YIELD_LEVEL,last.SPREAD_LEVEL,j+1) for j in range(h)],1)
     growth=paths[:,:,5].copy() # no haircut on MMKT
     paths*=1-np.asarray(c['liquidity_haircuts'])
-    re=c['real_estate'];funding=paths
+    re=c['real_estate'];funding=paths;re_log=None
     if re['enabled']:
         from emfin_v2.real_estate import calibration,cash_and_mark
         cal=calibration(re);rho=re['equity_correlation']
@@ -134,10 +136,10 @@ def draw_paths(c,fit,n,seed,stressed=False):
     vol=c['liability_vol'];stress=-cumul[:,-1,:3].mean(1)
     stress=(stress-stress.mean())/max(stress.std(),1e-9)
     amounts=bases[None,:]*np.exp(vol*(.3*stress[:,None]+np.sqrt(.91)*rng.normal(size=(n,len(bases))))-.5*vol*vol)
-    return ScenarioDraw((paths,amounts,steps,bases,growth),funding)
+    return ScenarioDraw((paths,amounts,steps,bases,growth),funding,re_log)
 
 
-def probabilities(c,paths):
+def probabilities(c,paths,re_price_logs=None):
     n=len(paths);uniform=np.full(n,1/n)
     # Views and stress belong to these exact path rows.
     i,j=c['view_instruments']
@@ -149,6 +151,13 @@ def probabilities(c,paths):
         views.append(seqep.SeqView(0,lambda p: ep.relative_mean_view(terminal,i,j,c['view_spread'])))
     if terminal.shape[1]>2 and c.get('view_vol_cap') is not None:
         views.append(seqep.SeqView(1,lambda p: ep.volatility_cap(terminal,2,c['view_vol_cap'],pin_mean=p['mean',2])))
+    re_view=None
+    if c['real_estate']['enabled']:
+        from emfin_v2.real_estate import calibration
+        if re_price_logs is None:raise ValueError('RE entropy-pooling view needs underlying re_price_log_paths, not rental/sale marks')
+        target=calibration(c['real_estate'])['forward_log_drift']*c['horizon_weeks']/52
+        re_view=ep.View(np.asarray(re_price_logs)[:,-1],[target],name='Explicit forward RE log-price mean')
+        views.append(seqep.SeqView(2,lambda p:re_view,name='Forward RE price view'))
     if c.get('sequential_ep',True):
         q=seqep.sequential_entropy_pooling(terminal,views,sweeps=2).posterior_probs
     else:
@@ -157,7 +166,7 @@ def probabilities(c,paths):
     loss=np.maximum(0,1-paths[:,:,[i,j]].mean(2)).max(1)
     target=float(loss@q+c['stress_mean_path_loss_increment'])
     try:
-        qs=ep.joint_entropy_pooling(n,[ep.View(loss,[target],sense='ge')],prior_probs=q).posterior_probs
+        qs=ep.joint_entropy_pooling(n,[ep.View(loss,[target],sense='ge')]+([re_view] if re_view is not None else []),prior_probs=q).posterior_probs
     except (ValueError,RuntimeError):
         raise ValueError('stress target unsupported by simulated paths; reduce stress or increase scenario support')
     return q,qs
@@ -223,7 +232,7 @@ def run(c,output='artifacts/default'):
         c=copy.deepcopy(c)
         prior=c['liabilities']
         c['liabilities']=[dict(name=prior[i]['name'] if len(prior)==len(draw[2]) else f'Imported payout {i+1}',week=int(step),amount=float(draw[3][i])) for i,step in enumerate(draw[2])]
-    q,qs=probabilities(c,draw[0]);d=draw[0].shape[2]
+    q,qs=probabilities(c,draw[0],getattr(draw,'re_price_logs',None));d=draw[0].shape[2]
     mins=np.asarray(c['minimum_weights'],float) if c.get('minimum_weights') is not None else np.r_[np.zeros(6),c['real_estate']['minimum_weight']] if d==7 else np.zeros(d)
     if mins.shape!=(d,) or not np.isfinite(mins).all() or (mins<0).any() or mins.sum()>1:raise ValueError('invalid minimum holdings')
     equal=np.full(d,1/d)
@@ -237,7 +246,7 @@ def run(c,output='artifacts/default'):
     baseline={'1/N':equal*c['wealth']}
     baseline['shrunk MV']=benchmark.mean_variance_allocation(draw[0][:,-1].mean(0),np.cov(draw[0][:,-1].T),np.ones(d),c['wealth'],c['risk_tolerance'],minimum_weights=mins)
     validation=[load_archive(p,c) for p in archive['validation']] if archive else [draw_paths(c,fit,c['validation_scenarios'],c['seed']+1000+j) for j in range(c['validation_seeds'])]
-    validation_stress=[probabilities(c,v[0])[1] for v in validation]
+    validation_stress=[probabilities(c,v[0],getattr(v,'re_price_logs',None))[1] for v in validation]
     calibration=[];chosen=None;status={}
     for mult in sorted(c['multiplier_grid'],reverse=True):
         a,diag=solve(c,draw,q,qs,mult)
@@ -285,7 +294,7 @@ def run(c,output='artifacts/default'):
     evaluation=[load_archive(p,c) for p in archive['evaluation']] if archive else [draw_paths(c,fit,c['evaluation_scenarios'],c['seed']+10000+j) for j in range(c['evaluation_seeds'])]
     for v in validation+evaluation:
         if v[0].shape[1:]!=draw[0].shape[1:] or not np.array_equal(v[2],draw[2]) or not np.array_equal(v[3],draw[3]):raise ValueError('all split archives must share asset/horizon dimensions, payout weeks and liability bases')
-    evaluation_stress=[probabilities(c,v[0])[1] for v in evaluation]
+    evaluation_stress=[probabilities(c,v[0],getattr(v,'re_price_logs',None))[1] for v in evaluation]
     rows=[];fan={}
     for name,a in allocations.items():
         scores=[metrics(c,v,a) for v in evaluation]

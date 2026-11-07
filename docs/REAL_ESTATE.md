@@ -89,3 +89,24 @@ Geltner formula/reference:
 https://timelyportfolio.github.io/PerformanceAnalytics/reference/Return.Geltner.html
 
 The implementation is original NumPy code; no R or GPL package is a dependency.
+
+## Forward expectation is separate from the boom sample
+
+The default forward annual price log-return view is 4%, an explicitly illustrative
+long-run assumption, not a calibrated prior or a conservative statistical bound.
+Net rent is separate. The observed short-window mean is displayed alongside it
+but does not drive the default scenario drift. The generator is centered on the
+forward assumption; entropy pooling then pins the terminal underlying log-price
+mean to forward_drift * horizon / 52. The stressed posterior preserves this same
+mean constraint while adding the stress tilt. Posteriors expose achieved means.
+
+Sample mode is an optional sensitivity, not the default. In that mode the chosen
+central/cautious/optimistic sample-implied mean becomes the explicit EP target.
+In view mode those history cases alter volatility but the independently specified
+forward mean stays fixed. Other asset moments can move when probabilities change,
+especially under dependence; this is a joint distribution reweighting, not a free
+RE-only return adjustment. An unsupported view raises rather than silently clips.
+
+RE NPZ archives must also supply `re_price_log_paths` with (scenario, week) shape
+so the view targets underlying price, not a mark that mixes rent/sale proceeds.
+Confirm the forward view with the decision owner before using it for investments.
