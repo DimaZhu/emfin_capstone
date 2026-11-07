@@ -63,6 +63,7 @@ from emfin_capstone.toolbox import (
     validation,
     reporting,
     snapshot,
+    raw_data,
 )
 
 # --------------------------------------------------------------------------
@@ -125,12 +126,30 @@ SHRINK_T0 = 156  # mean-shrinkage prior strength in weeks (~3 years); placeholde
 # degrees of freedom (variance-matched), so the paper can show allocation
 # sensitivity to tail thickness.  Default: Gaussian.
 STUDENT_T_NU = None
-STUDENT_T_AUTO = "--student-t=auto" in sys.argv
-for arg in sys.argv:
-    if arg.startswith("--student-t=") and not arg.endswith("=auto"):
-        STUDENT_T_NU = float(arg.split("=", 1)[1])
-        if STUDENT_T_NU <= 4:
-            raise ValueError("Student-t nu must be > 4 for finite skew/kurtosis")
+STUDENT_T_AUTO = False
+
+
+def argument_parser():
+    import argparse
+    parser=argparse.ArgumentParser(description="Appendix research catalogue; current default is python -m emfin_capstone")
+    parser.add_argument('--student-t', default=None, metavar='NU|auto')
+    parser.add_argument('--no-tail-calibration',action='store_true')
+    parser.add_argument('--no-crra','--no-surplus-cara',dest='no_surplus_cara',action='store_true')
+    parser.add_argument('--tsdr',action='store_true')
+    parser.add_argument('--with-uniform-contrast',action='store_true')
+    parser.add_argument('--scenarios',type=int,default=100000)
+    return parser
+
+
+def parse_options(argv=None):
+    parser=argument_parser();opts=parser.parse_args(argv)
+    if opts.scenarios<32:parser.error('--scenarios must be at least 32')
+    if opts.student_t not in (None,'auto'):
+        try:opts.student_t=float(opts.student_t)
+        except ValueError:parser.error('--student-t requires a number or auto')
+        if not np.isfinite(opts.student_t) or opts.student_t<=4:parser.error('Student-t nu must be finite and >4')
+    return opts
+
 
 # Illustrative committee views (NOT research-backed):
 VIEWS = [
@@ -140,8 +159,12 @@ VIEWS = [
 ]
 
 
-def main() -> None:
-    global STUDENT_T_NU
+def main(argv=None) -> None:
+    global STUDENT_T_NU, STUDENT_T_AUTO, N_SCENARIOS
+    options=parse_options(argv)
+    STUDENT_T_AUTO=options.student_t=='auto'
+    STUDENT_T_NU=None if STUDENT_T_AUTO else options.student_t
+    N_SCENARIOS=options.scenarios
     _tick("start")
     snap = snapshot.load_snapshot()
     weekly_eq = snapshot.weekly_log_returns(snap)  # DFUS, DFAI, DFAE
@@ -156,7 +179,7 @@ def main() -> None:
     # this ICE series only from 2023-11-07, so the joint estimation window
     # shortens to the ~157 common Wednesdays - documented trade-off for
     # having a real credit driver.
-    oas_path = _Path(__file__).resolve().parents[1] / "data" / "raw" / "fred" / "2026-11-07" / "ice_bofa_ig_oas_bamlc0a0cm.csv"
+    oas_path = raw_data.series_file("BAMLC0A0CM")
     oas = pd.read_csv(oas_path, index_col=0, parse_dates=True).iloc[:, 0].astype(float)
     oas_wed = oas[oas.index.weekday == 2]
     joint = joint.join((oas_wed.diff() / 100.0).rename("DSPREAD"), how="inner").dropna()
@@ -169,7 +192,7 @@ def main() -> None:
     # it a near-total payout is simply infeasible (duration risk on the
     # bond).  This replaces the old proxy that accrued at the lagged 10Y
     # yield - money-market carry is a short rate, not a 10Y rate.
-    mm_path = _Path(__file__).resolve().parents[1] / "data" / "raw" / "fred" / "2026-11-07" / "dgs3mo_3m_treasury.csv"
+    mm_path = raw_data.series_file("DGS3MO")
     mm_rate = pd.read_csv(mm_path, index_col=0, parse_dates=True).iloc[:, 0].astype(float)
     mm_wed = (mm_rate[mm_rate.index.weekday == 2] / 100.0).rename("MMRATE")
     joint = joint.join(mm_wed, how="inner")
@@ -269,7 +292,7 @@ def main() -> None:
     # Judging stays pseudo-random: out-of-sample reality is not
     # low-discrepancy, so OOS evaluation must not be either.
     sob = qmc.Sobol(len(mu_tau), scramble=True, seed=SCENARIO_SEED)
-    u = np.clip(sob.random_base2(17)[:N_SCENARIOS], 1e-12, 1 - 1e-12)
+    u = np.clip(sob.random_base2(int(np.ceil(np.log2(N_SCENARIOS))))[:N_SCENARIOS], 1e-12, 1 - 1e-12)
     z_scen = norm.ppf(u) @ chol.T
     if STUDENT_T_NU is not None:
         # multivariate Student-t invariants: normal / sqrt(chi2/nu), scaled
@@ -449,7 +472,7 @@ def main() -> None:
     #    the team chose EP.
     g_prior = mu_market / prices_vector  # expected gross returns
     cov_ret = cov_market / np.outer(prices_vector, prices_vector)
-    w_mkt = np.array([0.36, 0.20, 0.08, 0.12, 0.12, 0.12])  # documented assumption, not observable
+    w_mkt = ref_weights.copy()  # same documented placeholder, not an observable prior
     pi = black_litterman.equilibrium_prior(cov_ret, w_mkt, risk_aversion=2.5)
     P = np.array([[-1.0, 1.0, 0.0, 0.0, 0.0, 0.0]])  # E[g_DFAI] - E[g_DFUS] = 50bp
     Q = np.array([0.005])
@@ -510,7 +533,7 @@ def main() -> None:
             WEALTH, RISK_TOLERANCE, liability_due=liability_due, confidence_level=CONFIDENCE)
         return float(res.shortfall_cvar_by_seed.mean())
 
-    if "--no-tail-calibration" in sys.argv:
+    if options.no_tail_calibration:
         alloc_lace = _solve_lace(1.0)
         calibration = None
     else:
@@ -535,7 +558,7 @@ def main() -> None:
     # Illustrative preference sensitivity, not exact CRRA utility. One
     # rescale step changes CARA absolute tolerance with expected surplus.
     alloc_crra = None
-    if "--no-crra" not in sys.argv and "--no-surplus-cara" not in sys.argv:
+    if not options.no_surplus_cara:
         f0 = max((WEALTH - liability_due) / WEALTH, 1e-3)
         w_mean_crra = float((market_net @ alloc_lace).mean())
         f1 = max((w_mean_crra - liability_due) / WEALTH, 1e-3)
@@ -562,7 +585,7 @@ def main() -> None:
     liab_scen = stochastic_liabilities(base_amounts, cum_all, payout_steps,
                                        LIAB_VOL, LIAB_STRESS_CORR, seed=LIAB_SEED)
     mm_growth = paths_all[:, :, 5] / prices_vector[5]  # MMKT gross growth path
-    n_opt = 10_000
+    n_opt = min(10_000,N_SCENARIOS)
     # liquidity overlay on the solver's path slice at the dates that matter
     eval_steps = sorted(set(payout_steps.tolist()) | {HORIZON_WEEKS})
     paths_opt = paths_all[:n_opt].copy()
@@ -638,7 +661,7 @@ def main() -> None:
     #     Unlike the i.i.d. Gaussian paths, regime persistence survives into
     #     the simulated paths.  --tsdr enables the contrast allocation.
     alloc_tsdr = None
-    if "--tsdr" in sys.argv:
+    if options.tsdr:
         tsdr_pv = tsdr_mod.state_probability_vectors(tsdr_labels, half_life=len(invariants) / 2)
         inv_paths, _ = tsdr_mod.resample_invariant_paths(
             invariants, tsdr_labels, tsdr_pv, n_scenarios=n_opt, n_steps=HORIZON_WEEKS,
@@ -695,13 +718,15 @@ def main() -> None:
     # Optional honest contrast: same optimization on uniform-prior scenarios.
     # Off by default - its unweighted solve intermittently falls back to the
     # slow SCS path; run with --with-uniform-contrast when needed.
-    if "--with-uniform-contrast" in sys.argv:
+    if options.with_uniform_contrast:
         rng_u = np.random.default_rng(SCENARIO_SEED)
         inv_scen_uniform = (HORIZON_WEEKS * uniform_mean) + rng_u.standard_normal(
             (N_SCENARIOS, len(uniform_mean))) @ np.linalg.cholesky(
             HORIZON_WEEKS * uniform_cov + 1e-12 * np.eye(len(uniform_mean))).T
-        market_uniform = liq.apply_liquidation_cost(
-            market_from_invariants(inv_scen_uniform), cost_params, seed=COST_SEED)
+        uniform_stress=np.clip(-inv_scen_uniform[:,:3].mean(1)/.05,0.,None)
+        market_uniform = mliq.apply_meucci_liquidity(
+            market_from_invariants(inv_scen_uniform),np.tile(ref_amounts,(N_SCENARIOS,1)),
+            meucci_params,market_corr,gamma=.9,state_multiplier=1.+2.*uniform_stress,seed=COST_SEED)
         allocations["EP+liab (unif prior)"], _ = liab.optimization_liability_aware(
             market_samples=market_uniform, prices_vector=prices_vector, wealth=WEALTH,
             liability_due=liability_due, risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
@@ -888,7 +913,7 @@ def main() -> None:
     }
     print(f"{'method':>22} {'solve(s)':>9} {'CE($)':>15} {'shortfall':>10} {'gapCVaR($)':>12}")
     for idx, name in enumerate(result.names):
-        secs = TIMINGS.get(stage_of.get(name, ""), float("nan"))
+        secs = TIMINGS.get(stage_of.get(name, ""), 0.0)
         ce = float(result.ce_by_seed[:, idx].mean())
         sf = float(result.shortfall_prob_by_seed[:, idx].mean()) if result.shortfall_prob_by_seed is not None else float("nan")
         sc = float(result.shortfall_cvar_by_seed[:, idx].mean()) if result.shortfall_cvar_by_seed is not None else float("nan")

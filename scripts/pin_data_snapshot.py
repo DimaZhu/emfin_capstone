@@ -43,14 +43,17 @@ def main() -> None:
     closes = pd.DataFrame(frames).dropna()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     closes.to_csv(OUT_DIR / "closes.csv")
-    manifest = {
+    previous_path=OUT_DIR/'manifest.json'
+    previous=json.loads(previous_path.read_text()) if previous_path.exists() else {}
+    manifest = dict(previous)
+    manifest.update({
         "tickers": TICKERS,
         "source": "yfinance (Yahoo Finance), auto_adjust=True for ETFs, raw close for ^TNX (percent)",
         "start": START,
         "end": str(closes.index.max().date()),
         "fetched_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "rows": len(closes),
-    }
+    })
     (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"Wrote {len(closes)} rows through {manifest['end']} to {OUT_DIR}")
 

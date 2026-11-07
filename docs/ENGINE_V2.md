@@ -126,3 +126,28 @@ CARA approximation. It prohibits simulated shortfalls, a different economic mode
 No GPL code/dependency or upstream changes. CI still needs root `.github/workflows/`
 installation via web UI because the token lacks workflow scope. Historical notes
 in CHANGELOG_ENGINE.md are not current claims or reusable result tables.
+
+## Reproducibility and audit notes
+
+Raw series resolve through `data/raw/manifest.json` with SHA-256 checks, not
+date-coded paths. `scripts/fetch_raw_drop.py` only stages a user-selected CSV;
+review its source and terms before changing the manifest. Snapshot refresh
+preserves pre-existing manifest notes. Refreshing data is a manual action.
+
+Generated outputs are ignored, not committed. Run the default to reproduce them;
+solve timing is environment-dependent. Historical generated multi-period output
+is withdrawn. The current default fan includes configured synthetic proportional
+liquidity haircuts. The appendix research funding fan is gross of its Meucci
+liquidity overlay; it must not be read as liquid cash available to pay obligations.
+The old single-date companion fan is also before payouts.
+
+The unused `liquidity.IlliquidHolding` time-to-cash helper remains an isolated
+research example, not an active client valuation model. The synthetic RE sleeve
+uses an explicit configured proportional haircut. Do not interpret it as an
+empirically validated property sale-delay model.
+
+No licence is assigned here to inherited project code: rightsholder consent is
+needed before choosing a project licence. Dependency/data provenance does not
+settle that choice. No GPL dependency has been added. The CI workflow remains a
+template under `ci/`; activating a root GitHub workflow needs separate GitHub
+workflow-write permission, which the current credential does not have.
