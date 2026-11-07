@@ -92,3 +92,40 @@ policy class actually compared; it is not a global optimum certificate. A
 legacy W1 additive reserve is retained as an explicitly heuristic stress
 screen for shared dynamic judgment, never represented as a nonlinear policy
 DRO bound. Both raw empirical tails and the reserve are reported separately.
+
+## Post-result attribution diagnostic (not selection)
+The primary final results were seen before this addition. To distinguish
+changing the initial target from valuable later feedback, add two comparators
+DERIVED FROM THE FROZEN selected policy's first action: apply its same time0
+trade, then cash-first only; and fix that initial target for later monthly
+rebalancing. Same original paths/costs/judge, no parameter or policy reselection.
+This is post-hoc attribution, not a fresh confirmatory test. Preserve original
+summary unchanged and save these diagnostics separately. Paired CE difference
+uncertainty uses frozen per-path outcomes, not an independent economic interval.
+
+## Prespecified robust variant, after primary/attribution results
+The primary -2ppdrift failure and post-hoc attribution were already seen.
+This extension is exploratory model redesign; it is not a confirmatory test
+of the original policy. New training/validation/final seeds use original base
+seed+200000/+210000/+220000; no original final paths reused or selected.
+Fixed model set:IIDnominal, boundedcap9nominal, IIDlisteddrift-2pp/year,
+and IIDdrift-2pppluscovariancex1.2. Other assumptions unchanged. This finite
+set is NOT a confidence region for the economic law or W1robust optimization.
+
+Same8parameters/bounds/360evaluations. Training objective is WORST-law CE
+plus100times WORST-law constraint-violation penalty. Training-feasible means
+pass the declared training screens under ALL4laws. Rank by worst-law CE;
+validate top12unique candidates across ALL4validationlaws; first passing
+all-risk/strict judge is frozen, else no candidate. Initial population includes
+the original trained feedback, its time0-equivalent static target and original
+initial holdings, remaining members use a fixed new seeded uniform draw.
+
+Fresh final comparisons are frozen before final generation:original starting
+cash-first, pro-rata, static monthly target; original feedback and its same
+first-action-only comparator; robust feedback and its same-first-action-only
+comparator. All initial wealth/holdings/costs/draws/judge match. Report joint
+all-payment rate, all-risk under every law, common ledgerCE/cost/turnover,
+paired4batchCEdifferences. If robust feedback equals/loses to its static
+first-action comparator or matches cash-first, say so. No final repair.
+Preserve all earlier results and source/selection locks.360evaluationsx4laws,
+search budget180s, whole study300s; estimate before execution.
