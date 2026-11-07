@@ -84,3 +84,14 @@ After installing the package, `emfin-run` is the same engine entry point. The
 repo-root CI workflow is still blocked by the token's missing workflow scope;
 the misplaced template remains at ci/.github/workflows/tests.yml until web-UI repair.
 No GPL dependency or source has been incorporated. Nothing is pushed upstream.
+
+## Visual companion
+
+`python -m emfin_capstone.explorer --precompute` starts the local explorer.
+`--export artifacts/report/explorer.html` creates a standalone static snapshot.
+It offers views, funding-tail budget, liability, Student-t, SeqEP and stress controls,
+allocation bars, a mean/variance frontier with benchmark points, CE/gap tables,
+and a gross funding-ratio fan. Nine main-slider configurations can be precomputed;
+all repeated configurations are cached in memory. The example uses a 1k training
+set and 8k fresh nominal evaluation set, so it is fast but not the full engine.
+It does not contain the full multi-period liability, robust CML or RE pipeline.
