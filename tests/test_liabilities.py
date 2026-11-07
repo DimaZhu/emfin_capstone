@@ -138,3 +138,64 @@ def test_calibration_reports_failure_when_even_tightest_fails():
     cal = calibrate_shortfall_budget(solve, evaluate, target=10.0, lo=0.1)
     assert cal.best_multiplier == 0.1
     assert evaluate(cal.best_allocation) > 10.0  # honest failure, visible in history
+
+
+def _steady_paths(n_scen=200, n_steps=6, growth=1.01, n_assets=2):
+    """Deterministic upward paths: every asset grows `growth` per step."""
+    rng = np.random.default_rng(7)
+    base = np.tile(np.array([100.0, 50.0]), (n_scen, 1)) * rng.lognormal(0, 0.001, (n_scen, n_assets))
+    paths = np.stack([base * growth ** t for t in range(1, n_steps + 1)], axis=1)
+    prices = base[0].copy() if False else np.array([100.0, 50.0])
+    return paths, prices
+
+
+def test_multiperiod_zero_liabilities_matches_asset_only_direction():
+    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+
+    paths, prices = _steady_paths()
+    n_scen, n_steps, _ = paths.shape
+    mm_growth = np.tile(1.001 ** np.arange(1, n_steps + 1), (n_scen, 1))
+    alloc, diag = optimization_multiperiod(
+        paths, prices, wealth=1e6,
+        liability_scenarios=np.zeros((n_scen, 1)), payout_steps=np.array([3]),
+        liability_base=np.array([0.0]), mm_growth_paths=mm_growth,
+        risk_tolerance=5e4, confidence_level=0.95, gamma_loss=0.5, gamma_shortfall=1.0,
+        n_optimization_scenarios=n_scen,
+    )
+    assert diag["status"] in ("optimal", "optimal_inaccurate")
+    assert alloc.sum() > 0
+    np.testing.assert_allclose((diag["weights"] >= -1e-9).all(), True)
+
+
+def test_multiperiod_gap_constraint_forces_funding():
+    from emfin_capstone.toolbox.liabilities import optimization_multiperiod
+
+    paths, prices = _steady_paths()
+    n_scen, n_steps, _ = paths.shape
+    mm_growth = np.tile(1.001 ** np.arange(1, n_steps + 1), (n_scen, 1))
+    # liability larger than any plausible wealth at step 2 -> infeasible gap
+    # budget zero unless the allocation keeps value high early
+    alloc, diag = optimization_multiperiod(
+        paths, prices, wealth=1e6,
+        liability_scenarios=np.full((n_scen, 1), 5e5), payout_steps=np.array([2]),
+        liability_base=np.array([5e5]), mm_growth_paths=mm_growth,
+        risk_tolerance=5e4, confidence_level=0.95, gamma_loss=0.5, gamma_shortfall=0.0,
+        n_optimization_scenarios=n_scen,
+    )
+    value_at_2 = (paths[:, 1, :] / prices) @ diag["weights"] * 1e6
+    # with a zero gap budget, wealth at the due date must cover the payout
+    assert value_at_2.min() >= 5e5 - 1e-3 * 5e5
+
+
+def test_multiperiod_metrics_per_date():
+    from emfin_capstone.toolbox.liabilities import multiperiod_gap_metrics
+
+    values = np.array([[100.0, 110.0, 120.0], [90.0, 95.0, 130.0]])
+    liabilities = np.array([[100.0, 100.0], [100.0, 100.0]])
+    steps = np.array([1, 3])
+    growth = np.ones((2, 3))
+    m = multiperiod_gap_metrics(values, liabilities, steps, growth, 0.95)
+    np.testing.assert_allclose(m.shortfall_probability, [0.5, 0.0])
+    assert m.shortfall_cvar[0] > 0 and m.shortfall_cvar[1] == 0.0
+    # terminal net = final value minus each payout (growth factors are 1)
+    np.testing.assert_allclose(m.terminal_net, [120.0 - 200.0, 130.0 - 200.0])

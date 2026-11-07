@@ -48,6 +48,7 @@ from emfin_capstone.toolbox import (
     liabilities as liab,
     moneymarket,
     meucci_liquidity as mliq,
+    scenario_market,
     snapshot,
 )
 
@@ -58,6 +59,8 @@ HORIZON_WEEKS = 13  # one quarter
 N_SCENARIOS = 100_000
 SCENARIO_SEED = 42
 COST_SEED = 43
+PATH_SEED = 2026_11_07_3
+LIAB_SEED = 2026_11_07_4
 N_JUDGE_SEEDS = 5
 JUDGE_SEED_BASE = 1000
 
@@ -70,6 +73,10 @@ CONFIDENCE = 0.95
 # open modelling decision.
 GAMMA_LOSS = 0.15  # quarterly scale, placeholder calibration
 GAMMA_SHORTFALL = 0.002  # funding-gap CVaR budget: 0.2% of the liability - tight enough to bind in-solver given SAA tail noise
+# Stochastic-liability placeholders (branch feat/stochastic-liabilities):
+# payout vol and correlation with equity drawdowns at the due date.
+LIAB_VOL = np.array([0.15, 0.08])      # PE calls swing more than the property price
+LIAB_STRESS_CORR = np.array([0.4, 0.3])  # payouts grow in drawdowns (denominator effect)
 
 EQUITY_TICKERS = snapshot.EQUITY_TICKERS
 BOND = bonds.Bond("UST10", face_value=100.0, coupon_rate=0.04, years_to_maturity=10.0, ytm=0.0)
@@ -205,15 +212,59 @@ def main() -> None:
     ig_p0 = bonds.price_from_ytm(current_ytm + current_spread, ig_bond.years_to_maturity,
                                  ig_bond.coupon_rate, ig_bond.face_value)[0]
 
-    def market_from_invariants(inv: np.ndarray) -> np.ndarray:
+    def market_from_invariants(inv: np.ndarray, weeks_elapsed: int = HORIZON_WEEKS) -> np.ndarray:
         eq = prices_eq * np.exp(inv[:, :3])
-        bond_prices = bonds.bond_price_scenarios(bond, current_ytm + inv[:, 3], HORIZON_WEEKS)
+        bond_prices = bonds.bond_price_scenarios(bond, current_ytm + inv[:, 3], weeks_elapsed)
         ig_prices = bonds.credit_price_scenarios(
-            ig_bond, current_ytm + inv[:, 3], current_spread + inv[:, 4], HORIZON_WEEKS)
+            ig_bond, current_ytm + inv[:, 3], current_spread + inv[:, 4], weeks_elapsed)
         # Money market: $1 accrues carry and takes duration * horizon rate
         # change (both inside the MMKT invariant); exp keeps it a gross return
         mmkt = 1.0 * np.exp(inv[:, 5])
         return np.column_stack([eq, bond_prices, ig_prices, mmkt])
+
+    def build_scenario_paths(weekly_mean: np.ndarray, weekly_cov: np.ndarray,
+                             n_steps: int, n_scenarios: int, seed: int):
+        """Weekly i.i.d. invariant draws cumulated into scenario paths.
+
+        Returns (paths, cum_invariants): paths is (n_scenarios, n_steps,
+        n_assets) gross prices at the end of each week; cum_invariants is
+        the cumulative invariant vector behind each step (needed to link
+        stochastic liabilities to the path's market stress).
+        """
+        rng_p = np.random.default_rng(seed)
+        chol_w = np.linalg.cholesky(weekly_cov + 1e-12 * np.eye(len(weekly_mean)))
+        cum = np.zeros((n_scenarios, len(weekly_mean)))
+        slices, cums = [], []
+        for t in range(1, n_steps + 1):
+            cum = cum + weekly_mean + rng_p.standard_normal((n_scenarios, len(weekly_mean))) @ chol_w.T
+            slices.append(market_from_invariants(cum, weeks_elapsed=t))
+            cums.append(cum.copy())
+        return np.stack(slices, axis=1), np.stack(cums, axis=1)
+
+    def stochastic_liabilities(base_amounts: np.ndarray, cum_invariants: np.ndarray,
+                               payout_steps: np.ndarray, vols: np.ndarray,
+                               stress_corr: np.ndarray, seed: int) -> np.ndarray:
+        """Lognormal liability amounts, correlated with market stress at due date.
+
+        Honest placeholder model: liability i due at step t_i scales by
+        exp(sigma_i * (rho_i * z_s(t_i) + sqrt(1-rho_i^2) * eps) - sigma_i^2/2)
+        where z is the standardized cumulative equity drawdown of the
+        scenario at t_i.  rho > 0 means the payout grows in drawdowns (the
+        PE denominator effect: capital calls keep coming when markets fall).
+        sigma/rho are COMMUNICABLE PLACEHOLDERS for the client conversation.
+        """
+        rng_l = np.random.default_rng(seed)
+        n_scenarios = cum_invariants.shape[0]
+        out = np.empty((n_scenarios, len(base_amounts)))
+        for i, step in enumerate(payout_steps):
+            eq_cum = cum_invariants[:, step - 1, :3].mean(axis=1)
+            # stress = drawdown vs EXPECTATION (standardized: demeaned, unit
+            # std) - not vs zero return; keeps the amounts centered at base
+            z = -(eq_cum - eq_cum.mean()) / (eq_cum.std() + 1e-12)
+            eps = rng_l.standard_normal(n_scenarios)
+            shock = vols[i] * (stress_corr[i] * z + np.sqrt(1 - stress_corr[i] ** 2) * eps)
+            out[:, i] = base_amounts[i] * np.exp(shock - 0.5 * vols[i] ** 2)
+        return out
 
     _tick("scenario generation (cholesky + draws)")
     market = market_from_invariants(inv_scen)
@@ -374,6 +425,40 @@ def main() -> None:
             print("  -> nominal budget already respects the target out-of-sample; no tightening")
 
     _tick("optimize: EP + liabilities (tail-budget calibrated)")
+
+    # 5. stochastic + multi-period liabilities: the same liability plan, but
+    #    amounts are scenario-dependent (grow in drawdowns) and each payout
+    #    must be funded AT ITS DUE DATE on the wealth path, not just at the
+    #    horizon.  Paths: weekly invariant draws through the same market
+    #    map.  Provisioning at the money-market rate keeps the solve convex
+    #    (documented in ENGINE_V2.md).
+    payout_steps = np.array([item.week for item in LIABILITIES.items])
+    base_amounts = np.array([item.amount for item in LIABILITIES.items], dtype=float)
+    paths_all, cum_all = build_scenario_paths(inv_mean, inv_cov, HORIZON_WEEKS, N_SCENARIOS, PATH_SEED)
+    liab_scen = stochastic_liabilities(base_amounts, cum_all, payout_steps,
+                                       LIAB_VOL, LIAB_STRESS_CORR, seed=LIAB_SEED)
+    mm_growth = paths_all[:, :, 5] / prices_vector[5]  # MMKT gross growth path
+    n_opt = 10_000
+    # liquidity overlay on the solver's path slice at the dates that matter
+    eval_steps = sorted(set(payout_steps.tolist()) | {HORIZON_WEEKS})
+    paths_opt = paths_all[:n_opt].copy()
+    for step in eval_steps:
+        paths_opt[:, step - 1, :] = mliq.apply_meucci_liquidity(
+            paths_opt[:, step - 1, :], np.tile(ref_amounts, (n_opt, 1)), meucci_params,
+            market_corr, gamma=0.9,
+            state_multiplier=1.0 + 2.0 * np.clip(-cum_all[:n_opt, step - 1, :3].mean(axis=1) / 0.05, 0.0, None),
+            seed=COST_SEED + step)
+    alloc_mp, diag_mp = liab.optimization_multiperiod(
+        market_paths=paths_opt, prices_vector=prices_vector, wealth=WEALTH,
+        liability_scenarios=liab_scen[:n_opt], payout_steps=payout_steps,
+        liability_base=base_amounts, mm_growth_paths=mm_growth[:n_opt],
+        risk_tolerance=RISK_TOLERANCE, confidence_level=CONFIDENCE,
+        gamma_loss=GAMMA_LOSS, gamma_shortfall=GAMMA_SHORTFALL, scenario_probs=q[:n_opt],
+        n_optimization_scenarios=n_opt)
+    print(f"stochastic liabilities: mean amounts ${liab_scen.mean(axis=0)/1e6}M, "
+          f"p90 ${np.quantile(liab_scen, 0.9, axis=0)/1e6}M "
+          f"(bases ${base_amounts/1e6}M; placeholder vol/corr)")
+    _tick("optimize: EP + liabilities (multi-period, stochastic)")
     # Uniform-prior contrast: the same EP+liabilities optimization on
     # scenarios generated from the uniform (full-sample) moments.  The judge
     # below draws from a third, fresh distribution, so neither prior is the
@@ -383,6 +468,7 @@ def main() -> None:
         "Black-Litterman": alloc_bl,
         "EP (views)": alloc_ep,
         "EP + liabilities": alloc_lace,
+        "EP+liab (multi-per)": alloc_mp,
     }
     if calibration is not None and calibration.best_multiplier < 1.0:
         # honest contrast: what the un-calibrated (nominal-budget) allocation
@@ -434,6 +520,45 @@ def main() -> None:
             GAMMA_SHORTFALL * liability_due, cal_note))
         for name, sc in zip(result.names, result.shortfall_cvar_by_seed.mean(axis=0)):
             print(f"{name:>18}: ${sc:,.0f}")
+
+
+    # ---- Multi-period funding check on fresh judge paths -----------------
+    # Both liability-aware allocations are graded on fresh scenario PATHS:
+    # shortfall probability and gap CVaR at EACH payout's due date, plus
+    # terminal net CE after money-market provisioning.  This is the honest
+    # out-of-sample test of the feature: the aggregated allocation never saw
+    # the per-date constraints.
+    print("\n=== Multi-period funding check (out-of-sample paths) ===")
+    print(f"(payouts at weeks {list(payout_steps)}; stochastic amounts re-drawn per seed; "
+          "provisioning at the money-market rate)")
+    mp_names = ["EP + liabilities", "EP+liab (multi-per)"]
+    mp_stats = {n: [] for n in mp_names}
+    for seed in range(JUDGE_SEED_BASE + 500, JUDGE_SEED_BASE + 500 + N_JUDGE_SEEDS):
+        jp, jc = build_scenario_paths(inv_mean, inv_cov, HORIZON_WEEKS, N_SCENARIOS, seed)
+        jl = stochastic_liabilities(base_amounts, jc, payout_steps, LIAB_VOL, LIAB_STRESS_CORR,
+                                    seed=seed + 7)
+        jgrowth = jp[:, :, 5] / prices_vector[5]
+        for step in eval_steps:
+            jp[:, step - 1, :] = mliq.apply_meucci_liquidity(
+                jp[:, step - 1, :], np.tile(ref_amounts, (N_SCENARIOS, 1)), meucci_params,
+                market_corr, gamma=0.9,
+                state_multiplier=1.0 + 2.0 * np.clip(-jc[:, step - 1, :3].mean(axis=1) / 0.05, 0.0, None),
+                seed=seed + step)
+        for n in mp_names:
+            vpaths = jp @ allocations[n]  # (n_scenarios, n_steps) value path in $
+            m = liab.multiperiod_gap_metrics(vpaths, jl, payout_steps, jgrowth, CONFIDENCE)
+            ce_net = scenario_market.empirical_certainty_equivalent(m.terminal_net, RISK_TOLERANCE)
+            mp_stats[n].append((m.shortfall_probability, m.shortfall_cvar, ce_net))
+    for n in mp_names:
+        sf = np.mean([s[0] for s in mp_stats[n]], axis=0)
+        sc = np.mean([s[1] for s in mp_stats[n]], axis=0)
+        ce = np.mean([s[2] for s in mp_stats[n]])
+        print(f"{n:>18}: terminal net CE ${ce:,.0f}")
+        for i, step in enumerate(payout_steps):
+            print(f"    week {step:2d} payout ${base_amounts[i]/1e6:.0f}M: "
+                  f"shortfall prob {sf[i]:.1%}, gap CVaR ${sc[i]:,.0f} "
+                  f"(budget ${GAMMA_SHORTFALL * base_amounts[i]:,.0f})")
+    _tick("multi-period funding check")
 
 
 if __name__ == "__main__":

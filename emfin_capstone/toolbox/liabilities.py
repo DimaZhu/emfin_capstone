@@ -228,3 +228,160 @@ def calibrate_shortfall_budget(
             break
     history = [(m, cache[m][1]) for m in sorted(cache)]
     return TailBudgetCalibration(best, cache[best][0], tuple(history), target)
+
+
+@dataclass(frozen=True)
+class MultiPeriodMetrics:
+    """Funding diagnostics per payout date plus terminal net wealth."""
+
+    shortfall_probability: np.ndarray  # (n_payouts,) P(W < L_i) at each due date
+    shortfall_cvar: np.ndarray  # (n_payouts,) CVaR of max(0, L_i - W) at each due date
+    terminal_net: np.ndarray  # (n_scenarios,) terminal wealth net of provisioned payouts
+
+
+def multiperiod_gap_metrics(
+    value_paths: np.ndarray,
+    liability_scenarios: np.ndarray,
+    payout_steps: np.ndarray,
+    mm_growth_paths: np.ndarray,
+    confidence_level: float,
+) -> MultiPeriodMetrics:
+    """Evaluate funding along a scenario path, not just at the horizon.
+
+    ``value_paths``: (n_scenarios, n_steps) portfolio value path;
+    ``liability_scenarios``: (n_scenarios, n_payouts) amounts due;
+    ``payout_steps``: step index (1-based into n_steps) of each payout;
+    ``mm_growth_paths``: (n_scenarios, n_steps) gross growth of $1 in the
+    money-market sleeve - payouts are provisioned at the money-market rate
+    from their due date (LDI-style), so the terminal cost of payout i is
+    L_i * G(T)/G(t_i).  Conservative and convex; documented in ENGINE_V2.
+    """
+    values = np.asarray(value_paths, dtype=float)
+    liabilities = np.atleast_2d(np.asarray(liability_scenarios, dtype=float))
+    growth = np.asarray(mm_growth_paths, dtype=float)
+    steps = np.asarray(payout_steps, dtype=int).ravel()
+    n_scenarios, n_steps = values.shape
+    if liabilities.shape[0] != n_scenarios or growth.shape != values.shape:
+        raise ValueError("value paths, liabilities and MM growth must align scenario-for-scenario")
+    if np.any(steps < 1) or np.any(steps > n_steps):
+        raise ValueError("payout steps must index into the path")
+
+    probs, cvars = [], []
+    terminal_net = values[:, -1].copy()
+    for i, step in enumerate(steps):
+        gap = np.maximum(0.0, liabilities[:, i] - values[:, step - 1])
+        probs.append(float((gap > 0).mean()))
+        cvars.append(risk_stats.empirical_cvar(gap, confidence_level))
+        terminal_net -= liabilities[:, i] * growth[:, -1] / growth[:, step - 1]
+    return MultiPeriodMetrics(
+        shortfall_probability=np.array(probs),
+        shortfall_cvar=np.array(cvars),
+        terminal_net=terminal_net,
+    )
+
+
+def optimization_multiperiod(
+    market_paths: np.ndarray,
+    prices_vector: np.ndarray,
+    wealth: float,
+    liability_scenarios: np.ndarray,
+    payout_steps: np.ndarray,
+    liability_base: np.ndarray,
+    mm_growth_paths: np.ndarray,
+    risk_tolerance: float,
+    confidence_level: float,
+    gamma_loss: float,
+    gamma_shortfall: float,
+    long_only: bool = True,
+    n_optimization_scenarios: int = 10_000,
+    scenario_probs: np.ndarray | None = None,
+) -> tuple[np.ndarray, dict]:
+    """Multi-period, stochastic-liability allocation.
+
+    Extends ``optimization_liability_aware`` two ways, as the module
+    docstring promised:
+
+    * Stochastic amounts: liability i due at step t_i is an
+      (n_scenarios,) vector (e.g. capital calls that grow in equity
+      drawdowns), not a fixed number.  CE is taken over net terminal wealth
+      scenario-by-scenario.
+    * Multi-period funding: each payout carries its own funding-gap
+      constraint evaluated on the portfolio's value AT ITS DUE DATE
+      (wealth path, not just horizon wealth) - a payout due in week 10
+      cannot be funded by week-13 gains.
+
+    Provisioning convention (keeps the problem convex): payout i is funded
+    at its due date and the opportunity cost accrues at the money-market
+    rate, so terminal net wealth is
+    W_T - sum_i L_i,s * G_T,s / G_{t_i},s - linear in the weights given the
+    scenarios.  Conservative when the portfolio out-earns the money market.
+
+    Budgets: gap CVaR at date i <= gamma_shortfall * base_i, with base_i
+    the plan (deterministic) amount.  Returns (share allocations, dict).
+    """
+    paths = np.asarray(market_paths, dtype=float)[:n_optimization_scenarios]
+    n_scenarios, n_steps, n_assets = paths.shape
+    liabilities = np.atleast_2d(np.asarray(liability_scenarios, dtype=float))[:n_scenarios]
+    base = np.asarray(liability_base, dtype=float).ravel()
+    steps = np.asarray(payout_steps, dtype=int).ravel()
+    growth = np.asarray(mm_growth_paths, dtype=float)[:n_scenarios]
+    if liabilities.shape != (n_scenarios, len(steps)) or base.shape != steps.shape:
+        raise ValueError("liability scenarios, bases and payout steps must align")
+    if growth.shape != (n_scenarios, n_steps):
+        raise ValueError("MM growth must be (n_scenarios, n_steps)")
+    if scenario_probs is None:
+        log_probs = np.full(n_scenarios, -np.log(n_scenarios))
+        probs = np.full(n_scenarios, 1.0 / n_scenarios)
+    else:
+        probs = np.asarray(scenario_probs, dtype=float).ravel()[:n_scenarios]
+        probs = probs / probs.sum()
+        log_probs = np.log(probs)
+
+    prices = prices_vector.ravel()
+    weights = cp.Variable(n_assets)
+    # relative portfolio value path at each date that matters (linear in w)
+    value_terminal = (paths[:, -1, :] / prices) @ weights
+    rel_risk_tolerance = risk_tolerance / wealth
+
+    # terminal net of provisioned payouts (constant per scenario)
+    provision = np.zeros(n_scenarios)
+    for i, step in enumerate(steps):
+        provision += liabilities[:, i] * growth[:, -1] / growth[:, step - 1]
+    rel_net = value_terminal - provision / wealth
+
+    ce_rel = -rel_risk_tolerance * cp.log_sum_exp(-rel_net / rel_risk_tolerance + log_probs)
+
+    rel_loss = 1 - value_terminal
+    t_loss = cp.Variable()
+    cvar_loss = t_loss + cp.sum(cp.multiply(probs, cp.pos(rel_loss - t_loss))) / (1 - confidence_level)
+    constraints = [cp.sum(weights) == 1, cvar_loss <= gamma_loss]
+    if long_only:
+        constraints.append(weights >= 0)
+
+    # one funding-gap epigraph per payout date, on the wealth path at that date
+    for i, step in enumerate(steps):
+        value_at_step = (paths[:, step - 1, :] / prices) @ weights
+        gap = cp.pos(liabilities[:, i] / wealth - value_at_step)
+        t_gap = cp.Variable()
+        cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
+        constraints.append(cvar_gap <= gamma_shortfall * base[i] / wealth)
+
+    problem = cp.Problem(cp.Maximize(ce_rel), constraints)
+    used_solver = "CLARABEL"
+    try:
+        problem.solve(solver="CLARABEL", max_iter=400, time_limit=60.0)
+    except cp.SolverError:
+        used_solver = "SCS"
+        problem.solve(solver="SCS", eps_abs=1e-6, eps_rel=1e-6, max_iters=10_000,
+                      time_limit_secs=60.0)
+    if weights.value is None:
+        raise RuntimeError(f"multi-period optimization failed: {problem.status}")
+
+    allocations = weights.value * wealth / prices
+    diagnostics = {
+        "status": problem.status,
+        "solver": used_solver,
+        "ce_in_solver": float(problem.value) * wealth,
+        "weights": weights.value.copy(),
+    }
+    return allocations, diagnostics
