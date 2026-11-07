@@ -350,8 +350,8 @@ def optimization_multiperiod(
         probs = np.full(n_scenarios, 1.0 / n_scenarios)
     else:
         probs = np.asarray(scenario_probs, dtype=float).ravel()[:n_scenarios]
+        if probs.shape!=(n_scenarios,) or not np.isfinite(probs).all() or (probs<0).any() or probs.sum()<=0:raise ValueError("valid scenario probabilities required")
         probs = probs / probs.sum()
-        log_probs = np.log(probs)
 
     prices = prices_vector.ravel()
     weights = cp.Variable(n_assets)
@@ -366,7 +366,11 @@ def optimization_multiperiod(
     rel_net = value_terminal - provision / wealth
 
     reference_net = 1.0 - float(np.mean(provision)) / wealth
-    expected_disutility = cp.sum(cp.multiply(probs, cp.exp(-(rel_net - reference_net) / rel_risk_tolerance)))
+    # Strictly increasing log leaves the CARA minimizer unchanged, but puts
+    # the objective on an order-one log scale. The weighted exponential sum
+    # can stall interior-point progress despite a feasible holdings domain.
+    support=probs>0
+    expected_disutility = cp.log_sum_exp(np.log(probs[support])-(rel_net[support]-reference_net)/rel_risk_tolerance)
 
     rel_loss = 1 - value_terminal
     t_loss = cp.Variable()
@@ -388,6 +392,15 @@ def optimization_multiperiod(
     fixed=validate_fixed(fixed_weights,n_assets,minimum_weights)
     constraints.extend(weights[i]==v for i,v in fixed.items())
 
+    # Certify constraints redundant on the ENTIRE admissible holdings domain.
+    # This is an exact presolve, not a candidate-only or nominal-tail shortcut.
+    base_weights=np.zeros(n_assets) if minimum_weights is None else np.asarray(minimum_weights,float).copy()
+    for i,v in fixed.items():base_weights[i]=v
+    free=[i for i in range(n_assets) if i not in fixed]
+    remaining=1-base_weights.sum()
+    largest_weight=max(float(base_weights.max()),max((base_weights[i]+remaining for i in free),default=0.))
+    max_funding_dro=wasserstein_radius*max(largest_weight,wasserstein_liability_scale)/(1-confidence_level)
+    funding_certificates=[]
     # Scale each funding budget to one. A nonnegative threshold makes the
     # extra positive-part layer on the gap redundant, reducing cone size.
     for i, step in enumerate(steps):
@@ -397,6 +410,15 @@ def optimization_multiperiod(
             if previous_step < step or (previous_step == step and j < i):
                 required += liabilities[:, j] * growth[:, step-1] / growth[:, previous_step-1]
         budget_rel = gamma_shortfall * base[i] / wealth
+        if long_only and remaining>=0:
+            funding_prices=funding[:,step-1,:]/prices
+            minimum_value=funding_prices@base_weights
+            if free:minimum_value+=remaining*funding_prices[:,free].min(axis=1)
+            pointwise_gap_bound=float(np.maximum(required/wealth-minimum_value,0.).max())
+            certified_bound=pointwise_gap_bound+max_funding_dro
+            if certified_bound<=budget_rel:
+                funding_certificates.append(dict(payout_index=i,week=int(step),pointwise_gap_bound=pointwise_gap_bound,worst_holdings_w1=max_funding_dro,budget=budget_rel,upper_bound=certified_bound,scope='Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound.'))
+                continue
         if budget_rel == 0:
             if wasserstein_radius>0:raise ValueError('Positive unrestricted-support Wasserstein radius cannot guarantee a zero shortfall budget')
             constraints.append(value_at_step >= required/wealth)
@@ -447,8 +469,9 @@ def optimization_multiperiod(
     diagnostics = {
         "status": problem.status,
         "solver": used_solver,
-        "ce_in_solver": float(reference_net - rel_risk_tolerance * np.log(problem.value)) * wealth,
+        "ce_in_solver": float(reference_net - rel_risk_tolerance * problem.value) * wealth,
         "weights": weights.value.copy(),
+        "funding_presolve_certificates": funding_certificates,
     }
     return allocations, diagnostics
 
