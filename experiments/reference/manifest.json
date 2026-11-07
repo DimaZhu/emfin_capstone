@@ -1,0 +1,83 @@
+{
+  "provenance": {
+    "code_sha256": "431b04d466cbdb17aa7e72d7d972d900352073ac57bafcc5633b084bd7b59464",
+    "data_sha256": "fda94e0f5818a55a6a1a834d987a42af37527074a3a1aefd2a392d59bebcd721",
+    "versions": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.15.3",
+      "cvxpy": "1.7.5",
+      "clarabel": "0.11.1",
+      "scs": "3.3.1"
+    },
+    "git_commit": "b86c577ca4ad79f4de45f68fa9838783f85c4cf1",
+    "source": "synthetic RE; bundled market snapshot",
+    "schema_version": 1,
+    "cell_timeout_seconds": 80,
+    "report_code_sha256": "ec10f89f4c0f8b75faabc266f1430117f4fb8e755537a26fc0a80a44c763dd50"
+  },
+  "spec": {
+    "axes": {
+      "profile": [
+        "Balanced"
+      ],
+      "payout_ratio": [
+        0.5,
+        0.75,
+        0.95
+      ],
+      "timing": [
+        "late"
+      ],
+      "re_min": [
+        0.0,
+        0.1,
+        0.2
+      ],
+      "radius": [
+        2e-05
+      ],
+      "rho": [
+        0.3
+      ]
+    },
+    "real_estate": {
+      "annual_drift": 0.04,
+      "annual_vol": 0.12,
+      "net_rental_yield": 0.03,
+      "smoothing_alpha": 0.0,
+      "sale_week": 0,
+      "sale_delay_weeks": 12,
+      "history_case": "central"
+    },
+    "engine": {
+      "horizon_weeks": 13,
+      "train_scenarios": 200,
+      "validation_scenarios": 400,
+      "evaluation_scenarios": 600,
+      "validation_seeds": 2,
+      "evaluation_seeds": 3,
+      "multiplier_grid": [
+        1.0,
+        0.25
+      ],
+      "cash_mix_grid": [
+        1.0,
+        0.5,
+        0.0
+      ]
+    }
+  },
+  "job_ids": [
+    "4b709354586c0a340822afec04a61049c675e78d89e72c190b178ca966258852",
+    "4de4bc45d0c315dfa77921dcb18d1f619af66fbfaadb42131ec21bd21943ad45",
+    "d18c5f11503d8a107dac87d25419e5da06ff90fb66c872b13b53cda21e4bfee5",
+    "3569fd204a4b46d5018f05613f47dbc856c7a93ce3eb0a4dfc56dd4896a0f7aa",
+    "79339ed4200b8670a93478f9d9c829f3f8d301e17dac6cbf7cea487164834f94",
+    "964df4b2bc9d3e812688942bfe94b6d68a55c6e358f978261c8a344bab62c4ec",
+    "d4c8ca4fb6d743871f2d6980d907f294d288920f36150d8933a3270bdc0261ce",
+    "aeacd4752bbeb2d80d8e4b873c5a062227e698b8f27e5d56804475f81bf3eb46",
+    "3c22ea525eb8217a84135bb9cbd9392f4e19e6c0668cb9ed2aa9a8d2247a9b7b"
+  ],
+  "expected_count": 9
+}

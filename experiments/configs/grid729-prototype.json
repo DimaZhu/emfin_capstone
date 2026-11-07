@@ -1,0 +1,61 @@
+{
+  "axes": {
+    "profile": [
+      "Preserve",
+      "Balanced",
+      "Growth"
+    ],
+    "payout_ratio": [
+      0.5,
+      0.75,
+      0.95
+    ],
+    "timing": [
+      "early",
+      "mixed",
+      "late"
+    ],
+    "re_min": [
+      0.0,
+      0.1,
+      0.2
+    ],
+    "radius": [
+      0.0,
+      2e-05,
+      4e-05
+    ],
+    "rho": [
+      -0.2,
+      0.3,
+      0.7
+    ]
+  },
+  "real_estate": {
+    "annual_drift": 0.04,
+    "annual_vol": 0.12,
+    "net_rental_yield": 0.03,
+    "smoothing_alpha": 0.0,
+    "sale_week": 0,
+    "sale_delay_weeks": 12,
+    "history_case": "central"
+  },
+  "engine": {
+    "horizon_weeks": 13,
+    "train_scenarios": 100,
+    "validation_scenarios": 200,
+    "evaluation_scenarios": 300,
+    "validation_seeds": 2,
+    "evaluation_seeds": 2,
+    "multiplier_grid": [
+      1.0,
+      0.25
+    ],
+    "cash_mix_grid": [
+      1.0,
+      0.5,
+      0.0
+    ]
+  },
+  "tier": "prototype-coarse, not full validation"
+}

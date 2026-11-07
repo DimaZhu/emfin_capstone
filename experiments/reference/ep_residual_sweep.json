@@ -1,0 +1,122 @@
+[
+  {
+    "n": 10,
+    "seed": 0,
+    "residual": 3.608224830031759e-16,
+    "normalization": 0.0
+  },
+  {
+    "n": 10,
+    "seed": 1,
+    "residual": 5.547262094118821e-10,
+    "normalization": 0.0
+  },
+  {
+    "n": 10,
+    "seed": 2,
+    "residual": 8.997941280952659e-13,
+    "normalization": 2.220446049250313e-16
+  },
+  {
+    "n": 10,
+    "seed": 3,
+    "residual": 3.090916411707667e-12,
+    "normalization": 0.0
+  },
+  {
+    "n": 25,
+    "seed": 0,
+    "residual": 1.145038924788011e-13,
+    "normalization": 1.1102230246251565e-16
+  },
+  {
+    "n": 25,
+    "seed": 1,
+    "residual": 3.9641563642778266e-10,
+    "normalization": 0.0
+  },
+  {
+    "n": 25,
+    "seed": 2,
+    "residual": 2.0297652447709424e-13,
+    "normalization": 0.0
+  },
+  {
+    "n": 25,
+    "seed": 3,
+    "residual": 1.3039458401920001e-11,
+    "normalization": 0.0
+  },
+  {
+    "n": 50,
+    "seed": 0,
+    "residual": 2.7755575615628914e-17,
+    "normalization": 0.0
+  },
+  {
+    "n": 50,
+    "seed": 1,
+    "residual": 2.5951463200613034e-15,
+    "normalization": 1.1102230246251565e-16
+  },
+  {
+    "n": 50,
+    "seed": 2,
+    "residual": 5.953570969552402e-15,
+    "normalization": 0.0
+  },
+  {
+    "n": 50,
+    "seed": 3,
+    "residual": 0.0,
+    "normalization": 0.0
+  },
+  {
+    "n": 100,
+    "seed": 0,
+    "residual": 3.005373727660299e-13,
+    "normalization": 0.0
+  },
+  {
+    "n": 100,
+    "seed": 1,
+    "residual": 7.810245505890379e-14,
+    "normalization": 0.0
+  },
+  {
+    "n": 100,
+    "seed": 2,
+    "residual": 2.441730012625598e-10,
+    "normalization": 0.0
+  },
+  {
+    "n": 100,
+    "seed": 3,
+    "residual": 1.0114774989800068e-09,
+    "normalization": 2.220446049250313e-16
+  },
+  {
+    "n": 250,
+    "seed": 0,
+    "residual": 1.6233017707811825e-10,
+    "normalization": 0.0
+  },
+  {
+    "n": 250,
+    "seed": 1,
+    "residual": 2.0816681711721685e-17,
+    "normalization": 0.0
+  },
+  {
+    "n": 250,
+    "seed": 2,
+    "residual": 4.4199602311500996e-11,
+    "normalization": 0.0
+  },
+  {
+    "n": 250,
+    "seed": 3,
+    "residual": 6.904006116803529e-10,
+    "normalization": 0.0
+  }
+]
