@@ -123,3 +123,13 @@ jupyter notebook notebooks/portfolio_optimization.ipynb
 - **Live prices.** The `emfin_capstone.toolbox.price` module fetches prices live
   (via yfinance) and caches responses under `data/cache/`, which is created
   automatically on first run. The `data/` directory is git-ignored.
+
+## Current illustrative engine
+
+Work is on the default `engine-v2` branch. See [current status](docs/ENGINE_V2.md),
+[evidence and paper scope](docs/PAPER_STRUCTURE.md), and the dated change log.
+Run `python scripts/run_v2_engine.py`; JSON, CSV and appendix text are written
+to `artifacts/report/`. After installation, `emfin-run` is equivalent.
+Client obligations, views, liquidity inputs and alternative-asset calibration
+remain illustrative. The real-estate allocation example is synthetic-labelled,
+not an estimate of the real SFO client's exposure.

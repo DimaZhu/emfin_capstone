@@ -36,6 +36,13 @@ def ledoit_wolf_cov(samples: np.ndarray, ess: float | None = None) -> tuple[np.n
     t_eff = float(ess) if ess is not None else float(t)
     if t_eff < 2:
         raise ValueError("effective sample size too small for shrinkage")
+    # Shrink in standardized coordinates. Identity shrinkage on raw equity,
+    # yield and money-market invariants would depend on their chosen units
+    # and could manufacture large volatility in the cash sleeve.
+    scales = x.std(axis=0, ddof=1)
+    if not np.isfinite(x).all() or np.any(scales <= 0):
+        raise ValueError("finite nondegenerate columns required")
+    x = (x - x.mean(0)) / scales
     s = np.cov(x, rowvar=False, ddof=1)
     m = float(np.trace(s) / n)
     f = m * np.eye(n)
@@ -49,7 +56,7 @@ def ledoit_wolf_cov(samples: np.ndarray, ess: float | None = None) -> tuple[np.n
         b2 += float(((outer - s) ** 2).sum())
     b2 /= (t_eff ** 2) * n
     delta = min(b2 / d2, 1.0) if d2 > 0 else 1.0
-    return (1.0 - delta) * s + delta * f, delta
+    return ((1.0 - delta) * s + delta * f) * np.outer(scales,scales), delta
 
 
 def shrink_mean(
