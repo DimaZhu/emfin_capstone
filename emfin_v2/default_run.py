@@ -65,6 +65,9 @@ def load_config(path=DEFAULT_CONFIG):
     if not 0<=re['minimum_weight']<=1 or not -1<=re['equity_correlation']<=1 or re['annual_vol']<0 or not 0<=re['liquidation_haircut']<1:
         raise ValueError('invalid RE assumptions')
     from emfin_v2.real_estate import validate
+    from emfin_v2.market_views import validate_views
+    validate_views(c.get('market_return_views',{}))
+    if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)
     return c
 
@@ -146,27 +149,38 @@ def probabilities(c,paths,re_price_logs=None):
     if not 0<=i<paths.shape[2] or not 0<=j<paths.shape[2]:raise ValueError('view instrument index outside scenario archive')
     terminal=paths[:,-1]-1.
     uniform=np.full(n,1/n)
-    views=[]
-    if c['view_spread']!=0:
+    views=[];fixed_views=[]
+    requested=c.get('market_return_views',{})
+    from emfin_v2.market_views import validate_views
+    validate_views(requested)
+    if c['view_spread']!=0 and not requested:
         views.append(seqep.SeqView(0,lambda p: ep.relative_mean_view(terminal,i,j,c['view_spread'])))
     if terminal.shape[1]>2 and c.get('view_vol_cap') is not None:
         views.append(seqep.SeqView(1,lambda p: ep.volatility_cap(terminal,2,c['view_vol_cap'],pin_mean=p['mean',2])))
+    if requested:
+        indices=[int(k) for k in requested]
+        absolute=ep.View(terminal[:,indices],[requested[str(k)] for k in indices],name='Explicit expected horizon-return targets')
+        fixed_views.append(absolute)
+        views.append(seqep.SeqView(2,lambda p:absolute,name='My asset return targets'))
     re_view=None
     if c['real_estate']['enabled']:
         from emfin_v2.real_estate import calibration
         if re_price_logs is None:raise ValueError('RE entropy-pooling view needs underlying re_price_log_paths, not rental/sale marks')
         target=calibration(c['real_estate'])['forward_log_drift']*c['horizon_weeks']/52
         re_view=ep.View(np.asarray(re_price_logs)[:,-1],[target],name='Explicit forward RE log-price mean')
-        views.append(seqep.SeqView(2,lambda p:re_view,name='Forward RE price view'))
+        fixed_views.append(re_view)
+        views.append(seqep.SeqView(3,lambda p:re_view,name='Forward RE price view'))
     if c.get('sequential_ep',True):
         q=seqep.sequential_entropy_pooling(terminal,views,sweeps=2).posterior_probs
     else:
         pins=seqep._extract_params(terminal,uniform)
         q=ep.joint_entropy_pooling(n,[v.build(pins) for v in views]).posterior_probs
+    if fixed_views:
+        q=ep.joint_entropy_pooling(n,fixed_views,prior_probs=q).posterior_probs
     loss=np.maximum(0,1-paths[:,:,[i,j]].mean(2)).max(1)
     target=float(loss@q+c['stress_mean_path_loss_increment'])
     try:
-        qs=ep.joint_entropy_pooling(n,[ep.View(loss,[target],sense='ge')]+([re_view] if re_view is not None else []),prior_probs=q).posterior_probs
+        qs=ep.joint_entropy_pooling(n,[ep.View(loss,[target],sense='ge')]+fixed_views,prior_probs=q).posterior_probs
     except (ValueError,RuntimeError):
         raise ValueError('stress target unsupported by simulated paths; reduce stress or increase scenario support')
     return q,qs

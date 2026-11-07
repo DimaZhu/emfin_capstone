@@ -18,6 +18,8 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
         'Time-to-cash has not been calibrated. A liquid-market label does not guarantee same-day sale or settlement.',
         'Wasserstein risk bounds use a development radius and unrestricted-support L1 transport; utility is nominal. No probability coverage is guaranteed by the radius.',
         'Zero observed losses is not a bound on unseen tails.'])
+    from emfin_v2.market_views import evidence
+    result['market_views']=evidence(c,draw,q,qs)
     from emfin_v2.abu_dhabi import local_calibration
     observed=local_calibration() if c['real_estate'].get('source')=='abu_dhabi_private' else None
     from emfin_v2.real_estate import calibration,assumptions
