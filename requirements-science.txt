@@ -1,0 +1,4 @@
+# Optional experiment/report tools; not application runtime.
+-r requirements-dev.txt
+matplotlib>=3.10,<4
+pyarrow>=21,<24

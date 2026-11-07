@@ -1,0 +1,257 @@
+{
+  "engine": {
+    "horizon_weeks": 13,
+    "train_scenarios": 200,
+    "validation_scenarios": 400,
+    "evaluation_scenarios": 600,
+    "validation_seeds": 2,
+    "evaluation_seeds": 3,
+    "multiplier_grid": [
+      1.0,
+      0.25
+    ],
+    "cash_mix_grid": [
+      1.0,
+      0.5,
+      0.0
+    ],
+    "wealth": 100000000.0,
+    "liabilities": [
+      {
+        "name": "Study payout 1",
+        "week": 10,
+        "amount": 30000000.0
+      },
+      {
+        "name": "Study payout 2",
+        "week": 13,
+        "amount": 45000000.0
+      }
+    ]
+  },
+  "real_estate": {
+    "annual_drift": 0.04,
+    "annual_vol": 0.12,
+    "net_rental_yield": 0.03,
+    "smoothing_alpha": 0.0,
+    "sale_week": 0,
+    "sale_delay_weeks": 12,
+    "history_case": "central",
+    "minimum_weight": 0.1
+  },
+  "cases": [
+    {
+      "study": "RE annual_drift",
+      "value": -0.02,
+      "overrides": {
+        "real_estate.annual_drift": -0.02
+      }
+    },
+    {
+      "study": "RE annual_drift",
+      "value": 0.04,
+      "overrides": {
+        "real_estate.annual_drift": 0.04
+      }
+    },
+    {
+      "study": "RE annual_drift",
+      "value": 0.1,
+      "overrides": {
+        "real_estate.annual_drift": 0.1
+      }
+    },
+    {
+      "study": "RE annual_vol",
+      "value": 0.08,
+      "overrides": {
+        "real_estate.annual_vol": 0.08
+      }
+    },
+    {
+      "study": "RE annual_vol",
+      "value": 0.12,
+      "overrides": {
+        "real_estate.annual_vol": 0.12
+      }
+    },
+    {
+      "study": "RE annual_vol",
+      "value": 0.2,
+      "overrides": {
+        "real_estate.annual_vol": 0.2
+      }
+    },
+    {
+      "study": "RE equity_correlation",
+      "value": -0.2,
+      "overrides": {
+        "real_estate.equity_correlation": -0.2
+      }
+    },
+    {
+      "study": "RE equity_correlation",
+      "value": 0.3,
+      "overrides": {
+        "real_estate.equity_correlation": 0.3
+      }
+    },
+    {
+      "study": "RE equity_correlation",
+      "value": 0.7,
+      "overrides": {
+        "real_estate.equity_correlation": 0.7
+      }
+    },
+    {
+      "study": "RE net_rental_yield",
+      "value": 0.0,
+      "overrides": {
+        "real_estate.net_rental_yield": 0.0
+      }
+    },
+    {
+      "study": "RE net_rental_yield",
+      "value": 0.03,
+      "overrides": {
+        "real_estate.net_rental_yield": 0.03
+      }
+    },
+    {
+      "study": "RE net_rental_yield",
+      "value": 0.06,
+      "overrides": {
+        "real_estate.net_rental_yield": 0.06
+      }
+    },
+    {
+      "study": "RE liquidation_haircut",
+      "value": 0.0,
+      "overrides": {
+        "real_estate.liquidation_haircut": 0.0
+      }
+    },
+    {
+      "study": "RE liquidation_haircut",
+      "value": 0.1,
+      "overrides": {
+        "real_estate.liquidation_haircut": 0.1
+      }
+    },
+    {
+      "study": "RE liquidation_haircut",
+      "value": 0.2,
+      "overrides": {
+        "real_estate.liquidation_haircut": 0.2
+      }
+    },
+    {
+      "study": "RE settlement delay",
+      "value": 0,
+      "overrides": {
+        "real_estate.sale_week": 1,
+        "real_estate.sale_delay_weeks": 0
+      }
+    },
+    {
+      "study": "RE settlement delay",
+      "value": 4,
+      "overrides": {
+        "real_estate.sale_week": 1,
+        "real_estate.sale_delay_weeks": 4
+      }
+    },
+    {
+      "study": "RE settlement delay",
+      "value": 12,
+      "overrides": {
+        "real_estate.sale_week": 1,
+        "real_estate.sale_delay_weeks": 12
+      }
+    },
+    {
+      "study": "wasserstein_radius",
+      "value": 0.0,
+      "overrides": {
+        "wasserstein_radius": 0.0
+      }
+    },
+    {
+      "study": "wasserstein_radius",
+      "value": 2e-05,
+      "overrides": {
+        "wasserstein_radius": 2e-05
+      }
+    },
+    {
+      "study": "wasserstein_radius",
+      "value": 4e-05,
+      "overrides": {
+        "wasserstein_radius": 4e-05
+      }
+    },
+    {
+      "study": "funding_budget_fraction",
+      "value": 0.001,
+      "overrides": {
+        "funding_budget_fraction": 0.001
+      }
+    },
+    {
+      "study": "funding_budget_fraction",
+      "value": 0.002,
+      "overrides": {
+        "funding_budget_fraction": 0.002
+      }
+    },
+    {
+      "study": "funding_budget_fraction",
+      "value": 0.005,
+      "overrides": {
+        "funding_budget_fraction": 0.005
+      }
+    },
+    {
+      "study": "seed",
+      "value": 20261107,
+      "overrides": {
+        "seed": 20261107
+      }
+    },
+    {
+      "study": "seed",
+      "value": 20261108,
+      "overrides": {
+        "seed": 20261108
+      }
+    },
+    {
+      "study": "seed",
+      "value": 20261109,
+      "overrides": {
+        "seed": 20261109
+      }
+    },
+    {
+      "study": "train_scenarios",
+      "value": 100,
+      "overrides": {
+        "train_scenarios": 100
+      }
+    },
+    {
+      "study": "train_scenarios",
+      "value": 200,
+      "overrides": {
+        "train_scenarios": 200
+      }
+    },
+    {
+      "study": "train_scenarios",
+      "value": 400,
+      "overrides": {
+        "train_scenarios": 400
+      }
+    }
+  ]
+}
