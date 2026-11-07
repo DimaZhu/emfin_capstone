@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import numpy as np
 import pandas as pd
 import pytest
@@ -47,7 +48,7 @@ def test_fx_joint_covariance_is_a_factor_not_an_extra_holding(tmp_path):
     from emfin_v2.default_run import load_config
     from emfin_v2.registry_runtime import configure,fit,draw
     from emfin_v2.fx import COLUMN
-    c=load_config();c['real_estate'].update(source='synthetic',annual_drift=0.,annual_vol=0.,forward_mode='sample',equity_correlation=0.)
+    c=load_config(LEGACY_CONFIG);c['real_estate'].update(source='synthetic',annual_drift=0.,annual_vol=0.,forward_mode='sample',equity_correlation=0.)
     c=configure(c,load_registry());c.update(fx=dict(enabled=True,mean_policy='zero'),horizon_weeks=1,student_nu=None)
     s,_=load_reference();s=s.loc['2018-01-01':'2020-01-31'];m={}
     for j,a in enumerate(c['asset_registry']['assets']):

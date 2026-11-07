@@ -12,6 +12,9 @@ authors = [{name = "Tijs de Boer"}]
 license-files = ["NOTICE.md", "legacy/ATTRIBUTION.md"]
 dependencies = ["numpy==2.2.6", "pandas==2.3.3", "scipy==1.15.3", "cvxpy==1.7.5"]
 
+[project.optional-dependencies]
+market-data = ["yfinance==1.8.0"]
+
 [project.scripts]
 emfin-run = "emfin_v2.default_run:main"
 emfin-explore = "emfin_v2.explorer:main"
@@ -21,4 +24,4 @@ include = ["emfin_v2*", "emfin_capstone*"]
 exclude = ["legacy*", "tests*"]
 
 [tool.setuptools.package-data]
-emfin_v2 = ["resources/configs/*.json", "resources/data/snapshot/*", "resources/data/singapore/*", "resources/data/fx/*", "resources/data/raw/*.json", "resources/data/raw/fred/*/*.csv", "web/*.html"]
+emfin_v2 = ["resources/configs/*.json", "resources/data/snapshot/*", "resources/data/singapore/*", "resources/data/fx/*", "resources/data/actual_etfs/*", "resources/data/raw/*.json", "resources/data/raw/fred/*/*.csv", "web/*.html"]

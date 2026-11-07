@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import numpy as np
 import pytest
 from emfin_v2.real_estate import unsmooth,history_statistics,cash_and_mark,ScenarioDraw,funding_paths,validate
@@ -41,7 +42,7 @@ def test_settlement_after_horizon_keeps_receivable_not_cash():
 
 
 def test_generated_mark_vs_funding_and_dependence():
-    c=load_config();c['student_nu']=None;c['horizon_weeks']=13
+    c=load_config(LEGACY_CONFIG);c['student_nu']=None;c['horizon_weeks']=13
     c['real_estate'].update(enabled=True,source='synthetic',equity_correlation=.6,net_rental_yield=0.,sale_week=0)
     d=draw_paths(c,setup(c),5000,45)
     assert len(d)==5 and d[0].shape==funding_paths(d).shape
@@ -53,7 +54,7 @@ def test_generated_mark_vs_funding_and_dependence():
 
 
 def test_funding_metrics_do_not_count_unsold_property():
-    c=load_config();c['confidence']=.95
+    c=load_config(LEGACY_CONFIG);c['confidence']=.95
     paths=np.array([[[1.,1.]],[[1.,1.]]]);funding=paths.copy();funding[:,:,1]=0
     draw=ScenarioDraw((paths,np.array([[50.],[50.]]),np.array([1]),np.array([50.]),np.ones((2,1))),funding)
     gap,ce=metrics(c,draw,np.array([0.,100.]))
@@ -75,7 +76,7 @@ def test_optimizer_does_not_spend_marked_property():
 
 def test_forward_re_view_pins_mean_in_nominal_and_stress():
     from emfin_v2.default_run import probabilities
-    c=load_config();c['real_estate'].update(enabled=True,source='synthetic',annual_drift=.15,forward_log_drift=.02,forward_mode='view')
+    c=load_config(LEGACY_CONFIG);c['real_estate'].update(enabled=True,source='synthetic',annual_drift=.15,forward_log_drift=.02,forward_mode='view')
     draw=draw_paths(c,setup(c),400,52)
     q,qs=probabilities(c,draw[0],draw.re_price_logs)
     target=.02*c['horizon_weeks']/52

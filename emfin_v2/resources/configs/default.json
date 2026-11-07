@@ -1,5 +1,5 @@
 {
-  "label": "Illustrative one-year (52-week) implementation, not client-calibrated",
+  "label": "Private research: actual VTI/VWO/GLD/IEF histories, cash account, SGD property with USD FX. Not client-calibrated.",
   "seed": 20261107,
   "wealth": 100000000,
   "horizon_weeks": 52,
@@ -67,5 +67,8 @@
     "first_week": 4,
     "spacing_weeks": 4.333333333333333,
     "note": "Editable placeholder, not client evidence. Weekly approximation of monthly payments."
-  }
+  },
+  "asset_registry": "bundled",
+  "history_bundle": "actual_etfs",
+  "history_end": "2026-10-30"
 }

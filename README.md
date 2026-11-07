@@ -1,3 +1,10 @@
+> Private research fork. Default: VTI, VWO, GLD, IEF, an explicit0%-rate cash
+> account, and fixed initial10% Singapore property with SGD/USD risk.
+> Data calibrate simulated paths, not an actual-history backtest. Yahoo terms
+> risk accepted by owner for private use; no public redistribution approved.
+> `legacy.json` explicitly retains the former liquid universe. See
+> [asset/data notes](docs/ASSET_REGISTRY.md) and [FX model](docs/FX_MODEL.md).
+
 # EMFin V2
 
 > Active default:52-week horizon, editable$250k/month x12 placeholder, W1 on with a visible20% per-payment tail-gap budget. Interactive dashboard uses an explicitly coarse tier. Earlier13-week reference/grid/lookup artifacts are archived, not current one-year evidence. No new grid has been run. See docs/ONE_YEAR_MONTHLY.md (or ONE_YEAR_MONTHLY.md from docs).

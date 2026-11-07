@@ -1,0 +1,6 @@
+{
+  "us_equity": "us_equity-manifest.json",
+  "em_equity": "em_equity-manifest.json",
+  "gold": "gold-manifest.json",
+  "treasury": "treasury-manifest.json"
+}

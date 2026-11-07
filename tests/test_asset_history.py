@@ -1,3 +1,4 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import json,hashlib
 import numpy as np
 import pandas as pd
@@ -38,7 +39,7 @@ def test_registry_pipeline_add_remove_has_no_six_or_seven_asset_assumption(tmp_p
     base=load_registry();dummy=copy.deepcopy(base['assets'][0]);dummy.update(id='dummy',ticker='DUMMY',name='Dummy test equity');extended=copy.deepcopy(base);extended['assets'].insert(0,dummy)
     dates=pd.bdate_range('2018-01-01','2020-01-31')
     for k,document in enumerate((base,extended)):
-        c=configure(load_config(),document)
+        c=configure(load_config(LEGACY_CONFIG),document)
         c.update(train_scenarios=30,validation_scenarios=30,evaluation_scenarios=30,validation_seeds=2,evaluation_seeds=2,multiplier_grid=[1.],stress_mean_path_loss_increment=0.,history_manifests={a['id']:str(make_history(tmp_path,a,dates)) for a in document['assets'] if a['return_model']=='etf_total_return'})
         for j,(asset_id,manifest_file) in enumerate(c['history_manifests'].items()):
             m=json.loads(open(manifest_file).read());p=tmp_path/m['file'];data=pd.read_csv(p);data['total_return_index']=100*np.exp(np.cumsum(np.random.default_rng(j).normal(.0002,.002,len(data))));data.to_csv(p,index=False);m['sha256']=hashlib.sha256(p.read_bytes()).hexdigest();open(manifest_file,'w').write(json.dumps(m))

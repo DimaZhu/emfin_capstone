@@ -29,8 +29,9 @@ def fit(c):
     if not c.get('history_manifests'):raise ValueError('Actual VTI/VWO/GLD/Treasury total-return histories required. Configure private history_manifests; no proxy or old-sleeve substitution is permitted.')
     frame=weekly_returns(c['asset_registry'],c['history_manifests'],c.get('history_end'))
     manifests=[json.loads(Path(p).read_text()) for p in c['history_manifests'].values()]
+    private=any(m.get('private_only',False) for m in manifests)
     test=any('test' in (m['adjustment_method']+' '+m['use_terms']).lower() for m in manifests)
-    c['history_evidence']=dict(label='SYNTHETIC TEST FIXTURE ONLY. Not market data or an investment result.' if test else 'Actual instrument calibration histories; parametric scenario paths, not an actual-history backtest.',first_week=str(frame.index[0].date()),last_week=str(frame.index[-1].date()),weekly_returns=len(frame),sources=[dict(asset_id=m['asset_id'],source_url=m['source_url'],use_terms=m['use_terms'],sha256=m['sha256']) for m in manifests])
+    c['history_evidence']=dict(label='SYNTHETIC TEST FIXTURE ONLY. Not market data or an investment result.' if test else 'PRIVATE RESEARCH. Yahoo-adjusted ETF histories plus issuer Treasury NAV returns. Terms risk accepted; not cleared for public distribution. Parametric scenarios, not an actual-history backtest.' if private else 'Actual instrument calibration histories; parametric scenario paths, not an actual-history backtest.',first_week=str(frame.index[0].date()),last_week=str(frame.index[-1].date()),weekly_returns=len(frame),sources=[dict(asset_id=m['asset_id'],source_url=m['source_url'],use_terms=m['use_terms'],sha256=m['sha256']) for m in manifests])
     if len(frame)<52:raise ValueError('at least52 common weekly actual-instrument observations required')
     from emfin_v2.fx import weekly_factor,COLUMN
     if c['fx']['enabled']:

@@ -1,10 +1,11 @@
+from emfin_v2.default_run import LEGACY_CONFIG
 import numpy as np
 from unittest.mock import patch
 from emfin_v2.default_run import load_config,setup,draw_paths,probabilities,solve
 
 
 def test_minimum_holding_fallback_respects_re_and_pointwise_guards():
-    c=load_config();c['real_estate'].update(enabled=True,minimum_weight=.1,holding_mode='minimum')
+    c=load_config(LEGACY_CONFIG);c['real_estate'].update(enabled=True,minimum_weight=.1,holding_mode='minimum')
     d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
     with patch('emfin_v2.toolbox.liabilities.optimization_multiperiod',side_effect=RuntimeError('test solver failure')):
         a,status=solve(c,d,q,qs,1.)
@@ -18,7 +19,7 @@ def test_minimum_holding_fallback_respects_re_and_pointwise_guards():
 
 
 def test_fixed_holdings_fallback_is_an_equality_not_a_floor():
-    c=load_config();d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
+    c=load_config(LEGACY_CONFIG);d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
     with patch('emfin_v2.toolbox.liabilities.optimization_multiperiod',side_effect=RuntimeError('test solver failure')):
         a,status=solve(c,d,q,qs,1.)
     assert status['kind']=='verified pointwise fixed-holdings fallback'
