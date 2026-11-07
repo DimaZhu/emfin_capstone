@@ -21,6 +21,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     lower_buffer=wealth*c.get('wasserstein_radius',0.)/(1-c['confidence'])/len(assets)
     smallest=min(p['amount']*c['funding_budget_fraction'] for p in c['liabilities'])
     result['budget_warning']=f'Incompatible risk settings: W1 buffer is at least ${lower_buffer:,.0f}, above the smallest per-payment tail-gap budget ${smallest:,.0f}. No solver can fix this parameter conflict.' if lower_buffer>smallest+1e-8 else None
+    result['registry_mode']=bool(c.get('asset_registry'))
     result['history_evidence']=c.get('history_evidence')
     result['fx_evidence']=c.get('fx_evidence')
     result['scenario_tier']=c.get('scenario_tier','full')
