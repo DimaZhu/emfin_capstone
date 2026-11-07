@@ -87,6 +87,7 @@ def optimization_liability_aware(
     gamma_shortfall: float,
     long_only: bool = True,
     n_optimization_scenarios: int = 10_000,
+    scenario_probs: np.ndarray | None = None,
 ) -> tuple[np.ndarray, dict]:
     """Maximize CARA CE of net wealth (W - L) under loss + shortfall budgets.
 
@@ -102,6 +103,13 @@ def optimization_liability_aware(
     """
     solver_samples = market_samples[:n_optimization_scenarios]
     n_scenarios, n_assets = solver_samples.shape
+    if scenario_probs is None:
+        log_probs = np.full(n_scenarios, -np.log(n_scenarios))
+        probs = np.full(n_scenarios, 1.0 / n_scenarios)
+    else:
+        probs = np.asarray(scenario_probs, dtype=float).ravel()[:n_optimization_scenarios]
+        probs = probs / probs.sum()
+        log_probs = np.log(probs)
     gross_return = solver_samples / prices_vector.ravel()
 
     weights = cp.Variable(n_assets)
@@ -110,14 +118,14 @@ def optimization_liability_aware(
     rel_net = rel_wealth - rel_liability
     rel_risk_tolerance = risk_tolerance / wealth
 
-    ce_rel = -rel_risk_tolerance * (
-        cp.log_sum_exp(-rel_net / rel_risk_tolerance) - np.log(n_scenarios)
-    )
+    # weighted CE: -zeta * log sum_s q_s exp(-net_s / zeta); for uniform q
+    # this is exactly the unweighted form above
+    ce_rel = -rel_risk_tolerance * cp.log_sum_exp(-rel_net / rel_risk_tolerance + log_probs)
 
     # portfolio loss budget (as in the asset-only engine)
     rel_loss = 1 - rel_wealth
     t_loss = cp.Variable()
-    cvar_loss = t_loss + cp.sum(cp.pos(rel_loss - t_loss)) / ((1 - confidence_level) * n_scenarios)
+    cvar_loss = t_loss + cp.sum(cp.multiply(probs, cp.pos(rel_loss - t_loss))) / (1 - confidence_level)
 
     constraints = [cp.sum(weights) == 1, cvar_loss <= gamma_loss]
     if long_only:
@@ -129,11 +137,16 @@ def optimization_liability_aware(
     if liability_due > 0:
         gap = cp.pos(rel_liability - rel_wealth)
         t_gap = cp.Variable()
-        cvar_gap = t_gap + cp.sum(cp.pos(gap - t_gap)) / ((1 - confidence_level) * n_scenarios)
+        cvar_gap = t_gap + cp.sum(cp.multiply(probs, cp.pos(gap - t_gap))) / (1 - confidence_level)
         constraints.append(cvar_gap <= gamma_shortfall * rel_liability)
 
     problem = cp.Problem(cp.Maximize(ce_rel), constraints)
-    problem.solve(solver="CLARABEL")
+    try:
+        problem.solve(solver="CLARABEL")
+    except cp.SolverError:
+        # weighted CE + two CVaR epigraphs can strain CLARABEL; SCS is the
+        # slower but sturdier fallback for this cone shape
+        problem.solve(solver="SCS", eps_abs=1e-7, eps_rel=1e-7, max_iters=100_000)
     if weights.value is None:
         raise RuntimeError(f"liability-aware optimization failed: {problem.status}")
 
