@@ -22,10 +22,14 @@ import time as _time
 _T0 = _time.perf_counter()
 
 
+TIMINGS: dict[str, float] = {}
+
+
 def _tick(label: str) -> None:
     global _T0
     now = _time.perf_counter()
     print(f"[t+{now - _T0:7.2f}s] {label}", flush=True)
+    TIMINGS[label] = TIMINGS.get(label, 0.0) + (now - _T0)
     _T0 = now
 
 # Run from a fresh clone without installing the package:
@@ -559,6 +563,28 @@ def main() -> None:
                   f"shortfall prob {sf[i]:.1%}, gap CVaR ${sc[i]:,.0f} "
                   f"(budget ${GAMMA_SHORTFALL * base_amounts[i]:,.0f})")
     _tick("multi-period funding check")
+
+    # ---- Runtime vs accuracy: the benchmark table the paper needs --------
+    # Accuracy = out-of-sample judged metrics (paired seeds); runtime = the
+    # wall-clock seconds spent producing each allocation (calibration and
+    # path generation included, so the costs are fully loaded).
+    print("\n=== Runtime vs accuracy (OOS judged metrics vs wall-clock cost) ===")
+    stage_of = {
+        "vanilla MV": "optimize: vanilla MV",
+        "Black-Litterman": "optimize: Black-Litterman",
+        "EP (views)": "optimize: EP (views)",
+        "EP + liabilities": "optimize: EP + liabilities (tail-budget calibrated)",
+        "EP+liab (multi-per)": "optimize: EP + liabilities (multi-period, stochastic)",
+        "EP+liab (nominal)": "optimize: EP + liabilities (tail-budget calibrated)",
+    }
+    print(f"{'method':>22} {'solve(s)':>9} {'CE($)':>15} {'shortfall':>10} {'gapCVaR($)':>12}")
+    for idx, name in enumerate(result.names):
+        secs = TIMINGS.get(stage_of.get(name, ""), float("nan"))
+        ce = float(result.ce_by_seed[:, idx].mean())
+        sf = float(result.shortfall_prob_by_seed[:, idx].mean()) if result.shortfall_prob_by_seed is not None else float("nan")
+        sc = float(result.shortfall_cvar_by_seed[:, idx].mean()) if result.shortfall_cvar_by_seed is not None else float("nan")
+        print(f"{name:>22} {secs:>8.2f}s {ce:>15,.0f} {sf:>9.1%} {sc:>12,.0f}")
+    print("\npipeline stages (s): " + ", ".join(f"{k} {v:.2f}" for k, v in TIMINGS.items()))
 
 
 if __name__ == "__main__":
