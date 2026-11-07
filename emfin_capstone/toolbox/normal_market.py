@@ -125,7 +125,7 @@ def optimization_with_cvar_constrain(
     constraints = [
         cp.sum(weights) == 1,
         cvar_rel <= gamma,
-        # weights >= 0,
+        weights >= 0,
     ]
     prob = cp.Problem(objective, constraints)
     prob.solve(solver="CLARABEL")
