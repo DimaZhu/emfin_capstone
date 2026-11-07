@@ -1,0 +1,14 @@
+{
+  "selected": "garch_mix",
+  "criterion": "Mean equal-asset normalized CRPS, validation2014-2018 only",
+  "validation_scores": {
+    "ewma_mix": 0.5740175479664374,
+    "garch_mix": 0.5735871377068299,
+    "ewma_fhs": 0.574723167551605
+  },
+  "validation_sha256": "2c06c7388e728246ec8c4f39cb3bf91f565af093fdc78ccc664c8110d5de820c",
+  "protocol_sha256": "666891d31f4da409764c1c54b288ee250f316716c579c2e998231739eea55426",
+  "source_sha256": "0a0e6cdaa2420f04c7ce69cf7250e67cf478c180580e6a2b3c0eabc2f2f9c2f9",
+  "selection_time_utc": "2026-11-07T14:04:02.864807+00:00",
+  "final_scores_computed": false
+}

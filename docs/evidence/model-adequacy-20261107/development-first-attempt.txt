@@ -1,0 +1,4 @@
+Initial development batch2007-2013 aborted before any scores: ValueError,
+insufficient annual training or forecast rows. Common history starts2005-03-18,
+so2007 has94 past weekly returns, fewer than fixed104 minimum. Minimum not
+weakened; later development artifact records this unavailable year explicitly.

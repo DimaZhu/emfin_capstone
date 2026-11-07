@@ -1,0 +1,20 @@
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 65%]
+........................................................................ [ 86%]
+............................................                             [100%]
+=============================== warnings summary ===============================
+tests/test_asset_history.py::test_registry_pipeline_add_remove_has_no_six_or_seven_asset_assumption
+  /home/sandbox/.local/lib/python3.10/site-packages/cvxpy/problems/problem.py:1539: UserWarning: Solution may be inaccurate. Try another solver, adjusting the solver settings, or solve with verbose=True for more information.
+    warnings.warn(
+
+tests/test_entropy_pooling.py::test_dual_matches_brute_force_primal
+  /home/sandbox/repo/tests/test_entropy_pooling.py:76: RuntimeWarning: invalid value encountered in log
+    return q @ np.log(q * n)
+
+tests/test_model_adequacy.py::test_future_returns_cannot_change_earlier_forecasts
+  /usr/local/lib/python3.10/dist-packages/scipy/optimize/_slsqp_py.py:435: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+    fx = wrapped_fun(x)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+332 passed, 3 warnings in 15.21s

@@ -65,3 +65,15 @@ $3M schedule was not changed. The UI now exposes this separate execution audit.
 No budgets or numerical acceptance tolerances were loosened to get these tests
 to pass. CARA uses equivalent conic formulations and exact positive budget
 normalization for conditioning. The previous failures are part of the record.
+
+## Additional model-adequacy study,7 November2026
+
+A fixed retrospective one-week marginal forecast protocol compares iid mixture,
+EWMA mixture, GARCH-variance mixture and empirical EWMA-FHS. Validation2014-2018
+selected GARCH before final2019-2025 scoring. Its normalized CRPS is1.82% lower
+than iid in that final slice, with lower residual volatility clustering. This
+is not an annual portfolio result or independent blind preregistration. Crisis
+tail exceptions remain imperfect; unbounded Gaussian conditional-variance
+recursion has a serious multistep price-moment problem. No default was changed.
+See MODEL_ADEQUACY_PROTOCOL.md, MODEL_ADEQUACY_RESULTS.md and
+CONDITIONAL_PRICE_MOMENTS.md. New independent test total:332pass.

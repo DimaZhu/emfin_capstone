@@ -61,6 +61,8 @@ Read [model details](docs/ENGINE_V2.md), [client input format](docs/CLIENT_INPUT
 and [paper scope](docs/PAPER_STRUCTURE.md). The [book-based review](docs/BOOK_AUDIT.md) records errors fixed and unresolved model-adequacy gaps against Meucci (2005). Optional research catalogue:
 `python -m emfin_v2 --research --help`. Its original payout example is infeasible under corrected accounting and reports unavailable; the unvalidated stochastic-liability option is disabled at the final boundary.
 
+A separate [fixed-protocol conditional-volatility comparison](docs/MODEL_ADEQUACY_RESULTS.md) tests one-week forecast adequacy, not annual funding performance. No model promotion is implied.
+
 ## Package and test it
 
 ```bash
@@ -131,3 +133,5 @@ due obligation. See [assumptions, equations and limits](docs/REAL_ESTATE.md).
 - [Final config boundary](docs/CONFIG_BOUNDARY.md): validate after all edits; unsafe stochastic calls are disabled.
 - [W1 metric](docs/W1_METRIC.md): duplicate-sleeve/time-grid invariant, but the radius remains uncalibrated.
 - `python -m experiments.robustness --help`: bounded private research studies from a clone, not an installed runtime requirement. Annual episodes use latest data vintages and an assumed property publication lag; they are not revision-safe point-in-time backtests.
+
+See the [conditional-volatility forecast study](docs/MODEL_ADEQUACY_RESULTS.md) for the fixed retrospective one-week comparison and multistep price-moment blocker. No production model was promoted.
