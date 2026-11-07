@@ -8,7 +8,7 @@ number here is reproducible byte-for-byte: `python scripts/run_v2_engine.py`.
 
 ```
 pinned snapshot (CSV, manifest, scripts/pin_data_snapshot.py)
-  -> weekly invariants (toolbox/snapshot.py: equity log returns, 10Y yield changes, IG OAS changes, cash accrual)
+  -> weekly invariants (toolbox/snapshot.py: equity log returns, 10Y yield changes, IG OAS changes, money-market carry + rate risk)
   -> joint moments -> horizon projection (square-root rule)
   -> Gaussian invariant scenarios (seeded)
   -> market map (equities lognormal; bond exact repricing with roll-down - toolbox/bonds.py)
@@ -96,9 +96,14 @@ change only scenario probabilities and scenario values, upstream.
   shortfall-type constraints - or via stochastic amounts / multi-period
   funding (both future work). The funding-gap constraint uses the one-sided
   gap max(0, L - W); a surplus never offsets a shortfall.
-- **Cash sleeve is required**: without a riskless asset, a near-total payout
-  is infeasible (10Y duration risk). Cash is a T-bill proxy accruing at the
-  lagged 10Y yield.
+- **Money-market sleeve (`MMKT`)**: a rolling 3-month T-bill position on the
+  FRED DGS3MO short rate (open data, manifest entry).  Weekly carry
+  (rate/52) minus 0.25y duration times the weekly rate change - small but
+  real rate risk, correctly correlated with the yield invariant; same-day
+  liquidity (zero cost in the overlay).  Replaces the old proxy that accrued
+  at the lagged 10Y yield: money-market carry is a short rate, not a 10Y
+  rate.  A near-riskless sleeve is required: without it a near-total payout
+  is infeasible (10Y duration risk on the government sleeve).
 - **SAA tail noise - fixed by calibration**: a CVaR-of-gap constraint that
   binds in-solver on 10k scenarios realizes looser out-of-sample (~2x in
   this engine), so the nominal budget cannot be trusted directly.  The

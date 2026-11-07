@@ -46,6 +46,7 @@ from emfin_capstone.toolbox import (
     entropy_pooling as ep,
     ffr,
     liabilities as liab,
+    moneymarket,
     meucci_liquidity as mliq,
     snapshot,
 )
@@ -126,15 +127,25 @@ def main() -> None:
     oas_wed = oas[oas.index.weekday == 2]
     joint = joint.join((oas_wed.diff() / 100.0).rename("DSPREAD"), how="inner").dropna()
 
-    # Cash (T-bill proxy): weekly accrual at the lagged 10Y yield.  Real
-    # liability-aware allocation needs a riskless sleeve; without it a
-    # near-total payout is simply infeasible (duration risk on the bond).
-    joint["CASH"] = (joint[snapshot.YIELD_TICKER].shift(1).bfill()) / 52.0
+    # Money-market sleeve (MMKT): a rolling 3-month T-bill position on the
+    # FRED DGS3MO short rate (open data, see data/raw/manifest.json) -
+    # weekly carry (rate/52) minus duration times the weekly rate change.
+    # Same-day liquidity: zero transaction cost in the Meucci overlay.
+    # Real liability-aware allocation needs a near-riskless sleeve; without
+    # it a near-total payout is simply infeasible (duration risk on the
+    # bond).  This replaces the old proxy that accrued at the lagged 10Y
+    # yield - money-market carry is a short rate, not a 10Y rate.
+    mm_path = _Path(__file__).resolve().parents[1] / "data" / "raw" / "fred" / "2026-11-07" / "dgs3mo_3m_treasury.csv"
+    mm_rate = pd.read_csv(mm_path, index_col=0, parse_dates=True).iloc[:, 0].astype(float)
+    mm_wed = (mm_rate[mm_rate.index.weekday == 2] / 100.0).rename("MMRATE")
+    joint = joint.join(mm_wed, how="inner")
+    joint["MMKT"] = moneymarket.money_market_weekly_returns(joint["MMRATE"])
+    joint = joint.dropna()
     print(f"snapshot: {snap.manifest['rows']} daily rows through {snap.manifest['end']}; "
           f"{len(joint)} aligned weekly observations (common window incl. OAS)")
 
     _tick("snapshot + weekly invariants")
-    invariants = joint.to_numpy()  # DFUS, DFAI, DFAE, dYield, dSpread, cash log return
+    invariants = joint[["DFUS", "DFAI", "DFAE", snapshot.YIELD_TICKER, "DSPREAD", "MMKT"]].to_numpy()
 
     # ---- FFR prior over the historical observations ---------------------
     # State variable: trailing 13-week realized weekly vol of DFUS (the
@@ -166,7 +177,7 @@ def main() -> None:
     uniform_cov = np.cov(invariants, rowvar=False, ddof=1)
 
     drift = inv_mean - uniform_mean
-    print("FFR vs uniform weekly mean drift (DFUS, DFAI, DFAE, dY, cash):",
+    print("FFR vs uniform weekly mean drift (DFUS, DFAI, DFAE, dY, dSpread, MMKT):",
           np.array2string(drift, precision=5))
     _tick("FFR prior + weighted moments")
     # Projection: i.i.d. weekly invariants -> tau-week horizon (square-root rule)
@@ -199,17 +210,22 @@ def main() -> None:
         bond_prices = bonds.bond_price_scenarios(bond, current_ytm + inv[:, 3], HORIZON_WEEKS)
         ig_prices = bonds.credit_price_scenarios(
             ig_bond, current_ytm + inv[:, 3], current_spread + inv[:, 4], HORIZON_WEEKS)
-        cash = 1.0 * np.exp(inv[:, 5])  # T-bill: $1 accrues
-        return np.column_stack([eq, bond_prices, ig_prices, cash])
+        # Money market: $1 accrues carry and takes duration * horizon rate
+        # change (both inside the MMKT invariant); exp keeps it a gross return
+        mmkt = 1.0 * np.exp(inv[:, 5])
+        return np.column_stack([eq, bond_prices, ig_prices, mmkt])
 
     _tick("scenario generation (cholesky + draws)")
     market = market_from_invariants(inv_scen)
     prices_vector = np.concatenate([prices_eq, [bond_p0, ig_p0, 1.0]])
-    names = EQUITY_TICKERS + [bond.name, ig_bond.name, "CASH"]
+    names = EQUITY_TICKERS + [bond.name, ig_bond.name, "MMKT"]
     print(f"universe: {names}; current prices {np.round(prices_vector, 2)}")
     print(f"10Y yield: {current_ytm:.3%}; weekly dYield mean {joint[snapshot.YIELD_TICKER].mean()*1e4:.2f}bp, "
           f"std {joint[snapshot.YIELD_TICKER].std()*1e4:.1f}bp")
     print(f"IG OAS spread: {current_spread:.2%}; weekly dSpread std {joint['DSPREAD'].std()*1e4:.1f}bp")
+    print(f"3M money-market rate: {joint['MMRATE'].iloc[-1]:.3%}; MMKT weekly return std "
+          f"{joint['MMKT'].std()*1e4:.2f}bp (carry {joint['MMRATE'].iloc[-1]/52*1e4:.1f}bp/wk, "
+          f"rate risk std {0.25*joint['MMRATE'].diff().std()*1e4:.2f}bp/wk)")
 
     _tick("market map (equities + bond repricing)")
     # ---- Views via entropy pooling (on the invariant scenarios) ----------
@@ -245,7 +261,7 @@ def main() -> None:
         mliq.MeucciLiquidityParams(alpha=0.002, beta=0.2, delta=5e-7, ann_vol=0.25, adv=5e6),   # DFAE
         mliq.MeucciLiquidityParams(alpha=0.0005, beta=0.05, delta=1e-7, ann_vol=0.08, adv=5e7),  # UST10
         mliq.MeucciLiquidityParams(alpha=0.001, beta=0.1, delta=2e-7, ann_vol=0.10, adv=2e7),   # USIG (credit: wider spreads, less liquid)
-        mliq.MeucciLiquidityParams(alpha=0.0, beta=0.0, delta=0.0, ann_vol=0.001, adv=1e12),    # CASH
+        mliq.MeucciLiquidityParams(alpha=0.0, beta=0.0, delta=0.0, ann_vol=0.001, adv=1e12),    # MMKT: same-day cash, zero cost
     ]
     ref_weights = np.array([0.36, 0.20, 0.08, 0.12, 0.12, 0.12])  # documented placeholder, sums to 1
     ref_amounts = WEALTH * ref_weights / prices_vector  # units per asset, full liquidation
@@ -258,7 +274,8 @@ def main() -> None:
     mu_l, sig_l = mliq.adjustment_moments(
         np.tile(ref_amounts, (N_SCENARIOS, 1)), market.mean(axis=0), meucci_params,
         market_corr, gamma=0.9, state_multiplier=state_mult)
-    print(f"Meucci liquidity overlay: mean cost {mu_l.mean()/WEALTH:.2%} of wealth, "
+    # mu_l is the signed adjustment (negative = cost); report cost as positive
+    print(f"Meucci liquidity overlay: mean cost {-mu_l.mean()/WEALTH:.2%} of wealth, "
           f"cost std {sig_l.mean()/WEALTH:.2%} (placeholder calibration, state-dependent)")
 
     liability_due = LIABILITIES.amount_due_by(HORIZON_WEEKS)
