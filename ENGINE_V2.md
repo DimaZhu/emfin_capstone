@@ -42,6 +42,15 @@ change only scenario probabilities and scenario values, upstream.
   dependency - copyleft; used only as a one-off local check. Their
   sequential-EP heuristics are proprietary and not in either open-source
   package - ours is our own implementation).
+- **Estimation-error control (shrinkage)**: moments are shrunk before
+  anything consumes them.  Covariance: Ledoit-Wolf toward the scaled
+  identity, intensity estimated with the Kish effective sample in place of
+  T (~8% on the pinned window).  Mean: Bayes-Stein toward structural
+  targets - equity returns toward their grand mean, rate and spread
+  changes toward zero, money market unshrunk (carry is structural) - with
+  prior strength `SHRINK_T0 = 156` weeks (placeholder, communicable).
+  Every method including the vanilla MV benchmark optimizes the same
+  shrunk moments, so the benchmark is fair (the review's point 5).
 - **FFR prior (Fully Flexible Resampling)**: the moment estimates behind the
   scenario set are computed under flexible probabilities over the historical
   weeks - exponential time decay (half-life scaled to ~half the estimation
@@ -165,4 +174,4 @@ change only scenario probabilities and scenario values, upstream.
 
 ## Tests
 
-`python -m pytest tests/` - 101 tests covering every module.
+`python -m pytest tests/` - 105 tests covering every module.
