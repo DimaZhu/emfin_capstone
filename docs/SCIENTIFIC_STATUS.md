@@ -77,3 +77,14 @@ tail exceptions remain imperfect; unbounded Gaussian conditional-variance
 recursion has a serious multistep price-moment problem. No default was changed.
 See MODEL_ADEQUACY_PROTOCOL.md, MODEL_ADEQUACY_RESULTS.md and
 CONDITIONAL_PRICE_MOMENTS.md. New independent test total:332pass.
+
+## Research-only bounded conditional annual model
+
+A declared capped-EWMA Gaussian-mixture model preserves finite-horizon price
+moments by a uniform conditional-MGF bound. Default/risk limits unchanged.
+One-week improvement does not carry into clear annual superiority:19annual
+histories show mixed multihorizon scores and slightly lower raw mean ledger
+returns for the bounded model. The coarse2-batch all-risk judge accepted no
+historical blend, including the cash/property anchor; these remain failures,
+not certified investments. A current4-batch cross-law study validates frozen
+cash blends, not raw bounded CARA. BOUNDED_VOLATILITY.md gives scope and limits.

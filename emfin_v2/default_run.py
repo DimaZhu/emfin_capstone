@@ -97,7 +97,7 @@ def validate_config(config):
     if c.get('asset_registry'):
         from emfin_v2.registry_runtime import configure
         c=configure(c,c['asset_registry']);allowed=c['asset_layout']['view_indices']
-    if c['scenario_model']=='fhs_ewma' and not c.get('asset_registry'):raise ValueError('EWMA FHS requires the actual-instrument registry adapter, not legacy yield repricing')
+    if c['scenario_model'] in ('fhs_ewma','bounded_ewma_mixture') and not c.get('asset_registry'):raise ValueError('Conditional volatility requires the actual-instrument registry adapter, not legacy yield repricing')
     validate_views(c.get('market_return_views',{}),allowed)
     if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)
@@ -416,7 +416,7 @@ def run(c,output='artifacts/default'):
                  'Archive split independence is the input provider responsibility; generated mode uses disjoint calibration/evaluation seeds. Final failures are never recalibrated away.',
                  'Stressed posterior and nominal share funding/CML thresholds, covering their finite convex hull only.',
                  'Liabilities, views and innovation-law parameters are illustrative/development-selected, not client evidence. Scenario law: '+c['scenario_model'],
-                 'Weekly log shocks aggregate by summation. The finite Gaussian variance mixture has finite exponential moments; it is not a Student-t law, fitted regime process or FHS. Legacy t remains explicitly labelled and cannot support population price means/variances.',
+                 'Weekly log shocks aggregate by summation. Read innovation_evidence for the selected iid, conditional or legacy model domain. Legacy t cannot support population price means/variances; iid exact formulas do not apply to recursive conditional variance.',
                  'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
                  '1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings.'])

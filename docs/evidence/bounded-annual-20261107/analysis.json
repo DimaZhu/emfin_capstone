@@ -1,0 +1,998 @@
+{
+  "horizon": [
+    {
+      "weeks": 4,
+      "model": "bounded_ewma_mixture",
+      "crps": 0.8211923408109372
+    },
+    {
+      "weeks": 4,
+      "model": "gaussian_scale_mixture",
+      "crps": 0.8236901083424499
+    },
+    {
+      "weeks": 13,
+      "model": "bounded_ewma_mixture",
+      "crps": 0.7261419683759746
+    },
+    {
+      "weeks": 13,
+      "model": "gaussian_scale_mixture",
+      "crps": 0.7282929466521221
+    },
+    {
+      "weeks": 26,
+      "model": "bounded_ewma_mixture",
+      "crps": 0.7022458637994345
+    },
+    {
+      "weeks": 26,
+      "model": "gaussian_scale_mixture",
+      "crps": 0.6991290598875973
+    },
+    {
+      "weeks": 52,
+      "model": "bounded_ewma_mixture",
+      "crps": 0.7895866035716577
+    },
+    {
+      "weeks": 52,
+      "model": "gaussian_scale_mixture",
+      "crps": 0.7911311742306093
+    }
+  ],
+  "annual": [
+    {
+      "method": "bounded_ewma_mixture:cara:raw",
+      "n": 19,
+      "return_mean": 0.012469569247559568,
+      "return_min": -0.16212933351903913,
+      "funded": 19
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:raw",
+      "n": 19,
+      "return_mean": 0.012440354007228824,
+      "return_min": -0.16212933095250737,
+      "funded": 19
+    },
+    {
+      "method": "cash_fixed_property:raw",
+      "n": 19,
+      "return_mean": -0.02380635310664085,
+      "return_min": -0.03977509075713037,
+      "funded": 19
+    },
+    {
+      "method": "cash_reserve:raw",
+      "n": 19,
+      "return_mean": 0.039947311701711355,
+      "return_min": -0.14984352359360698,
+      "funded": 19
+    },
+    {
+      "method": "equal_weight:raw",
+      "n": 19,
+      "return_mean": 0.039947311701711355,
+      "return_min": -0.14984352359360698,
+      "funded": 19
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:raw",
+      "n": 19,
+      "return_mean": 0.013500608938914577,
+      "return_min": -0.11843271102840225,
+      "funded": 19
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:raw",
+      "n": 19,
+      "return_mean": 0.013773677903326433,
+      "return_min": -0.12017668763988043,
+      "funded": 19
+    },
+    {
+      "method": "raw_mean_variance:raw",
+      "n": 19,
+      "return_mean": 0.032161238819667905,
+      "return_min": -0.157126140745125,
+      "funded": 19
+    }
+  ],
+  "statuses": [
+    {
+      "origin": "2006-12-29",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2006-12-29",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2006-12-29",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2006-12-29",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2007-12-28",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2007-12-28",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2007-12-28",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2007-12-28",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2008-12-26",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2008-12-26",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2008-12-26",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2008-12-26",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2009-12-25",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.000449"
+    },
+    {
+      "origin": "2009-12-25",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2009-12-25",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.0726"
+    },
+    {
+      "origin": "2009-12-25",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2010-12-31",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2010-12-31",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2010-12-31",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2010-12-31",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2011-12-30",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2011-12-30",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2011-12-30",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 3.33e-05"
+    },
+    {
+      "origin": "2011-12-30",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2012-12-28",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 2.39e-05"
+    },
+    {
+      "origin": "2012-12-28",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2012-12-28",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 1.43e-05"
+    },
+    {
+      "origin": "2012-12-28",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2013-12-27",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2013-12-27",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2013-12-27",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal_inaccurate",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.000966"
+    },
+    {
+      "origin": "2013-12-27",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2014-12-26",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2014-12-26",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2014-12-26",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.00461"
+    },
+    {
+      "origin": "2014-12-26",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2015-12-25",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2015-12-25",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2015-12-25",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal_inaccurate",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.00417"
+    },
+    {
+      "origin": "2015-12-25",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2016-12-30",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2016-12-30",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2016-12-30",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2016-12-30",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2017-12-29",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2017-12-29",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2017-12-29",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2017-12-29",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2018-12-28",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2018-12-28",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2018-12-28",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2018-12-28",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2019-12-27",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2019-12-27",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2019-12-27",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.193"
+    },
+    {
+      "origin": "2019-12-27",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2020-12-25",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2020-12-25",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2020-12-25",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal_inaccurate",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.000423"
+    },
+    {
+      "origin": "2020-12-25",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2021-12-31",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 3.71e-05"
+    },
+    {
+      "origin": "2021-12-31",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2021-12-31",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2021-12-31",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2022-12-30",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2022-12-30",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2022-12-30",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2022-12-30",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2023-12-29",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2023-12-29",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2023-12-29",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2023-12-29",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2024-12-27",
+      "method": "gaussian_scale_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2024-12-27",
+      "method": "gaussian_scale_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2024-12-27",
+      "method": "bounded_ewma_mixture:cara",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    },
+    {
+      "origin": "2024-12-27",
+      "method": "bounded_ewma_mixture:mv_matched",
+      "kind": "optimized",
+      "status": "optimal",
+      "error": null,
+      "first_formulation_failure": null
+    }
+  ],
+  "paired_annual": [
+    {
+      "objective": "cara",
+      "variant": "raw",
+      "n": 19,
+      "mean": -0.001031039691355008,
+      "minimum": -0.05287768334856913,
+      "maximum": 0.04958750807479839,
+      "omitted_origins": []
+    },
+    {
+      "objective": "cara",
+      "variant": "cross_validated",
+      "n": 0,
+      "mean": null,
+      "minimum": null,
+      "maximum": null,
+      "omitted_origins": [
+        "2006-12-29",
+        "2007-12-28",
+        "2008-12-26",
+        "2009-12-25",
+        "2010-12-31",
+        "2011-12-30",
+        "2012-12-28",
+        "2013-12-27",
+        "2014-12-26",
+        "2015-12-25",
+        "2016-12-30",
+        "2017-12-29",
+        "2018-12-28",
+        "2019-12-27",
+        "2020-12-25",
+        "2021-12-31",
+        "2022-12-30",
+        "2023-12-29",
+        "2024-12-27"
+      ]
+    },
+    {
+      "objective": "mv_matched",
+      "variant": "raw",
+      "n": 19,
+      "mean": -0.0013333238960976086,
+      "minimum": -0.04857948339596552,
+      "maximum": 0.04595546570940434,
+      "omitted_origins": []
+    },
+    {
+      "objective": "mv_matched",
+      "variant": "cross_validated",
+      "n": 0,
+      "mean": null,
+      "minimum": null,
+      "maximum": null,
+      "omitted_origins": [
+        "2006-12-29",
+        "2007-12-28",
+        "2008-12-26",
+        "2009-12-25",
+        "2010-12-31",
+        "2011-12-30",
+        "2012-12-28",
+        "2013-12-27",
+        "2014-12-26",
+        "2015-12-25",
+        "2016-12-30",
+        "2017-12-29",
+        "2018-12-28",
+        "2019-12-27",
+        "2020-12-25",
+        "2021-12-31",
+        "2022-12-30",
+        "2023-12-29",
+        "2024-12-27"
+      ]
+    }
+  ],
+  "allrisk": [
+    {
+      "method": "bounded_ewma_mixture:cara:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "bounded_ewma_mixture:cara:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "bounded_ewma_mixture:mv_matched:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "cash_fixed_property:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "cash_fixed_property:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "cash_reserve:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "cash_reserve:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "equal_weight:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "equal_weight:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "gaussian_scale_mixture:cara:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "gaussian_scale_mixture:mv_matched:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "raw_mean_variance:raw",
+      "judge": "bounded_ewma_mixture",
+      "n": 19,
+      "passed": 0
+    },
+    {
+      "method": "raw_mean_variance:raw",
+      "judge": "gaussian_scale_mixture",
+      "n": 19,
+      "passed": 0
+    }
+  ],
+  "weekly_aggregate": [
+    {
+      "stage": "development",
+      "method": "bounded16",
+      "crps": 1.1988292361610167,
+      "qlike": 2.6300365678429927,
+      "exception1": 13,
+      "exception5": 29,
+      "n": 260
+    },
+    {
+      "stage": "development",
+      "method": "bounded4",
+      "crps": 1.215069804263265,
+      "qlike": 2.7517614594953317,
+      "exception1": 14,
+      "exception5": 33,
+      "n": 260
+    },
+    {
+      "stage": "development",
+      "method": "bounded9",
+      "crps": 1.2024355830718827,
+      "qlike": 2.6382116355021226,
+      "exception1": 13,
+      "exception5": 31,
+      "n": 260
+    },
+    {
+      "stage": "development",
+      "method": "iid",
+      "crps": 1.2843453071260003,
+      "qlike": 4.9919946898312135,
+      "exception1": 31,
+      "exception5": 56,
+      "n": 260
+    },
+    {
+      "stage": "final",
+      "method": "bounded16",
+      "crps": 0.6659197520892419,
+      "qlike": 1.2965865502954417,
+      "exception1": 33,
+      "exception5": 109,
+      "n": 1825
+    },
+    {
+      "stage": "final",
+      "method": "bounded4",
+      "crps": 0.6651870006683775,
+      "qlike": 1.2931387384403512,
+      "exception1": 33,
+      "exception5": 109,
+      "n": 1825
+    },
+    {
+      "stage": "final",
+      "method": "bounded9",
+      "crps": 0.6659197520892419,
+      "qlike": 1.2965865502954417,
+      "exception1": 33,
+      "exception5": 109,
+      "n": 1825
+    },
+    {
+      "stage": "final",
+      "method": "iid",
+      "crps": 0.6756070669033467,
+      "qlike": 1.3871680900067695,
+      "exception1": 18,
+      "exception5": 71,
+      "n": 1825
+    },
+    {
+      "stage": "validation",
+      "method": "bounded16",
+      "crps": 0.574258091132932,
+      "qlike": 0.9918776977494179,
+      "exception1": 26,
+      "exception5": 91,
+      "n": 1305
+    },
+    {
+      "stage": "validation",
+      "method": "bounded4",
+      "crps": 0.5742580912384077,
+      "qlike": 0.9918776995726484,
+      "exception1": 26,
+      "exception5": 91,
+      "n": 1305
+    },
+    {
+      "stage": "validation",
+      "method": "bounded9",
+      "crps": 0.574258091132932,
+      "qlike": 0.9918776977494179,
+      "exception1": 26,
+      "exception5": 91,
+      "n": 1305
+    },
+    {
+      "stage": "validation",
+      "method": "iid",
+      "crps": 0.5926104521808899,
+      "qlike": 1.1958336764804987,
+      "exception1": 4,
+      "exception5": 42,
+      "n": 1305
+    }
+  ]
+}

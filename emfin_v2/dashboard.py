@@ -10,7 +10,7 @@ def summarize(c,draw,q,qs,evaluation,allocations,rows,status,assets):
     result=dict(wealth=wealth,horizon_weeks=h,payouts=c['liabilities'],selected=selected,satellite_indices=c.get('asset_layout',{}).get('property_indices',[6] if len(assets)==7 and c['real_estate']['enabled'] else []),
         status={k:status[k] for k in ('kind','risky_fraction','optimality_claim','reason') if k in status},confidence=c['confidence'],loss_budget=c['loss_budget'],cml_budget=c['cml_budget'],
         cash_index=c['cash_index'],wasserstein_radius=c.get('wasserstein_radius',0.),wasserstein_liability_scale=c.get('wasserstein_liability_scale',.01),risk_tolerance=c['risk_tolerance'],profile=c.get('risk_profile','Balanced'),
-        innovation_evidence=describe(c),price_moments_finite=bool(c.get('asset_registry')) and c.get('scenario_model') in ('gaussian','gaussian_scale_mixture','fhs_ewma'),liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
+        innovation_evidence=describe(c),price_moments_finite=bool(c.get('asset_registry')) and c.get('scenario_model') in ('gaussian','gaussian_scale_mixture','fhs_ewma','bounded_ewma_mixture'),liability_vol=c['liability_vol'],haircuts=c['liquidity_haircuts'],
         qualifications=['Illustrative, not client-calibrated. All dollar amounts are USD.',
         'Displayed return and volatility describe finite simulated paths, not economic forecasts. Explicit legacy log-Student-t modes do not have finite population price moments. The new Gaussian-mixture default does. Certainty equivalent is risk-adjusted net wealth, not expected profit.',
         'CML is a tail average of loss from initial capital before payouts, not peak-to-trough maximum drawdown. Observed maximum loss is not a guaranteed limit.',

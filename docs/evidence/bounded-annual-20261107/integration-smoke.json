@@ -1,0 +1,12 @@
+{
+  "local_seconds": 2.0911482579999756,
+  "installed_wheel_seconds": 2.10539416000006,
+  "installed_path": "/tmp/bounded-installed/emfin_v2/__init__.py",
+  "default_model_unchanged": true,
+  "selected_model": "bounded_ewma_mixture",
+  "dashboard_finite_domain": true,
+  "browser_page_errors": [],
+  "overflow_desktop": false,
+  "overflow_320": false,
+  "scope": "CLI integration smoke100/200/400x2, not4batch scientific confirmation. Screenshot allocations/results belong to that smoke, not confirm.json."
+}

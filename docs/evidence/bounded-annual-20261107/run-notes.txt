@@ -1,0 +1,19 @@
+Protocol f1680fe committed before new model/study code; amended with multihorizon
+score design and cost plan before any outputs at f2457a9. Fullsuite340passed.
+Pilot snapshot1.995s, weekly2.178s. Post-pilot audit added saved selection locks
+and data evidence before confirm/historical, commitb687d23. No model,cap,mean,
+score,selection or risk-setting changes. Original pilot/weekly outputs retained.
+Confirmatory200/400/800x4 measured8.737s, numerical-inaccuracy warning saved.
+Historical first-origin pilot2006-12-29 measured1.428s, no errors.
+Estimate19origins*1.43s=27.2s, allow60s with hard120s process timeout; no grid,
+no extra origins/cap reselection or funding-rule tuning. Full19run begins now.
+All19historical origins completed44.47s, no omitted/failed origins. However,
+none of their cross-law validation blends or final all-risk checks accepted
+at the declared2batch tier, including the90%cash/10%property anchor. The
+Bonferroni Student-t df1 bounds are extremely wide; no acceptance is claimed.
+These results are preserved, not rerun with looser limits/more batches to pass.
+All raw methods paid the small3M annual schedule in19observed histories;
+this is weak evidence and does not override final budget failures.
+After scientific outputs, dashboard finite-domain flag was extended to include
+this explicit research model; general caveat field-name corrected. No forecast,
+portfolio, selection or score output changed. Integration-only test added.

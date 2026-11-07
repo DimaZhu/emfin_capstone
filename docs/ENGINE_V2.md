@@ -116,3 +116,11 @@ The book PDF itself and third-party book pages are not committed or distributed.
 Private use only; no GPL dependency, public hosting, client data or upstream
 writes. The inherited archive, attribution and history remain. A new identity
 or private fork does not settle inherited code/data redistribution rights.
+
+## Research-only annual conditional-volatility extension
+
+`bounded_ewma_mixture` is an explicit selectable capped-variance model, not the
+default or a new automatic UI choice. See BOUNDED_VOLATILITY.md for its domain,
+fixed cap assumptions, cross-law funding checks and honest failures. Finite
+moments are proved; economic calibration and superiority are not. Original
+historical reports remain unchanged. The user has not approved promotion.
