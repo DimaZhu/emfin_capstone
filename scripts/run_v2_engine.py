@@ -37,6 +37,7 @@ from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 
 import numpy as np
+import pandas as pd
 
 from emfin_capstone.toolbox import (
     benchmark,
@@ -84,14 +85,18 @@ LIABILITIES = liab.LiabilitySchedule(items=(
     liab.Liability("property purchase", 60_000_000, week=13),
 ))
 
-# FFR prior (Fully Flexible Resampling): exponential time decay with a
-# 3-year half-life plus Gaussian-kernel conditioning on the trailing
-# 13-week realized vol of DFUS - the prior counts recent, similar-vol-regime
-# weeks more.  Bandwidth = half the state series' std (documented choice;
-# the paper should show the allocation's sensitivity to both knobs).
-FFR_HALF_LIFE_WEEKS = 156
+# FFR prior (Fully Flexible Resampling): exponential time decay plus
+# Gaussian-kernel conditioning on the trailing 13-week realized vol of
+# DFUS - the prior counts recent, similar-vol-regime weeks more.
+# Half-life scales with the estimation window (half of it): on the
+# OAS-shortened 151-week window a fixed 3-year half-life burns the Kish
+# effective sample to ~30 weeks, too thin for a 6x6 covariance.  Bandwidth
+# = half the state series' std (documented choice; the paper should show
+# the allocation's sensitivity to both knobs).
+FFR_HALF_LIFE_WEEKS = 78  # ~half the OAS-common window; was 156 on the full 276-week window
 FFR_STATE_WINDOW = 13
 FFR_BANDWIDTH_SCALE = 0.5
+FFR_MIN_ESS = 60  # robustness floor: widen the kernel until this many effective weeks remain
 
 # Illustrative committee views (NOT research-backed):
 VIEWS = [
@@ -110,15 +115,26 @@ def main() -> None:
     # Align equity returns and yield changes on shared Wednesdays
     joint = weekly_eq.join(weekly_dy, how="inner")
     joint[snapshot.YIELD_TICKER] = joint[snapshot.YIELD_TICKER] / 100.0  # pp -> decimal
+
+    # Credit-spread invariant: weekly changes in the ICE BofA IG OAS (open
+    # data via FRED, see data/raw/manifest.json).  The FRED graph CSV serves
+    # this ICE series only from 2023-11-07, so the joint estimation window
+    # shortens to the ~157 common Wednesdays - documented trade-off for
+    # having a real credit driver.
+    oas_path = _Path(__file__).resolve().parents[1] / "data" / "raw" / "fred" / "2026-11-07" / "ice_bofa_ig_oas_bamlc0a0cm.csv"
+    oas = pd.read_csv(oas_path, index_col=0, parse_dates=True).iloc[:, 0].astype(float)
+    oas_wed = oas[oas.index.weekday == 2]
+    joint = joint.join((oas_wed.diff() / 100.0).rename("DSPREAD"), how="inner").dropna()
+
     # Cash (T-bill proxy): weekly accrual at the lagged 10Y yield.  Real
     # liability-aware allocation needs a riskless sleeve; without it a
     # near-total payout is simply infeasible (duration risk on the bond).
     joint["CASH"] = (joint[snapshot.YIELD_TICKER].shift(1).bfill()) / 52.0
     print(f"snapshot: {snap.manifest['rows']} daily rows through {snap.manifest['end']}; "
-          f"{len(joint)} aligned weekly observations")
+          f"{len(joint)} aligned weekly observations (common window incl. OAS)")
 
     _tick("snapshot + weekly invariants")
-    invariants = joint.to_numpy()  # DFUS, DFAI, DFAE, dYield, cash log return
+    invariants = joint.to_numpy()  # DFUS, DFAI, DFAE, dYield, dSpread, cash log return
 
     # ---- FFR prior over the historical observations ---------------------
     # State variable: trailing 13-week realized weekly vol of DFUS (the
@@ -126,16 +142,24 @@ def main() -> None:
     eq_vol_state = (
         joint["DFUS"].rolling(FFR_STATE_WINDOW).std().bfill().to_numpy()
     )
-    ffr_prior = ffr.build_ffr_prior(
-        len(invariants),
-        half_life=FFR_HALF_LIFE_WEEKS,
-        state=eq_vol_state,
-        target=float(eq_vol_state[-1]),
-        bandwidth=float(eq_vol_state.std()) * FFR_BANDWIDTH_SCALE,
-        state_name=f"DFUS trailing {FFR_STATE_WINDOW}w vol",
-    )
-    print(f"FFR prior: half-life {FFR_HALF_LIFE_WEEKS}w + kernel on {ffr_prior.state_name}; "
-          f"effective sample {ffr_prior.ess:.0f} / {len(invariants)} weeks")
+    # ESS floor: an over-tight kernel on a short window burns the effective
+    # sample below what a 6x6 covariance needs, so widen the bandwidth until
+    # the floor holds (robustness guard; reported, not silent).
+    bandwidth = float(eq_vol_state.std()) * FFR_BANDWIDTH_SCALE
+    while True:
+        ffr_prior = ffr.build_ffr_prior(
+            len(invariants),
+            half_life=FFR_HALF_LIFE_WEEKS,
+            state=eq_vol_state,
+            target=float(eq_vol_state[-1]),
+            bandwidth=bandwidth,
+            state_name=f"DFUS trailing {FFR_STATE_WINDOW}w vol",
+        )
+        if ffr_prior.ess >= FFR_MIN_ESS or bandwidth > 20 * float(eq_vol_state.std()):
+            break
+        bandwidth *= 1.5
+    print(f"FFR prior: half-life {FFR_HALF_LIFE_WEEKS}w + kernel on {ffr_prior.state_name} "
+          f"(bandwidth {bandwidth:.4f}); effective sample {ffr_prior.ess:.0f} / {len(invariants)} weeks")
 
     inv_mean, inv_cov = ffr.weighted_moments(invariants, ffr_prior.weights)
     uniform_mean = invariants.mean(axis=0)
@@ -161,19 +185,31 @@ def main() -> None:
     bond = bonds.Bond(BOND.name, BOND.face_value, BOND.coupon_rate, BOND.years_to_maturity, current_ytm)
     bond_p0 = bonds.price_from_ytm(current_ytm, bond.years_to_maturity, bond.coupon_rate, bond.face_value)[0]
 
+    # Credit sleeve (USIG): a 10Y investment-grade corporate priced off
+    # treasury yield + OAS spread, both invariant-driven, exact repricing
+    # with roll-down - duration/convexity/carry fall out of the pricing
+    # equation; a spread widening hits the price exactly like a rates move.
+    current_spread = float(oas.iloc[-1]) / 100.0
+    ig_bond = bonds.Bond("USIG", 100.0, 0.04, 10.0, current_ytm + current_spread)
+    ig_p0 = bonds.price_from_ytm(current_ytm + current_spread, ig_bond.years_to_maturity,
+                                 ig_bond.coupon_rate, ig_bond.face_value)[0]
+
     def market_from_invariants(inv: np.ndarray) -> np.ndarray:
         eq = prices_eq * np.exp(inv[:, :3])
         bond_prices = bonds.bond_price_scenarios(bond, current_ytm + inv[:, 3], HORIZON_WEEKS)
-        cash = 1.0 * np.exp(inv[:, 4])  # T-bill: $1 accrues
-        return np.column_stack([eq, bond_prices, cash])
+        ig_prices = bonds.credit_price_scenarios(
+            ig_bond, current_ytm + inv[:, 3], current_spread + inv[:, 4], HORIZON_WEEKS)
+        cash = 1.0 * np.exp(inv[:, 5])  # T-bill: $1 accrues
+        return np.column_stack([eq, bond_prices, ig_prices, cash])
 
     _tick("scenario generation (cholesky + draws)")
     market = market_from_invariants(inv_scen)
-    prices_vector = np.concatenate([prices_eq, [bond_p0, 1.0]])
-    names = EQUITY_TICKERS + [bond.name, "CASH"]
+    prices_vector = np.concatenate([prices_eq, [bond_p0, ig_p0, 1.0]])
+    names = EQUITY_TICKERS + [bond.name, ig_bond.name, "CASH"]
     print(f"universe: {names}; current prices {np.round(prices_vector, 2)}")
     print(f"10Y yield: {current_ytm:.3%}; weekly dYield mean {joint[snapshot.YIELD_TICKER].mean()*1e4:.2f}bp, "
           f"std {joint[snapshot.YIELD_TICKER].std()*1e4:.1f}bp")
+    print(f"IG OAS spread: {current_spread:.2%}; weekly dSpread std {joint['DSPREAD'].std()*1e4:.1f}bp")
 
     _tick("market map (equities + bond repricing)")
     # ---- Views via entropy pooling (on the invariant scenarios) ----------
@@ -208,9 +244,10 @@ def main() -> None:
         mliq.MeucciLiquidityParams(alpha=0.0015, beta=0.15, delta=2e-7, ann_vol=0.22, adv=1e7),  # DFAI
         mliq.MeucciLiquidityParams(alpha=0.002, beta=0.2, delta=5e-7, ann_vol=0.25, adv=5e6),   # DFAE
         mliq.MeucciLiquidityParams(alpha=0.0005, beta=0.05, delta=1e-7, ann_vol=0.08, adv=5e7),  # UST10
+        mliq.MeucciLiquidityParams(alpha=0.001, beta=0.1, delta=2e-7, ann_vol=0.10, adv=2e7),   # USIG (credit: wider spreads, less liquid)
         mliq.MeucciLiquidityParams(alpha=0.0, beta=0.0, delta=0.0, ann_vol=0.001, adv=1e12),    # CASH
     ]
-    ref_weights = np.array([0.40, 0.22, 0.09, 0.18, 0.11])  # same documented assumption as BL
+    ref_weights = np.array([0.36, 0.20, 0.08, 0.12, 0.12, 0.12])  # documented placeholder, sums to 1
     ref_amounts = WEALTH * ref_weights / prices_vector  # units per asset, full liquidation
     market_corr = np.corrcoef(market.T)
     eq_stress = np.clip(-inv_scen[:, :3].mean(axis=1) / 0.05, 0.0, None)  # 0 calm, ~1+ in a >5% equity drawdown
@@ -242,9 +279,9 @@ def main() -> None:
     #    the team chose EP.
     g_prior = mu_market / prices_vector  # expected gross returns
     cov_ret = cov_market / np.outer(prices_vector, prices_vector)
-    w_mkt = np.array([0.40, 0.22, 0.09, 0.18, 0.11])  # documented assumption, not observable
+    w_mkt = np.array([0.36, 0.20, 0.08, 0.12, 0.12, 0.12])  # documented assumption, not observable
     pi = black_litterman.equilibrium_prior(cov_ret, w_mkt, risk_aversion=2.5)
-    P = np.array([[-1.0, 1.0, 0.0, 0.0, 0.0]])  # E[g_DFAI] - E[g_DFUS] = 50bp
+    P = np.array([[-1.0, 1.0, 0.0, 0.0, 0.0, 0.0]])  # E[g_DFAI] - E[g_DFUS] = 50bp
     Q = np.array([0.005])
     mu_bl_ret, cov_bl_ret = black_litterman.posterior(cov_ret, pi, P, Q, tau=0.05)
     alloc_bl = benchmark.mean_variance_allocation(

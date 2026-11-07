@@ -52,3 +52,33 @@ def test_projection_scales_moments():
     ys = bonds.project_yield_scenarios(0.04, 0.0001, 0.001, 52, 20000, 3)
     assert ys.mean() == pytest.approx(0.04 + 0.0052, abs=0.0002)
     assert ys.std() == pytest.approx(0.001 * np.sqrt(52), rel=0.02)
+
+
+class TestCreditSleeve:
+    def test_spread_widening_lowers_price(self):
+        from emfin_capstone.toolbox import bonds
+        bond = bonds.Bond("USIG", 100.0, 0.05, 10.0, 0.06)
+        tsy = np.array([0.048, 0.048])
+        spr = np.array([0.01, 0.03])
+        prices = bonds.credit_price_scenarios(bond, tsy, spr, 0)
+        assert prices[1] < prices[0]
+
+    def test_carry_exceeds_treasury(self):
+        from emfin_capstone.toolbox import bonds
+        # same yield curve, zero rate/spread change over a quarter: the
+        # credit bond's total return must beat the treasury's by roughly
+        # the spread (carry), both earning roll-down identically
+        tsy_bond = bonds.Bond("UST10", 100.0, 0.048, 10.0, 0.048)
+        ig_bond = bonds.Bond("USIG", 100.0, 0.048, 10.0, 0.058)
+        horizon = 13
+        tsy_px = bonds.bond_price_scenarios(tsy_bond, np.array([0.048]), horizon)[0]
+        ig_px = bonds.credit_price_scenarios(ig_bond, np.array([0.048]), np.array([0.010]), horizon)[0]
+        p0_tsy = bonds.price_from_ytm(0.048, 10.0, 0.048, 100.0)[0]
+        p0_ig = bonds.price_from_ytm(0.058, 10.0, 0.048, 100.0)[0]
+        assert (ig_px / p0_ig) > (tsy_px / p0_tsy)
+
+    def test_misaligned_scenarios_raise(self):
+        from emfin_capstone.toolbox import bonds
+        bond = bonds.Bond("USIG", 100.0, 0.05, 10.0, 0.06)
+        with pytest.raises(ValueError):
+            bonds.credit_price_scenarios(bond, np.array([0.05, 0.05]), np.array([0.01]), 13)
