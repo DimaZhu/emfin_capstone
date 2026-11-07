@@ -82,3 +82,27 @@ class TestCreditSleeve:
         bond = bonds.Bond("USIG", 100.0, 0.05, 10.0, 0.06)
         with pytest.raises(ValueError):
             bonds.credit_price_scenarios(bond, np.array([0.05, 0.05]), np.array([0.01]), 13)
+
+
+def test_money_market_carry_only_when_rate_constant():
+    import pandas as pd
+    from emfin_capstone.toolbox import moneymarket
+
+    rate = pd.Series([0.05] * 10)
+    mm = moneymarket.money_market_weekly_returns(rate)
+    assert len(mm) == 9
+    np.testing.assert_allclose(mm.to_numpy(), 0.05 / 52.0, rtol=1e-12)
+
+
+def test_money_market_rate_shock_hits_with_duration():
+    import pandas as pd
+    from emfin_capstone.toolbox import moneymarket
+
+    # one 100bp step up at t=1: that week loses duration * 1%, then carry resumes
+    rate = pd.Series([0.02, 0.03, 0.03, 0.03])
+    mm = moneymarket.money_market_weekly_returns(rate)
+    np.testing.assert_allclose(
+        mm.to_numpy(),
+        [0.02 / 52.0 - 0.25 * 0.01, 0.03 / 52.0, 0.03 / 52.0],
+        rtol=1e-12,
+    )

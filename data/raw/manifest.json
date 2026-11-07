@@ -18,5 +18,15 @@
     "path": "data/raw/fred/2026-11-07/uae_rppi_qaen628bis.csv",
     "series": "QAEN628BIS: Residential Property Prices for United Arab Emirates, Index 2010=100, quarterly, not seasonally adjusted, nominal",
     "notes": "BIS lists REIDIN as the UAE national source, so this is the REIDIN-derived free backbone (verified 2026-11-07). UAE-wide, not Abu Dhabi-only: composition effects vs Abu Dhabi; base year 2010; nominal."
+  },
+  {
+    "source": "US Treasury 3-Month Treasury Constant Maturity Rate, via FRED (St. Louis Fed)",
+    "url": "https://fred.stlouisfed.org/series/DGS3MO",
+    "access_date": "2026-11-07",
+    "licence": "US Treasury H.15 data via FRED; public domain (US government work), cite FRED series DGS3MO. FRED graph CSV serves the full history from 1981-09 for this series.",
+    "sha256": "ada4828f1ee3a26ec537c960ae424c3e569e0383eb6b2c46db824046910814e0",
+    "path": "data/raw/fred/2026-11-07/dgs3mo_3m_treasury.csv",
+    "series": "DGS3MO: 3-Month Treasury Constant Maturity Rate, percent, daily business days, 1981-09-01 to 2026-11-05",
+    "notes": "Money-market sleeve driver: carry = rate/52 per week, rate-change risk = -0.25y duration x weekly change (rolling 3M bill). Wednesday-sampled to align with the equity/yield/OAS invariants."
   }
 ]
