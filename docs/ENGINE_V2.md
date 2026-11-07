@@ -26,8 +26,9 @@ Pinned weekly equity/yield/spread/cash invariants -> time/state flexible weights
   under a finite convex hull of nominal/stressed measures using one shared tail threshold.
   It is not unrestricted entropy-ball or Wasserstein DRO. The reference uses 500 paths.
 - Surplus-scaled CARA is a one-step preference sensitivity, not exact CRRA power utility.
-  Positive-domain CRRA is possible but not implemented. The negative-surplus floor is
-  numerical and has no economic interpretation.
+  A separate experimental finite-scenario positive-domain CRRA solver now exists
+  in toolbox/power_utility.py; it is not the default CARA model. The surrogate
+  negative-surplus floor is numerical and has no economic interpretation.
 - Real-estate observation/unsmoothing machinery is merged. Client-calibrated real estate
   is not part of the default six-sleeve optimization. A seven-sleeve synthetic RE
   example now runs through the actual optimizer with optional minimum holdings;
@@ -95,3 +96,17 @@ and a gross funding-ratio fan. Nine main-slider configurations can be precompute
 all repeated configurations are cached in memory. The example uses a 1k training
 set and 8k fresh nominal evaluation set, so it is fast but not the full engine.
 It does not contain the full multi-period liability, robust CML or RE pipeline.
+
+## Exact positive-surplus utility experiment
+
+`python scripts/power_utility_sensitivity.py` exercises a separate exact CRRA
+objective on strictly positive surplus. Power and log utilities are expressed
+directly as concave CVXPY objectives, with explicit surplus >= epsilon constraints
+on every supplied scenario. Infeasible domains fail loudly; there is no clipping
+of negative surplus into the utility. Tests verify risk-aversion comparative
+statics and rejection of an impossible funding domain.
+
+This is a different economic model: it forbids every simulated shortfall, whereas
+CARA can assign utility to negative surplus and permit a funding-gap budget.
+Finite-scenario feasibility does not guarantee positive surplus for an unbounded
+population model. Results use a synthetic two-asset example, not a client case.
