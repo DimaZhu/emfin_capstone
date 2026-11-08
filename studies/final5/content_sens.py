@@ -37,8 +37,9 @@ def build_sens(d):
         ('p', "The terminal limit caps how far below the starting wealth the plan may end, measured at "
               "the horizon end. Your default is 15%; here it runs 5-50% at every horizon."),
         ('fig', 'fig_sens_terminal.png',
-         'Minimum validated T-bill share by horizon (x) and terminal loss limit (y). Left: fitted '
-         'carry. Right: today\'s quotes. Same paths within each panel; 15% and 25% rows re-use the '
+         'Minimum T-bill share the judge requires, by plan length (x) and allowed end-of-plan loss '
+         '(y). Left: using shrunk history. Right: using today\'s T-bill yields. Darker = more in '
+         'T-bills = safer. Same simulated paths within each panel; the 15% and 25% rows re-use the '
          'fresh sweeps, so every step in a column is the limit alone.'),
         ('bullets', [
             "Reading down a column: at 5y the limit barely matters (10-65% bills from loosest to "
@@ -55,8 +56,9 @@ def build_sens(d):
         ('p', "The any-point cap limits the worst dip at any moment; the terminal limit only the end. "
               "Swept together at 10/20/30y (any-point 5/15/25/40% x terminal 15/25%):"),
         ('fig', 'fig_sens_caps.png',
-         'Minimum validated T-bill share by horizon (x) and any-point cap (y), terminal limit 15%. '
-         'Left: fitted. Right: quotes. The 40% row is the base run; the cap bites below ~25%.'),
+         'Minimum T-bill share the judge requires, by plan length (x) and the worst dip allowed at '
+         'any moment (y), end-of-plan limit 15%. Darker = safer. The 40% row is the base run; the '
+         'dip cap bites below ~25%.'),
         ('bullets', [
             "At a 5% any-point cap the terminal limit is irrelevant: the cap binds first and forces "
             "72-88% bills at every horizon, at both 15% and 25% terminal. If you want a tight floor "
@@ -73,9 +75,9 @@ def build_sens(d):
               "rebalancing only when the mix drifts 10 points, and a glide path whose bill target "
               "declines each year from the validated static share toward the 10y share."),
         ('fig', 'fig_sens_policy.png',
-         'Upper bound on the terminal loss tail (lower is safer; the 25% and 15% limit lines marked) '
-         'by policy, 20y and 30y, fitted view. The frozen-mix bar is the judged metric; every policy '
-         'bar is the executed twin on the same paths.'),
+         'Worst end-of-plan loss, upper bound (lower = safer), by execution policy, 20y and 30y, '
+         'shrunk-history view. The do-nothing bar is what the judge measures; every policy bar is '
+         'the executed twin on the same paths. Bars above a dashed line break that loss limit.'),
         ('bullets', [
             "Drift is the enemy at long horizons: never rebalancing roughly doubles the tail loss vs "
             "the marked mix (20y fitted: 1.12 vs 0.68). Annual rebalancing claws most of that back; "
@@ -118,9 +120,9 @@ def build_sens(d):
 
         ('h2', '6.5 How much of this is real: the seed-noise band'),
         ('fig', 'fig_sens_seeds.png',
-         'Minimum validated T-bill share at the 15% and 25% terminal limits, fitted view, on three '
-         'independent seed families. The band between families is the honest uncertainty on any '
-         'single run.'),
+         'Minimum T-bill share the judge requires on independent sets of simulated futures, at the '
+         '15% end-of-plan limit (top, two families) and the 25% limit (bottom, three families). '
+         'The shaded band between families is the honest uncertainty on any single run.'),
         ('bullets', [
             "Across three seed families the required bill share at a given cell moves by up to "
             "~20 points (fitted 10y at 25%: 10% / 45% / 40% by family). The ORDER of dials is stable; "
