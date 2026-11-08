@@ -1,0 +1,309 @@
+{
+ "meta": {
+  "label": "UIF item 3 (owner ask 8 Nov 17:09 SGT): CPI-indexed vs nominal $250k/month. iid monthly CPI log-changes fitted on BLS CPI-U NSA 1996-2025 (mean 2.52%/yr, sd 0.357%/mo); independent of market draws; tail budgets scale with the expected index; nominal rule unchanged. Dual-law, owner defaults.",
+  "inflation_model": {
+   "mu_monthly": 0.00207,
+   "sd_monthly": 0.00357,
+   "source": "BLS public API CUUR0000SA0, Jan 1996 - Dec 2025, NSA",
+   "fetched": "8 Nov 2026"
+  }
+ },
+ "fitted": {
+  "10y_nominal_s20261109": {
+   "chosen_safe": 0.125,
+   "validation_selected_safe": 0.125,
+   "note": null,
+   "ce": 112370637.1320652,
+   "fifth_ce": 115596594.85936302,
+   "terminal_q05": 98572701.88620691,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1451,
+    "em_equity": 0.0,
+    "gold": 0.18,
+    "treasury": 0.4499,
+    "tips": 0.0,
+    "tbill": 0.125,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 13.607341557999916
+  },
+  "10y_indexed_s20261109": {
+   "chosen_safe": 0.125,
+   "validation_selected_safe": 0.125,
+   "note": null,
+   "ce": 107996635.81428565,
+   "fifth_ce": 110752916.59355749,
+   "terminal_q05": 93950153.05200827,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1451,
+    "em_equity": 0.0,
+    "gold": 0.18,
+    "treasury": 0.4499,
+    "tips": 0.0,
+    "tbill": 0.125,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 13.115657090000013
+  },
+  "10y_nominal_s20261111": {
+   "chosen_safe": 0.525,
+   "validation_selected_safe": 0.525,
+   "note": null,
+   "ce": 105308482.27707009,
+   "fifth_ce": 107578769.75887313,
+   "terminal_q05": 90071439.5995326,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.0702,
+    "em_equity": 0.0,
+    "gold": 0.0871,
+    "treasury": 0.2177,
+    "tips": 0.0,
+    "tbill": 0.525,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 43.74669435999999
+  },
+  "10y_indexed_s20261111": {
+   "chosen_safe": 0.525,
+   "validation_selected_safe": 0.525,
+   "note": null,
+   "ce": 100578929.04964927,
+   "fifth_ce": 102871335.48636036,
+   "terminal_q05": 85829290.44425842,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.0702,
+    "em_equity": 0.0,
+    "gold": 0.0871,
+    "treasury": 0.2177,
+    "tips": 0.0,
+    "tbill": 0.525,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 43.87801097700003
+  },
+  "20y_nominal_s20261109": {
+   "chosen_safe": 0.6,
+   "validation_selected_safe": 0.5,
+   "note": null,
+   "ce": 103496008.38763694,
+   "fifth_ce": 113951303.60033374,
+   "terminal_q05": 90194714.97725765,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.0562,
+    "em_equity": 0.0,
+    "gold": 0.0697,
+    "treasury": 0.1742,
+    "tips": 0.0,
+    "tbill": 0.6,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 85.3946650979999
+  },
+  "20y_indexed_s20261109": {
+   "chosen_safe": 0.6,
+   "validation_selected_safe": 0.5,
+   "note": null,
+   "ce": 81371693.5355276,
+   "fifth_ce": 90748575.13411334,
+   "terminal_q05": 66412661.829495616,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.0562,
+    "em_equity": 0.0,
+    "gold": 0.0697,
+    "treasury": 0.1742,
+    "tips": 0.0,
+    "tbill": 0.6,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 85.35185301000001
+  },
+  "10y_indexed_tips_sleeve": {
+   "chosen_safe": 0.15,
+   "validation_selected_safe": 0.15,
+   "note": null,
+   "ce": 107080620.37372589,
+   "fifth_ce": 111320149.12679783,
+   "terminal_q05": 92322040.89243652,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1404,
+    "em_equity": 0.0,
+    "gold": 0.1742,
+    "treasury": 0.2177,
+    "tips": 0.2177,
+    "tbill": 0.15,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   }
+  }
+ },
+ "current_quotes": {
+  "10y_nominal_s20261109": {
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "note": null,
+   "ce": 121408105.63970387,
+   "fifth_ce": 125644278.20534627,
+   "terminal_q05": 109150544.95883727,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 5.464474641000152
+  },
+  "10y_indexed_s20261109": {
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "note": null,
+   "ce": 116956297.3623494,
+   "fifth_ce": 120655006.03573309,
+   "terminal_q05": 104080354.43210454,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 5.394265717999815
+  },
+  "10y_nominal_s20261111": {
+   "chosen_safe": 0.35,
+   "validation_selected_safe": 0.35,
+   "note": null,
+   "ce": 122437580.89418334,
+   "fifth_ce": 127787995.80828455,
+   "terminal_q05": 107356287.42005987,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1231,
+    "em_equity": 0.0,
+    "gold": 0.132,
+    "treasury": 0.2949,
+    "tips": 0.0,
+    "tbill": 0.35,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 14.716549894000082
+  },
+  "10y_indexed_s20261111": {
+   "chosen_safe": 0.35,
+   "validation_selected_safe": 0.35,
+   "note": null,
+   "ce": 117460621.19197245,
+   "fifth_ce": 122881191.24045342,
+   "terminal_q05": 102415721.84524404,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1231,
+    "em_equity": 0.0,
+    "gold": 0.132,
+    "treasury": 0.2949,
+    "tips": 0.0,
+    "tbill": 0.35,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 14.43019001399989
+  },
+  "20y_nominal_s20261109": {
+   "chosen_safe": 0.45,
+   "validation_selected_safe": 0.3,
+   "note": null,
+   "ce": 145090220.03722638,
+   "fifth_ce": 161654994.25539178,
+   "terminal_q05": 140830905.03319344,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1007,
+    "em_equity": 0.0,
+    "gold": 0.108,
+    "treasury": 0.2412,
+    "tips": 0.0,
+    "tbill": 0.45,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "seconds": 80.03403756000012
+  },
+  "20y_indexed_s20261109": {
+   "chosen_safe": 0.45,
+   "validation_selected_safe": 0.3,
+   "note": null,
+   "ce": 120914504.35063899,
+   "fifth_ce": 136979989.1464627,
+   "terminal_q05": 114634609.15587421,
+   "funded": 1.0,
+   "weights": {
+    "us_equity": 0.1007,
+    "em_equity": 0.0,
+    "gold": 0.108,
+    "treasury": 0.2412,
+    "tips": 0.0,
+    "tbill": 0.45,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "index": {
+    "mean_index_10y": 1.2819726186973637,
+    "q05_index_10y": 1.2020979746137983,
+    "q95_index_10y": 1.3671546161765835
+   },
+   "seconds": 78.62820347800016
+  }
+ }
+}

@@ -1,0 +1,1559 @@
+{
+ "meta": {
+  "label": "UIF item 1 (owner ask 8 Nov 17:09 SGT): estimation uncertainty on fitted drift/vol. 24 circular block-bootstrap refits (block 26 weeks) of the weekly return frame per (view, seed family); full 10y dual-law safe-share search per refit on matched RNG streams; frozen round-2 mix re-judged per refit. Declared: block length 26w; shrinkage re-applied per refit; current_quotes view re-anchors tbill/treasury/tips means to the same quotes per refit by design, so its band excludes safe-carry uncertainty.",
+  "B": 24,
+  "block_weeks": 26,
+  "seeds": [
+   20261109,
+   20261111
+  ]
+ },
+ "fitted": {
+  "seed20261109": {
+   "cells": [
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 133103610.95345888,
+     "fifth_ce": 132877605.37740485,
+     "frozen_final_pass": true,
+     "frozen_ce": 126188420.62328634,
+     "drift": {
+      "us_equity": 0.09628851195979125,
+      "em_equity": 0.07274558491095506,
+      "gold": 0.14697134944011608,
+      "treasury": 0.044659891592738095,
+      "tips": 0.05069730022189857,
+      "tbill": 0.019328697962798895,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17692995666161987,
+      "em_equity": 0.20645280267337449,
+      "gold": 0.16462883414712107,
+      "treasury": 0.06366189166993909,
+      "tips": 0.05646012949542457,
+      "tbill": 0.003467439511609901,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04682708308547362
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 143541431.37092614,
+     "fifth_ce": 148947177.2567622,
+     "frozen_final_pass": true,
+     "frozen_ce": 136420377.58508113,
+     "drift": {
+      "us_equity": 0.09626400312654736,
+      "em_equity": 0.09244747489847527,
+      "gold": 0.1559656128189792,
+      "treasury": 0.06496184095277265,
+      "tips": 0.060158526034694265,
+      "tbill": 0.025388839681133674,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17572359407861038,
+      "em_equity": 0.231821770152291,
+      "gold": 0.1797754283099997,
+      "treasury": 0.06184410301115283,
+      "tips": 0.05866297833807467,
+      "tbill": 0.003379800387261495,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04999185638239531
+     }
+    },
+    {
+     "chosen_safe": 0.575,
+     "validation_selected_safe": 0.575,
+     "search_note": null,
+     "ce": 91599456.56139065,
+     "fifth_ce": 92393189.11986001,
+     "frozen_final_pass": false,
+     "frozen_ce": 90888594.72484244,
+     "drift": {
+      "us_equity": 0.07649998263489319,
+      "em_equity": -0.014638425420975877,
+      "gold": 0.026804502285301204,
+      "treasury": 0.012053984855960436,
+      "tips": 0.009405338534373444,
+      "tbill": 0.017569619131975456,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16099526586696894,
+      "em_equity": 0.20019921780604644,
+      "gold": 0.16812905072910667,
+      "treasury": 0.05850950310608995,
+      "tips": 0.05586166932272,
+      "tbill": 0.002826884392252573,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04629845932228235
+     }
+    },
+    {
+     "chosen_safe": 0.625,
+     "validation_selected_safe": 0.625,
+     "search_note": null,
+     "ce": 106032587.04706658,
+     "fifth_ce": 108802410.99965715,
+     "frozen_final_pass": true,
+     "frozen_ce": 115906209.44029003,
+     "drift": {
+      "us_equity": 0.08630001653159297,
+      "em_equity": 0.05533688545529798,
+      "gold": 0.1313390519083486,
+      "treasury": 0.03885971609137431,
+      "tips": 0.044348203065727974,
+      "tbill": 0.01793091231178029,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16735034791233416,
+      "em_equity": 0.19521946606071472,
+      "gold": 0.1756512636631048,
+      "treasury": 0.061546966599228654,
+      "tips": 0.05505168164450856,
+      "tbill": 0.003206976950123741,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05139013897034869
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 120473329.96413903,
+     "fifth_ce": 123488454.83992058,
+     "frozen_final_pass": true,
+     "frozen_ce": 116691070.82722224,
+     "drift": {
+      "us_equity": 0.054162182981587204,
+      "em_equity": 0.04987531331024062,
+      "gold": 0.11737870330783828,
+      "treasury": 0.054696941225845425,
+      "tips": 0.04447490794846002,
+      "tbill": 0.02057590788308238,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.18288758182911008,
+      "em_equity": 0.22774863606616283,
+      "gold": 0.17544558853962852,
+      "treasury": 0.06259858276720126,
+      "tips": 0.05789962034567066,
+      "tbill": 0.003266275512952632,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04950277894484706
+     }
+    },
+    {
+     "chosen_safe": 0.625,
+     "validation_selected_safe": 0.625,
+     "search_note": null,
+     "ce": 94474170.4652906,
+     "fifth_ce": 95268646.11381282,
+     "frozen_final_pass": true,
+     "frozen_ce": 99225337.89059685,
+     "drift": {
+      "us_equity": 0.05900902893515831,
+      "em_equity": 0.027746592075250397,
+      "gold": 0.0860080439894423,
+      "treasury": 0.02412992875606031,
+      "tips": 0.03654894558536014,
+      "tbill": 0.01357511071744934,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.1944514497227138,
+      "em_equity": 0.2466529625469972,
+      "gold": 0.17696283722222342,
+      "treasury": 0.0678000128166264,
+      "tips": 0.062254989369934254,
+      "tbill": 0.002994677182062739,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05136267434396221
+     }
+    },
+    {
+     "chosen_safe": 0.25,
+     "validation_selected_safe": 0.125,
+     "search_note": null,
+     "ce": 110626025.1370024,
+     "fifth_ce": 111672198.6807614,
+     "frozen_final_pass": true,
+     "frozen_ce": 109422259.59300369,
+     "drift": {
+      "us_equity": 0.1335697553759261,
+      "em_equity": 0.06840409075901412,
+      "gold": 0.06465152933983692,
+      "treasury": 0.02930311873744556,
+      "tips": 0.030453624089510363,
+      "tbill": 0.01693029229406571,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16793673039851717,
+      "em_equity": 0.2171181918180212,
+      "gold": 0.17899988287735485,
+      "treasury": 0.060187976628507694,
+      "tips": 0.054767075263001036,
+      "tbill": 0.0031066773377359165,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05173203693153299
+     }
+    },
+    {
+     "chosen_safe": 0.675,
+     "validation_selected_safe": 0.675,
+     "search_note": null,
+     "ce": 93503420.49898285,
+     "fifth_ce": 93150752.81646779,
+     "frozen_final_pass": false,
+     "frozen_ce": 98515512.99305627,
+     "drift": {
+      "us_equity": 0.0870471193693174,
+      "em_equity": 0.05818863117103465,
+      "gold": 0.0750093004069346,
+      "treasury": 0.018675249211549824,
+      "tips": 0.023045168583170503,
+      "tbill": 0.014467404782993772,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17476423570132402,
+      "em_equity": 0.22157653904632965,
+      "gold": 0.17892786389471235,
+      "treasury": 0.06270241335192493,
+      "tips": 0.05972876553773927,
+      "tbill": 0.0029459873368205664,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05429386765861187
+     }
+    },
+    {
+     "chosen_safe": 0.675,
+     "validation_selected_safe": 0.675,
+     "search_note": null,
+     "ce": 111963090.7973906,
+     "fifth_ce": 113423292.3380151,
+     "frozen_final_pass": true,
+     "frozen_ce": 126999821.8259513,
+     "drift": {
+      "us_equity": 0.19751926948545934,
+      "em_equity": 0.190646323361831,
+      "gold": 0.08696982185124992,
+      "treasury": 0.017975557429551016,
+      "tips": 0.04108100456651309,
+      "tbill": 0.022407617360495836,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.15516905275816278,
+      "em_equity": 0.20783499734429572,
+      "gold": 0.16928489354467052,
+      "treasury": 0.06464766471636349,
+      "tips": 0.05106916949814289,
+      "tbill": 0.0033677037540322664,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04950522038112238
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 131909120.09395173,
+     "fifth_ce": 135507480.4499985,
+     "frozen_final_pass": true,
+     "frozen_ce": 124394832.80914344,
+     "drift": {
+      "us_equity": 0.07808704598801429,
+      "em_equity": 0.057154396436606275,
+      "gold": 0.12193176649932053,
+      "treasury": 0.06142970455848874,
+      "tips": 0.04818550486734378,
+      "tbill": 0.017711603188662647,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19059499206145877,
+      "em_equity": 0.24479784887253833,
+      "gold": 0.17304548533343542,
+      "treasury": 0.06639350047095692,
+      "tips": 0.06150987176165125,
+      "tbill": 0.003345530852400994,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05130561221812376
+     }
+    },
+    {
+     "chosen_safe": 0.5,
+     "validation_selected_safe": 0.375,
+     "search_note": null,
+     "ce": 100710431.92440857,
+     "fifth_ce": 102566183.12292609,
+     "frozen_final_pass": false,
+     "frozen_ce": 103295623.3616268,
+     "drift": {
+      "us_equity": 0.03449126077094699,
+      "em_equity": 0.011436838681884146,
+      "gold": 0.11781497689329082,
+      "treasury": 0.029706485559475717,
+      "tips": 0.03298303931292456,
+      "tbill": 0.01425119574845014,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.20774617419157684,
+      "em_equity": 0.2533770046221204,
+      "gold": 0.1822782705398689,
+      "treasury": 0.06785053844710758,
+      "tips": 0.06675189744215698,
+      "tbill": 0.003146809928562964,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05137094334076358
+     }
+    },
+    {
+     "chosen_safe": 0.55,
+     "validation_selected_safe": 0.55,
+     "search_note": null,
+     "ce": 106378768.2715384,
+     "fifth_ce": 106356890.30146876,
+     "frozen_final_pass": true,
+     "frozen_ce": 111962291.72576421,
+     "drift": {
+      "us_equity": 0.0602145233210249,
+      "em_equity": 0.020424929077348598,
+      "gold": 0.12730306730212082,
+      "treasury": 0.03408454012458021,
+      "tips": 0.03325312782017741,
+      "tbill": 0.018273782108060306,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.1651492131883188,
+      "em_equity": 0.20043043521728315,
+      "gold": 0.15954983226205643,
+      "treasury": 0.06786235989246768,
+      "tips": 0.0543601213609147,
+      "tbill": 0.003272836966668595,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04974993278059349
+     }
+    },
+    {
+     "chosen_safe": 0.35,
+     "validation_selected_safe": 0.35,
+     "search_note": null,
+     "ce": 103610473.98682709,
+     "fifth_ce": 106246498.97869901,
+     "frozen_final_pass": true,
+     "frozen_ce": 103769717.13380757,
+     "drift": {
+      "us_equity": 0.09608308502474738,
+      "em_equity": 0.06578451499843714,
+      "gold": 0.08778321763249278,
+      "treasury": 0.019368225483640027,
+      "tips": 0.023509852134335773,
+      "tbill": 0.0188534100974313,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17756122152671336,
+      "em_equity": 0.21659683701906246,
+      "gold": 0.16955111082018293,
+      "treasury": 0.0675158560102211,
+      "tips": 0.06070488747125288,
+      "tbill": 0.0032622486498731485,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.049616230547951806
+     }
+    },
+    {
+     "chosen_safe": 0.425,
+     "validation_selected_safe": 0.425,
+     "search_note": null,
+     "ce": 124645906.73117293,
+     "fifth_ce": 128129716.71314761,
+     "frozen_final_pass": true,
+     "frozen_ce": 129090552.48480639,
+     "drift": {
+      "us_equity": 0.09706397867994176,
+      "em_equity": 0.07643472684917463,
+      "gold": 0.16222729031906083,
+      "treasury": 0.05294140531313753,
+      "tips": 0.05251828846710491,
+      "tbill": 0.01664216120460589,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19977560904837863,
+      "em_equity": 0.2529877897593847,
+      "gold": 0.1795637033379066,
+      "treasury": 0.06994863612550882,
+      "tips": 0.06413031591064544,
+      "tbill": 0.003342904544538165,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.052361180174698145
+     }
+    },
+    {
+     "chosen_safe": 0.475,
+     "validation_selected_safe": 0.475,
+     "search_note": null,
+     "ce": 102473837.51411252,
+     "fifth_ce": 106501736.44688937,
+     "frozen_final_pass": true,
+     "frozen_ce": 105035060.67557219,
+     "drift": {
+      "us_equity": 0.06474976051131687,
+      "em_equity": 0.01357531882234267,
+      "gold": 0.10574302554231578,
+      "treasury": 0.032605013892268435,
+      "tips": 0.022245225746926726,
+      "tbill": 0.015127546501328509,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.20310447471650547,
+      "em_equity": 0.2580352989259939,
+      "gold": 0.18054219025394347,
+      "treasury": 0.06905854696595913,
+      "tips": 0.06703389544292947,
+      "tbill": 0.002997124842079318,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05463960598366209
+     }
+    },
+    {
+     "chosen_safe": 0.45,
+     "validation_selected_safe": 0.45,
+     "search_note": null,
+     "ce": 101958662.47149985,
+     "fifth_ce": 102033440.79236309,
+     "frozen_final_pass": false,
+     "frozen_ce": 103515032.23753172,
+     "drift": {
+      "us_equity": 0.09549952204013229,
+      "em_equity": 0.057613354843344206,
+      "gold": 0.0657449174518214,
+      "treasury": 0.03155956944143928,
+      "tips": 0.03231076167240634,
+      "tbill": 0.01685225863596128,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19049426034061073,
+      "em_equity": 0.24358684374806547,
+      "gold": 0.16796036458087935,
+      "treasury": 0.06747881278782912,
+      "tips": 0.062498508610642454,
+      "tbill": 0.0035009444032648497,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05263994882027979
+     }
+    }
+   ],
+   "base_moments": {
+    "ids": [
+     "us_equity",
+     "em_equity",
+     "gold",
+     "treasury",
+     "tips",
+     "tbill",
+     "cash",
+     "__fx_usd_per_sgd"
+    ],
+    "drift": {
+     "us_equity": 0.09831680381875918,
+     "em_equity": 0.0628695018975309,
+     "gold": 0.09207931015658082,
+     "treasury": 0.035433473972801575,
+     "tips": 0.0363405424821914,
+     "tbill": 0.018114437555358742,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.0
+    },
+    "vol": {
+     "us_equity": 0.1803821851069821,
+     "em_equity": 0.2242094394126983,
+     "gold": 0.17356681838609256,
+     "treasury": 0.06397579099537658,
+     "tips": 0.05959868448086985,
+     "tbill": 0.003174899249950712,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.050241732196776565
+    }
+   },
+   "T_weeks": 1129,
+   "seconds": 43.56508353199979
+  },
+  "seed20261111": {
+   "cells": [
+    {
+     "chosen_safe": 0.65,
+     "validation_selected_safe": 0.65,
+     "search_note": null,
+     "ce": 92510984.55426948,
+     "fifth_ce": 92922294.32980765,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.08284330709222501,
+      "em_equity": 0.08244289218002175,
+      "gold": 0.08110783705823398,
+      "treasury": 0.020921801554557497,
+      "tips": 0.02712688323260988,
+      "tbill": 0.010799468556244444,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19424080143302436,
+      "em_equity": 0.24536210440155398,
+      "gold": 0.17278680214662379,
+      "treasury": 0.06958189973731711,
+      "tips": 0.06577160409395591,
+      "tbill": 0.002749379981688074,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05287160466800111
+     }
+    },
+    {
+     "chosen_safe": 0.725,
+     "validation_selected_safe": 0.725,
+     "search_note": null,
+     "ce": 95732240.96813291,
+     "fifth_ce": 96212007.09171045,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.11134004888138563,
+      "em_equity": 0.06393960875193541,
+      "gold": 0.08428454770980401,
+      "treasury": 0.014559225386630197,
+      "tips": 0.026690553682563962,
+      "tbill": 0.016993976970770482,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16350266716223288,
+      "em_equity": 0.20040975773123385,
+      "gold": 0.17564755495451528,
+      "treasury": 0.06653177379119933,
+      "tips": 0.0583307971343816,
+      "tbill": 0.0029231723457691103,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05173283072801246
+     }
+    },
+    {
+     "chosen_safe": 0.525,
+     "validation_selected_safe": 0.525,
+     "search_note": null,
+     "ce": 114479193.04521428,
+     "fifth_ce": 117559341.08601053,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.08049034024171174,
+      "em_equity": 0.0830418530621873,
+      "gold": 0.12353976337063213,
+      "treasury": 0.05675591273428117,
+      "tips": 0.05419667868518045,
+      "tbill": 0.021075907883082362,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19303379159020834,
+      "em_equity": 0.2424785019625051,
+      "gold": 0.18213048518414662,
+      "treasury": 0.06546275359912564,
+      "tips": 0.06227102930293602,
+      "tbill": 0.003556109709969619,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05258054889147235
+     }
+    },
+    {
+     "chosen_safe": 0.3,
+     "validation_selected_safe": 0.15,
+     "search_note": null,
+     "ce": 110981061.46896242,
+     "fifth_ce": 110783707.35873476,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.07133266408221711,
+      "em_equity": 0.035288981023861105,
+      "gold": 0.08685104883259841,
+      "treasury": 0.04656826529175385,
+      "tips": 0.030273940210523202,
+      "tbill": 0.018097254207263058,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19079488234130756,
+      "em_equity": 0.24036857222247568,
+      "gold": 0.17933047769585486,
+      "treasury": 0.06241241811116961,
+      "tips": 0.0604075464666673,
+      "tbill": 0.0032788822224580384,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.050452142593927614
+     }
+    },
+    {
+     "chosen_safe": 0.65,
+     "validation_selected_safe": 0.65,
+     "search_note": null,
+     "ce": 96531275.40607828,
+     "fifth_ce": 96924189.87070525,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.013641930205850132,
+      "em_equity": -0.029339269684293647,
+      "gold": 0.10387449575307896,
+      "treasury": 0.031155517173721878,
+      "tips": 0.016906467815709415,
+      "tbill": 0.017243312666076246,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.21334614100274746,
+      "em_equity": 0.26348503808473256,
+      "gold": 0.17722762940039027,
+      "treasury": 0.06472806813566076,
+      "tips": 0.06423827355203925,
+      "tbill": 0.0030746505596589155,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05326519946898665
+     }
+    },
+    {
+     "chosen_safe": 0.725,
+     "validation_selected_safe": 0.725,
+     "search_note": null,
+     "ce": 94818652.66684324,
+     "fifth_ce": 94580971.66296284,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.07303630990635693,
+      "em_equity": 0.028535877059485085,
+      "gold": 0.0706747683509957,
+      "treasury": 0.02021958731715334,
+      "tips": 0.01866499041580495,
+      "tbill": 0.01895101860053144,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.21467017899893595,
+      "em_equity": 0.26768328077589904,
+      "gold": 0.18624781849763575,
+      "treasury": 0.06820806825176853,
+      "tips": 0.06835905993702183,
+      "tbill": 0.0030760210841358697,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05550810867959867
+     }
+    },
+    {
+     "chosen_safe": 0.5,
+     "validation_selected_safe": 0.5,
+     "search_note": null,
+     "ce": 109083603.9626631,
+     "fifth_ce": 111710021.99697834,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.0919595836845776,
+      "em_equity": 0.0597628765699635,
+      "gold": 0.1197186770220697,
+      "treasury": 0.0338174069176469,
+      "tips": 0.03786471801609134,
+      "tbill": 0.021556687333923706,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.18452361558904254,
+      "em_equity": 0.23331468131095032,
+      "gold": 0.18948522587685965,
+      "treasury": 0.06530571580943491,
+      "tips": 0.062114315347792194,
+      "tbill": 0.0034170972577656816,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.052175368684527774
+     }
+    },
+    {
+     "chosen_safe": 0.6,
+     "validation_selected_safe": 0.6,
+     "search_note": null,
+     "ce": 99408301.80285922,
+     "fifth_ce": 99205434.8696999,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.05376795538628422,
+      "em_equity": 0.014990741484758034,
+      "gold": 0.0693463195646623,
+      "treasury": 0.03842761243396833,
+      "tips": 0.020561632538405695,
+      "tbill": 0.01966333038086797,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19309146611270855,
+      "em_equity": 0.2560187799854812,
+      "gold": 0.16927217080207954,
+      "treasury": 0.06431880616917725,
+      "tips": 0.06086197958502357,
+      "tbill": 0.003334529386510713,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05025059501270272
+     }
+    }
+   ],
+   "base_moments": {
+    "ids": [
+     "us_equity",
+     "em_equity",
+     "gold",
+     "treasury",
+     "tips",
+     "tbill",
+     "cash",
+     "__fx_usd_per_sgd"
+    ],
+    "drift": {
+     "us_equity": 0.09831680381875918,
+     "em_equity": 0.0628695018975309,
+     "gold": 0.09207931015658082,
+     "treasury": 0.035433473972801575,
+     "tips": 0.0363405424821914,
+     "tbill": 0.018114437555358742,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.0
+    },
+    "vol": {
+     "us_equity": 0.1803821851069821,
+     "em_equity": 0.2242094394126983,
+     "gold": 0.17356681838609256,
+     "treasury": 0.06397579099537658,
+     "tips": 0.05959868448086985,
+     "tbill": 0.003174899249950712,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.050241732196776565
+    }
+   },
+   "T_weeks": 1129,
+   "seconds": 29.445145073000276
+  }
+ },
+ "current_quotes": {
+  "seed20261109": {
+   "cells": [
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 138005154.28581673,
+     "fifth_ce": 137723743.4946458,
+     "frozen_final_pass": true,
+     "frozen_ce": 138006807.36311713,
+     "drift": {
+      "us_equity": 0.09628851195979125,
+      "em_equity": 0.07274558491095506,
+      "gold": 0.14697134944011608,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17692995666161987,
+      "em_equity": 0.20645280267337449,
+      "gold": 0.16462883414712107,
+      "treasury": 0.06366189166993909,
+      "tips": 0.05646012949542457,
+      "tbill": 0.003467439511609901,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04682708308547362
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 136083526.4096323,
+     "fifth_ce": 144353266.38171658,
+     "frozen_final_pass": true,
+     "frozen_ce": 136084192.8567508,
+     "drift": {
+      "us_equity": 0.09626400312654736,
+      "em_equity": 0.09244747489847527,
+      "gold": 0.1559656128189792,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17572359407861038,
+      "em_equity": 0.231821770152291,
+      "gold": 0.1797754283099997,
+      "treasury": 0.06184410301115283,
+      "tips": 0.05866297833807467,
+      "tbill": 0.003379800387261495,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04999185638239531
+     }
+    },
+    {
+     "chosen_safe": 0.225,
+     "validation_selected_safe": 0.2,
+     "search_note": null,
+     "ce": 109912487.88477531,
+     "fifth_ce": 114136304.81284101,
+     "frozen_final_pass": false,
+     "frozen_ce": 107341401.81343028,
+     "drift": {
+      "us_equity": 0.07649998263489319,
+      "em_equity": -0.014638425420975877,
+      "gold": 0.026804502285301204,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16099526586696894,
+      "em_equity": 0.20019921780604644,
+      "gold": 0.16812905072910667,
+      "treasury": 0.05850950310608995,
+      "tips": 0.05586166932272,
+      "tbill": 0.002826884392252573,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04629845932228235
+     }
+    },
+    {
+     "chosen_safe": 0.525,
+     "validation_selected_safe": 0.525,
+     "search_note": null,
+     "ce": 126529903.38284731,
+     "fifth_ce": 131662424.92948523,
+     "frozen_final_pass": true,
+     "frozen_ce": 127600338.6703061,
+     "drift": {
+      "us_equity": 0.08630001653159297,
+      "em_equity": 0.05533688545529798,
+      "gold": 0.1313390519083486,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16735034791233416,
+      "em_equity": 0.19521946606071472,
+      "gold": 0.1756512636631048,
+      "treasury": 0.061546966599228654,
+      "tips": 0.05505168164450856,
+      "tbill": 0.003206976950123741,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05139013897034869
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 118461823.35661572,
+     "fifth_ce": 121748063.14550395,
+     "frozen_final_pass": true,
+     "frozen_ce": 118460045.4062856,
+     "drift": {
+      "us_equity": 0.054162182981587204,
+      "em_equity": 0.04987531331024062,
+      "gold": 0.11737870330783828,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.18288758182911008,
+      "em_equity": 0.22774863606616283,
+      "gold": 0.17544558853962852,
+      "treasury": 0.06259858276720126,
+      "tips": 0.05789962034567066,
+      "tbill": 0.003266275512952632,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04950277894484706
+     }
+    },
+    {
+     "chosen_safe": 0.325,
+     "validation_selected_safe": 0.325,
+     "search_note": null,
+     "ce": 117293240.96977983,
+     "fifth_ce": 120188658.78997491,
+     "frozen_final_pass": true,
+     "frozen_ce": 114268743.97592631,
+     "drift": {
+      "us_equity": 0.05900902893515831,
+      "em_equity": 0.027746592075250397,
+      "gold": 0.0860080439894423,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.1944514497227138,
+      "em_equity": 0.2466529625469972,
+      "gold": 0.17696283722222342,
+      "treasury": 0.0678000128166264,
+      "tips": 0.062254989369934254,
+      "tbill": 0.002994677182062739,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05136267434396221
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 125225200.59461021,
+     "fifth_ce": 124442755.22777157,
+     "frozen_final_pass": true,
+     "frozen_ce": 125224406.42806388,
+     "drift": {
+      "us_equity": 0.1335697553759261,
+      "em_equity": 0.06840409075901412,
+      "gold": 0.06465152933983692,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16793673039851717,
+      "em_equity": 0.2171181918180212,
+      "gold": 0.17899988287735485,
+      "treasury": 0.060187976628507694,
+      "tips": 0.054767075263001036,
+      "tbill": 0.0031066773377359165,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05173203693153299
+     }
+    },
+    {
+     "chosen_safe": 0.45,
+     "validation_selected_safe": 0.45,
+     "search_note": null,
+     "ce": 119123241.54731435,
+     "fifth_ce": 115373068.80895445,
+     "frozen_final_pass": false,
+     "frozen_ce": 115686267.24561724,
+     "drift": {
+      "us_equity": 0.0870471193693174,
+      "em_equity": 0.05818863117103465,
+      "gold": 0.0750093004069346,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17476423570132402,
+      "em_equity": 0.22157653904632965,
+      "gold": 0.17892786389471235,
+      "treasury": 0.06270241335192493,
+      "tips": 0.05972876553773927,
+      "tbill": 0.0029459873368205664,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05429386765861187
+     }
+    },
+    {
+     "chosen_safe": 0.525,
+     "validation_selected_safe": 0.525,
+     "search_note": null,
+     "ce": 141387872.1804883,
+     "fifth_ce": 143509882.85338274,
+     "frozen_final_pass": true,
+     "frozen_ce": 152295244.86396077,
+     "drift": {
+      "us_equity": 0.19751926948545934,
+      "em_equity": 0.190646323361831,
+      "gold": 0.08696982185124992,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.15516905275816278,
+      "em_equity": 0.20783499734429572,
+      "gold": 0.16928489354467052,
+      "treasury": 0.06464766471636349,
+      "tips": 0.05106916949814289,
+      "tbill": 0.0033677037540322664,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04950522038112238
+     }
+    },
+    {
+     "chosen_safe": 0.1,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 126785863.05665869,
+     "fifth_ce": 131720175.81307478,
+     "frozen_final_pass": true,
+     "frozen_ce": 126785556.32346433,
+     "drift": {
+      "us_equity": 0.07808704598801429,
+      "em_equity": 0.057154396436606275,
+      "gold": 0.12193176649932053,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19059499206145877,
+      "em_equity": 0.24479784887253833,
+      "gold": 0.17304548533343542,
+      "treasury": 0.06639350047095692,
+      "tips": 0.06150987176165125,
+      "tbill": 0.003345530852400994,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05130561221812376
+     }
+    },
+    {
+     "chosen_safe": 0.275,
+     "validation_selected_safe": 0.1,
+     "search_note": null,
+     "ce": 118090407.54300065,
+     "fifth_ce": 119280113.22298905,
+     "frozen_final_pass": false,
+     "frozen_ce": 114955206.25874624,
+     "drift": {
+      "us_equity": 0.03449126077094699,
+      "em_equity": 0.011436838681884146,
+      "gold": 0.11781497689329082,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.20774617419157684,
+      "em_equity": 0.2533770046221204,
+      "gold": 0.1822782705398689,
+      "treasury": 0.06785053844710758,
+      "tips": 0.06675189744215698,
+      "tbill": 0.003146809928562964,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05137094334076358
+     }
+    },
+    {
+     "chosen_safe": 0.35,
+     "validation_selected_safe": 0.35,
+     "search_note": null,
+     "ce": 125404304.48388985,
+     "fifth_ce": 124680882.94338436,
+     "frozen_final_pass": true,
+     "frozen_ce": 124330996.29401822,
+     "drift": {
+      "us_equity": 0.0602145233210249,
+      "em_equity": 0.020424929077348598,
+      "gold": 0.12730306730212082,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.1651492131883188,
+      "em_equity": 0.20043043521728315,
+      "gold": 0.15954983226205643,
+      "treasury": 0.06786235989246768,
+      "tips": 0.0543601213609147,
+      "tbill": 0.003272836966668595,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.04974993278059349
+     }
+    },
+    {
+     "chosen_safe": 0.2,
+     "validation_selected_safe": 0.2,
+     "search_note": null,
+     "ce": 121017108.0762355,
+     "fifth_ce": 124580894.37756112,
+     "frozen_final_pass": true,
+     "frozen_ce": 119683301.5366485,
+     "drift": {
+      "us_equity": 0.09608308502474738,
+      "em_equity": 0.06578451499843714,
+      "gold": 0.08778321763249278,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.17756122152671336,
+      "em_equity": 0.21659683701906246,
+      "gold": 0.16955111082018293,
+      "treasury": 0.0675158560102211,
+      "tips": 0.06070488747125288,
+      "tbill": 0.0032622486498731485,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.049616230547951806
+     }
+    },
+    {
+     "chosen_safe": 0.3,
+     "validation_selected_safe": 0.3,
+     "search_note": null,
+     "ce": 136697015.06120875,
+     "fifth_ce": 140708019.1666225,
+     "frozen_final_pass": true,
+     "frozen_ce": 137547386.7571339,
+     "drift": {
+      "us_equity": 0.09706397867994176,
+      "em_equity": 0.07643472684917463,
+      "gold": 0.16222729031906083,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19977560904837863,
+      "em_equity": 0.2529877897593847,
+      "gold": 0.1795637033379066,
+      "treasury": 0.06994863612550882,
+      "tips": 0.06413031591064544,
+      "tbill": 0.003342904544538165,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.052361180174698145
+     }
+    },
+    {
+     "chosen_safe": 0.275,
+     "validation_selected_safe": 0.275,
+     "search_note": null,
+     "ce": 119219891.19109593,
+     "fifth_ce": 127398266.35741921,
+     "frozen_final_pass": true,
+     "frozen_ce": 116754821.83796169,
+     "drift": {
+      "us_equity": 0.06474976051131687,
+      "em_equity": 0.01357531882234267,
+      "gold": 0.10574302554231578,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.20310447471650547,
+      "em_equity": 0.2580352989259939,
+      "gold": 0.18054219025394347,
+      "treasury": 0.06905854696595913,
+      "tips": 0.06703389544292947,
+      "tbill": 0.002997124842079318,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05463960598366209
+     }
+    },
+    {
+     "chosen_safe": 0.3,
+     "validation_selected_safe": 0.3,
+     "search_note": null,
+     "ce": 118148687.12261777,
+     "fifth_ce": 118167664.67533758,
+     "frozen_final_pass": false,
+     "frozen_ce": 115086312.62009841,
+     "drift": {
+      "us_equity": 0.09549952204013229,
+      "em_equity": 0.057613354843344206,
+      "gold": 0.0657449174518214,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19049426034061073,
+      "em_equity": 0.24358684374806547,
+      "gold": 0.16796036458087935,
+      "treasury": 0.06747881278782912,
+      "tips": 0.062498508610642454,
+      "tbill": 0.0035009444032648497,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05263994882027979
+     }
+    }
+   ],
+   "base_moments": {
+    "ids": [
+     "us_equity",
+     "em_equity",
+     "gold",
+     "treasury",
+     "tips",
+     "tbill",
+     "cash",
+     "__fx_usd_per_sgd"
+    ],
+    "drift": {
+     "us_equity": 0.09831680381875918,
+     "em_equity": 0.0628695018975309,
+     "gold": 0.09207931015658082,
+     "treasury": 0.04726519246711422,
+     "tips": 0.04726519246711422,
+     "tbill": 0.04085399400826605,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.0
+    },
+    "vol": {
+     "us_equity": 0.1803821851069821,
+     "em_equity": 0.2242094394126983,
+     "gold": 0.17356681838609256,
+     "treasury": 0.06397579099537658,
+     "tips": 0.05959868448086985,
+     "tbill": 0.003174899249950712,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.050241732196776565
+    }
+   },
+   "T_weeks": 1129,
+   "seconds": 66.32640467600004
+  },
+  "seed20261111": {
+   "cells": [
+    {
+     "chosen_safe": 0.4,
+     "validation_selected_safe": 0.4,
+     "search_note": null,
+     "ce": 118675270.09076312,
+     "fifth_ce": 119668782.42527658,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.08284330709222501,
+      "em_equity": 0.08244289218002175,
+      "gold": 0.08110783705823398,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19424080143302436,
+      "em_equity": 0.24536210440155398,
+      "gold": 0.17278680214662379,
+      "treasury": 0.06958189973731711,
+      "tips": 0.06577160409395591,
+      "tbill": 0.002749379981688074,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05287160466800111
+     }
+    },
+    {
+     "chosen_safe": 0.575,
+     "validation_selected_safe": 0.575,
+     "search_note": null,
+     "ce": 122736441.78422846,
+     "fifth_ce": 124433878.35953575,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.11134004888138563,
+      "em_equity": 0.06393960875193541,
+      "gold": 0.08428454770980401,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.16350266716223288,
+      "em_equity": 0.20040975773123385,
+      "gold": 0.17564755495451528,
+      "treasury": 0.06653177379119933,
+      "tips": 0.0583307971343816,
+      "tbill": 0.0029231723457691103,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05173283072801246
+     }
+    },
+    {
+     "chosen_safe": 0.4,
+     "validation_selected_safe": 0.4,
+     "search_note": null,
+     "ce": 124344218.680377,
+     "fifth_ce": 130040643.07077144,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.08049034024171174,
+      "em_equity": 0.0830418530621873,
+      "gold": 0.12353976337063213,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19303379159020834,
+      "em_equity": 0.2424785019625051,
+      "gold": 0.18213048518414662,
+      "treasury": 0.06546275359912564,
+      "tips": 0.06227102930293602,
+      "tbill": 0.003556109709969619,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05258054889147235
+     }
+    },
+    {
+     "chosen_safe": 0.15,
+     "validation_selected_safe": 0.15,
+     "search_note": null,
+     "ce": 117637371.31507374,
+     "fifth_ce": 115502676.69037385,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.07133266408221711,
+      "em_equity": 0.035288981023861105,
+      "gold": 0.08685104883259841,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19079488234130756,
+      "em_equity": 0.24036857222247568,
+      "gold": 0.17933047769585486,
+      "treasury": 0.06241241811116961,
+      "tips": 0.0604075464666673,
+      "tbill": 0.0032788822224580384,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.050452142593927614
+     }
+    },
+    {
+     "chosen_safe": 0.475,
+     "validation_selected_safe": 0.475,
+     "search_note": null,
+     "ce": 116177271.5886828,
+     "fifth_ce": 117871656.46266079,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.013641930205850132,
+      "em_equity": -0.029339269684293647,
+      "gold": 0.10387449575307896,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.21334614100274746,
+      "em_equity": 0.26348503808473256,
+      "gold": 0.17722762940039027,
+      "treasury": 0.06472806813566076,
+      "tips": 0.06423827355203925,
+      "tbill": 0.0030746505596589155,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05326519946898665
+     }
+    },
+    {
+     "chosen_safe": 0.625,
+     "validation_selected_safe": 0.625,
+     "search_note": null,
+     "ce": 117015722.97858804,
+     "fifth_ce": 116687322.88950935,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.07303630990635693,
+      "em_equity": 0.028535877059485085,
+      "gold": 0.0706747683509957,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.21467017899893595,
+      "em_equity": 0.26768328077589904,
+      "gold": 0.18624781849763575,
+      "treasury": 0.06820806825176853,
+      "tips": 0.06835905993702183,
+      "tbill": 0.0030760210841358697,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05550810867959867
+     }
+    },
+    {
+     "chosen_safe": 0.375,
+     "validation_selected_safe": 0.375,
+     "search_note": null,
+     "ce": 123930878.57530212,
+     "fifth_ce": 128858936.3204244,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.0919595836845776,
+      "em_equity": 0.0597628765699635,
+      "gold": 0.1197186770220697,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.18452361558904254,
+      "em_equity": 0.23331468131095032,
+      "gold": 0.18948522587685965,
+      "treasury": 0.06530571580943491,
+      "tips": 0.062114315347792194,
+      "tbill": 0.0034170972577656816,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.052175368684527774
+     }
+    },
+    {
+     "chosen_safe": 0.45,
+     "validation_selected_safe": 0.45,
+     "search_note": null,
+     "ce": 115079893.83302896,
+     "fifth_ce": 115741633.44165272,
+     "frozen_final_pass": null,
+     "frozen_ce": null,
+     "drift": {
+      "us_equity": 0.05376795538628422,
+      "em_equity": 0.014990741484758034,
+      "gold": 0.0693463195646623,
+      "treasury": 0.04726519246711422,
+      "tips": 0.04726519246711422,
+      "tbill": 0.04085399400826605,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.0
+     },
+     "vol": {
+      "us_equity": 0.19309146611270855,
+      "em_equity": 0.2560187799854812,
+      "gold": 0.16927217080207954,
+      "treasury": 0.06431880616917725,
+      "tips": 0.06086197958502357,
+      "tbill": 0.003334529386510713,
+      "cash": 0.0,
+      "__fx_usd_per_sgd": 0.05025059501270272
+     }
+    }
+   ],
+   "base_moments": {
+    "ids": [
+     "us_equity",
+     "em_equity",
+     "gold",
+     "treasury",
+     "tips",
+     "tbill",
+     "cash",
+     "__fx_usd_per_sgd"
+    ],
+    "drift": {
+     "us_equity": 0.09831680381875918,
+     "em_equity": 0.0628695018975309,
+     "gold": 0.09207931015658082,
+     "treasury": 0.04726519246711422,
+     "tips": 0.04726519246711422,
+     "tbill": 0.04085399400826605,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.0
+    },
+    "vol": {
+     "us_equity": 0.1803821851069821,
+     "em_equity": 0.2242094394126983,
+     "gold": 0.17356681838609256,
+     "treasury": 0.06397579099537658,
+     "tips": 0.05959868448086985,
+     "tbill": 0.003174899249950712,
+     "cash": 0.0,
+     "__fx_usd_per_sgd": 0.050241732196776565
+    }
+   },
+   "T_weeks": 1129,
+   "seconds": 92.91195096399997
+  }
+ }
+}

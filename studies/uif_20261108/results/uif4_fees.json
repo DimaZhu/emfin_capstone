@@ -1,0 +1,1677 @@
+{
+ "meta": {
+  "label": "UIF item 4 (owner ask 8 Nov 17:09 SGT): fees, no tax. Execution-policy layer: trading fee tiers 0/10/25bp and holding fees 0/0.25/0.50%/yr on listed sleeves, on top of the existing 5-20bp sell haircuts; frozen round-2 mixes; policies cash_first/annual_rebal/threshold_10/glide_annual; 10/20/30y. Search layer: 0.25/0.50%/yr mean drag on all listed sleeves, 10y dual-law search. Labeled sensitivity; engine unchanged.",
+  "tiers": {
+   "trade0": {
+    "fee_trade": 0.0,
+    "fee_aum_annual": 0.0
+   },
+   "trade10": {
+    "fee_trade": 0.001,
+    "fee_aum_annual": 0.0
+   },
+   "trade25": {
+    "fee_trade": 0.0025,
+    "fee_aum_annual": 0.0
+   },
+   "trade10_aum25": {
+    "fee_trade": 0.001,
+    "fee_aum_annual": 0.0025
+   },
+   "trade10_aum50": {
+    "fee_trade": 0.001,
+    "fee_aum_annual": 0.005
+   }
+  },
+  "policies": [
+   "cash_first",
+   "annual_rebal",
+   "threshold_10",
+   "glide_annual"
+  ]
+ },
+ "fitted": {
+  "10y_s20261109": {
+   "years": 10,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.125,
+    0.125
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 0.16370860017626374,
+     "q05": 98361320.09307753,
+     "median": 128622503.05685946,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.22083245834510284,
+     "q05": 97396140.78184,
+     "median": 123876681.20412052,
+     "funded": 1.0,
+     "turnover": 33228483.62225407,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.20523933757116475,
+     "q05": 97656587.18177795,
+     "median": 123411326.70250793,
+     "funded": 1.0,
+     "turnover": 59052467.38438183,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.2571100537827948,
+     "q05": 101529015.26565418,
+     "median": 138230487.57425767,
+     "funded": 1.0,
+     "turnover": 68596715.28439395,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 0.1640619706556968,
+     "q05": 98324522.12603346,
+     "median": 128582838.63992935,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 30030.03003003004,
+     "total_fees_median": 30030.03003003003
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.22130517786123294,
+     "q05": 97262086.58585106,
+     "median": 123774403.59673555,
+     "funded": 1.0,
+     "turnover": 33193233.20113249,
+     "total_fees": 96416.49643229495,
+     "total_fees_median": 73107.82295339153
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.2064839352533744,
+     "q05": 97445982.23126239,
+     "median": 123285074.26514368,
+     "funded": 1.0,
+     "turnover": 58905027.77547881,
+     "total_fees": 147840.08558098748,
+     "total_fees_median": 108887.41858418216
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.258014775955679,
+     "q05": 101329813.11228831,
+     "median": 138035401.14687413,
+     "funded": 1.0,
+     "turnover": 68501031.08881478,
+     "total_fees": 167032.09220765927,
+     "total_fees_median": 123427.96308462785
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 0.16459339316113492,
+     "q05": 98269186.83724557,
+     "median": 128523192.90018466,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 75187.96992481207,
+     "total_fees_median": 75187.96992481206
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.22200454036689526,
+     "q05": 97063780.7317484,
+     "median": 123642629.24799359,
+     "funded": 1.0,
+     "turnover": 33140441.348082528,
+     "total_fees": 240890.17666522466,
+     "total_fees_median": 182825.03219305212
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.20837910066697335,
+     "q05": 97145160.74266504,
+     "median": 123094407.14204772,
+     "funded": 1.0,
+     "turnover": 58685898.24732807,
+     "total_fees": 368617.46116145246,
+     "total_fees_median": 272147.2971172356
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.2593748448402152,
+     "q05": 101034193.37897435,
+     "median": 137788961.10095447,
+     "funded": 1.0,
+     "turnover": 68357861.9313659,
+     "total_fees": 416977.2795816417,
+     "total_fees_median": 308505.919526835
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 0.18497163742555955,
+     "q05": 95758415.29435,
+     "median": 125396402.16910821,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 2717141.153065332,
+     "total_fees_median": 2482434.419913572
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.24129141920475589,
+     "q05": 94827710.91857645,
+     "median": 120666456.35850626,
+     "funded": 1.0,
+     "turnover": 32678586.22008625,
+     "total_fees": 2572162.8135838713,
+     "total_fees_median": 2490563.9857650767
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.22713740943440164,
+     "q05": 94821451.9008729,
+     "median": 120246866.92158058,
+     "funded": 1.0,
+     "turnover": 57979358.5512127,
+     "total_fees": 2613922.760062729,
+     "total_fees_median": 2526657.983103319
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.276439469334485,
+     "q05": 98521133.26421094,
+     "median": 134624452.523288,
+     "funded": 1.0,
+     "turnover": 67709169.47874868,
+     "total_fees": 2843974.20747457,
+     "total_fees_median": 2695154.162605704
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 0.20534468634107877,
+     "q05": 93234679.4590502,
+     "median": 122353432.9722,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 5324534.819663325,
+     "total_fees_median": 4865942.817947463
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.26099258547739773,
+     "q05": 92428696.51907231,
+     "median": 117633914.44844162,
+     "funded": 1.0,
+     "turnover": 32173325.6702527,
+     "total_fees": 4977762.045499663,
+     "total_fees_median": 4844241.902454794
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.24728297249837244,
+     "q05": 92398459.10971615,
+     "median": 117289128.59637511,
+     "funded": 1.0,
+     "turnover": 57070532.69182651,
+     "total_fees": 5010216.402893773,
+     "total_fees_median": 4874747.035599189
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.2943155394119105,
+     "q05": 95794066.80371521,
+     "median": 131310919.1138747,
+     "funded": 1.0,
+     "turnover": 66932414.88972669,
+     "total_fees": 5443353.078787372,
+     "total_fees_median": 5197071.303123096
+    }
+   },
+   "seconds": 4.514560280999831
+  },
+  "10y_s20261111": {
+   "years": 10,
+   "seed": 20261111,
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.125,
+    0.125
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 0.40960389929589197,
+     "q05": 100172773.01922932,
+     "median": 127894273.04079472,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.3473407740448445,
+     "q05": 100174396.0238244,
+     "median": 123627237.83730206,
+     "funded": 1.0,
+     "turnover": 32677197.62167091,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.33339087365394543,
+     "q05": 100346456.47545871,
+     "median": 123144871.81045099,
+     "funded": 1.0,
+     "turnover": 54846409.65049121,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.43174801298798376,
+     "q05": 105061503.89274175,
+     "median": 137313586.65257156,
+     "funded": 1.0,
+     "turnover": 67761579.83626717,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 0.40994715813717536,
+     "q05": 100136117.50791003,
+     "median": 127854575.2818267,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 30030.03003003004,
+     "total_fees_median": 30030.03003003003
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.3486174629268885,
+     "q05": 100051395.55501786,
+     "median": 123539359.79195374,
+     "funded": 1.0,
+     "turnover": 32642548.812639512,
+     "total_fees": 95315.127655309,
+     "total_fees_median": 72328.41550573723
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.3383030272258839,
+     "q05": 100183265.56135802,
+     "median": 123006769.06403914,
+     "funded": 1.0,
+     "turnover": 54708101.461251915,
+     "total_fees": 139446.2329525337,
+     "total_fees_median": 102359.47990656155
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.43353562805973844,
+     "q05": 104904436.4617767,
+     "median": 137120718.62324852,
+     "funded": 1.0,
+     "turnover": 67667414.08923294,
+     "total_fees": 165364.8582084956,
+     "total_fees_median": 122667.29400527372
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 0.4104633403338335,
+     "q05": 100080996.43825695,
+     "median": 127794879.40367936,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 75187.96992481207,
+     "total_fees_median": 75187.96992481206
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.3505334513490161,
+     "q05": 99840908.11351818,
+     "median": 123399015.48808235,
+     "funded": 1.0,
+     "turnover": 32590658.042596795,
+     "total_fees": 238141.26013779602,
+     "total_fees_median": 180870.6436168678
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.34556250566209495,
+     "q05": 99938691.97600222,
+     "median": 122814508.81615722,
+     "funded": 1.0,
+     "turnover": 54502610.60519099,
+     "total_fees": 347701.02295076696,
+     "total_fees_median": 255852.31542720052
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.43621669747298636,
+     "q05": 104668888.28599818,
+     "median": 136855937.94968638,
+     "funded": 1.0,
+     "turnover": 67526517.61645782,
+     "total_fees": 412820.5580071012,
+     "total_fees_median": 306597.97630857123
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 0.4266622993231879,
+     "q05": 97481200.23284341,
+     "median": 124690463.44256508,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 2683448.8301986717,
+     "total_fees_median": 2476142.4070419753
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.36640937428937326,
+     "q05": 97269892.73880622,
+     "median": 120392300.06225365,
+     "funded": 1.0,
+     "turnover": 32131027.076057304,
+     "total_fees": 2560274.823911959,
+     "total_fees_median": 2488282.903322112
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.3566598560674744,
+     "q05": 97505063.508591,
+     "median": 119894368.7561397,
+     "funded": 1.0,
+     "turnover": 53820373.357554436,
+     "total_fees": 2591821.383076262,
+     "total_fees_median": 2519016.5707776854
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.4500243319975486,
+     "q05": 102072582.04844783,
+     "median": 133762393.00513068,
+     "funded": 1.0,
+     "turnover": 66881005.268702894,
+     "total_fees": 2824373.290944073,
+     "total_fees_median": 2688782.345440369
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 0.4427955301168368,
+     "q05": 94929778.82252596,
+     "median": 121665624.89591655,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 5258400.0519652935,
+     "total_fees_median": 4853904.290462002
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.3837493560703305,
+     "q05": 94642233.86721855,
+     "median": 117404518.60750753,
+     "funded": 1.0,
+     "turnover": 31628914.299701788,
+     "total_fees": 4955408.84050641,
+     "total_fees_median": 4842517.13904204
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.37452330496191094,
+     "q05": 94828221.49777047,
+     "median": 116914161.63928095,
+     "funded": 1.0,
+     "turnover": 52949122.606336474,
+     "total_fees": 4974868.068500314,
+     "total_fees_median": 4869021.51753876
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.4659846081414457,
+     "q05": 99391456.75066984,
+     "median": 130481457.39422674,
+     "funded": 1.0,
+     "turnover": 66109716.55073699,
+     "total_fees": 5406368.510759553,
+     "total_fees_median": 5189064.2267759275
+    }
+   },
+   "seconds": 4.347814357000061
+  },
+  "20y_s20261109": {
+   "years": 20,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.6,
+    0.125
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 1.1181266958065441,
+     "q05": 129026397.64224365,
+     "median": 195659764.49141815,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.5993567124127741,
+     "q05": 116264621.19349566,
+     "median": 159450772.29431617,
+     "funded": 1.0,
+     "turnover": 992878365786.3143,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.5305038229692659,
+     "q05": 115574275.50466782,
+     "median": 158484137.55646706,
+     "funded": 1.0,
+     "turnover": 319329877624.97015,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.5677902544143435,
+     "q05": 115972280.97099492,
+     "median": 152597269.19806302,
+     "funded": 1.0,
+     "turnover": 781490968941.8682,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 1.1186654482869467,
+     "q05": 128918639.25823382,
+     "median": 195549287.51581317,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 60060.060060060045,
+     "total_fees_median": 60060.060060060045
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.6018736972624056,
+     "q05": 116065672.34808199,
+     "median": 159220877.4797659,
+     "funded": 1.0,
+     "turnover": 984122521219.2941,
+     "total_fees": 1968305102.4986532,
+     "total_fees_median": 140762.58000140468
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.5325209180038475,
+     "q05": 115250576.4381092,
+     "median": 158176459.801189,
+     "funded": 1.0,
+     "turnover": 308569617633.37305,
+     "total_fees": 617199295.326806,
+     "total_fees_median": 192801.3509944629
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.570680321511339,
+     "q05": 115635933.5823973,
+     "median": 152217106.58290875,
+     "funded": 1.0,
+     "turnover": 774229026388.7148,
+     "total_fees": 1548518112.8374906,
+     "total_fees_median": 191767.31435485085
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 1.1194757860135622,
+     "q05": 128759029.61859122,
+     "median": 195383156.7254295,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 150375.9398496244,
+     "total_fees_median": 150375.9398496244
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.6056791795906282,
+     "q05": 115766444.29999733,
+     "median": 158875964.3267915,
+     "funded": 1.0,
+     "turnover": 971115603638.3245,
+     "total_fees": 4855728394.131472,
+     "total_fees_median": 351883.1774760932
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.5354730940254178,
+     "q05": 114783122.34677169,
+     "median": 157736269.2412789,
+     "funded": 1.0,
+     "turnover": 293102167142.63934,
+     "total_fees": 1465661211.653046,
+     "total_fees_median": 481612.4511157166
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.574962567217588,
+     "q05": 115149297.6694285,
+     "median": 151674902.61194882,
+     "funded": 1.0,
+     "turnover": 763447711610.6616,
+     "total_fees": 3817388933.9931574,
+     "total_fees_median": 479108.6193979852
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 1.1189911567197401,
+     "q05": 121398021.7449947,
+     "median": 185097196.5774306,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 150279922786.05624,
+     "total_fees_median": 5749782.467580086
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.6307776656547419,
+     "q05": 108992276.1523918,
+     "median": 150657950.62565586,
+     "funded": 1.0,
+     "turnover": 943312078043.26,
+     "total_fees": 15916312537.79923,
+     "total_fees_median": 5399034.609610185
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.5616587604905654,
+     "q05": 108262222.18650433,
+     "median": 149695554.25361007,
+     "funded": 1.0,
+     "turnover": 295262768636.18066,
+     "total_fees": 1792281549.5347888,
+     "total_fees_median": 5439242.131437348
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.5961908890865072,
+     "q05": 108695605.88067232,
+     "median": 143798935.60008305,
+     "funded": 1.0,
+     "turnover": 741360826268.3347,
+     "total_fees": 12063804369.212942,
+     "total_fees_median": 5141335.079426751
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 1.1215510283116963,
+     "q05": 113892068.0451566,
+     "median": 175144909.96697903,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 283750453933.097,
+     "total_fees_median": 11070601.742653593
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.6573587394977872,
+     "q05": 102732006.36080746,
+     "median": 142479200.28565514,
+     "funded": 1.0,
+     "turnover": 904193447240.377,
+     "total_fees": 28595860177.314484,
+     "total_fees_median": 10321053.275360553
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.589505674949902,
+     "q05": 101526992.00141191,
+     "median": 141948469.90125513,
+     "funded": 1.0,
+     "turnover": 282534180439.66724,
+     "total_fees": 2865824611.313085,
+     "total_fees_median": 10340703.883160822
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.620297621796151,
+     "q05": 102025749.36904769,
+     "median": 135840918.27274585,
+     "funded": 1.0,
+     "turnover": 709885507532.7275,
+     "total_fees": 21611480616.20731,
+     "total_fees_median": 9773822.306601163
+    }
+   },
+   "seconds": 8.440429830000085
+  },
+  "30y_s20261109": {
+   "years": 30,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.675,
+    0.125
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 1.8150990154326307,
+     "q05": 194540506.10341763,
+     "median": 352083433.86579597,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.9304640848095038,
+     "q05": 140029523.7805209,
+     "median": 215422038.28479904,
+     "funded": 1.0,
+     "turnover": 29659782532155.273,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.6886281865544177,
+     "q05": 139112431.67183965,
+     "median": 213475559.86006296,
+     "funded": 1.0,
+     "turnover": 6465861902529.81,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.3880203087545326,
+     "q05": 129924629.37562034,
+     "median": 184510203.91144726,
+     "funded": 1.0,
+     "turnover": 9169650336723.223,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 1.8158997875417646,
+     "q05": 194309233.63674945,
+     "median": 351790754.8105575,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 90090.0900900897,
+     "total_fees_median": 90090.09009008971
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.9340992303298636,
+     "q05": 139499453.34090778,
+     "median": 214966916.4059205,
+     "funded": 1.0,
+     "turnover": 29265946826386.91,
+     "total_fees": 58531983742.863884,
+     "total_fees_median": 213320.74447422422
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.7023864012536527,
+     "q05": 138532739.51979798,
+     "median": 212923384.40200743,
+     "funded": 1.0,
+     "turnover": 6181847245699.807,
+     "total_fees": 12363784581.489695,
+     "total_fees_median": 261378.67154077892
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.3959554118710415,
+     "q05": 129358943.5417403,
+     "median": 183863493.0544868,
+     "funded": 1.0,
+     "turnover": 9042836071189.4,
+     "total_fees": 18085762232.468884,
+     "total_fees_median": 250553.14127427462
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 1.8171039913734195,
+     "q05": 193961455.49138334,
+     "median": 351350635.9305004,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 225563.90977443545,
+     "total_fees_median": 225563.90977443545
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.9395604512194096,
+     "q05": 138706161.90154546,
+     "median": 214277103.80689025,
+     "funded": 1.0,
+     "turnover": 28684278204130.24,
+     "total_fees": 143421616584.5607,
+     "total_fees_median": 532975.1506170676
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.7229663146656672,
+     "q05": 137744769.24648184,
+     "median": 212121133.4827206,
+     "funded": 1.0,
+     "turnover": 5779002066093.812,
+     "total_fees": 28895235894.378845,
+     "total_fees_median": 652877.1178654741
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.407839526579532,
+     "q05": 128514172.3278958,
+     "median": 182826641.4198087,
+     "funded": 1.0,
+     "turnover": 8855657236079.014,
+     "total_fees": 44278511744.30484,
+     "total_fees_median": 625781.8943367611
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 1.8127281139723128,
+     "q05": 176899526.11420327,
+     "median": 322552394.90651727,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 1848172794980.9211,
+     "total_fees_median": 11089493.471810132
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.9880914240292685,
+     "q05": 125833603.00467412,
+     "median": 196417696.38215947,
+     "funded": 1.0,
+     "turnover": 27349200617477.55,
+     "total_fees": 464523494607.4483,
+     "total_fees_median": 8970099.230211861
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.7613649697953169,
+     "q05": 125327364.69931225,
+     "median": 194823062.51610485,
+     "funded": 1.0,
+     "turnover": 5790717239109.429,
+     "total_fees": 45854021541.01028,
+     "total_fees_median": 8966543.926789735
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.490248681801895,
+     "q05": 115800322.94313298,
+     "median": 167495533.01980537,
+     "funded": 1.0,
+     "turnover": 8439863225484.986,
+     "total_fees": 145288800040.0117,
+     "total_fees_median": 7731772.660401456
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 1.7928567948015752,
+     "q05": 161170615.83372778,
+     "median": 294983782.40002525,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 3428350820603.091,
+     "total_fees_median": 20847147.971439794
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 1.025293659364785,
+     "q05": 112863000.11146739,
+     "median": 179732251.26602602,
+     "funded": 1.0,
+     "turnover": 25558666252285.46,
+     "total_fees": 814514288076.6873,
+     "total_fees_median": 16802102.912771836
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.8105319566487261,
+     "q05": 112507095.20562921,
+     "median": 177771007.0045433,
+     "funded": 1.0,
+     "turnover": 5424699198793.115,
+     "total_fees": 74985994989.2918,
+     "total_fees_median": 16742376.087325495
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.5748392772941129,
+     "q05": 103158835.80433123,
+     "median": 153036588.84316176,
+     "funded": 1.0,
+     "turnover": 7877196970176.477,
+     "total_fees": 254640660910.5867,
+     "total_fees_median": 14410958.001856187
+    }
+   },
+   "seconds": 12.668032328999743
+  },
+  "10y_search_drag0.0025": {
+   "drag_annual": 0.0025,
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "note": null,
+   "ce": 109216452.35490182,
+   "seconds": 9.194621001000087
+  },
+  "10y_search_drag0.0050": {
+   "drag_annual": 0.005,
+   "chosen_safe": 0.3,
+   "validation_selected_safe": 0.3,
+   "note": null,
+   "ce": 105459412.01400907,
+   "seconds": 12.910591408000073
+  }
+ },
+ "current_quotes": {
+  "10y_s20261109": {
+   "years": 10,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.1,
+    0.1
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 0.09719497940056702,
+     "q05": 114109488.68813154,
+     "median": 156891077.5217921,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.16625124725529078,
+     "q05": 113263907.12241086,
+     "median": 154778493.69996515,
+     "funded": 1.0,
+     "turnover": 52718661.70567073,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.09387881691909603,
+     "q05": 113959467.98540312,
+     "median": 154567447.97716627,
+     "funded": 1.0,
+     "turnover": 165060776.4885038,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.169515261672814,
+     "q05": 113193603.74664293,
+     "median": 155323554.06602532,
+     "funded": 1.0,
+     "turnover": 54220236.99661198,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 0.09755757910704901,
+     "q05": 114071835.99168943,
+     "median": 156849215.48972422,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 30030.03003003004,
+     "total_fees_median": 30030.03003003003
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.16687164708518284,
+     "q05": 113152749.07789592,
+     "median": 154677507.09323764,
+     "funded": 1.0,
+     "turnover": 52636241.79815441,
+     "total_fees": 135302.51362633877,
+     "total_fees_median": 83894.42206368965
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.0962531586606278,
+     "q05": 113592524.74303484,
+     "median": 154362832.84147322,
+     "funded": 1.0,
+     "turnover": 163546083.9096067,
+     "total_fees": 357122.1978492433,
+     "total_fees_median": 163402.47043734073
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.17014947440573258,
+     "q05": 113079457.30143602,
+     "median": 155195620.15584418,
+     "funded": 1.0,
+     "turnover": 54134580.20514104,
+     "total_fees": 138299.190440312,
+     "total_fees_median": 85466.18062338555
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 0.098102898296807,
+     "q05": 114015215.39553553,
+     "median": 156786265.0655617,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 75187.96992481207,
+     "total_fees_median": 75187.96992481206
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.16780615074111163,
+     "q05": 112985986.56296514,
+     "median": 154489608.2947932,
+     "funded": 1.0,
+     "turnover": 52512903.31924942,
+     "total_fees": 337752.4865210592,
+     "total_fees_median": 209773.16440120153
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.1001526086410853,
+     "q05": 113057551.92722963,
+     "median": 154071665.88214773,
+     "funded": 1.0,
+     "turnover": 161320404.15275565,
+     "total_fees": 881789.9906885903,
+     "total_fees_median": 408217.61771877075
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.17110531859567574,
+     "q05": 112908219.31097531,
+     "median": 155018158.9364069,
+     "funded": 1.0,
+     "turnover": 54006402.35542571,
+     "total_fees": 345219.98170194065,
+     "total_fees_median": 213694.25410830078
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 0.11981691405171924,
+     "q05": 111069262.15537347,
+     "median": 152949106.2297343,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 3135847.0109856515,
+     "total_fees_median": 2792075.843267231
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.18710316532743232,
+     "q05": 110236879.47537178,
+     "median": 150772107.91484705,
+     "funded": 1.0,
+     "turnover": 51745827.83221801,
+     "total_fees": 3006056.1022887463,
+     "total_fees_median": 2831130.176264328
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.11805943657192444,
+     "q05": 110911704.34208857,
+     "median": 150700906.11335212,
+     "funded": 1.0,
+     "turnover": 160530233.44966573,
+     "total_fees": 3291634.552391603,
+     "total_fees_median": 2910544.1086569577
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.19029087615075463,
+     "q05": 110281659.41103253,
+     "median": 151299587.69955269,
+     "funded": 1.0,
+     "turnover": 53227572.40226812,
+     "total_fees": 3017732.771933997,
+     "total_fees_median": 2838672.743761941
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 0.14169204711316052,
+     "q05": 108124094.40944512,
+     "median": 149253313.51958996,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 6146411.456317669,
+     "total_fees_median": 5474122.670375422
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.20677709417809498,
+     "q05": 107200206.2914879,
+     "median": 146930244.95191196,
+     "funded": 1.0,
+     "turnover": 50872580.35239263,
+     "total_fees": 5792308.886039883,
+     "total_fees_median": 5502853.361837294
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.13966132791190528,
+     "q05": 107893372.99704413,
+     "median": 146942297.91771424,
+     "funded": 1.0,
+     "turnover": 157574837.18939018,
+     "total_fees": 6138517.161180967,
+     "total_fees_median": 5581993.626762997
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.2099112035403603,
+     "q05": 107263171.71293037,
+     "median": 147493581.5566451,
+     "funded": 1.0,
+     "turnover": 52338082.079515204,
+     "total_fees": 5812333.9211258385,
+     "total_fees_median": 5516183.963259639
+    }
+   },
+   "seconds": 4.669613094000397
+  },
+  "10y_s20261111": {
+   "years": 10,
+   "seed": 20261111,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.1,
+    0.1
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 0.4404639663091546,
+     "q05": 116880101.8255969,
+     "median": 155926739.39537376,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.3815467759688309,
+     "q05": 117805161.50600591,
+     "median": 153731082.10755336,
+     "funded": 1.0,
+     "turnover": 51789334.16852409,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.39534685229660654,
+     "q05": 116971450.18935652,
+     "median": 153557202.23474354,
+     "funded": 1.0,
+     "turnover": 160071044.50332808,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.38686377273904343,
+     "q05": 117694420.70314427,
+     "median": 154223569.1140905,
+     "funded": 1.0,
+     "turnover": 53277812.14998825,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 0.4408590417967466,
+     "q05": 116839079.24282883,
+     "median": 155882057.4936098,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 30030.03003003004,
+     "total_fees_median": 30030.03003003003
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.38330032378072365,
+     "q05": 117692952.77053577,
+     "median": 153560930.04779565,
+     "funded": 1.0,
+     "turnover": 51708119.78421046,
+     "total_fees": 133446.26959845086,
+     "total_fees_median": 82418.42557799313
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.4024700532871817,
+     "q05": 116741657.16419154,
+     "median": 153347365.59074673,
+     "funded": 1.0,
+     "turnover": 158545096.4418391,
+     "total_fees": 347120.22291370813,
+     "total_fees_median": 154171.12139693974
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.38864065368603906,
+     "q05": 117571878.40664677,
+     "median": 154074033.61862683,
+     "funded": 1.0,
+     "turnover": 53193404.78222069,
+     "total_fees": 136416.8395944713,
+     "total_fees_median": 84263.3201533354
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 0.4414531452677896,
+     "q05": 116777391.14844082,
+     "median": 155814866.6638897,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 75187.96992481207,
+     "total_fees_median": 75187.96992481206
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.3859334801942576,
+     "q05": 117518799.29226327,
+     "median": 153363484.04123986,
+     "funded": 1.0,
+     "turnover": 51586586.514553554,
+     "total_fees": 333120.9024975798,
+     "total_fees_median": 206084.65598590183
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.41296385120908696,
+     "q05": 116400394.20792316,
+     "median": 152947374.54654703,
+     "funded": 1.0,
+     "turnover": 156303464.930005,
+     "total_fees": 856705.2945748373,
+     "total_fees_median": 385217.34805166034
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.39129309586303135,
+     "q05": 117388036.23966092,
+     "median": 153904750.88338685,
+     "funded": 1.0,
+     "turnover": 53067097.828375,
+     "total_fees": 340523.4590666871,
+     "total_fees_median": 210681.471242106
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 0.457397573663564,
+     "q05": 113684691.21320426,
+     "median": 152049070.64540374,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 3087605.189668215,
+     "total_fees_median": 2785547.084663554
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.4013958426908763,
+     "q05": 114661029.28599267,
+     "median": 149776747.729402,
+     "funded": 1.0,
+     "turnover": 50823866.019614466,
+     "total_fees": 2985012.4304166487,
+     "total_fees_median": 2824932.750300777
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.4205325726257034,
+     "q05": 113654160.87835671,
+     "median": 149492593.28563952,
+     "funded": 1.0,
+     "turnover": 155545262.5114768,
+     "total_fees": 3256164.9802300595,
+     "total_fees_median": 2900701.1610081783
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.40716801459523816,
+     "q05": 114711258.68730582,
+     "median": 150221108.1562962,
+     "funded": 1.0,
+     "turnover": 52292727.08950409,
+     "total_fees": 2996261.295182213,
+     "total_fees_median": 2832454.3172307555
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 0.4734908673570621,
+     "q05": 110613370.20238781,
+     "median": 148230423.22166002,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 6051712.84171977,
+     "total_fees_median": 5460790.089393334
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.41860938073550713,
+     "q05": 111708138.29140487,
+     "median": 146019224.7646904,
+     "funded": 1.0,
+     "turnover": 49956791.28283163,
+     "total_fees": 5752662.394993965,
+     "total_fees_median": 5499000.506631922
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.43784178200251234,
+     "q05": 110746828.3420206,
+     "median": 145803807.6332109,
+     "funded": 1.0,
+     "turnover": 152606571.2838547,
+     "total_fees": 6078416.426124242,
+     "total_fees_median": 5575149.671269927
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.4242563449872894,
+     "q05": 111756277.6746014,
+     "median": 146540494.9878393,
+     "funded": 1.0,
+     "turnover": 51409577.830711946,
+     "total_fees": 5771871.036502982,
+     "total_fees_median": 5511201.65387806
+    }
+   },
+   "seconds": 4.5695515440002055
+  },
+  "20y_s20261109": {
+   "years": 20,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.45,
+    0.1
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 1.6323345134782485,
+     "q05": 186756937.09731048,
+     "median": 283021615.51266694,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 0.8549491588127347,
+     "q05": 176454812.79685724,
+     "median": 255505956.53444487,
+     "funded": 1.0,
+     "turnover": 15833852110903.887,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.7059171033071101,
+     "q05": 176838360.38611677,
+     "median": 255306154.81819096,
+     "funded": 1.0,
+     "turnover": 348864235969889.75,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.5370589639676164,
+     "q05": 169328493.97275388,
+     "median": 224962969.68905866,
+     "funded": 1.0,
+     "turnover": 4286696502250.6533,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 1.632799167595209,
+     "q05": 186640863.75934505,
+     "median": 282887219.01338124,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 60060.06006006003,
+     "total_fees_median": 60060.06006006004
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 0.8594487316072876,
+     "q05": 176179792.27905944,
+     "median": 255211649.177464,
+     "funded": 1.0,
+     "turnover": 15685541059310.229,
+     "total_fees": 31371142178.680492,
+     "total_fees_median": 166669.1725954818
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.7067021815302014,
+     "q05": 176266779.6396621,
+     "median": 254906518.18831915,
+     "funded": 1.0,
+     "turnover": 329973633890949.5,
+     "total_fees": 659947327841.9587,
+     "total_fees_median": 293466.6585077687
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.5417090041684738,
+     "q05": 168867746.1275044,
+     "median": 224408441.37852013,
+     "funded": 1.0,
+     "turnover": 4244584052724.0356,
+     "total_fees": 8489228165.508122,
+     "total_fees_median": 228696.14031796972
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 1.6334982098417945,
+     "q05": 186467958.3362112,
+     "median": 282685119.01445514,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 150375.9398496244,
+     "total_fees_median": 150375.9398496244
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 0.8661817094892006,
+     "q05": 175767181.93363306,
+     "median": 254759885.86328346,
+     "funded": 1.0,
+     "turnover": 15465409297950.213,
+     "total_fees": 77327196865.69086,
+     "total_fees_median": 416563.1053506224
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.7081159762337124,
+     "q05": 175411273.17477867,
+     "median": 253768821.38746816,
+     "funded": 1.0,
+     "turnover": 303531808679748.9,
+     "total_fees": 1517659193774.6836,
+     "total_fees_median": 732468.9767785989
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.5486602403902212,
+     "q05": 168113518.08053598,
+     "median": 223559512.11275107,
+     "funded": 1.0,
+     "turnover": 4182108277345.6597,
+     "total_fees": 20910691762.668148,
+     "total_fees_median": 571253.6365173827
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 1.6068349064409855,
+     "q05": 176210559.9597536,
+     "median": 267647122.9678163,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 254107264436.92215,
+     "total_fees_median": 7364508.211931032
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 0.8714962664370167,
+     "q05": 166117212.27508366,
+     "median": 241837129.34019983,
+     "funded": 1.0,
+     "turnover": 15008082839404.457,
+     "total_fees": 245955020588.91663,
+     "total_fees_median": 7182605.805784153
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.7268659677898853,
+     "q05": 166388128.22903475,
+     "median": 241048011.93624225,
+     "funded": 1.0,
+     "turnover": 315562583386003.25,
+     "total_fees": 1634647448436.6465,
+     "total_fees_median": 7306367.487807943
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.5644427172297916,
+     "q05": 159106138.25810608,
+     "median": 212618012.68270123,
+     "funded": 1.0,
+     "turnover": 4061530883168.5713,
+     "total_fees": 66662774967.87729,
+     "total_fees_median": 6579642.753046462
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 1.5814990047692712,
+     "q05": 165864001.71312714,
+     "median": 253737417.88805532,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 479847812576.8753,
+     "total_fees_median": 14180730.98523074
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 0.8834311779681021,
+     "q05": 156491757.66228607,
+     "median": 228783369.29583627,
+     "funded": 1.0,
+     "turnover": 14359926052386.727,
+     "total_fees": 440766476636.7951,
+     "total_fees_median": 13742505.11349018
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.7472691926073951,
+     "q05": 156962424.84194225,
+     "median": 228250571.93440777,
+     "funded": 1.0,
+     "turnover": 301784055461859.94,
+     "total_fees": 2522753493942.979,
+     "total_fees_median": 13853894.250543598
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.5881852448594849,
+     "q05": 149767348.32824314,
+     "median": 201215524.3774475,
+     "funded": 1.0,
+     "turnover": 3886373098966.2485,
+     "total_fees": 119461907983.46677,
+     "total_fees_median": 12513951.649110515
+    }
+   },
+   "seconds": 8.759388686999955
+  },
+  "30y_s20261109": {
+   "years": 30,
+   "seed": 20261109,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.425,
+    0.1
+   ],
+   "policies": {
+    "cash_first|trade0": {
+     "terminal_ru": 2.1750193512727183,
+     "q05": 329280608.3777205,
+     "median": 581007935.0400636,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "annual_rebal|trade0": {
+     "terminal_ru": 1.4643130688525403,
+     "q05": 278266223.29997087,
+     "median": 457240249.72693044,
+     "funded": 1.0,
+     "turnover": 1075091318308046.4,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "threshold_10|trade0": {
+     "terminal_ru": 0.8120033371655575,
+     "q05": 282892133.1895891,
+     "median": 454138043.7879261,
+     "funded": 1.0,
+     "turnover": 1.3564262224340242e+16,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "glide_annual|trade0": {
+     "terminal_ru": 0.48640909702506946,
+     "q05": 260488437.48248935,
+     "median": 377444492.02914464,
+     "funded": 1.0,
+     "turnover": 186682968320474.2,
+     "total_fees": 0.0,
+     "total_fees_median": 0.0
+    },
+    "cash_first|trade10": {
+     "terminal_ru": 2.1758502553965107,
+     "q05": 328975752.4147467,
+     "median": 580652514.1158681,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 90090.0900900897,
+     "total_fees_median": 90090.09009008971
+    },
+    "annual_rebal|trade10": {
+     "terminal_ru": 1.4724371681547286,
+     "q05": 277310077.30616385,
+     "median": 456320056.0209029,
+     "funded": 1.0,
+     "turnover": 1059654863119959.1,
+     "total_fees": 2119309816330.012,
+     "total_fees_median": 273717.21474312874
+    },
+    "threshold_10|trade10": {
+     "terminal_ru": 0.8461441660044235,
+     "q05": 281980003.3087683,
+     "median": 452414486.28583395,
+     "funded": 1.0,
+     "turnover": 1.259236567114983e+16,
+     "total_fees": 25184731432389.754,
+     "total_fees_median": 407582.8929658844
+    },
+    "glide_annual|trade10": {
+     "terminal_ru": 0.4983052826972583,
+     "q05": 259511427.20621687,
+     "median": 376298481.89634144,
+     "funded": 1.0,
+     "turnover": 183961182209383.97,
+     "total_fees": 367922454508.85803,
+     "total_fees_median": 303297.28497004235
+    },
+    "cash_first|trade25": {
+     "terminal_ru": 2.1770997504593153,
+     "q05": 328517322.39523774,
+     "median": 580118046.5606871,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 225563.90977443545,
+     "total_fees_median": 225563.90977443545
+    },
+    "annual_rebal|trade25": {
+     "terminal_ru": 1.4836626473893197,
+     "q05": 276048046.5984228,
+     "median": 455159508.6779931,
+     "funded": 1.0,
+     "turnover": 1036890048540467.5,
+     "total_fees": 5184450468266.251,
+     "total_fees_median": 683842.1181295444
+    },
+    "threshold_10|trade25": {
+     "terminal_ru": 0.9020359601178392,
+     "q05": 279212712.32909715,
+     "median": 449954383.208058,
+     "funded": 1.0,
+     "turnover": 1.1263305095144024e+16,
+     "total_fees": 56316525701284.0,
+     "total_fees_median": 1017215.2443969203
+    },
+    "glide_annual|trade25": {
+     "terminal_ru": 0.5161661715934387,
+     "q05": 258047677.32718414,
+     "median": 374658851.3565892,
+     "funded": 1.0,
+     "turnover": 179948016987402.84,
+     "total_fees": 899740310500.9237,
+     "total_fees_median": 757305.3716503363
+    },
+    "cash_first|trade10_aum25": {
+     "terminal_ru": 2.1591639219316794,
+     "q05": 299668576.7214926,
+     "median": 535450767.96676254,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 3125088806587.9673,
+     "total_fees_median": 16207319.163826317
+    },
+    "annual_rebal|trade10_aum25": {
+     "terminal_ru": 1.5002713170977908,
+     "q05": 252306807.21247885,
+     "median": 419230597.71563053,
+     "funded": 1.0,
+     "turnover": 988672826824579.5,
+     "total_fees": 17066915287719.938,
+     "total_fees_median": 14502797.15964954
+    },
+    "threshold_10|trade10_aum25": {
+     "terminal_ru": 0.9196683651392958,
+     "q05": 257941082.78798565,
+     "median": 415791818.00467813,
+     "funded": 1.0,
+     "turnover": 1.1761384907111596e+16,
+     "total_fees": 69290334725651.12,
+     "total_fees_median": 14631411.033441648
+    },
+    "glide_annual|trade10_aum25": {
+     "terminal_ru": 0.5879243228759541,
+     "q05": 236147139.71856228,
+     "median": 344735281.2664591,
+     "funded": 1.0,
+     "turnover": 171641391295030.62,
+     "total_fees": 2993524652544.342,
+     "total_fees_median": 12528676.314227326
+    },
+    "cash_first|trade10_aum50": {
+     "terminal_ru": 2.1440007244467463,
+     "q05": 272765870.9360213,
+     "median": 491349966.5947684,
+     "funded": 1.0,
+     "turnover": 0.0,
+     "total_fees": 5797703174384.737,
+     "total_fees_median": 30508656.02325143
+    },
+    "annual_rebal|trade10_aum50": {
+     "terminal_ru": 1.5267055349114722,
+     "q05": 229903881.69170114,
+     "median": 384402200.4597899,
+     "funded": 1.0,
+     "turnover": 922454553867946.1,
+     "total_fees": 29910233485014.99,
+     "total_fees_median": 27149471.24774709
+    },
+    "threshold_10|trade10_aum50": {
+     "terminal_ru": 0.9765737134457566,
+     "q05": 234513526.42687145,
+     "median": 381668144.0594718,
+     "funded": 1.0,
+     "turnover": 1.0985669589215802e+16,
+     "total_fees": 107430593885891.5,
+     "total_fees_median": 27264475.155076772
+    },
+    "glide_annual|trade10_aum50": {
+     "terminal_ru": 0.6763753733193263,
+     "q05": 215502486.81725845,
+     "median": 315833144.09813595,
+     "funded": 1.0,
+     "turnover": 160148148756668.94,
+     "total_fees": 5249421882907.521,
+     "total_fees_median": 23423913.607307844
+    }
+   },
+   "seconds": 13.460037827000178
+  },
+  "10y_search_drag0.0025": {
+   "drag_annual": 0.0025,
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "note": null,
+   "ce": 118819437.24405232,
+   "seconds": 5.758290314000078
+  },
+  "10y_search_drag0.0050": {
+   "drag_annual": 0.005,
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "note": null,
+   "ce": 116283160.52130471,
+   "seconds": 5.675207531999604
+  }
+ }
+}
