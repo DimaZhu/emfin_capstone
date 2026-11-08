@@ -1,0 +1,425 @@
+{
+ "meta": {
+  "label": "LABELED STUDY (owner ask 8 Nov 11:05, open point 3): real terms.",
+  "inflation_model": "stationary bootstrap of monthly log CPIAUCSL changes, mean block 36 months, 1947-2026, independent of asset paths (labeled simplification)",
+  "inflation_paths": {
+   "mean_annual": 0.03509301260523168,
+   "p05_annual": 0.01817334797915278,
+   "p95_annual": 0.06530916648185264
+  }
+ },
+ "real_frozen_sleeve": {
+  "chosen_safe": null,
+  "note": "no candidate mix passes validation",
+  "label": "real terms, base sleeve frozen (fix 3)",
+  "seconds": 6.2195088479999185
+ },
+ "real_solve_10y": {
+  "status": "unavailable",
+  "reason": "multi-period optimization failed validation: CLARABEL: infeasible; SCS: constraint residual 0.0822; exact representation retry: equivalent exponential CARA optimization failed validation: CLARABEL: infeasible; SCS: constraint residual 0.0637",
+  "seconds": 62.98593586300001
+ },
+ "real_own_sleeve": {
+  "chosen_safe": null,
+  "note": "10y real solve unavailable: unavailable",
+  "sleeve_status": "unavailable"
+ },
+ "real_peak_to_trough": {
+  "chosen_safe": null,
+  "note": "no candidate mix passes validation (peak-to-trough)",
+  "label": "real terms + peak-to-trough any-point limit, frozen base sleeve (fix 3, labeled custom judge)",
+  "seconds": 4.246318537999969,
+  "sleeve_proportions": {
+   "us_equity": 0.33313421039406155,
+   "gold": 0.20206096316513772,
+   "treasury": 0.4030787211978037,
+   "tips": 0.061726105242996994
+  }
+ },
+ "real_current_rates_solve_10y": {
+  "status": "optimized",
+  "reason": null,
+  "seconds": 6.77495331800003
+ },
+ "real_current_rates": {
+  "chosen_safe": null,
+  "note": "no candidate mix passes validation",
+  "label": "real terms x current rates (fixes 3+5), second default view candidate",
+  "seconds": 6.146204648999969,
+  "sleeve_proportions": {
+   "us_equity": 0.22628065199905423,
+   "gold": 0.1948047663379841,
+   "treasury": 0.5789145816629616
+  },
+  "sleeve_source": "true 10y real solve at current rates"
+ },
+ "real_tips_anchor_curr": {
+  "chosen_safe": null,
+  "note": "no candidate mix passes validation (anchor=tips)",
+  "label": "real terms x current rates, TIPS-anchored safe share (fix 3: TIPS is the real safe asset)",
+  "seconds": 6.239755557999956,
+  "sleeve_proportions": {
+   "us_equity": 0.22628065199905423,
+   "gold": 0.1948047663379841,
+   "treasury": 0.5789145816629616
+  }
+ },
+ "real_tips_anchor_fitted": {
+  "chosen_safe": null,
+  "note": "no candidate mix passes validation (anchor=tips)",
+  "label": "real terms, fitted means, TIPS-anchored safe share (fix 3)",
+  "seconds": 6.27303842799995,
+  "sleeve_proportions": {
+   "us_equity": 0.35505006827493335,
+   "gold": 0.21535392202025194,
+   "treasury": 0.4295960097048146
+  }
+ },
+ "judge_raw_solve_curr": {
+  "raw_weights": {
+   "us_equity": 0.1633,
+   "em_equity": 0.0,
+   "gold": 0.1406,
+   "treasury": 0.4178,
+   "tips": 0.0,
+   "tbill": 0.1783,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "validation_pass": false,
+  "final_pass": false,
+  "final_breaches": [
+   "Held-out path-loss tail",
+   "Held-out terminal-loss tail"
+  ],
+  "common_cara_ledger_ce": 78925137.80947645,
+  "terminal_median": 104131818.78058845,
+  "terminal_q05": 64478107.92497133,
+  "terminal_q95": 168507708.5440717,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "cross_base_on_real": {
+  "final_pass": false,
+  "final_breaches": [
+   "Held-out path-loss tail",
+   "Held-out terminal-loss tail"
+  ],
+  "common_cara_ledger_ce": 71627922.86557925,
+  "terminal_median": 91371856.60029408,
+  "terminal_q05": 56488894.50826595,
+  "terminal_q95": 149922479.99142691,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "real_feasible_limits": {
+  "label": "fix 3: tightest real-terms budgets passing the unchanged judge, 90% TIPS anchor at current rates (property fixed 10%)",
+  "grid": [
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.15,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.2,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.25,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.3,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.35,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.4,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.4,
+    "terminal_limit": 0.45,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.15,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.2,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.25,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.3,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.35,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.4,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.45,
+    "terminal_limit": 0.45,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.15,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.2,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.25,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.3,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.35,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.4,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.5,
+    "terminal_limit": 0.45,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.15,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.2,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.25,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.3,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.35,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.4,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.55,
+    "terminal_limit": 0.45,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.15,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.2,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.25,
+    "validation_pass": false,
+    "final_pass": false,
+    "breaches": [
+     "Held-out terminal-loss tail"
+    ]
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.3,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.35,
+    "validation_pass": false,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.4,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   },
+   {
+    "anypoint_cap": 0.6,
+    "terminal_limit": 0.45,
+    "validation_pass": true,
+    "final_pass": true,
+    "breaches": []
+   }
+  ],
+  "tightest": {
+   "anypoint_cap": 0.45,
+   "terminal_limit": 0.4,
+   "validation_pass": true,
+   "final_pass": true,
+   "breaches": []
+  },
+  "seconds": 14.909074584999871,
+  "weights": {
+   "us_equity": -0.0,
+   "em_equity": -0.0,
+   "gold": -0.0,
+   "treasury": -0.0,
+   "tips": 0.9,
+   "tbill": -0.0,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "common_cara_ledger_ce": 80472253.53725643,
+  "terminal_median": 93768056.42744339,
+  "terminal_q05": 66601937.585877284,
+  "terminal_q95": 134141087.77664165,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 2.9103830456733704e-11,
+  "total_paid": 30000000.0
+ }
+}
