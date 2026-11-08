@@ -1,0 +1,225 @@
+{
+ "meta": {
+  "label": "Rebalancing check (owner 8 Nov 12:50 SGT): 20y/30y, regime law fhs_ewma, frozen round-2 mixes, seed family 20261110 (shared with T25 horizon run). buy_hold_mark = what the terminal-loss judge measures; cash_first = executed policy audit twin; annual_rebal = rebalance to target every 52 weeks (labeled sensitivity: no buy-side cost).",
+  "limits": {
+   "old": 0.15,
+   "new": 0.25
+  }
+ },
+ "fitted_20y": {
+  "years": 20,
+  "view": "fitted",
+  "weights": {
+   "us_equity": 0.1076,
+   "em_equity": 0.0,
+   "gold": 0.1335,
+   "treasury": 0.3338,
+   "tips": 0.0,
+   "tbill": 0.3251,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "buy_hold_mark": {
+   "terminal_ru": 0.504738920101327,
+   "measure_upper": {
+    "reference": 0.23645418293592552,
+    "nominal": 0.24108409261375968,
+    "stressed": 0.504738920101327,
+    "common_hull": 0.504738920101327
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 228115836.54470798,
+   "median": 310317722.11015546
+  },
+  "cash_first": {
+   "terminal_ru": 1.0590362151856814,
+   "measure_upper": {
+    "reference": 0.8603720991386699,
+    "nominal": 0.8695388911064135,
+    "stressed": 1.0590362151856814,
+    "common_hull": 1.0590362151856814
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 127774006.44293171,
+   "median": 194092714.66311938,
+   "funded": 1.0,
+   "turnover_mean": 0.0
+  },
+  "annual_rebal": {
+   "terminal_ru": 0.5883920032305606,
+   "measure_upper": {
+    "reference": 0.4746182930474385,
+    "nominal": 0.46190147058191405,
+    "stressed": 0.579888691000465,
+    "common_hull": 0.5883920032305606
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 115817680.40926857,
+   "median": 158702297.5377128,
+   "funded": 1.0,
+   "turnover_mean": 992878923829.0415
+  }
+ },
+ "fitted_30y": {
+  "years": 30,
+  "view": "fitted",
+  "weights": {
+   "us_equity": 0.1076,
+   "em_equity": 0.0,
+   "gold": 0.1335,
+   "treasury": 0.3338,
+   "tips": 0.0,
+   "tbill": 0.3251,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "buy_hold_mark": {
+   "terminal_ru": 0.8096573295627669,
+   "measure_upper": {
+    "reference": 0.08194907344935091,
+    "nominal": 0.11749767114494784,
+    "stressed": 0.8096573295627669,
+    "common_hull": 0.8096573295627669
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 418496684.7079188,
+   "median": 637107431.6048849
+  },
+  "cash_first": {
+   "terminal_ru": 1.6494551365141983,
+   "measure_upper": {
+    "reference": 1.3772133427830866,
+    "nominal": 1.3936294093742383,
+    "stressed": 1.6494551365141983,
+    "common_hull": 1.6494551365141983
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 194694510.60555226,
+   "median": 348820873.3917606,
+   "funded": 1.0,
+   "turnover_mean": 0.0
+  },
+  "annual_rebal": {
+   "terminal_ru": 0.9137826789512814,
+   "measure_upper": {
+    "reference": 0.788428353752068,
+    "nominal": 0.794437188849885,
+    "stressed": 0.9137826789512814,
+    "common_hull": 0.9120718324287087
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 138888791.05587658,
+   "median": 213854234.36031094,
+   "funded": 1.0,
+   "turnover_mean": 29659782016106.67
+  }
+ },
+ "current_quotes_20y": {
+  "years": 20,
+  "view": "current_quotes",
+  "weights": {
+   "us_equity": 0.1791,
+   "em_equity": 0.0,
+   "gold": 0.1921,
+   "treasury": 0.4289,
+   "tips": 0.0,
+   "tbill": 0.0999,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "buy_hold_mark": {
+   "terminal_ru": 0.7853580130523548,
+   "measure_upper": {
+    "reference": 0.3436295190604027,
+    "nominal": 0.34395446198017693,
+    "stressed": 0.7853580130523548,
+    "common_hull": 0.7853580130523548
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 305674876.85151905,
+   "median": 420640816.10079765
+  },
+  "cash_first": {
+   "terminal_ru": 1.4989541610821329,
+   "measure_upper": {
+    "reference": 1.0950521764067442,
+    "nominal": 1.1079070911777955,
+    "stressed": 1.4989541610821329,
+    "common_hull": 1.4989541610821329
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 186719939.1192319,
+   "median": 280808398.54302806,
+   "funded": 1.0,
+   "turnover_mean": 0.0
+  },
+  "annual_rebal": {
+   "terminal_ru": 0.8154656105521505,
+   "measure_upper": {
+    "reference": 0.5308817358645002,
+    "nominal": 0.5169691795284357,
+    "stressed": 0.8085275844339075,
+    "common_hull": 0.8154656105521505
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 175025922.65002817,
+   "median": 253821616.97171885,
+   "funded": 1.0,
+   "turnover_mean": 15833853958197.393
+  }
+ },
+ "current_quotes_30y": {
+  "years": 30,
+  "view": "current_quotes",
+  "weights": {
+   "us_equity": 0.1791,
+   "em_equity": 0.0,
+   "gold": 0.1921,
+   "treasury": 0.4289,
+   "tips": 0.0,
+   "tbill": 0.0999,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "buy_hold_mark": {
+   "terminal_ru": 1.294825143631937,
+   "measure_upper": {
+    "reference": -0.006079712806529037,
+    "nominal": 0.0590793281613458,
+    "stressed": 1.294825143631937,
+    "common_hull": 1.294825143631937
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 620991514.1286222,
+   "median": 936770873.2831318
+  },
+  "cash_first": {
+   "terminal_ru": 2.0666565497660443,
+   "measure_upper": {
+    "reference": 1.3931555196916166,
+    "nominal": 1.4342389126204262,
+    "stressed": 2.0666565497660443,
+    "common_hull": 2.0666565497660443
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 327523928.7997982,
+   "median": 574718761.4953072,
+   "funded": 1.0,
+   "turnover_mean": 0.0
+  },
+  "annual_rebal": {
+   "terminal_ru": 0.9075448800645809,
+   "measure_upper": {
+    "reference": 0.6426082072798165,
+    "nominal": 0.6627787896490434,
+    "stressed": 0.9075448800645809,
+    "common_hull": 0.9075448800645809
+   },
+   "buffer": 0.0003999999999999997,
+   "q05": 273606677.1314593,
+   "median": 450665455.82753706,
+   "funded": 1.0,
+   "turnover_mean": 1075091315134676.6
+  }
+ }
+}
