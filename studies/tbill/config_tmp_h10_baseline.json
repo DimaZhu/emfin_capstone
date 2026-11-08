@@ -1057,9 +1057,9 @@
  },
  "wasserstein_metric": "max_path",
  "history_manifests": {
-  "us_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/us_equity-manifest.json",
-  "em_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/em_equity-manifest.json",
-  "gold": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/gold-manifest.json",
-  "treasury": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/treasury-manifest.json"
+  "us_equity": "emfin_v2/resources/data/actual_etfs/us_equity-manifest.json",
+  "em_equity": "emfin_v2/resources/data/actual_etfs/em_equity-manifest.json",
+  "gold": "emfin_v2/resources/data/actual_etfs/gold-manifest.json",
+  "treasury": "emfin_v2/resources/data/actual_etfs/treasury-manifest.json"
  }
 }

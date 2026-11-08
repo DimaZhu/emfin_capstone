@@ -37,6 +37,11 @@ def validate_config(config):
         if name!='actual_etfs':raise ValueError('unknown bundled history selection')
         folder=DATA_DIR/name;index=json.loads((folder/'index.json').read_text())
         c['history_manifests']={k:str(folder/v) for k,v in index.items()}
+    if c.get('history_manifests'):
+        # Repo-relative manifest paths resolve against the repository root so
+        # configs are portable across clone locations; absolute paths pass through.
+        root=Path(__file__).resolve().parents[1]
+        c['history_manifests']={k:(v if Path(v).is_absolute() else str(root/v)) for k,v in c['history_manifests'].items()}
     required=['wealth','horizon_weeks','student_nu','confidence','risk_tolerance','liabilities','liquidity_haircuts','evaluation_seeds','validation_seeds','real_estate','funding_budget_fraction','loss_budget','cml_budget','liability_vol','train_scenarios','validation_scenarios','evaluation_scenarios','seed','multiplier_grid','view_spread','stress_mean_path_loss_increment','label']
     if not isinstance(c,dict) or any(key not in c for key in required):raise ValueError('Incomplete model config; copy the bundled default.json and replace its documented inputs')
     if c.get('recurring_payout') is not None:
