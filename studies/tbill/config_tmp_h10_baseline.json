@@ -1,0 +1,1065 @@
+{
+ "label": "Private research: actual VTI/VWO/GLD/IEF histories, cash account, SGD property with USD FX. Not client-calibrated. LABELED SENSITIVITY: 10y horizon, 120x$250k/month beyond the confirmed 12 months. Multi-year iid-week law; clustering caveat grows with horizon.",
+ "seed": 20261107,
+ "wealth": 100000000,
+ "horizon_weeks": 520,
+ "liabilities": [
+  {
+   "name": "Monthly payment 1 (labeled sensitivity beyond the confirmed 12)",
+   "week": 4,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 1
+  },
+  {
+   "name": "Monthly payment 2 (labeled sensitivity beyond the confirmed 12)",
+   "week": 8,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 2
+  },
+  {
+   "name": "Monthly payment 3 (labeled sensitivity beyond the confirmed 12)",
+   "week": 13,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 3
+  },
+  {
+   "name": "Monthly payment 4 (labeled sensitivity beyond the confirmed 12)",
+   "week": 17,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 4
+  },
+  {
+   "name": "Monthly payment 5 (labeled sensitivity beyond the confirmed 12)",
+   "week": 21,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 5
+  },
+  {
+   "name": "Monthly payment 6 (labeled sensitivity beyond the confirmed 12)",
+   "week": 26,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 6
+  },
+  {
+   "name": "Monthly payment 7 (labeled sensitivity beyond the confirmed 12)",
+   "week": 30,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 7
+  },
+  {
+   "name": "Monthly payment 8 (labeled sensitivity beyond the confirmed 12)",
+   "week": 34,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 8
+  },
+  {
+   "name": "Monthly payment 9 (labeled sensitivity beyond the confirmed 12)",
+   "week": 39,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 9
+  },
+  {
+   "name": "Monthly payment 10 (labeled sensitivity beyond the confirmed 12)",
+   "week": 43,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 10
+  },
+  {
+   "name": "Monthly payment 11 (labeled sensitivity beyond the confirmed 12)",
+   "week": 47,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 11
+  },
+  {
+   "name": "Monthly payment 12 (labeled sensitivity beyond the confirmed 12)",
+   "week": 52,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 12
+  },
+  {
+   "name": "Monthly payment 13 (labeled sensitivity beyond the confirmed 12)",
+   "week": 56,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 13
+  },
+  {
+   "name": "Monthly payment 14 (labeled sensitivity beyond the confirmed 12)",
+   "week": 60,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 14
+  },
+  {
+   "name": "Monthly payment 15 (labeled sensitivity beyond the confirmed 12)",
+   "week": 65,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 15
+  },
+  {
+   "name": "Monthly payment 16 (labeled sensitivity beyond the confirmed 12)",
+   "week": 69,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 16
+  },
+  {
+   "name": "Monthly payment 17 (labeled sensitivity beyond the confirmed 12)",
+   "week": 73,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 17
+  },
+  {
+   "name": "Monthly payment 18 (labeled sensitivity beyond the confirmed 12)",
+   "week": 78,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 18
+  },
+  {
+   "name": "Monthly payment 19 (labeled sensitivity beyond the confirmed 12)",
+   "week": 82,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 19
+  },
+  {
+   "name": "Monthly payment 20 (labeled sensitivity beyond the confirmed 12)",
+   "week": 86,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 20
+  },
+  {
+   "name": "Monthly payment 21 (labeled sensitivity beyond the confirmed 12)",
+   "week": 91,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 21
+  },
+  {
+   "name": "Monthly payment 22 (labeled sensitivity beyond the confirmed 12)",
+   "week": 95,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 22
+  },
+  {
+   "name": "Monthly payment 23 (labeled sensitivity beyond the confirmed 12)",
+   "week": 99,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 23
+  },
+  {
+   "name": "Monthly payment 24 (labeled sensitivity beyond the confirmed 12)",
+   "week": 104,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 24
+  },
+  {
+   "name": "Monthly payment 25 (labeled sensitivity beyond the confirmed 12)",
+   "week": 108,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 25
+  },
+  {
+   "name": "Monthly payment 26 (labeled sensitivity beyond the confirmed 12)",
+   "week": 112,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 26
+  },
+  {
+   "name": "Monthly payment 27 (labeled sensitivity beyond the confirmed 12)",
+   "week": 117,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 27
+  },
+  {
+   "name": "Monthly payment 28 (labeled sensitivity beyond the confirmed 12)",
+   "week": 121,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 28
+  },
+  {
+   "name": "Monthly payment 29 (labeled sensitivity beyond the confirmed 12)",
+   "week": 125,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 29
+  },
+  {
+   "name": "Monthly payment 30 (labeled sensitivity beyond the confirmed 12)",
+   "week": 130,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 30
+  },
+  {
+   "name": "Monthly payment 31 (labeled sensitivity beyond the confirmed 12)",
+   "week": 134,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 31
+  },
+  {
+   "name": "Monthly payment 32 (labeled sensitivity beyond the confirmed 12)",
+   "week": 138,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 32
+  },
+  {
+   "name": "Monthly payment 33 (labeled sensitivity beyond the confirmed 12)",
+   "week": 143,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 33
+  },
+  {
+   "name": "Monthly payment 34 (labeled sensitivity beyond the confirmed 12)",
+   "week": 147,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 34
+  },
+  {
+   "name": "Monthly payment 35 (labeled sensitivity beyond the confirmed 12)",
+   "week": 151,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 35
+  },
+  {
+   "name": "Monthly payment 36 (labeled sensitivity beyond the confirmed 12)",
+   "week": 156,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 36
+  },
+  {
+   "name": "Monthly payment 37 (labeled sensitivity beyond the confirmed 12)",
+   "week": 160,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 37
+  },
+  {
+   "name": "Monthly payment 38 (labeled sensitivity beyond the confirmed 12)",
+   "week": 164,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 38
+  },
+  {
+   "name": "Monthly payment 39 (labeled sensitivity beyond the confirmed 12)",
+   "week": 169,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 39
+  },
+  {
+   "name": "Monthly payment 40 (labeled sensitivity beyond the confirmed 12)",
+   "week": 173,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 40
+  },
+  {
+   "name": "Monthly payment 41 (labeled sensitivity beyond the confirmed 12)",
+   "week": 177,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 41
+  },
+  {
+   "name": "Monthly payment 42 (labeled sensitivity beyond the confirmed 12)",
+   "week": 182,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 42
+  },
+  {
+   "name": "Monthly payment 43 (labeled sensitivity beyond the confirmed 12)",
+   "week": 186,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 43
+  },
+  {
+   "name": "Monthly payment 44 (labeled sensitivity beyond the confirmed 12)",
+   "week": 190,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 44
+  },
+  {
+   "name": "Monthly payment 45 (labeled sensitivity beyond the confirmed 12)",
+   "week": 195,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 45
+  },
+  {
+   "name": "Monthly payment 46 (labeled sensitivity beyond the confirmed 12)",
+   "week": 199,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 46
+  },
+  {
+   "name": "Monthly payment 47 (labeled sensitivity beyond the confirmed 12)",
+   "week": 203,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 47
+  },
+  {
+   "name": "Monthly payment 48 (labeled sensitivity beyond the confirmed 12)",
+   "week": 208,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 48
+  },
+  {
+   "name": "Monthly payment 49 (labeled sensitivity beyond the confirmed 12)",
+   "week": 212,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 49
+  },
+  {
+   "name": "Monthly payment 50 (labeled sensitivity beyond the confirmed 12)",
+   "week": 216,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 50
+  },
+  {
+   "name": "Monthly payment 51 (labeled sensitivity beyond the confirmed 12)",
+   "week": 221,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 51
+  },
+  {
+   "name": "Monthly payment 52 (labeled sensitivity beyond the confirmed 12)",
+   "week": 225,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 52
+  },
+  {
+   "name": "Monthly payment 53 (labeled sensitivity beyond the confirmed 12)",
+   "week": 229,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 53
+  },
+  {
+   "name": "Monthly payment 54 (labeled sensitivity beyond the confirmed 12)",
+   "week": 234,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 54
+  },
+  {
+   "name": "Monthly payment 55 (labeled sensitivity beyond the confirmed 12)",
+   "week": 238,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 55
+  },
+  {
+   "name": "Monthly payment 56 (labeled sensitivity beyond the confirmed 12)",
+   "week": 242,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 56
+  },
+  {
+   "name": "Monthly payment 57 (labeled sensitivity beyond the confirmed 12)",
+   "week": 247,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 57
+  },
+  {
+   "name": "Monthly payment 58 (labeled sensitivity beyond the confirmed 12)",
+   "week": 251,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 58
+  },
+  {
+   "name": "Monthly payment 59 (labeled sensitivity beyond the confirmed 12)",
+   "week": 255,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 59
+  },
+  {
+   "name": "Monthly payment 60 (labeled sensitivity beyond the confirmed 12)",
+   "week": 260,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 60
+  },
+  {
+   "name": "Monthly payment 61 (labeled sensitivity beyond the confirmed 12)",
+   "week": 264,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 61
+  },
+  {
+   "name": "Monthly payment 62 (labeled sensitivity beyond the confirmed 12)",
+   "week": 268,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 62
+  },
+  {
+   "name": "Monthly payment 63 (labeled sensitivity beyond the confirmed 12)",
+   "week": 273,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 63
+  },
+  {
+   "name": "Monthly payment 64 (labeled sensitivity beyond the confirmed 12)",
+   "week": 277,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 64
+  },
+  {
+   "name": "Monthly payment 65 (labeled sensitivity beyond the confirmed 12)",
+   "week": 281,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 65
+  },
+  {
+   "name": "Monthly payment 66 (labeled sensitivity beyond the confirmed 12)",
+   "week": 286,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 66
+  },
+  {
+   "name": "Monthly payment 67 (labeled sensitivity beyond the confirmed 12)",
+   "week": 290,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 67
+  },
+  {
+   "name": "Monthly payment 68 (labeled sensitivity beyond the confirmed 12)",
+   "week": 294,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 68
+  },
+  {
+   "name": "Monthly payment 69 (labeled sensitivity beyond the confirmed 12)",
+   "week": 299,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 69
+  },
+  {
+   "name": "Monthly payment 70 (labeled sensitivity beyond the confirmed 12)",
+   "week": 303,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 70
+  },
+  {
+   "name": "Monthly payment 71 (labeled sensitivity beyond the confirmed 12)",
+   "week": 307,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 71
+  },
+  {
+   "name": "Monthly payment 72 (labeled sensitivity beyond the confirmed 12)",
+   "week": 312,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 72
+  },
+  {
+   "name": "Monthly payment 73 (labeled sensitivity beyond the confirmed 12)",
+   "week": 316,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 73
+  },
+  {
+   "name": "Monthly payment 74 (labeled sensitivity beyond the confirmed 12)",
+   "week": 320,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 74
+  },
+  {
+   "name": "Monthly payment 75 (labeled sensitivity beyond the confirmed 12)",
+   "week": 325,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 75
+  },
+  {
+   "name": "Monthly payment 76 (labeled sensitivity beyond the confirmed 12)",
+   "week": 329,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 76
+  },
+  {
+   "name": "Monthly payment 77 (labeled sensitivity beyond the confirmed 12)",
+   "week": 333,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 77
+  },
+  {
+   "name": "Monthly payment 78 (labeled sensitivity beyond the confirmed 12)",
+   "week": 338,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 78
+  },
+  {
+   "name": "Monthly payment 79 (labeled sensitivity beyond the confirmed 12)",
+   "week": 342,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 79
+  },
+  {
+   "name": "Monthly payment 80 (labeled sensitivity beyond the confirmed 12)",
+   "week": 346,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 80
+  },
+  {
+   "name": "Monthly payment 81 (labeled sensitivity beyond the confirmed 12)",
+   "week": 351,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 81
+  },
+  {
+   "name": "Monthly payment 82 (labeled sensitivity beyond the confirmed 12)",
+   "week": 355,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 82
+  },
+  {
+   "name": "Monthly payment 83 (labeled sensitivity beyond the confirmed 12)",
+   "week": 359,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 83
+  },
+  {
+   "name": "Monthly payment 84 (labeled sensitivity beyond the confirmed 12)",
+   "week": 364,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 84
+  },
+  {
+   "name": "Monthly payment 85 (labeled sensitivity beyond the confirmed 12)",
+   "week": 368,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 85
+  },
+  {
+   "name": "Monthly payment 86 (labeled sensitivity beyond the confirmed 12)",
+   "week": 372,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 86
+  },
+  {
+   "name": "Monthly payment 87 (labeled sensitivity beyond the confirmed 12)",
+   "week": 377,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 87
+  },
+  {
+   "name": "Monthly payment 88 (labeled sensitivity beyond the confirmed 12)",
+   "week": 381,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 88
+  },
+  {
+   "name": "Monthly payment 89 (labeled sensitivity beyond the confirmed 12)",
+   "week": 385,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 89
+  },
+  {
+   "name": "Monthly payment 90 (labeled sensitivity beyond the confirmed 12)",
+   "week": 390,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 90
+  },
+  {
+   "name": "Monthly payment 91 (labeled sensitivity beyond the confirmed 12)",
+   "week": 394,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 91
+  },
+  {
+   "name": "Monthly payment 92 (labeled sensitivity beyond the confirmed 12)",
+   "week": 398,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 92
+  },
+  {
+   "name": "Monthly payment 93 (labeled sensitivity beyond the confirmed 12)",
+   "week": 403,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 93
+  },
+  {
+   "name": "Monthly payment 94 (labeled sensitivity beyond the confirmed 12)",
+   "week": 407,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 94
+  },
+  {
+   "name": "Monthly payment 95 (labeled sensitivity beyond the confirmed 12)",
+   "week": 411,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 95
+  },
+  {
+   "name": "Monthly payment 96 (labeled sensitivity beyond the confirmed 12)",
+   "week": 416,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 96
+  },
+  {
+   "name": "Monthly payment 97 (labeled sensitivity beyond the confirmed 12)",
+   "week": 420,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 97
+  },
+  {
+   "name": "Monthly payment 98 (labeled sensitivity beyond the confirmed 12)",
+   "week": 424,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 98
+  },
+  {
+   "name": "Monthly payment 99 (labeled sensitivity beyond the confirmed 12)",
+   "week": 429,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 99
+  },
+  {
+   "name": "Monthly payment 100 (labeled sensitivity beyond the confirmed 12)",
+   "week": 433,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 100
+  },
+  {
+   "name": "Monthly payment 101 (labeled sensitivity beyond the confirmed 12)",
+   "week": 437,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 101
+  },
+  {
+   "name": "Monthly payment 102 (labeled sensitivity beyond the confirmed 12)",
+   "week": 442,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 102
+  },
+  {
+   "name": "Monthly payment 103 (labeled sensitivity beyond the confirmed 12)",
+   "week": 446,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 103
+  },
+  {
+   "name": "Monthly payment 104 (labeled sensitivity beyond the confirmed 12)",
+   "week": 450,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 104
+  },
+  {
+   "name": "Monthly payment 105 (labeled sensitivity beyond the confirmed 12)",
+   "week": 455,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 105
+  },
+  {
+   "name": "Monthly payment 106 (labeled sensitivity beyond the confirmed 12)",
+   "week": 459,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 106
+  },
+  {
+   "name": "Monthly payment 107 (labeled sensitivity beyond the confirmed 12)",
+   "week": 463,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 107
+  },
+  {
+   "name": "Monthly payment 108 (labeled sensitivity beyond the confirmed 12)",
+   "week": 468,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 108
+  },
+  {
+   "name": "Monthly payment 109 (labeled sensitivity beyond the confirmed 12)",
+   "week": 472,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 109
+  },
+  {
+   "name": "Monthly payment 110 (labeled sensitivity beyond the confirmed 12)",
+   "week": 476,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 110
+  },
+  {
+   "name": "Monthly payment 111 (labeled sensitivity beyond the confirmed 12)",
+   "week": 481,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 111
+  },
+  {
+   "name": "Monthly payment 112 (labeled sensitivity beyond the confirmed 12)",
+   "week": 485,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 112
+  },
+  {
+   "name": "Monthly payment 113 (labeled sensitivity beyond the confirmed 12)",
+   "week": 489,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 113
+  },
+  {
+   "name": "Monthly payment 114 (labeled sensitivity beyond the confirmed 12)",
+   "week": 494,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 114
+  },
+  {
+   "name": "Monthly payment 115 (labeled sensitivity beyond the confirmed 12)",
+   "week": 498,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 115
+  },
+  {
+   "name": "Monthly payment 116 (labeled sensitivity beyond the confirmed 12)",
+   "week": 502,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 116
+  },
+  {
+   "name": "Monthly payment 117 (labeled sensitivity beyond the confirmed 12)",
+   "week": 507,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 117
+  },
+  {
+   "name": "Monthly payment 118 (labeled sensitivity beyond the confirmed 12)",
+   "week": 511,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 118
+  },
+  {
+   "name": "Monthly payment 119 (labeled sensitivity beyond the confirmed 12)",
+   "week": 515,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 119
+  },
+  {
+   "name": "Monthly payment 120 (labeled sensitivity beyond the confirmed 12)",
+   "week": 520,
+   "amount": 250000.0,
+   "schedule": "recurring",
+   "month": 120
+  }
+ ],
+ "liability_vol": 0.0,
+ "risk_tolerance": 10000000,
+ "confidence": 0.95,
+ "funding_budget_fraction": 0.2,
+ "loss_budget": 0.15,
+ "cml_budget": 0.06,
+ "student_nu": null,
+ "train_scenarios": 1000,
+ "validation_scenarios": 4000,
+ "evaluation_scenarios": 8000,
+ "validation_seeds": 3,
+ "evaluation_seeds": 8,
+ "multiplier_grid": [
+  1.0,
+  0.5,
+  0.25,
+  0.1
+ ],
+ "view_spread": 0.005,
+ "stress_mean_path_loss_increment": 0.01,
+ "liquidity_haircuts": [
+  0.001,
+  0.0015,
+  0.002,
+  0.0005,
+  0.001,
+  0.0
+ ],
+ "real_estate": {
+  "enabled": true,
+  "minimum_weight": 0.0,
+  "annual_drift": 0.04,
+  "annual_vol": 0.12,
+  "equity_correlation": 0.3,
+  "liquidation_haircut": 0.1,
+  "source": "singapore_ura",
+  "smoothing_alpha": 0.0,
+  "net_rental_yield": 0.0,
+  "sale_week": 0,
+  "sale_delay_weeks": 12,
+  "history_case": "central",
+  "forward_mode": "view",
+  "forward_log_drift": 0.04,
+  "sg_property_type": "All Residential",
+  "holding_mode": "fixed",
+  "fixed_weight": 0.1
+ },
+ "client_evidence": {
+  "status": "illustrative",
+  "holdings": null,
+  "family_company": null,
+  "sources": []
+ },
+ "sequential_ep": true,
+ "view_vol_cap": null,
+ "wasserstein_radius": 2e-05,
+ "wasserstein_liability_scale": 0.01,
+ "recurring_payout": null,
+ "asset_registry": {
+  "schema_version": 1,
+  "status": "target universe; runtime supports private histories, default cutover blocked on VTI/VWO data",
+  "assets": [
+   {
+    "enabled": true,
+    "currency": "USD",
+    "return_model": "etf_total_return",
+    "liquidity": "listed",
+    "minimum_weight": 0.0,
+    "mean_view": true,
+    "factors": [
+     "equity"
+    ],
+    "cash": false,
+    "id": "us_equity",
+    "ticker": "VTI",
+    "name": "US equity",
+    "asset_class": "equity",
+    "haircut": 0.001,
+    "source": {
+     "kind": "issuer_nav_and_distributions",
+     "url": "https://www.vanguardoffshore.com/en/product/etf/equity/0970/vanguard-total-stock-market-etf",
+     "status": "download_and_adjustment_check_pending",
+     "redistribution": "not_cleared"
+    }
+   },
+   {
+    "enabled": true,
+    "currency": "USD",
+    "return_model": "etf_total_return",
+    "liquidity": "listed",
+    "minimum_weight": 0.0,
+    "mean_view": true,
+    "factors": [
+     "equity"
+    ],
+    "cash": false,
+    "id": "em_equity",
+    "ticker": "VWO",
+    "name": "Emerging-market equity",
+    "asset_class": "equity",
+    "haircut": 0.002,
+    "source": {
+     "kind": "issuer_nav_and_distributions",
+     "url": "https://workplace.vanguard.com/investments/product-details/fund/0964",
+     "status": "download_and_adjustment_check_pending",
+     "redistribution": "not_cleared"
+    }
+   },
+   {
+    "enabled": true,
+    "currency": "USD",
+    "return_model": "etf_total_return",
+    "liquidity": "listed",
+    "minimum_weight": 0.0,
+    "mean_view": true,
+    "factors": [],
+    "cash": false,
+    "id": "gold",
+    "ticker": "GLD",
+    "name": "Gold",
+    "asset_class": "gold",
+    "haircut": 0.001,
+    "source": {
+     "kind": "issuer_nav_and_distributions",
+     "url": "https://www.spdrgoldshares.com/usa/gld/",
+     "status": "download_and_adjustment_check_pending",
+     "redistribution": "not_cleared"
+    }
+   },
+   {
+    "enabled": true,
+    "currency": "USD",
+    "return_model": "etf_total_return",
+    "liquidity": "listed",
+    "minimum_weight": 0.0,
+    "mean_view": true,
+    "factors": [],
+    "cash": false,
+    "id": "treasury",
+    "ticker": "IEF",
+    "name": "US Treasuries",
+    "asset_class": "treasury",
+    "haircut": 0.0005,
+    "source": {
+     "kind": "issuer_nav_and_distributions",
+     "url": "https://www.ishares.com/us/products/etf-investments",
+     "status": "download_and_adjustment_check_pending",
+     "redistribution": "not_cleared"
+    },
+    "limitations": "IEF candidate for the requested Treasury sleeve, not the former synthetic ten-year bond. Historical total-return data are still required."
+   },
+   {
+    "enabled": true,
+    "currency": "USD",
+    "return_model": "cash_account",
+    "liquidity": "listed",
+    "minimum_weight": 0.0,
+    "mean_view": false,
+    "factors": [],
+    "cash": true,
+    "id": "cash",
+    "ticker": null,
+    "name": "Cash / money market",
+    "asset_class": "cash_like",
+    "haircut": 0.0,
+    "source": {
+     "kind": "explicit_cash_rate",
+     "annual_rate": 0.0,
+     "status": "zero-rate uncalibrated placeholder"
+    },
+    "limitations": "Cash-account model, not SHV or guaranteed investable yield. Set explicit rate/currency and validate account terms before client use."
+   },
+   {
+    "enabled": true,
+    "currency": "SGD",
+    "return_model": "quarterly_property",
+    "liquidity": "planned_sale_only",
+    "minimum_weight": 0.0,
+    "mean_view": false,
+    "factors": [],
+    "cash": false,
+    "id": "sg_property",
+    "ticker": null,
+    "name": "Singapore URA All Residential",
+    "asset_class": "real_estate",
+    "haircut": 0.1,
+    "source": {
+     "kind": "ura_quarterly_index",
+     "url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+     "property_type": "All Residential",
+     "redistribution": "Singapore Open Data Licence with attribution"
+    },
+    "limitations": "Price index only, not rent/total return. Registry adapter converts SGD marks/rent/sale proceeds using the explicit SGD/USD factor. Legacy default is separately labelled if no FX model runs."
+   }
+  ],
+  "relative_mean_view": null,
+  "reporting_currency": "USD"
+ },
+ "history_end": "2026-10-30",
+ "scenario_model": "gaussian_scale_mixture",
+ "innovation_mixture": {
+  "probabilities": [
+   0.9,
+   0.1
+  ],
+  "variance_scales": [
+   0.75,
+   3.25
+  ]
+ },
+ "wasserstein_metric": "max_path",
+ "history_manifests": {
+  "us_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/us_equity-manifest.json",
+  "em_equity": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/em_equity-manifest.json",
+  "gold": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/gold-manifest.json",
+  "treasury": "/home/sandbox/repo/emfin_v2/resources/data/actual_etfs/treasury-manifest.json"
+ }
+}
