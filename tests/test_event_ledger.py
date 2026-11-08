@@ -135,3 +135,29 @@ def test_dynamic_specs_match_legacy_execute():
                                            np.asarray(legacy[lk], float),
                                            err_msg=f'{name}/{mode}/{lk}', **TOL)
             np.testing.assert_array_equal(r['funded'], legacy['funded'])
+
+
+def test_metrics_executable_matches_manual_ledger_score():
+    """Phase 4: the experimental executable-ledger scorer sources every
+    number from the engine (cash_first ledger), same shape as metrics()."""
+    import numpy as np
+    from emfin_v2.default_run import metrics_executable
+    from emfin_v2.ledger import cash_first
+    from scipy.special import logsumexp
+    c = dict(cash_index=0, wealth=10000., confidence=.95, risk_tolerance=5000.,
+             real_estate=dict(enabled=False), asset_layout=dict(property_indices=[]))
+    n, h, d = 6, 10, 3
+    rng = np.random.default_rng(3)
+    prices = np.cumprod(1 + rng.normal(0, .01, (n, h, d)), axis=1)
+    prices[:, :, 0] = 1.
+    growth = np.full((n, h), 1.001) ** np.arange(1, h + 1)
+    amounts = np.full((n, 2), 100.)
+    steps = np.array([4, 9])
+    draw = (prices, amounts, steps, amounts.copy(), growth)
+    a = np.array([4000., 3000., 3000.])
+    gaps, ce = metrics_executable(c, draw, a)
+    r = cash_first(c, draw, a)
+    manual_ce = float(-c['risk_tolerance'] * (logsumexp(-r['terminal_net'] / c['risk_tolerance'])
+                                              - np.log(n)))
+    assert gaps.shape == (2,)
+    assert ce == manual_ce

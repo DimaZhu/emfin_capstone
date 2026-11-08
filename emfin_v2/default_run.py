@@ -245,6 +245,22 @@ def metrics(c,draw,a,probs=None):
     return np.array(gaps),float(ce)
 
 
+def metrics_executable(c,draw,a,probs=None):
+    """EXPERIMENTAL (Phase 4): candidate scoring under the executable event
+    ledger (cash-first trading, haircuts in unit values) instead of the
+    provisioning convention. Same return shape as metrics(): per-payment
+    funding-gap tail measures and a terminal CE. The difference against
+    metrics() is exactly the named trading-vs-no-trading gap. Enable with
+    config key candidate_scoring='executable_ledger'; default unchanged."""
+    from emfin_v2.ledger import cash_first
+    from scipy.special import logsumexp
+    r=cash_first(c,draw,a)
+    p=np.full(len(r['terminal_net']),1/len(r['terminal_net'])) if probs is None else np.asarray(probs,float)
+    ce=-c['risk_tolerance']*logsumexp(-r['terminal_net']/c['risk_tolerance'],b=p)
+    gaps=[mpep.cml_of_paths(np.maximum(r['payment_shortfalls'][:,i],0),p,c['confidence']) for i in range(len(draw[2]))]
+    return np.array(gaps),float(ce)
+
+
 def dro_buffer(c,a,liability=True):
     from emfin_v2.toolbox.wasserstein import penalty
     return c['wealth']*penalty(a/c['wealth'],c.get('wasserstein_radius',0.),c['confidence'],c.get('wasserstein_liability_scale',.01) if liability else 0.,metric=c.get('wasserstein_metric','legacy_l1'))
@@ -355,10 +371,9 @@ def run(c,output='artifacts/default'):
         # Cash must satisfy stronger pointwise training budgets before mixing.
         cash=np.zeros(d);cash[c['cash_index']]=c['wealth']
         cash_safe=True
+        from emfin_v2.contracts import accumulated_requirement
         for k,step in enumerate(draw[2]):
-            need=draw[1][:,k].copy()
-            for j,prior in enumerate(draw[2]):
-                if prior<step or (prior==step and j<k):need+=draw[1][:,j]*draw[4][:,step-1]/draw[4][:,prior-1]
+            need=accumulated_requirement(draw[1],draw[2],draw[4],k)
             cash_safe &= bool(np.maximum(need-funding_paths(draw)[:,step-1]@cash,0).max()+dro_buffer(c,cash) <= c['funding_budget_fraction']*mult*draw[3][k])
         cash_safe &= bool(np.maximum(0,1-draw[0]@cash/c['wealth']).max()+dro_buffer(c,cash,False)/c['wealth']<=min(c['cml_budget'],c['loss_budget']))
         if np.any(mins[np.arange(d)!=c['cash_index']]>0) or any(i!=c['cash_index'] and v>0 for i,v in fixed.items()):cash_safe=False
@@ -369,10 +384,11 @@ def run(c,output='artifacts/default'):
             cash[c['cash_index']]+=c['wealth']-cash.sum()
             grid=[1.,.75,.5,.25,0.]
         else:grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
+        scoring=metrics_executable if c.get('candidate_scoring')=='executable_ledger' else metrics
         for risky_fraction in grid:
             candidate=risky_fraction*a+(1-risky_fraction)*cash
-            ci=interval([metrics(c,v,candidate)[0] for v in validation])
-            stress_ci=interval([metrics(c,v,candidate,ps)[0] for v,ps in zip(validation,validation_stress)])
+            ci=interval([scoring(c,v,candidate)[0] for v in validation])
+            stress_ci=interval([scoring(c,v,candidate,ps)[0] for v,ps in zip(validation,validation_stress)])
             budgets=draw[3]*c['funding_budget_fraction']
             passed=bool(np.all(np.maximum(ci['high'],stress_ci['high'])+dro_buffer(c,candidate)<=budgets))
             strict=None
@@ -383,7 +399,7 @@ def run(c,output='artifacts/default'):
                 from emfin_v2.ledger import cash_first
                 terminal=np.concatenate([cash_first(c,v,candidate)['terminal_net'] for v in validation]);ce=float(-c['risk_tolerance']*(logsumexp(-terminal/c['risk_tolerance'])-np.log(len(terminal))))
                 strict_tradeoff.append(dict(multiplier=mult,candidate_fraction=risky_fraction,cash_weight=float(candidate[c['cash_index']]/c['wealth']),net_ce=ce,strict_check=strict,validation_budget_passed=bool(np.all(np.maximum(ci['high'],stress_ci['high'])+dro_buffer(c,candidate)<=budgets)),weights=(candidate/c['wealth']).tolist(),selected=False))
-            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,strict_check=strict,passed=passed))
+            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],scoring=c.get('candidate_scoring','provisioning'),wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,strict_check=strict,passed=passed))
             if passed and chosen is None:
                 chosen=candidate.copy();status=dict(diag)
                 if strict_tradeoff:strict_tradeoff[-1]['selected']=True
