@@ -1,0 +1,26 @@
+{
+ "asset_id": "treasury",
+ "ticker": "IEF",
+ "currency": "USD",
+ "return_type": "total_return",
+ "adjustment_method": "Cash distributions reinvested at ex-date NAV; before taxes/frictions. NAV and ledger matched at1e-7.",
+ "file": "treasury-w2019-total-return.csv",
+ "sha256": "88eb0122c930282d2bb5f30fdd0c11b76c5e4b7489f31a1adbde66695aac713e",
+ "source_url": "https://www.blackrock.com/us/financial-professionals/products/239456/ishares-710-year-treasury-bond-etf",
+ "use_terms": "Personal non-commercial analysis only, notices retained in source workbook. No redistribution or public/commercial use.",
+ "source_file": "ief-issuer.xls",
+ "source_sha256": "d284ae14d81706af2c05a17dd3524ba9d27c3d717110a81dedae62b7266e0ec1",
+ "coverage": {
+  "first": "2002-07-22",
+  "last": "2026-11-06",
+  "observations": 6117,
+  "distribution_count": 291,
+  "reinvestment": "Cash distributions reinvested at ex-date NAV; before taxes/frictions. NAV and ledger matched at1e-7.",
+  "source_notices_retained": true
+ },
+ "private_only": true,
+ "storage_note": "Owner approved private-fork storage on2026-11-07. Source notice remains; private storage is not public redistribution permission.",
+ "crosscheck_note": "Issuer NAV reinvested total return cross-checked against Yahoo adjusted closing price. NAV versus market close differences are expected; neither silently substituted for the other.",
+ "first": "2019-05-08",
+ "note": "Window-truncated copy (>=2019-05-08) for same-window control of short-history candidates; base manifest unchanged."
+}

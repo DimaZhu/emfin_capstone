@@ -1,0 +1,20 @@
+{
+ "asset_id": "gold",
+ "ticker": "GLD",
+ "currency": "USD",
+ "return_type": "total_return",
+ "adjustment_method": "Yahoo adjusted close, provider-adjusted for splits and cash distributions, normalized to100; no splicing or price repair",
+ "source_url": "https://finance.yahoo.com/quote/GLD/history/",
+ "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+ "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+ "library": "yfinance 1.8.0",
+ "file": "gold-w2006-total-return.csv",
+ "sha256": "0adeda609fef3bca7459a22f35930c5e13105be29578454c21cb6672b9cbd6a1",
+ "raw_sha256": "01fd2bdf8803852c4fcab544feb5debfc8a8f0576ecdeff02ca68abf190fb025",
+ "first": "2006-02-06",
+ "last": "2026-11-06",
+ "observations": 5527,
+ "private_only": true,
+ "crosscheck_note": "Issuer closing prices checked; early historical date/price differences found, so use one consistent Yahoo adjusted-close history instead of silently mixing sources.",
+ "note": "Window-truncated copy (>=2006-02-06) for same-window control of short-history candidates; base manifest unchanged."
+}

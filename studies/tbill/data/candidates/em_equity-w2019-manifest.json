@@ -1,0 +1,20 @@
+{
+ "asset_id": "em_equity",
+ "ticker": "VWO",
+ "currency": "USD",
+ "return_type": "total_return",
+ "adjustment_method": "Yahoo adjusted close, provider-adjusted for splits and cash distributions, normalized to100; no splicing or price repair",
+ "source_url": "https://finance.yahoo.com/quote/VWO/history/",
+ "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+ "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage on2026-11-07. Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+ "library": "yfinance 1.8.0",
+ "file": "em_equity-w2019-total-return.csv",
+ "sha256": "da5606ed7e57e0186c9b287c28d225b8e112dcc05af6d45b6b3550d6935a3a0c",
+ "raw_sha256": "8c5e0a83fce7bf84b0eec1ddbb286089e672b37f78e59f85cb43e450d03d81f6",
+ "first": "2019-05-08",
+ "last": "2026-11-06",
+ "observations": 5451,
+ "private_only": true,
+ "crosscheck_note": "Provider-adjusted total return, not an issuer-certified total-return index.",
+ "note": "Window-truncated copy (>=2019-05-08) for same-window control of short-history candidates; base manifest unchanged."
+}

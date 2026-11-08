@@ -1,0 +1,18 @@
+{
+ "asset_id": "reits",
+ "ticker": "VNQ",
+ "currency": "USD",
+ "return_type": "total_return",
+ "adjustment_method": "Yahoo adjusted close, provider-adjusted for splits and cash distributions, normalized to 100; no splicing or price repair",
+ "source_url": "https://finance.yahoo.com/quote/VNQ/history/",
+ "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+ "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage (WhatsApp, 7 Nov 2026). Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+ "library": "yfinance 1.8.0",
+ "file": "reits-total-return.csv",
+ "sha256": "f82df7dc20ef6bffa6ff7e9f5814bc7248b4ee4cece524d346495ff6582f8730",
+ "first": "2004-09-29",
+ "last": "2026-11-06",
+ "observations": 5563,
+ "private_only": true,
+ "crosscheck_note": "Provider-adjusted total return, not an issuer-certified total-return index."
+}

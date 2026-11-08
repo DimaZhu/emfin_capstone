@@ -1,0 +1,18 @@
+{
+ "asset_id": "agg_bond",
+ "ticker": "AGG",
+ "currency": "USD",
+ "return_type": "total_return",
+ "adjustment_method": "Yahoo adjusted close, provider-adjusted for splits and cash distributions, normalized to 100; no splicing or price repair",
+ "source_url": "https://finance.yahoo.com/quote/AGG/history/",
+ "terms_url": "https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html",
+ "use_terms": "Yahoo-sourced. Owner accepted automated-access terms risk for private research and private-fork storage (WhatsApp, 7 Nov 2026). Yahoo permission is not claimed. No public redistribution or external sharing approved.",
+ "library": "yfinance 1.8.0",
+ "file": "agg_bond-total-return.csv",
+ "sha256": "7408c84ebfb3627f3a2b976ace9c6c35018af347c5c3f6044ec8ea51b82b0cee",
+ "first": "2003-09-29",
+ "last": "2026-11-06",
+ "observations": 5815,
+ "private_only": true,
+ "crosscheck_note": "Provider-adjusted total return, not an issuer-certified total-return index."
+}

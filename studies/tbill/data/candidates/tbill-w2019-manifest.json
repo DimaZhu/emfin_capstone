@@ -1,0 +1,17 @@
+{
+ "asset_id": "tbill",
+ "ticker": "DGS3MO",
+ "currency": "USD",
+ "return_type": "total_return",
+ "file": "tbill-w2019-total-return.csv",
+ "sha256": "cf7d623375d84726fe4f5b6477726943eca9aafa5c586cc54e7f34cb23704015",
+ "source_url": "https://fred.stlouisfed.org/series/DGS3MO",
+ "use_terms": "FRED public data (Board of Governors H.15); citation required, redistribution of derived research series inside this private repo only.",
+ "adjustment_method": "Constructed constant-maturity 13-week T-bill roll: weekly log return = prior Friday DGS3MO/52 - 0.25y * weekly DGS3MO change, Friday samples, holiday Fridays use the prior observation (<=7d). Same convention as emfin_v2/toolbox/moneymarket.py. Validated against BIL ETF when network available.",
+ "constructed": true,
+ "source_series": "DGS3MO",
+ "source_snapshot": "raw/fred/2026-11-07/dgs3mo_3m_treasury.csv",
+ "built_at": "2026-11-08",
+ "first": "2019-05-10",
+ "note": "Window-truncated copy (>=2019-05-08) for same-window control of short-history candidates; base manifest unchanged."
+}
