@@ -17,6 +17,7 @@ specs; the engine is dimension-agnostic (no four-sleeve restriction).
 import numpy as np
 from dataclasses import dataclass
 
+from emfin_v2.contracts import ScenarioBatch
 from emfin_v2.real_estate import funding_paths
 
 
@@ -69,6 +70,8 @@ def run_event_ledger(c, draw, allocation, spec):
     value but cannot pay before settlement (dynamic_policy convention); for
     lag-0 specs the pending queue is always exactly zero at marking time."""
     spec.validate()
+    if isinstance(draw, ScenarioBatch):
+        draw = draw.to_draw()
     paths, amounts, steps, bases, growth = draw
     prices = np.asarray(paths, float)
     a = np.asarray(allocation, float)
