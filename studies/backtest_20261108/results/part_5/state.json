@@ -1,11 +1,12 @@
 {
- "fold": 69,
- "mult_index": 1,
- "stage": "solve",
+ "fold": 70,
+ "mult_index": 0,
+ "stage": "select",
  "done": [
   65,
   66,
   67,
-  68
+  68,
+  69
  ]
 }
