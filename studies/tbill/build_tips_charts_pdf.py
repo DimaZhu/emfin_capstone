@@ -64,14 +64,14 @@ savefig(fig, 'f1_portfolio.png')
 # ---- fig 2: utility models ----
 u = R['utilities']
 kinds = ['cara', 'crra_gross', 'hara_payment_floor', 'kinked_shortfall']
-labels = ['CARA\n(constant abs.)', 'CRRA\n(constant rel.)', 'HARA\n(payment floor)', 'Kinked\nshortfall']
+labels = ['CARA', 'CRRA', 'HARA', 'Kinked']
 fig, axes = plt.subplots(1, 2, figsize=(9.2, 3.6))
 x = np.arange(4)
 axes[0].bar(x, [u[k]['chosen_safe'] * 100 for k in kinds], color=TEAL, width=0.58)
 for xi, k in zip(x, kinds):
     axes[0].text(xi, u[k]['chosen_safe'] * 100 + 0.8, f"{u[k]['chosen_safe']*100:.1f}%",
                  ha='center', fontsize=11, color=NAVY)
-axes[0].set_xticks(x, labels, fontsize=9.5)
+axes[0].set_xticks(x, labels, fontsize=10)
 axes[0].set_ylabel('T-bill share chosen (%)')
 axes[0].set_ylim(0, 50)
 axes[0].set_title('What each utility picks', fontsize=11.5, color=NAVY, loc='left')
@@ -79,7 +79,7 @@ ces = [M(u[k]['common_cara_ledger_ce']) for k in kinds]
 axes[1].bar(x, ces, color=NAVY, width=0.58)
 for xi, v in zip(x, ces):
     axes[1].text(xi, v + 0.04, f"${v:.1f}M", ha='center', fontsize=11, color=NAVY)
-axes[1].set_xticks(x, labels, fontsize=9.5)
+axes[1].set_xticks(x, labels, fontsize=10)
 axes[1].set_ylabel('Score (certainty equivalent, $M/yr)')
 axes[1].set_ylim(109.5, 111.3)
 axes[1].set_title('What each outcome scores (zoomed axis)', fontsize=11.5, color=NAVY, loc='left')
@@ -103,8 +103,9 @@ ax2.spines['right'].set_visible(True)
 q05 = [M(rb[f]['terminal_q05']) for f in freqs]
 ax2.plot(x, q05, 'o--', color=AMBER, label='5% bad-case leftover')
 for xi, v in zip(x, q05):
-    ax2.annotate(f"${v:.1f}M", (xi, v), textcoords='offset points', xytext=(0, -16),
-                 fontsize=9, color=AMBER, ha='center')
+    ax2.annotate(f"${v:.1f}M", (xi, v), textcoords='offset points', xytext=(0, -17),
+                 fontsize=9, color=AMBER, ha='center',
+                 bbox=dict(boxstyle='round,pad=0.15', fc='white', ec='none', alpha=0.85))
 ax2.set_ylim(88, 112)
 ax2.set_ylabel('5% bad-case leftover ($M)', color=AMBER)
 ax2.tick_params(axis='y', colors=AMBER)
@@ -133,7 +134,8 @@ ax2.plot(x, med, 'o-', color=TEAL, label='median leftover')
 ax2.plot(x, q05h, 's--', color=AMBER, label='5% bad case')
 for xi, v in zip(x, med):
     ax2.annotate(f"${v:.0f}M", (xi, v), textcoords='offset points', xytext=(0, 8),
-                 fontsize=9, color=TEAL, ha='center')
+                 fontsize=9, color=TEAL, ha='center',
+                 bbox=dict(boxstyle='round,pad=0.15', fc='white', ec='none', alpha=0.85))
 ax2.set_ylabel('Leftover after all payments ($M)')
 ax2.set_ylim(0, 460)
 ax2.legend(loc='upper left', frameon=False, fontsize=9)
@@ -152,8 +154,9 @@ for c, s in zip(caps, safes):
     ax.annotate(f'{s:.0f}%', (c * 100, s), textcoords='offset points', xytext=(0, 8),
                 fontsize=9.5, color=NAVY, ha='center')
 ax.axvspan(15, 50, color=PANEL, zorder=0)
-ax.text(32, 78, 'from 15% up, the any-point cap no longer decides -\nthe 15% year-10 loss limit does (flat 37.5% bills)',
-        fontsize=9.5, color=GRAY, ha='center')
+ax.text(32.5, 8, 'from 15% up, the any-point cap no longer decides -\nthe 15% year-10 loss limit does (flat 37.5% bills)',
+        fontsize=9.5, color=GRAY, ha='center',
+        bbox=dict(boxstyle='round,pad=0.3', fc='white', ec=LINE, alpha=0.95))
 ax.set_xlabel('Any-point (in-period) loss limit (%)')
 ax.set_ylabel('T-bill share required (%)')
 ax.set_ylim(0, 100)
