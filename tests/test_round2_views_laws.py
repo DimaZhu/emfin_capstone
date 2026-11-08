@@ -108,3 +108,77 @@ def test_extra_law_draws_are_distinct_and_reproducible(tmp_path):
     from emfin_v2.default_run import draw_paths
     primary = draw_paths(c, fit, c['validation_scenarios'], c['seed'] + 1000)
     assert not np.allclose(a, primary[0])  # extra law is not a relabeled primary draw
+
+
+# ---------- review-brief small fixes (8 Nov 2026) ----------
+
+def _minimal_result(with_proposed):
+    cfg = dict(liabilities=[dict(name='p', week=4, amount=1000.)], real_estate=dict(
+        enabled=False, minimum_weight=0., fixed_weight=0., holding_mode='fixed', sg_property_type='All Residential',
+        smoothing_alpha=0., net_rental_yield=0., equity_correlation=.3, sale_week=0, sale_delay_weeks=12,
+        history_case='central', liquidation_haircut=.1, forward_mode='view', forward_log_drift=.04),
+        view_spread=.005, stress_mean_path_loss_increment=.01, scenario_model='gaussian_scale_mixture',
+        student_nu=None, sequential_ep=True, recurring_payout=None, funding_budget_fraction=.2,
+        funding_mode='tail_allowance', objective_kind='cara', radius_calibration_mode='manual')
+    judge = dict(worst_funding_index=0, checks=[dict(payout_index=0, upper=1.)])
+    row = dict(method='proposed' if with_proposed else 'shrunk MV', net_ce=dict(mean=[1.]), gap_cvar=dict(mean=[0.]),
+               stressed_gap_cvar=dict(mean=[0.]), training_gap=[0.], wasserstein_gap_upper=[0.], budgets=[1.],
+               evaluation=judge, overall_pass=with_proposed)
+    fan = {'shrunk MV': [[0.]]}
+    if with_proposed:
+        fan['proposed'] = [[0.]]
+    return dict(config=cfg, rows=[row], net_wealth_fan=fan, weights={}, points={}, frontier={},
+                dashboard=None, assets=[], snapshot='2026-11-08', seconds=1.,
+                status=dict(kind='optimized' if with_proposed else 'no calibration candidate passed'),
+                caveats=['c'], strict_tradeoff=[])
+
+
+def test_dashboard_never_shows_comparator_as_proposed():
+    from emfin_v2.explorer import from_default
+    ok = from_default(_minimal_result(True))
+    assert ok['fan_state'] == 'approved_candidate'
+    assert 'NO APPROVED CANDIDATE' not in ok['fan_note']
+    no = from_default(_minimal_result(False))
+    assert no['fan_state'] == 'no_approved_candidate_comparator_shown'
+    assert 'NO APPROVED CANDIDATE' in no['fan_note']
+    assert 'not a recommendation' in no['fan_note']
+
+
+def test_vol_cap_instrument_membership_validated():
+    c = load_config(DEFAULT)
+    c['view_vol_cap'] = 0.2
+    c['view_vol_cap_instrument'] = 99
+    import numpy as np
+    from emfin_v2.default_run import setup, draw_paths, probabilities
+    fit = setup(c)
+    d = draw_paths(c, fit, 40, 1)
+    with pytest.raises(ValueError):
+        probabilities(c, d[0], d.re_price_logs)
+
+
+def test_property_equity_dependence_pinned_per_law():
+    """Review-brief dependence audit: the configured property/equity correlation
+    (0.30 latent weekly shocks) realizes differently per scenario law - the FHS
+    branch derives the property factor differently and realizes LOWER weekly
+    dependence. Labeled assumption, not a proven defect; this test pins current
+    behaviour so any change is deliberate. Tolerances are change-detectors, not
+    correctness proofs."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'studies' / 'tbill'))
+    import numpy as np
+    import study_tips_charts as S
+    expected = {'gaussian_scale_mixture': (0.25, 0.45), 'fhs_ewma': (0.05, 0.35),
+                'bounded_ewma_mixture': (0.15, 0.40)}
+    for law, (lo, hi) in expected.items():
+        c = S.nm_config()
+        c['scenario_model'] = law
+        fit = S.setup(c)
+        d = S.draw_paths(c, fit, 400, c['seed'] + 42)
+        ids = c['asset_layout']['ids']
+        pi = c['asset_layout']['property_indices'][0]
+        ei = ids.index('us_equity')
+        lp = np.log(d[0][:, 1:, pi] / d[0][:, :-1, pi]).ravel()
+        le = np.log(d[0][:, 1:, ei] / d[0][:, :-1, ei]).ravel()
+        corr = float(np.corrcoef(lp, le)[0, 1])
+        assert lo <= corr <= hi, (law, corr)

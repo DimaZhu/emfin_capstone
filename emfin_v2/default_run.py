@@ -205,7 +205,11 @@ def probabilities(c,paths,re_price_logs=None):
     if c['view_spread']!=0 and not requested:
         views.append(seqep.SeqView(0,lambda p: ep.relative_mean_view(terminal,i,j,c['view_spread'])))
     if terminal.shape[1]>2 and c.get('view_vol_cap') is not None:
-        views.append(seqep.SeqView(1,lambda p: ep.volatility_cap(terminal,2,c['view_vol_cap'],pin_mean=p['mean',2])))
+        # Explicit membership, not a magic positional index (review brief 8 Nov
+        # 2026): legacy default keeps column 2; registry mode sets the cap off.
+        cap_i=c.get('view_vol_cap_instrument',2)
+        if not isinstance(cap_i,int) or not 0<=cap_i<terminal.shape[1]:raise ValueError('view_vol_cap_instrument must name a valid asset column')
+        views.append(seqep.SeqView(1,lambda p: ep.volatility_cap(terminal,cap_i,c['view_vol_cap'],pin_mean=p['mean',cap_i])))
     if requested:
         indices=[int(k) for k in requested]
         absolute=ep.View(terminal[:,indices],[requested[str(k)] for k in indices],name='Explicit expected horizon-return targets')

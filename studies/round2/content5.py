@@ -188,6 +188,39 @@ def build_content(d):
                  "resampled weeks are scaled by today's volatility level, so it under-weights calmer regimes "
                  "than today's. That makes it a complement to the default law, not a replacement."),
     ]
+    # ---------- 5b. policy-by-model matrix (review brief) ----------
+    f5th = lambda e: (e.get('fifth_law_score') or {}).get('common_cara_ledger_ce')
+    mrows = []
+    def matrix_row(name, mix_ce, regime_ce, real_ce):
+        mrows.append([name, M(mix_ce) if mix_ce else '-', M(regime_ce) if regime_ce else '-',
+                      M(real_ce) if real_ce else '-'])
+    matrix_row('1y sleeve, fitted carry (recommended alt.)', fit_dual['common_cara_ledger_ce'],
+               f5th(fit_dual), real['fitted']['common_cara_ledger_ce'])
+    matrix_row('1y sleeve, current quotes (recommended)', cur_dual['common_cara_ledger_ce'],
+               f5th(cur_dual), real['current_quotes']['common_cara_ledger_ce'])
+    if mix10.get('fresh_sleeve_dual', {}).get('chosen_safe'):
+        matrix_row('True 10y sleeve (fresh)', mix10['fresh_sleeve_dual']['common_cara_ledger_ce'],
+                   f5th(mix10['fresh_sleeve_dual']), None)
+    if mix10.get('fix4_sleeve_fresh_dual', {}).get('chosen_safe'):
+        matrix_row('True 10y sleeve (fix 4, on fresh paths)', mix10['fix4_sleeve_fresh_dual']['common_cara_ledger_ce'],
+                   f5th(mix10['fix4_sleeve_fresh_dual']), None)
+    matrix_row('Previous default (pre-round-2)', base['common_cara_ledger_ce'], None,
+               fix3['cross_base_on_real']['common_cara_ledger_ce'])
+    B += [
+        ('h2', 'The policy-by-model matrix, frozen'),
+        ('table',
+         ['Policy (all five-law validated where shown)', 'Default law', 'Regime law', 'Real terms'],
+         mrows,
+         [0.40, 0.20, 0.20, 0.20]),
+        ('note', 'Scores are certainty equivalents over 10 years on shared frozen paths; each column judges '
+                 'under a different law, so columns are not utilities compared - they are the same CARA score '
+                 'under different worlds. Real terms deflate by bootstrapped CPI. Missing cells: not yet '
+                 'computed on this seed family, not hidden failures.'),
+        ('p', "No policy wins everywhere, and no complex policy beats the simple fixed mixes: the two 1y-sleeve "
+              "mixes and the two 10y-sleeve mixes sit within a few $M of each other under every law, and the "
+              "regime law actually prefers the riskier current-quotes mix. The simple static policy remains "
+              "the answer; the matrix is the proof, frozen."),
+    ]
     # ---------- 6. second view ----------
     f5 = fix5['current_rates']
     B += [
@@ -264,7 +297,7 @@ def build_content(d):
     # ---------- 9. cost of limits ----------
     cells = fix6['cells']
     def ce_of(loss):
-        return cells.get(f'cml0.4_loss{loss}', {}).get('common_cara_ledger_ce')
+        return cells.get(f'cml0.40_loss{loss:.2f}', {}).get('common_cara_ledger_ce')
     loose = max((v.get('common_cara_ledger_ce') for v in cells.values() if v.get('common_cara_ledger_ce')), default=None)
     B += [
         ('h1', '9. What the loss limits cost'),

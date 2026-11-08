@@ -209,7 +209,16 @@ def from_default(result):
         check=next((z for z in judge.get('checks',[]) if z.get('payout_index')==i),None)
         rows.append(dict(method=r['method'],ce=r['net_ce']['mean'][0],gap_cvar=r['gap_cvar']['mean'][i],
             gap_upper=check['upper'] if check else r['wasserstein_gap_upper'][i],stress_gap=r['stressed_gap_cvar']['mean'][i],nominal_gap=r['training_gap'][i],budget=r['budgets'][i],week=int(cfg['liabilities'][i]['week']),overall_pass=r.get('overall_pass',False),verified=bool(judge)))
-    selected='proposed' if 'proposed' in result['net_wealth_fan'] else 'shrunk MV'
+    if 'proposed' in result['net_wealth_fan']:
+        selected='proposed';fan_state='approved_candidate'
+        fan_disclosure=''
+    else:
+        # Never present a comparator as the proposed portfolio (review brief,
+        # 8 Nov 2026): no candidate passed calibration, so the fan shows the
+        # shrunk mean-variance comparator and must say so.
+        selected='shrunk MV';fan_state='no_approved_candidate_comparator_shown'
+        fan_disclosure=(' NO APPROVED CANDIDATE: no proposed portfolio passed calibration; this fan is the '
+                        'shrunk mean-variance comparator, not a recommendation.')
     from emfin_v2.utility_science import load as load_utility_science
     from emfin_v2.dynamic_science import load as load_dynamic_science
     return dict(dynamic_science=load_dynamic_science(),utility_science=load_utility_science(),strict_tradeoff=result.get('strict_tradeoff',[]),controls=dict(objective_kind=cfg.get('objective_kind','cara'),funding_mode=cfg.get('funding_mode','tail_allowance'),radius_calibration_mode=cfg.get('radius_calibration_mode','manual'),scenario_tier=cfg.get('scenario_tier','full'),liability=sum(i['amount'] for i in cfg['liabilities'])/1e6,
@@ -221,8 +230,8 @@ def from_default(result):
         re_correlation=cfg['real_estate']['equity_correlation'],re_sale_week=cfg['real_estate'].get('sale_week',0),
         re_sale_delay=cfg['real_estate'].get('sale_delay_weeks',12),re_history=cfg['real_estate'].get('history_case','central'),re_haircut=cfg['real_estate']['liquidation_haircut']*100,re_forward_mode=cfg['real_estate'].get('forward_mode','view'),re_forward_drift=cfg['real_estate'].get('forward_log_drift',.04)*100,stress_increment=cfg['stress_mean_path_loss_increment']*100,asset_views=tuple(cfg.get('market_return_views',{}).get(str(i),0.)*100 for i in cfg.get('asset_layout',{}).get('view_indices',list(range(5)))) if cfg.get('market_return_views') else None),
         dashboard=result.get('dashboard'),all_fans=result['net_wealth_fan'],assets=result['assets'],weights=result['weights'],rows=rows,points=result['points'],frontier=result['frontier'],
-        training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',
-        fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.',
+        training_label='Training gap CVaR (uniform)',fan=result['net_wealth_fan'][selected],fan_title='Net wealth after cumulative payouts',fan_state=fan_state,
+        fan_note='5/25/50/75/95 percentiles. Net wealth / initial wealth. Payouts provisioned at money-market growth; due weeks are shown on the chart and do not move with the horizon.'+fan_disclosure,
         seconds=result['seconds'],snapshot=result['snapshot'],errors={} if result['status']['kind'] in ('optimized','calibrated optimizer/cash mixture','verified pointwise cash fallback','verified pointwise minimum-holdings fallback','verified pointwise fixed-holdings fallback') else {'proposed':result['status']['kind']},
         caveat='Status: '+result['status']['kind']+'. Optimizer share '+str(result['status'].get('risky_fraction','not applicable'))+'. Multi-period default: cumulative payouts, calibrated funding budget, shared nominal/stressed-posterior funding and CML bounds. Table shows final nominal mean / worst nominal-stressed upper CI; JSON reports every date and both measures. RE source and sale/rent assumptions are explicit; no measured cross-asset dependence. '+result['caveats'][0])
 

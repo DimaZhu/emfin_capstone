@@ -120,7 +120,7 @@ def fig_limit_cost(d):
     cells = d['fix6']['cells']
     rows = []
     for key, cell in cells.items():
-        if not key.startswith('cml0.4_'):
+        if not key.startswith('cml0.40_'):
             continue
         loss = float(key.split('loss')[1])
         ce = cell.get('common_cara_ledger_ce')
