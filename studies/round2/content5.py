@@ -140,6 +140,7 @@ def build_content(d):
     ]
     # ---------- 4. real terms ----------
     B += [
+        ('pagebreak',),
         ('h1', '4. Real dollars: the honest headline'),
         ('p', "Everything so far is nominal: dollars of the year they arrive in. You asked for the real view "
               "- today's purchasing power - as the headline. Here it is."),
@@ -247,6 +248,7 @@ def build_content(d):
     st = fresh.get('stability', {}).get('sleeve_L1', {})
     n400 = fresh.get('solves', {}).get('400', {})
     B += [
+        ('pagebreak',),
         ('h1', '7. The ten-year optimization, properly'),
         ('p', "The old pipeline solved the risky sleeve on a one-year problem and stretched it to ten years. "
               "The fix round solved the true 10-year problem directly. This edition re-ran that solve on "
