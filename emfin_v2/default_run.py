@@ -237,10 +237,10 @@ def metrics(c,draw,a,probs=None):
     p=np.full(len(paths),1/len(paths)) if probs is None else np.asarray(probs,float)
     ce=-c['risk_tolerance']*logsumexp(-m.terminal_net/c['risk_tolerance'],b=p)
     gaps=[]
+    from emfin_v2.contracts import accumulated_requirement
     for i,step in enumerate(steps):
-        required=amounts[:,i].copy()
-        for j,prior in enumerate(steps):
-            if prior<step or (prior==step and j<i):required+=amounts[:,j]*growth[:,step-1]/growth[:,prior-1]
+        # Shared provisioning primitive (Phase 4); op order unchanged.
+        required=accumulated_requirement(amounts,steps,growth,i)
         gaps.append(mpep.cml_of_paths(np.maximum(required-funding_paths(draw)[:,step-1]@a,0),p,c['confidence']))
     return np.array(gaps),float(ce)
 
