@@ -52,28 +52,24 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 fitted recommended mix held at 5y",
-    "validation_pass": false,
-    "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
-    "fifth_law_final_breaches": [
-     "Fixed holding 7"
-    ],
-    "common_cara_ledger_ce": 105518548.4585797,
-    "terminal_median": 112588689.10830432,
-    "terminal_q05": 92283197.99251887,
-    "terminal_q95": 142392843.82981193,
+    "label": "frozen round-2 fitted recommended mix held at 5y (residual to tbill)",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 105518055.78150757,
+    "terminal_median": 112586786.76730323,
+    "terminal_q05": 92283319.58814861,
+    "terminal_q95": 142387970.87150306,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 15000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 105506407.07383272,
-     "terminal_median": 111409515.55551606,
-     "terminal_q05": 93592021.88625918,
-     "terminal_q95": 138849053.77362555,
+     "common_cara_ledger_ce": 105505884.49745221,
+     "terminal_median": 111407717.59256086,
+     "terminal_q05": 93592021.22828212,
+     "terminal_q95": 138844524.8962227,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 8.731149137020111e-11,
@@ -123,28 +119,24 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 fitted recommended mix held at 10y",
-    "validation_pass": false,
-    "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
-    "fifth_law_final_breaches": [
-     "Fixed holding 7"
-    ],
-    "common_cara_ledger_ce": 109986537.64222318,
-    "terminal_median": 131891311.6202349,
-    "terminal_q05": 94933647.94942638,
-    "terminal_q95": 201416799.1713616,
+    "label": "frozen round-2 fitted recommended mix held at 10y (residual to tbill)",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 109985831.47520481,
+    "terminal_median": 131886761.71055928,
+    "terminal_q05": 94932727.36364567,
+    "terminal_q95": 201405097.0169181,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 30000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 112464328.48178093,
-     "terminal_median": 128626733.29936785,
-     "terminal_q05": 98362443.83247428,
-     "terminal_q95": 186996506.7769491,
+     "common_cara_ledger_ce": 112463228.2750915,
+     "terminal_median": 128622503.05685946,
+     "terminal_q05": 98361320.09307753,
+     "terminal_q95": 186986372.36115086,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 8.731149137020111e-11,
@@ -194,31 +186,27 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 fitted recommended mix held at 15y",
+    "label": "frozen round-2 fitted recommended mix held at 15y (residual to tbill)",
     "validation_pass": false,
-    "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
-    "fifth_law_final_breaches": [
-     "Fixed holding 7"
-    ],
-    "common_cara_ledger_ce": 109101861.15812977,
-    "terminal_median": 162376628.64594802,
-    "terminal_q05": 97397791.86007719,
-    "terminal_q95": 299757054.0614487,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 109101994.62725842,
+    "terminal_median": 162368263.80014664,
+    "terminal_q05": 97395994.94146188,
+    "terminal_q95": 299735137.02538687,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 45000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 109513549.29706362,
-     "terminal_median": 154298241.73337236,
-     "terminal_q05": 112892283.50272402,
-     "terminal_q95": 257220474.28706867,
+     "common_cara_ledger_ce": 109516278.6471534,
+     "terminal_median": 154290689.67642528,
+     "terminal_q05": 112888950.52604094,
+     "terminal_q95": 257202309.1616068,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
-     "largest_unpaid": 1.1641532182693481e-10,
+     "largest_unpaid": 8.731149137020111e-11,
      "total_paid": 45000000.0
     }
    },
@@ -265,32 +253,29 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 fitted recommended mix held at 20y",
+    "label": "frozen round-2 fitted recommended mix held at 20y (residual to tbill)",
     "validation_pass": false,
     "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
+    "final_breaches": [],
     "fifth_law_final_breaches": [
-     "Held-out terminal-loss tail",
-     "Fixed holding 7"
+     "Held-out terminal-loss tail"
     ],
-    "common_cara_ledger_ce": 112467336.89259933,
-    "terminal_median": 208696569.8403672,
-    "terminal_q05": 109348213.67912309,
-    "terminal_q95": 473656932.86034447,
+    "common_cara_ledger_ce": 112467015.65909432,
+    "terminal_median": 208682389.81617868,
+    "terminal_q05": 109344753.45192924,
+    "terminal_q95": 473613668.85969424,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
-    "largest_unpaid": 1.1641532182693481e-10,
+    "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 60000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 128589756.25738272,
-     "terminal_median": 195672393.34883386,
-     "terminal_q05": 129032108.21559103,
-     "terminal_q95": 363660449.74896604,
+     "common_cara_ledger_ce": 128588775.61624938,
+     "terminal_median": 195659764.49141815,
+     "terminal_q05": 129026397.64224365,
+     "terminal_q95": 363629974.50729775,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
-     "largest_unpaid": 8.731149137020111e-11,
+     "largest_unpaid": 1.1641532182693481e-10,
      "total_paid": 60000000.0
     }
    },
@@ -337,29 +322,26 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 fitted recommended mix held at 30y",
+    "label": "frozen round-2 fitted recommended mix held at 30y (residual to tbill)",
     "validation_pass": false,
     "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
+    "final_breaches": [],
     "fifth_law_final_breaches": [
-     "Held-out terminal-loss tail",
-     "Fixed holding 7"
+     "Held-out terminal-loss tail"
     ],
-    "common_cara_ledger_ce": 128741790.70689955,
-    "terminal_median": 398817038.61559397,
-    "terminal_q05": 143482165.72208917,
-    "terminal_q95": 1272719323.4936283,
+    "common_cara_ledger_ce": 128738733.94368598,
+    "terminal_median": 398778946.992007,
+    "terminal_q05": 143472620.93442306,
+    "terminal_q95": 1272587412.1808872,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
-    "largest_unpaid": 8.731149137020111e-11,
+    "largest_unpaid": 1.1641532182693481e-10,
     "total_paid": 90000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 124131341.7002916,
-     "terminal_median": 352116442.23829144,
-     "terminal_q05": 194555039.8622743,
-     "terminal_q95": 766048244.347491,
+     "common_cara_ledger_ce": 124131446.92518826,
+     "terminal_median": 352083433.86579597,
+     "terminal_q05": 194540506.10341763,
+     "terminal_q95": 765971500.9006363,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 1.1641532182693481e-10,
@@ -411,29 +393,26 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 current_quotes recommended mix held at 5y",
-    "validation_pass": false,
+    "label": "frozen round-2 current_quotes recommended mix held at 5y (residual to tbill)",
+    "validation_pass": true,
     "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
+    "final_breaches": [],
     "fifth_law_final_breaches": [
-     "Held-out terminal-loss tail",
-     "Fixed holding 7"
+     "Held-out terminal-loss tail"
     ],
-    "common_cara_ledger_ce": 111617587.85587217,
-    "terminal_median": 124627193.96402794,
-    "terminal_q05": 96651165.82703207,
-    "terminal_q95": 168374119.33911777,
+    "common_cara_ledger_ce": 111617023.46075672,
+    "terminal_median": 124629027.67155457,
+    "terminal_q05": 96650117.42248768,
+    "terminal_q95": 168380437.70320645,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 15000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 111746432.31463243,
-     "terminal_median": 123212206.09267473,
-     "terminal_q05": 99123542.10709567,
-     "terminal_q95": 160709866.9301666,
+     "common_cara_ledger_ce": 111745769.52455291,
+     "terminal_median": 123213930.11227846,
+     "terminal_q05": 99122899.03264415,
+     "terminal_q95": 160715357.1280418,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 8.731149137020111e-11,
@@ -483,28 +462,24 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 current_quotes recommended mix held at 10y",
-    "validation_pass": false,
-    "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
-    "fifth_law_final_breaches": [
-     "Fixed holding 7"
-    ],
-    "common_cara_ledger_ce": 121408409.68108451,
-    "terminal_median": 161172314.77863705,
-    "terminal_q05": 109151323.83153668,
-    "terminal_q95": 263801903.0512507,
+    "label": "frozen round-2 current_quotes recommended mix held at 10y (residual to tbill)",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 121406782.53226426,
+    "terminal_median": 161177113.53180194,
+    "terminal_q05": 109150895.96774413,
+    "terminal_q95": 263817121.7945649,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 8.731149137020111e-11,
     "total_paid": 30000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 125644347.31629616,
-     "terminal_median": 156886743.07772046,
-     "terminal_q05": 114109392.05267426,
-     "terminal_q95": 237882787.1575771,
+     "common_cara_ledger_ce": 125643047.1268179,
+     "terminal_median": 156891077.5217921,
+     "terminal_q05": 114109488.68813154,
+     "terminal_q95": 237895334.3781673,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 8.731149137020111e-11,
@@ -554,31 +529,27 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 current_quotes recommended mix held at 15y",
+    "label": "frozen round-2 current_quotes recommended mix held at 15y (residual to tbill)",
     "validation_pass": false,
-    "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
-    "fifth_law_final_breaches": [
-     "Fixed holding 7"
-    ],
-    "common_cara_ledger_ce": 119803325.552754,
-    "terminal_median": 219002907.603422,
-    "terminal_q05": 121820111.00437912,
-    "terminal_q95": 429879974.44163895,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 119798401.63367006,
+    "terminal_median": 219012393.74742553,
+    "terminal_q05": 121819617.12654157,
+    "terminal_q95": 429911710.3194031,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 1.1641532182693481e-10,
     "total_paid": 45000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 107583454.57962634,
-     "terminal_median": 206655874.3677795,
-     "terminal_q05": 146000913.12027562,
-     "terminal_q95": 360520994.8559628,
+     "common_cara_ledger_ce": 107573964.73219179,
+     "terminal_median": 206664221.61827636,
+     "terminal_q05": 146003061.5954026,
+     "terminal_q95": 360545090.4475116,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
-     "largest_unpaid": 8.731149137020111e-11,
+     "largest_unpaid": 1.1641532182693481e-10,
      "total_paid": 45000000.0
     }
    },
@@ -625,29 +596,26 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 current_quotes recommended mix held at 20y",
+    "label": "frozen round-2 current_quotes recommended mix held at 20y (residual to tbill)",
     "validation_pass": false,
     "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
+    "final_breaches": [],
     "fifth_law_final_breaches": [
-     "Held-out terminal-loss tail",
-     "Fixed holding 7"
+     "Held-out terminal-loss tail"
     ],
-    "common_cara_ledger_ce": 134929560.93063065,
-    "terminal_median": 304791006.84694827,
-    "terminal_q05": 153673832.88814124,
-    "terminal_q95": 716932781.391935,
+    "common_cara_ledger_ce": 134925061.7511563,
+    "terminal_median": 304808258.31972456,
+    "terminal_q05": 153675714.00345668,
+    "terminal_q95": 716993202.9313216,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 1.1641532182693481e-10,
     "total_paid": 60000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 154044432.64534387,
-     "terminal_median": 283006417.31587017,
-     "terminal_q05": 186751833.1399766,
-     "terminal_q95": 526401800.64528775,
+     "common_cara_ledger_ce": 154040354.15946564,
+     "terminal_median": 283021615.51266694,
+     "terminal_q05": 186756937.09731048,
+     "terminal_q95": 526442357.02535725,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 1.1641532182693481e-10,
@@ -697,29 +665,26 @@
     }
    },
    "hold_10y_mix": {
-    "label": "frozen round-2 current_quotes recommended mix held at 30y",
+    "label": "frozen round-2 current_quotes recommended mix held at 30y (residual to tbill)",
     "validation_pass": false,
     "final_pass": false,
-    "final_breaches": [
-     "Fixed holding 7"
-    ],
+    "final_breaches": [],
     "fifth_law_final_breaches": [
-     "Held-out terminal-loss tail",
-     "Fixed holding 7"
+     "Held-out terminal-loss tail"
     ],
-    "common_cara_ledger_ce": 181372518.001704,
-    "terminal_median": 659584653.2585261,
-    "terminal_q05": 240141546.731356,
-    "terminal_q95": 2112300819.1532676,
+    "common_cara_ledger_ce": 181368512.59058422,
+    "terminal_median": 659636437.044275,
+    "terminal_q05": 240148151.70944312,
+    "terminal_q95": 2112511259.1813247,
     "prob_end_below_start": 0.0,
     "funded": 1.0,
     "largest_unpaid": 1.1641532182693481e-10,
     "total_paid": 90000000.0,
     "fifth_law_score": {
-     "common_cara_ledger_ce": 149647694.5059185,
-     "terminal_median": 580964433.2458905,
-     "terminal_q05": 329264565.5340368,
-     "terminal_q95": 1223534666.6587598,
+     "common_cara_ledger_ce": 149636636.0253357,
+     "terminal_median": 581007935.0400636,
+     "terminal_q05": 329280608.3777205,
+     "terminal_q95": 1223643717.6052403,
      "prob_end_below_start": 0.0,
      "funded": 1.0,
      "largest_unpaid": 1.1641532182693481e-10,

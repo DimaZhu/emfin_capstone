@@ -154,7 +154,11 @@ def judge_frozen(c, primary, fifth, weights, label=''):
     """Score a frozen weight vector under both laws; report pass/fail per law."""
     ids = c['asset_layout']['ids']
     a = np.array([weights.get(i, 0.0) for i in ids], float)
-    a = a / a.sum()  # stored weights are rounded to 4 decimals; renormalize exactly
+    # stored weights are rounded to 4 decimals; fold the residual into the safe
+    # asset only, so fixed holdings (property) stay exactly at their pinned value
+    safe_idx = ids.index('tbill') if 'tbill' in ids else int(c['cash_index'])
+    a[safe_idx] += 1.0 - a.sum()
+    assert abs(a.sum() - 1.0) < 1e-12
     a = a * c['wealth']
     v1, f1 = judge(c, primary, a)
     v2, f2 = judge(c, fifth, a)
