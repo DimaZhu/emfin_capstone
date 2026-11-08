@@ -79,4 +79,29 @@ def test_dynamic_execute_cash_first_mode_golden():
     calm, stress = scenarios()
     for name, spec in (('calm', calm), ('stress', stress)):
         expected = json.loads((FIX / f'dynamic_cash_first_{name}.json').read_text())
+        expected = {k: v for k, v in expected.items() if not k.startswith('_')}
         _compare(execute(CONFIG, _draw(spec), ALLOC, mode='cash_first'), expected)
+
+
+def test_dynamic_all_modes_golden():
+    """Phase 3: every execute() mode runs on the shared event engine; these
+    fixtures were captured from the retired twin loop at migration and pin
+    bit-for-bit behavior (rtol 1e-9, atol 1e-12). Regenerate only
+    intentionally via tests/golden/generate_dynamic_modes.py."""
+    modes = ('cash_first', 'pro_rata', 'feedback', 'static_target',
+             'feedback_initial_only', 'feedback_static_target', 'static_frequency')
+    calm, stress = scenarios()
+    for name, spec in (('calm', calm), ('stress', stress)):
+        draw = _draw(spec)
+        for mode in modes:
+            expected = json.loads((FIX / f'dynamic_{mode}_{name}.json').read_text())
+            theta = expected.pop('_theta')
+            months = expected.pop('_rebalance_months')
+            kw = dict(theta=theta) if 'feedback' in mode else {}
+            if mode == 'static_frequency':
+                kw['rebalance_months'] = months
+            actual = _flat(execute(CONFIG, draw, ALLOC, mode=mode, **kw))
+            assert actual.keys() == expected.keys()
+            for k in actual:
+                np.testing.assert_allclose(np.array(actual[k]), np.array(expected[k]),
+                                           err_msg=f'{name}/{mode}/{k}', **TOL)

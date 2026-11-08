@@ -49,6 +49,15 @@ class LedgerSpec:
     sale_rule: str = 'cash_first'     # 'cash_first' | 'pro_rata'
     shadow_carry: bool = False        # track paid Carry shadow wealth (dynamic_policy)
     proceeds_rounding: str = 'elementwise'  # 'elementwise' | 'aggregate' (legacy execute op order)
+    # Target rules (dynamic_policy.execute's feedback/static modes). A target
+    # rule sets a full [cash, *liquid] allocation target at a decision week,
+    # trading both ways (sell what exceeds target, buy what falls short);
+    # 'none' falls back to the sell-only sale_rule.
+    target_rule: str = 'none'         # 'none' | 'feedback' | 'static_target'
+    initial_rule: str = 'same'        # 'same' | 'none' | 'feedback' | 'static_target'
+    capture_weights_at_initial: bool = False  # feedback_static_target's path-0 weights quirk
+    feedback_theta: tuple = ()        # eight softmax feedback parameters
+    rebalance_every_payments: int = 0  # static_frequency: 0 = target at every decision
 
     @staticmethod
     def cash_first():
@@ -70,6 +79,50 @@ class LedgerSpec:
                           need_rule='windowed', decision_rule='before_settlement',
                           sale_rule='pro_rata', shadow_carry=True,
                           proceeds_rounding='aggregate')
+
+    @staticmethod
+    def _dynamic(fee_bps, settlement_lag_weeks, **kw):
+        base = dict(fee_bps=fee_bps, settlement_lag_weeks=settlement_lag_weeks,
+                    need_rule='windowed', decision_rule='before_settlement',
+                    shadow_carry=True, proceeds_rounding='aggregate')
+        base.update(kw)
+        return LedgerSpec(**base)
+
+    @staticmethod
+    def dynamic_feedback(theta, fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='feedback') mechanics."""
+        return LedgerSpec._dynamic(fee_bps, settlement_lag_weeks,
+                                   target_rule='feedback', feedback_theta=tuple(theta))
+
+    @staticmethod
+    def dynamic_static_target(fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='static_target') mechanics."""
+        return LedgerSpec._dynamic(fee_bps, settlement_lag_weeks,
+                                   target_rule='static_target')
+
+    @staticmethod
+    def dynamic_feedback_initial_only(theta, fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='feedback_initial_only') mechanics."""
+        return LedgerSpec._dynamic(fee_bps, settlement_lag_weeks,
+                                   target_rule='none', initial_rule='feedback',
+                                   sale_rule='cash_first', feedback_theta=tuple(theta))
+
+    @staticmethod
+    def dynamic_feedback_static_target(theta, fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='feedback_static_target') mechanics."""
+        return LedgerSpec._dynamic(fee_bps, settlement_lag_weeks,
+                                   target_rule='static_target', initial_rule='feedback',
+                                   capture_weights_at_initial=True,
+                                   feedback_theta=tuple(theta))
+
+    @staticmethod
+    def dynamic_static_frequency(rebalance_months, fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='static_frequency') mechanics: a static
+        target at every rebalance_every_payments-th payment's decision week
+        (and the initial trade), cash_first sales at the other decisions."""
+        return LedgerSpec._dynamic(fee_bps, settlement_lag_weeks,
+                                   target_rule='static_target', sale_rule='cash_first',
+                                   rebalance_every_payments=rebalance_months)
 
     def validate(self):
         if self.liquidation != 'cash_first_pro_rata':
@@ -96,6 +149,26 @@ class LedgerSpec:
             raise ValueError('windowed needs require the before_settlement decision rule')
         if self.sale_rule == 'pro_rata' and self.need_rule != 'windowed':
             raise ValueError('the pro_rata sale rule requires windowed needs')
+        if self.target_rule not in ('none', 'feedback', 'static_target'):
+            raise ValueError('unknown target rule')
+        if self.initial_rule not in ('same', 'none', 'feedback', 'static_target'):
+            raise ValueError('unknown initial rule')
+        uses_target = self.target_rule != 'none' or (
+            self.initial_rule not in ('same', 'none'))
+        if uses_target and self.decision_rule != 'before_settlement':
+            raise ValueError('target rules require the before_settlement decision rule')
+        uses_feedback = 'feedback' in (self.target_rule, self.initial_rule)
+        if uses_feedback:
+            th = np.asarray(self.feedback_theta, float)
+            if th.shape != (8,) or not np.isfinite(th).all():
+                raise ValueError('eight finite feedback parameters required')
+        if self.capture_weights_at_initial and not (
+                self.initial_rule == 'feedback' and self.target_rule == 'static_target'):
+            raise ValueError('weights capture requires feedback initial into static target')
+        if type(self.rebalance_every_payments) is not int or self.rebalance_every_payments < 0:
+            raise ValueError('rebalance_every_payments must be a nonnegative int')
+        if self.rebalance_every_payments and self.target_rule != 'static_target':
+            raise ValueError('a rebalance calendar requires the static_target rule')
 
 
 def run_event_ledger(c, draw, allocation, spec):
@@ -140,6 +213,22 @@ def run_event_ledger(c, draw, allocation, spec):
         decisions = sorted(set([0, *[max(0, int(w) - lag)
                                      for w in steps if int(w) - lag < h]]))
         decision_weeks = set(tau - 1 for tau in decisions if tau >= 1)
+        initial_rule = spec.target_rule if spec.initial_rule == 'same' else spec.initial_rule
+        if initial_rule == 'none':
+            initial_rule = spec.sale_rule
+        if spec.rebalance_every_payments:
+            m = spec.rebalance_every_payments
+            rebal_exec = set([0, *[max(0, int(steps[k - 1]) - lag)
+                                   for k in range(1, len(steps)) if k % m == 0]])
+            rebalance_weeks = set(tau - 1 for tau in rebal_exec if tau >= 1)
+        else:
+            rebalance_weeks = decision_weeks
+        # Static-target weights run over [cash, *liquid], matching
+        # dynamic_policy.execute's liquid list and base.
+        cash_liquid = [cash_index, *liquid]
+        base_liquid = float(a[cash_liquid].sum())
+        weights = a[cash_liquid] / base_liquid
+        running = np.ones(n)
         paid_carry = np.zeros(n)
         shadow = np.zeros((n, h))
         cost = np.zeros(n)
@@ -152,19 +241,37 @@ def run_event_ledger(c, draw, allocation, spec):
             mask = (steps >= tau + lag) & (steps < next_decision + lag)
             return amounts[:, mask].sum(1) + arrears
 
-        def declared_trade(px, tau):
-            # dynamic_policy.execute's sell block, float op order preserved.
-            nonlocal cash, cost, turnover, trades
+        def declared_trade(px, tau, rule):
+            # dynamic_policy.execute's trade block, float op order preserved.
+            nonlocal cash, cost, turnover, trades, weights
             val = units[:, liquid] * px[:, liquid]
             spendable = cash + val.sum(1)
-            need = windowed_need(tau)
-            if spec.sale_rule == 'cash_first':
-                sale = np.minimum(np.maximum(need - cash, 0) / (1 - fee), val.sum(1))
+            if rule == 'feedback':
+                from scipy.special import softmax
+                th = np.asarray(spec.feedback_theta, float)
+                if len(liquid) != 4:
+                    raise ValueError('the feedback target rule requires four liquid sleeves')
+                remaining = amounts[:, steps >= max(1, tau)].sum(1)
+                past = np.ones((n, len(liquid))) if tau <= 4 else prices[:, tau - 5, liquid]
+                momentum = np.log(np.maximum(px[:, liquid], 1e-300) / np.maximum(past, 1e-300))
+                feature = th[4] * (spendable / base_liquid - 1) + th[5] * remaining / base_liquid \
+                    + th[6] * (px[:, liquid[0]] / running - 1)
+                target = softmax(np.c_[np.zeros(n), np.broadcast_to(th[:4], (n, 4))
+                                       + feature[:, None] + th[7] * momentum],
+                                 axis=1) * spendable[:, None]
+                if tau == 0 and spec.capture_weights_at_initial:
+                    weights = target[0] / spendable[0]
+            elif rule == 'static_target':
+                target = spendable[:, None] * weights[None, :]
             else:
-                sale = np.minimum(need * np.divide(val.sum(1), spendable, out=np.zeros(n),
-                                                   where=spendable > 0) / (1 - fee), val.sum(1))
-            fraction = np.divide(sale, val.sum(1), out=np.zeros(n), where=val.sum(1) > 0)
-            target = np.c_[cash + sale, val * (1 - fraction[:, None])]
+                need = windowed_need(tau)
+                if rule == 'cash_first':
+                    sale = np.minimum(np.maximum(need - cash, 0) / (1 - fee), val.sum(1))
+                else:
+                    sale = np.minimum(need * np.divide(val.sum(1), spendable, out=np.zeros(n),
+                                                       where=spendable > 0) / (1 - fee), val.sum(1))
+                fraction = np.divide(sale, val.sum(1), out=np.zeros(n), where=val.sum(1) > 0)
+                target = np.c_[cash + sale, val * (1 - fraction[:, None])]
             sell = np.maximum(val - target[:, 1:], 0)
             sell = np.minimum(sell, val)
             units[:, liquid] -= np.divide(sell, px[:, liquid], out=np.zeros_like(sell),
@@ -177,6 +284,20 @@ def run_event_ledger(c, draw, allocation, spec):
                 pending[:, tau + lag - 1] += proceeds
             else:
                 cash += proceeds
+            if rule in ('feedback', 'static_target'):
+                after = units[:, liquid] * px[:, liquid]
+                buy = np.maximum(target[:, 1:] - after, 0)
+                buy_need = buy.sum(1) * (1 + fee)
+                bfraction = np.minimum(1., np.divide(cash, buy_need, out=np.zeros(n),
+                                                     where=buy_need > 0))
+                buy *= bfraction[:, None]
+                spent = buy.sum(1) * (1 + fee)
+                cash -= spent
+                units[:, liquid] += np.divide(buy, px[:, liquid], out=np.zeros_like(buy),
+                                              where=px[:, liquid] > 0)
+                cost += buy.sum(1) * fee
+                turnover += buy.sum(1)
+                trades += (buy > 1e-6).sum(1)
 
     values = np.zeros((n, h))
     cash_path = np.zeros((n, h))
@@ -190,7 +311,7 @@ def run_event_ledger(c, draw, allocation, spec):
     funding = funding_paths(draw)
     if dynamic:
         # execute-week-0 trade: the initial-price rebalance.
-        declared_trade(np.ones((n, d)), 0)
+        declared_trade(np.ones((n, d)), 0, initial_rule)
     for t in range(h):
         ratio = growth[:, t] / (growth[:, t - 1] if t else 1.)
         cash *= ratio
@@ -210,10 +331,17 @@ def run_event_ledger(c, draw, allocation, spec):
             cash += np.maximum(received, 0.)
             last_property_cash = property_cash
         if dynamic:
+            running = np.maximum(running, prices[:, t, liquid[0]]) if liquid else running
             # One declared trade per decision week; payments then paid from
             # cash in due order, unpaid persisting as arrears.
             if t in decision_weeks:
-                declared_trade(prices[:, t, :], t + 1)
+                rule = spec.target_rule
+                if rule == 'static_target' and spec.rebalance_every_payments \
+                        and t not in rebalance_weeks:
+                    rule = 'none'
+                if rule == 'none':
+                    rule = spec.sale_rule
+                declared_trade(prices[:, t, :], t + 1, rule)
             for k in np.flatnonzero(steps == t + 1):
                 required = amounts[:, k] + arrears
                 payment = np.minimum(np.maximum(cash, 0), required)
