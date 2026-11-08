@@ -1,0 +1,1653 @@
+{
+ "meta": {
+  "label": "FINAL-5 SENS stage 4: seed-noise band on seed family 20261111 - horizon sweep at 15%/25% terminal plus 20/30y policy cells, both carry views, dual-law. Compares against final5_horizon.json / final5_horizon_t25_s09.json (20261109) and final5_horizon_t25.json (20261110).",
+  "seed_family": 20261111,
+  "years": [
+   5,
+   10,
+   15,
+   20,
+   30
+  ],
+  "losses": [
+   0.15,
+   0.25
+  ]
+ },
+ "fitted": {
+  "5y_t0.15": {
+   "years": 5,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.375,
+    "validation_selected_safe": 0.275,
+    "weights": {
+     "us_equity": 0.0983,
+     "em_equity": 0.0,
+     "gold": 0.1219,
+     "treasury": 0.3048,
+     "tips": 0.0,
+     "tbill": 0.375,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 5y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 104479020.91844508,
+    "terminal_median": 110187853.06122869,
+    "terminal_q05": 92078564.13268898,
+    "terminal_q95": 137989837.42145535,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 105099127.2598363,
+     "terminal_median": 109721965.60660687,
+     "terminal_q05": 93346723.35577287,
+     "terminal_q95": 134626549.1234694,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 5y, terminal 15%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 104969279.01557463,
+    "terminal_median": 111660312.06797835,
+    "terminal_q05": 91946807.33702403,
+    "terminal_q95": 141520906.29526737,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 105669285.34711806,
+     "terminal_median": 111128943.57473168,
+     "terminal_q05": 93580696.9755667,
+     "terminal_q95": 138105633.3718993,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "seconds": 4.851514339999994
+  },
+  "5y_t0.25": {
+   "years": 5,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.125,
+    "validation_selected_safe": 0.1,
+    "weights": {
+     "us_equity": 0.1451,
+     "em_equity": 0.0,
+     "gold": 0.18,
+     "treasury": 0.4499,
+     "tips": 0.0,
+     "tbill": 0.125,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 5y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 106339164.10317017,
+    "terminal_median": 117280212.83571535,
+    "terminal_q05": 91729408.80409434,
+    "terminal_q95": 155806136.7453202,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 107276221.37935333,
+     "terminal_median": 116642762.92643152,
+     "terminal_q05": 94623828.66266914,
+     "terminal_q95": 150852504.13354218,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 5y, terminal 25%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 104969279.01557463,
+    "terminal_median": 111660312.06797835,
+    "terminal_q05": 91946807.33702403,
+    "terminal_q95": 141520906.29526737,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 105669285.34711806,
+     "terminal_median": 111128943.57473168,
+     "terminal_q05": 93580696.9755667,
+     "terminal_q95": 138105633.3718993,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "seconds": 2.1163909569995667
+  },
+  "10y_t0.15": {
+   "years": 10,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.525,
+    "validation_selected_safe": 0.525,
+    "weights": {
+     "us_equity": 0.0702,
+     "em_equity": 0.0,
+     "gold": 0.0871,
+     "treasury": 0.2177,
+     "tips": 0.0,
+     "tbill": 0.525,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 10y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 105308482.27707009,
+    "terminal_median": 117981472.58458415,
+    "terminal_q05": 90071439.5995326,
+    "terminal_q95": 168044188.2722916,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 107578769.75887313,
+     "terminal_median": 115335043.54187573,
+     "terminal_q05": 95133851.19466376,
+     "terminal_q95": 154925644.00404072,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 10y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 109066058.78446871,
+    "terminal_median": 132223154.65440354,
+    "terminal_q05": 93848261.78936061,
+    "terminal_q95": 202250723.47089696,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 113498366.26245761,
+     "terminal_median": 127894273.04079472,
+     "terminal_q05": 100172773.01922932,
+     "terminal_q95": 186235883.32243893,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 10.80413386500004
+  },
+  "10y_t0.25": {
+   "years": 10,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.4,
+    "validation_selected_safe": 0.4,
+    "weights": {
+     "us_equity": 0.0936,
+     "em_equity": 0.0,
+     "gold": 0.1161,
+     "treasury": 0.2903,
+     "tips": 0.0,
+     "tbill": 0.4,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 10y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 107941962.96185862,
+    "terminal_median": 126797203.98839307,
+    "terminal_q05": 92483119.06532137,
+    "terminal_q95": 189141666.24734336,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 111575584.16235463,
+     "terminal_median": 123395106.33259636,
+     "terminal_q05": 98146707.69092731,
+     "terminal_q95": 174640563.03608704,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 10y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 109066058.78446871,
+    "terminal_median": 132223154.65440354,
+    "terminal_q05": 93848261.78936061,
+    "terminal_q95": 202250723.47089696,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 113498366.26245761,
+     "terminal_median": 127894273.04079472,
+     "terminal_q05": 100172773.01922932,
+     "terminal_q95": 186235883.32243893,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 8.09293772699948
+  },
+  "15y_t0.15": {
+   "years": 15,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.275,
+    "validation_selected_safe": 0.275,
+    "weights": {
+     "us_equity": 0.117,
+     "em_equity": 0.0,
+     "gold": 0.1452,
+     "treasury": 0.3629,
+     "tips": 0.0,
+     "tbill": 0.275,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 15y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 111818446.93078265,
+    "terminal_median": 172194220.7551635,
+    "terminal_q05": 98345847.45209123,
+    "terminal_q95": 319543946.1267338,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 106677006.70667754,
+     "terminal_median": 161673488.30329055,
+     "terminal_q05": 114821739.37850754,
+     "terminal_q95": 270100995.80494833,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 45000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 15y, terminal 15%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 111238985.0903598,
+    "terminal_median": 165134527.32526523,
+    "terminal_q05": 96319895.78659458,
+    "terminal_q95": 301978887.51907915,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 108752329.91107975,
+     "terminal_median": 155495475.18328568,
+     "terminal_q05": 111962322.61285394,
+     "terminal_q95": 254866323.35542616,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 45000000.0
+    }
+   },
+   "seconds": 11.150324008000098
+  },
+  "15y_t0.25": {
+   "years": 15,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.15,
+    "validation_selected_safe": 0.15,
+    "weights": {
+     "us_equity": 0.1404,
+     "em_equity": 0.0,
+     "gold": 0.1742,
+     "treasury": 0.4354,
+     "tips": 0.0,
+     "tbill": 0.15,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 15y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 112476443.10975125,
+    "terminal_median": 190338089.1858021,
+    "terminal_q05": 103324360.9767594,
+    "terminal_q95": 365303003.52275336,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 99898395.3155594,
+     "terminal_median": 177110423.24790895,
+     "terminal_q05": 121601147.04209802,
+     "terminal_q95": 303222204.6940017,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 45000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 15y, terminal 25%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 111238985.0903598,
+    "terminal_median": 165134527.32526523,
+    "terminal_q05": 96319895.78659458,
+    "terminal_q95": 301978887.51907915,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 108752329.91107975,
+     "terminal_median": 155495475.18328568,
+     "terminal_q05": 111962322.61285394,
+     "terminal_q95": 254866323.35542616,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 45000000.0
+    }
+   },
+   "seconds": 6.906285482000385
+  },
+  "20y_t0.15": {
+   "years": 20,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.7,
+    "validation_selected_safe": 0.7,
+    "weights": {
+     "us_equity": 0.0374,
+     "em_equity": 0.0,
+     "gold": 0.0465,
+     "treasury": 0.1161,
+     "tips": 0.0,
+     "tbill": 0.7,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 20y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 97896577.16706942,
+    "terminal_median": 125024277.72212848,
+    "terminal_q05": 81488765.6925042,
+    "terminal_q95": 239676184.62020668,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 103594114.17028302,
+     "terminal_median": 119160441.8575904,
+     "terminal_q05": 88904381.01669805,
+     "terminal_q95": 191989968.71829876,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 60000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 20y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 112840767.7720672,
+    "terminal_median": 209983921.22076225,
+    "terminal_q05": 107664185.6978049,
+    "terminal_q95": 483334107.94051886,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 126858767.11009601,
+     "terminal_median": 195701481.8356296,
+     "terminal_q05": 126685076.40423279,
+     "terminal_q95": 345596795.07522655,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 60000000.0
+    }
+   },
+   "seconds": 33.58664532700004
+  },
+  "20y_t0.25": {
+   "years": 20,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.625,
+    "validation_selected_safe": 0.625,
+    "weights": {
+     "us_equity": 0.0515,
+     "em_equity": 0.0,
+     "gold": 0.0639,
+     "treasury": 0.1597,
+     "tips": 0.0,
+     "tbill": 0.625,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 20y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 102773910.0711252,
+    "terminal_median": 141995196.631643,
+    "terminal_q05": 87276671.12755544,
+    "terminal_q95": 278946381.4371305,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 111121012.86177045,
+     "terminal_median": 134080630.1487872,
+     "terminal_q05": 97007402.26604454,
+     "terminal_q95": 220228901.32061005,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 60000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 20y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 112840767.7720672,
+    "terminal_median": 209983921.22076225,
+    "terminal_q05": 107664185.6978049,
+    "terminal_q95": 483334107.94051886,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 126858767.11009601,
+     "terminal_median": 195701481.8356296,
+     "terminal_q05": 126685076.40423279,
+     "terminal_q95": 345596795.07522655,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 60000000.0
+    }
+   },
+   "seconds": 29.998679157999504
+  },
+  "30y_t0.15": {
+   "years": 30,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.8,
+    "validation_selected_safe": 0.8,
+    "weights": {
+     "us_equity": 0.0187,
+     "em_equity": 0.0,
+     "gold": 0.0232,
+     "treasury": 0.0581,
+     "tips": 0.0,
+     "tbill": 0.8,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 30y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 82284123.09392715,
+    "terminal_median": 123990565.47808838,
+    "terminal_q05": 64440716.18316792,
+    "terminal_q95": 304166529.2429232,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 88788390.6847604,
+     "terminal_median": 113591802.83202185,
+     "terminal_q05": 73527277.62881903,
+     "terminal_q95": 258104618.79216304,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 30y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 120734868.34047605,
+    "terminal_median": 410096854.53515035,
+    "terminal_q05": 142836121.34999093,
+    "terminal_q95": 1332834375.136763,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 138977790.45921275,
+     "terminal_median": 353542920.9735398,
+     "terminal_q05": 196489525.5549797,
+     "terminal_q95": 790477269.4640416,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 67.94474963999983
+  },
+  "30y_t0.25": {
+   "years": 30,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.75,
+    "validation_selected_safe": 0.75,
+    "weights": {
+     "us_equity": 0.0281,
+     "em_equity": 0.0,
+     "gold": 0.0348,
+     "treasury": 0.0871,
+     "tips": 0.0,
+     "tbill": 0.75,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 fitted, 30y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 89861650.76284544,
+    "terminal_median": 151940651.53198236,
+    "terminal_q05": 72699055.50611806,
+    "terminal_q95": 384977628.7036574,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 100219454.47279406,
+     "terminal_median": 136755748.19197905,
+     "terminal_q05": 86671244.62407865,
+     "terminal_q95": 307621027.20573634,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 30y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 120734868.34047605,
+    "terminal_median": 410096854.53515035,
+    "terminal_q05": 142836121.34999093,
+    "terminal_q95": 1332834375.136763,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 138977790.45921275,
+     "terminal_median": 353542920.9735398,
+     "terminal_q05": 196489525.5549797,
+     "terminal_q95": 790477269.4640416,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 63.42261707599937
+  },
+  "20y_policies": {
+   "years": 20,
+   "view": "fitted",
+   "glide": [
+    0.6,
+    0.125
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 0.08404219211344936,
+    "measure_upper": {
+     "reference": -0.17752646003729528,
+     "nominal": -0.13798486313242314,
+     "stressed": 0.08404219211344936,
+     "common_hull": 0.08404219211344936
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 227127201.05870375,
+    "median": 311535880.8248352
+   },
+   "cash_first": {
+    "terminal_ru": 0.8509348145705431,
+    "measure_upper": {
+     "reference": 0.6548960135891648,
+     "nominal": 0.6890060776192142,
+     "stressed": 0.8509348145705431,
+     "common_hull": 0.8509348145705431
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 126685076.40423279,
+    "median": 195701481.8356296,
+    "funded": 1.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.46625286310821457,
+    "measure_upper": {
+     "reference": 0.3264878576554008,
+     "nominal": 0.34526608814349685,
+     "stressed": 0.4592162702670604,
+     "common_hull": 0.46625286310821457
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 113802422.84832156,
+    "median": 159879053.3930781,
+    "funded": 1.0
+   },
+   "threshold_10": {
+    "terminal_ru": 0.30769348650690265,
+    "measure_upper": {
+     "reference": 0.2492342368593262,
+     "nominal": 0.2523685735225264,
+     "stressed": 0.2974710617086486,
+     "common_hull": 0.30769348650690265
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 113501484.86547422,
+    "median": 158540790.7414236,
+    "funded": 1.0
+   },
+   "glide_annual": {
+    "terminal_ru": 0.47615794966130487,
+    "measure_upper": {
+     "reference": 0.3940814873130645,
+     "nominal": 0.4016976365424471,
+     "stressed": 0.46672338044260575,
+     "common_hull": 0.47615794966130487
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 114007556.47322488,
+    "median": 152957131.0264448,
+    "funded": 1.0
+   },
+   "seconds": 5.556136037000215
+  },
+  "30y_policies": {
+   "years": 30,
+   "view": "fitted",
+   "glide": [
+    0.675,
+    0.125
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 0.15654289116149794,
+    "measure_upper": {
+     "reference": -0.24874256291546887,
+     "nominal": -0.25417875491918357,
+     "stressed": 0.15654289116149794,
+     "common_hull": 0.15654289116149794
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 423454428.0550392,
+    "median": 640079493.4526155
+   },
+   "cash_first": {
+    "terminal_ru": 1.2339754695698222,
+    "measure_upper": {
+     "reference": 1.1268479079269162,
+     "nominal": 1.123367846459333,
+     "stressed": 1.2339754695698222,
+     "common_hull": 1.2339754695698222
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 196489525.5549797,
+    "median": 353542920.9735398,
+    "funded": 1.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.27969541214994836,
+    "measure_upper": {
+     "reference": 0.20481998693143277,
+     "nominal": 0.19325916631727966,
+     "stressed": 0.2755117665617787,
+     "common_hull": 0.27969541214994836
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 140167747.52924916,
+    "median": 216564570.0327803,
+    "funded": 1.0
+   },
+   "threshold_10": {
+    "terminal_ru": 0.11665185924309722,
+    "measure_upper": {
+     "reference": 0.11665185924309722,
+     "nominal": 0.11099710513502949,
+     "stressed": 0.10588344582540106,
+     "common_hull": 0.10588344582540106
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 139108759.38523075,
+    "median": 214013723.5978473,
+    "funded": 1.0
+   },
+   "glide_annual": {
+    "terminal_ru": 0.30288660524253014,
+    "measure_upper": {
+     "reference": 0.18378093947502935,
+     "nominal": 0.17412407597884336,
+     "stressed": 0.30288660524253014,
+     "common_hull": 0.3022607188314237
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 130478887.59125477,
+    "median": 184839200.8797979,
+    "funded": 1.0
+   },
+   "seconds": 1.8785313270000188
+  }
+ },
+ "current_quotes": {
+  "5y_t0.15": {
+   "years": 5,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.25,
+    "validation_selected_safe": 0.15,
+    "weights": {
+     "us_equity": 0.1455,
+     "em_equity": 0.0,
+     "gold": 0.156,
+     "treasury": 0.3485,
+     "tips": 0.0,
+     "tbill": 0.25,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 5y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 111297972.64307563,
+    "terminal_median": 120374857.634195,
+    "terminal_q05": 97384931.09915192,
+    "terminal_q95": 156557644.17549643,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112452038.36343504,
+     "terminal_median": 119793142.72021535,
+     "terminal_q05": 99871008.24997331,
+     "terminal_q95": 150043817.65274844,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 5y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 110759364.65971811,
+    "terminal_median": 123665894.17964837,
+    "terminal_q05": 96078103.53401592,
+    "terminal_q95": 166602830.46666902,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112142827.7594553,
+     "terminal_median": 122993292.28479253,
+     "terminal_q05": 98900012.25155374,
+     "terminal_q95": 158503834.39681607,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "seconds": 3.768999036000423
+  },
+  "5y_t0.25": {
+   "years": 5,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.1,
+    "validation_selected_safe": 0.1,
+    "weights": {
+     "us_equity": 0.1791,
+     "em_equity": 0.0,
+     "gold": 0.1921,
+     "treasury": 0.4289,
+     "tips": 0.0,
+     "tbill": 0.1,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 5y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 110759876.45676318,
+    "terminal_median": 123662495.045223,
+    "terminal_q05": 96078019.95181502,
+    "terminal_q95": 166594612.0501469,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112143247.3117965,
+     "terminal_median": 122989893.03437954,
+     "terminal_q05": 98899771.94658601,
+     "terminal_q95": 158495430.211693,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 5y, terminal 25%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 110759364.65971811,
+    "terminal_median": 123665894.17964837,
+    "terminal_q05": 96078103.53401592,
+    "terminal_q95": 166602830.46666902,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 15000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112142827.7594553,
+     "terminal_median": 122993292.28479253,
+     "terminal_q05": 98900012.25155374,
+     "terminal_q95": 158503834.39681607,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 15000000.0
+    }
+   },
+   "seconds": 1.7498247900002752
+  },
+  "10y_t0.15": {
+   "years": 10,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.35,
+    "validation_selected_safe": 0.35,
+    "weights": {
+     "us_equity": 0.1231,
+     "em_equity": 0.0,
+     "gold": 0.132,
+     "treasury": 0.2949,
+     "tips": 0.0,
+     "tbill": 0.35,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 10y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 122437580.89418334,
+    "terminal_median": 147622132.30996743,
+    "terminal_q05": 107356287.42005987,
+    "terminal_q95": 222139643.45279887,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 127787995.80828455,
+     "terminal_median": 143136290.44245225,
+     "terminal_q05": 114299119.81240107,
+     "terminal_q95": 200769906.64047265,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 10y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 119259514.57817511,
+    "terminal_median": 162550393.4984032,
+    "terminal_q05": 106575328.40189281,
+    "terminal_q95": 266292402.13791,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 126810582.6182547,
+     "terminal_median": 155926739.39537376,
+     "terminal_q05": 116880101.8255969,
+     "terminal_q95": 237913968.41512758,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 7.765372114999991
+  },
+  "10y_t0.25": {
+   "years": 10,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.25,
+    "validation_selected_safe": 0.25,
+    "weights": {
+     "us_equity": 0.1455,
+     "em_equity": 0.0,
+     "gold": 0.156,
+     "treasury": 0.3485,
+     "tips": 0.0,
+     "tbill": 0.25,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 10y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 121528003.6754286,
+    "terminal_median": 153643793.0905655,
+    "terminal_q05": 107048209.5534118,
+    "terminal_q95": 239442410.2738061,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 127961816.18654904,
+     "terminal_median": 148191911.68415707,
+     "terminal_q05": 115545692.0931508,
+     "terminal_q95": 215194379.34622028,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 10y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 119259514.57817511,
+    "terminal_median": 162550393.4984032,
+    "terminal_q05": 106575328.40189281,
+    "terminal_q95": 266292402.13791,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 126810582.6182547,
+     "terminal_median": 155926739.39537376,
+     "terminal_q05": 116880101.8255969,
+     "terminal_q95": 237913968.41512758,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 5.69451896999999
+  },
+  "15y_t0.15": {
+   "years": 15,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.15,
+    "validation_selected_safe": 0.15,
+    "weights": {
+     "us_equity": 0.1679,
+     "em_equity": 0.0,
+     "gold": 0.1801,
+     "treasury": 0.4021,
+     "tips": 0.0,
+     "tbill": 0.15,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 15y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 126620205.27884892,
+    "terminal_median": 217842451.26344758,
+    "terminal_q05": 120782329.19995384,
+    "terminal_q95": 415487845.47097796,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 111808434.06977756,
+     "terminal_median": 202362788.92840895,
+     "terminal_q05": 142996737.17620802,
+     "terminal_q95": 335922615.1844839,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 45000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 15y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 124784223.57303214,
+    "terminal_median": 223822712.866242,
+    "terminal_q05": 121040110.53798135,
+    "terminal_q95": 432000572.5192371,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 106919200.29893164,
+     "terminal_median": 207757570.20857465,
+     "terminal_q05": 144710700.87752813,
+     "terminal_q95": 350290713.9572403,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 45000000.0
+    }
+   },
+   "seconds": 7.630207721000261
+  },
+  "15y_t0.25": {
+   "years": 15,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.1,
+    "validation_selected_safe": 0.1,
+    "weights": {
+     "us_equity": 0.1791,
+     "em_equity": 0.0,
+     "gold": 0.1921,
+     "treasury": 0.4289,
+     "tips": 0.0,
+     "tbill": 0.1,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 15y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 124789458.40783095,
+    "terminal_median": 223798211.54885906,
+    "terminal_q05": 121038379.61442801,
+    "terminal_q95": 431932331.4312043,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 106924664.26391983,
+     "terminal_median": 207738748.4249909,
+     "terminal_q05": 144702780.12302965,
+     "terminal_q95": 350242746.09952176,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 45000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 15y, terminal 25%, seed 20261111",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 124784223.57303214,
+    "terminal_median": 223822712.866242,
+    "terminal_q05": 121040110.53798135,
+    "terminal_q95": 432000572.5192371,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 45000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 106919200.29893164,
+     "terminal_median": 207757570.20857465,
+     "terminal_q05": 144710700.87752813,
+     "terminal_q95": 350290713.9572403,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 45000000.0
+    }
+   },
+   "seconds": 5.453194059999987
+  },
+  "20y_t0.15": {
+   "years": 20,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.375,
+    "validation_selected_safe": 0.375,
+    "weights": {
+     "us_equity": 0.1175,
+     "em_equity": 0.0,
+     "gold": 0.126,
+     "treasury": 0.2815,
+     "tips": 0.0,
+     "tbill": 0.375,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 20y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 143793550.03555655,
+    "terminal_median": 246975009.01393986,
+    "terminal_q05": 140645971.90185815,
+    "terminal_q95": 526411022.3861724,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 159386902.5519119,
+     "terminal_median": 232027619.52332556,
+     "terminal_q05": 163473850.53396973,
+     "terminal_q95": 384855612.92402273,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 60000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 20y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 133847241.45668098,
+    "terminal_median": 306274516.7291237,
+    "terminal_q05": 149774304.66795483,
+    "terminal_q95": 725400461.153298,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 150524992.95116305,
+     "terminal_median": 282736490.2034374,
+     "terminal_q05": 183641870.07598487,
+     "terminal_q95": 507741569.5551092,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 60000000.0
+    }
+   },
+   "seconds": 19.986572355000135
+  },
+  "20y_t0.25": {
+   "years": 20,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.325,
+    "validation_selected_safe": 0.325,
+    "weights": {
+     "us_equity": 0.1287,
+     "em_equity": 0.0,
+     "gold": 0.138,
+     "treasury": 0.3083,
+     "tips": 0.0,
+     "tbill": 0.325,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 20y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 142316302.79127958,
+    "terminal_median": 258018304.69346547,
+    "terminal_q05": 142444668.46063444,
+    "terminal_q95": 561509622.8287556,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 158205290.5762939,
+     "terminal_median": 241257459.02286142,
+     "terminal_q05": 167491728.02248237,
+     "terminal_q95": 405299205.2857718,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 60000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 20y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 133847241.45668098,
+    "terminal_median": 306274516.7291237,
+    "terminal_q05": 149774304.66795483,
+    "terminal_q95": 725400461.153298,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 60000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 150524992.95116305,
+     "terminal_median": 282736490.2034374,
+     "terminal_q05": 183641870.07598487,
+     "terminal_q95": 507741569.5551092,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 60000000.0
+    }
+   },
+   "seconds": 18.188578393999705
+  },
+  "30y_t0.15": {
+   "years": 30,
+   "loss": 0.15,
+   "search": {
+    "chosen_safe": 0.5,
+    "validation_selected_safe": 0.5,
+    "weights": {
+     "us_equity": 0.0895,
+     "em_equity": 0.0,
+     "gold": 0.096,
+     "treasury": 0.2144,
+     "tips": 0.0,
+     "tbill": 0.5,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 30y, terminal 15%, dual-law",
+    "common_cara_ledger_ce": 180983452.5381617,
+    "terminal_median": 413185120.8437884,
+    "terminal_q05": 195341078.99233958,
+    "terminal_q95": 1136831872.0317163,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 205633109.62040213,
+     "terminal_median": 367783049.1274738,
+     "terminal_q05": 242498692.7110326,
+     "terminal_q95": 703381260.5076749,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 30y, terminal 15%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 164003193.74511898,
+    "terminal_median": 672593180.6903002,
+    "terminal_q05": 236483952.36427024,
+    "terminal_q95": 2205924396.497967,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 198138748.91131133,
+     "terminal_median": 583018596.8375361,
+     "terminal_q05": 329366521.6527147,
+     "terminal_q95": 1231141866.415763,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 44.87354114200025
+  },
+  "30y_t0.25": {
+   "years": 30,
+   "loss": 0.25,
+   "search": {
+    "chosen_safe": 0.475,
+    "validation_selected_safe": 0.475,
+    "weights": {
+     "us_equity": 0.0951,
+     "em_equity": 0.0,
+     "gold": 0.102,
+     "treasury": 0.2278,
+     "tips": 0.0,
+     "tbill": 0.475,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "FINAL-5 SENS seed 20261111 current_quotes, 30y, terminal 25%, dual-law",
+    "common_cara_ledger_ce": 180355908.29641193,
+    "terminal_median": 428248989.52832687,
+    "terminal_q05": 198474990.41066107,
+    "terminal_q95": 1201388396.3217175,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 205696761.06076136,
+     "terminal_median": 381174071.5707035,
+     "terminal_q05": 248087438.6796326,
+     "terminal_q95": 730682648.5267793,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 30y, terminal 25%, seed 20261111",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 164003193.74511898,
+    "terminal_median": 672593180.6903002,
+    "terminal_q05": 236483952.36427024,
+    "terminal_q95": 2205924396.497967,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 198138748.91131133,
+     "terminal_median": 583018596.8375361,
+     "terminal_q05": 329366521.6527147,
+     "terminal_q95": 1231141866.415763,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 42.70233460700001
+  },
+  "20y_policies": {
+   "years": 20,
+   "view": "current_quotes",
+   "glide": [
+    0.45,
+    0.1
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 0.15117210329922554,
+    "measure_upper": {
+     "reference": -0.24674236009373612,
+     "nominal": -0.20131557251019155,
+     "stressed": 0.15117210329922554,
+     "common_hull": 0.15117210329922554
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 302210047.338657,
+    "median": 422330504.89209116
+   },
+   "cash_first": {
+    "terminal_ru": 1.1492781469708724,
+    "measure_upper": {
+     "reference": 0.7663982797464973,
+     "nominal": 0.8109151290047781,
+     "stressed": 1.1492781469708724,
+     "common_hull": 1.1492781469708724
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 183641870.07598487,
+    "median": 282736490.2034374,
+    "funded": 1.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.5339665025653703,
+    "measure_upper": {
+     "reference": 0.22353799361193333,
+     "nominal": 0.26135555392203386,
+     "stressed": 0.5294332179967377,
+     "common_hull": 0.5339665025653703
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 173912615.05988643,
+    "median": 255104165.70455217,
+    "funded": 1.0
+   },
+   "threshold_10": {
+    "terminal_ru": 0.25889531857843123,
+    "measure_upper": {
+     "reference": 0.1453428625246031,
+     "nominal": 0.15829164403498092,
+     "stressed": 0.2485768561973556,
+     "common_hull": 0.25889531857843123
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 174277701.5647346,
+    "median": 253857658.65939853,
+    "funded": 1.0
+   },
+   "glide_annual": {
+    "terminal_ru": 0.23270858059486071,
+    "measure_upper": {
+     "reference": 0.10595302602181748,
+     "nominal": 0.11880731390493025,
+     "stressed": 0.22330852626785874,
+     "common_hull": 0.23270858059486071
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 167388264.56510088,
+    "median": 225088333.42038423,
+    "funded": 1.0
+   },
+   "seconds": 4.878994894000243
+  },
+  "30y_policies": {
+   "years": 30,
+   "view": "current_quotes",
+   "glide": [
+    0.425,
+    0.1
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 0.20030004896706638,
+    "measure_upper": {
+     "reference": -0.5690474389835183,
+     "nominal": -0.5825881497699847,
+     "stressed": 0.20030004896706638,
+     "common_hull": 0.20030004896706638
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 622430095.4679751,
+    "median": 943252217.8871765
+   },
+   "cash_first": {
+    "terminal_ru": 1.4001424053860463,
+    "measure_upper": {
+     "reference": 1.0160466044685115,
+     "nominal": 1.016788569843091,
+     "stressed": 1.4001424053860463,
+     "common_hull": 1.4001424053860463
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 329366521.6527147,
+    "median": 583018596.8375361,
+    "funded": 1.0
+   },
+   "annual_rebal": {
+    "terminal_ru": -0.08877373905574855,
+    "measure_upper": {
+     "reference": -0.08877373905574855,
+     "nominal": -0.14484092902094575,
+     "stressed": -0.21838233698717352,
+     "common_hull": -0.21838233698717352
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 276833987.8684176,
+    "median": 456081388.8375964,
+    "funded": 1.0
+   },
+   "threshold_10": {
+    "terminal_ru": 0.10724486245185698,
+    "measure_upper": {
+     "reference": 0.10724486245185698,
+     "nominal": 0.06366179529281428,
+     "stressed": -0.12305096439568826,
+     "common_hull": -0.12305096439568826
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 281248527.2554706,
+    "median": 453771015.2086903,
+    "funded": 1.0
+   },
+   "glide_annual": {
+    "terminal_ru": -0.46382440110887196,
+    "measure_upper": {
+     "reference": -0.5160510252653513,
+     "nominal": -0.5480892920572215,
+     "stressed": -0.46382440110887196,
+     "common_hull": -0.46382440110887196
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 261548626.92350748,
+    "median": 378818197.82871723,
+    "funded": 1.0
+   },
+   "seconds": 1.927868159999889
+  }
+ }
+}

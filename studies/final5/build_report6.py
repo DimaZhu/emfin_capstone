@@ -10,13 +10,13 @@ import build_report4
 from report6_data import assemble
 from content6 import build_content
 
-OUT = Path('/downloads/ballast-final-five-questions-20261108.pdf')
+OUT = Path('/downloads/ballast-final-sensitivity-20261108.pdf')
 
 
 def main():
     d = assemble()
     short, contents, blocks = build_content(d)
-    build_report4.EDITION = 'final'
+    build_report4.EDITION = 'final, sensitivity chapter added'
     build_report4.build(OUT, short, contents, blocks, HERE / 'figs6')
     print('written', OUT, OUT.stat().st_size, 'bytes')
 

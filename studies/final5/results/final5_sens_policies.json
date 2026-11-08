@@ -1,0 +1,543 @@
+{
+ "meta": {
+  "label": "FINAL-5 SENS stage 2 (owner ask 8 Nov 13:12 + glide \"Yes\" 13:19 SGT): policy dial at 10/20/30y, seed family 20261109 (same draws as the limit studies), both carry views. buy_hold_mark = judged metric; cash_first/annual_rebal/threshold_10/glide_annual = executed policies. Glide target: validated static bill share at horizon H declining linearly to the validated 10y share (final5_horizon.json, 15% terminal).",
+  "years": [
+   10,
+   20,
+   30
+  ],
+  "policies": [
+   "buy_hold_mark",
+   "cash_first",
+   "annual_rebal",
+   "threshold_10",
+   "glide_annual"
+  ]
+ },
+ "fitted": {
+  "10y": {
+   "years": 10,
+   "view": "fitted",
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.125,
+    0.125
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": -0.18483099981786577,
+    "measure_upper": {
+     "reference": -0.19887096509133162,
+     "nominal": -0.18483099981786577,
+     "stressed": -0.21288408817521365,
+     "common_hull": -0.21288408817521365
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 134069214.5701318,
+    "median": 168359477.22525033
+   },
+   "cash_first": {
+    "terminal_ru": 0.16370860017626374,
+    "measure_upper": {
+     "reference": 0.14878061612754934,
+     "nominal": 0.16370860017626374,
+     "stressed": 0.1514492050768073,
+     "common_hull": 0.1514492050768073
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 98361320.09307753,
+    "median": 128622503.05685946,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.22083245834510284,
+    "measure_upper": {
+     "reference": 0.2167835388192187,
+     "nominal": 0.22083245834510284,
+     "stressed": 0.19721301023231855,
+     "common_hull": 0.19721301023231855
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 97396140.78184,
+    "median": 123876681.20412052,
+    "funded": 1.0,
+    "turnover_mean": 33228483.62225407
+   },
+   "threshold_10": {
+    "terminal_ru": 0.20523933757116475,
+    "measure_upper": {
+     "reference": 0.20523933757116475,
+     "nominal": 0.1972344851674841,
+     "stressed": 0.2015121476953238,
+     "common_hull": 0.2015121476953238
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 97656587.18177795,
+    "median": 123411326.70250793,
+    "funded": 1.0,
+    "turnover_mean": 59052467.38438183
+   },
+   "glide_annual": {
+    "terminal_ru": 0.2571100537827948,
+    "measure_upper": {
+     "reference": 0.25045660396030256,
+     "nominal": 0.2571100537827948,
+     "stressed": 0.22338754794534368,
+     "common_hull": 0.22338754794534368
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 101529015.26565418,
+    "median": 138230487.57425767,
+    "funded": 1.0,
+    "turnover_mean": 68596715.28439395
+   },
+   "seconds": 0.6724591610000061
+  },
+  "20y": {
+   "years": 20,
+   "view": "fitted",
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.6,
+    0.125
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 0.6806410893833046,
+    "measure_upper": {
+     "reference": 0.2707730318924633,
+     "nominal": 0.30039100966521587,
+     "stressed": 0.6806410893833046,
+     "common_hull": 0.6806410893833046
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 229360639.22407696,
+    "median": 312618208.5772493
+   },
+   "cash_first": {
+    "terminal_ru": 1.1181266958065441,
+    "measure_upper": {
+     "reference": 0.8432284982960322,
+     "nominal": 0.8679678394990082,
+     "stressed": 1.1181266958065441,
+     "common_hull": 1.1181266958065441
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 129026397.64224365,
+    "median": 195659764.49141815,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.5993567124127741,
+    "measure_upper": {
+     "reference": 0.4248660682851681,
+     "nominal": 0.43656270015896337,
+     "stressed": 0.5993567124127741,
+     "common_hull": 0.5993567124127741
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 116264621.19349566,
+    "median": 159450772.29431617,
+    "funded": 1.0,
+    "turnover_mean": 992878365786.3143
+   },
+   "threshold_10": {
+    "terminal_ru": 0.5305038229692659,
+    "measure_upper": {
+     "reference": 0.43923781316506627,
+     "nominal": 0.4441878745579306,
+     "stressed": 0.5305038229692659,
+     "common_hull": 0.5305038229692659
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 115574275.50466782,
+    "median": 158484137.55646706,
+    "funded": 1.0,
+    "turnover_mean": 319329877624.97015
+   },
+   "glide_annual": {
+    "terminal_ru": 0.5677902544143435,
+    "measure_upper": {
+     "reference": 0.43078927683785084,
+     "nominal": 0.4366431516278707,
+     "stressed": 0.5677902544143435,
+     "common_hull": 0.5677902544143435
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 115972280.97099492,
+    "median": 152597269.19806302,
+    "funded": 1.0,
+    "turnover_mean": 781490968941.8682
+   },
+   "seconds": 1.0905229560003136
+  },
+  "30y": {
+   "years": 30,
+   "view": "fitted",
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.3251,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.675,
+    0.125
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 1.0439908748624074,
+    "measure_upper": {
+     "reference": 0.3292653326370712,
+     "nominal": 0.3485882957847349,
+     "stressed": 1.0439908748624074,
+     "common_hull": 1.0439908748624074
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 423425548.194469,
+    "median": 641186365.7596639
+   },
+   "cash_first": {
+    "terminal_ru": 1.8150990154326307,
+    "measure_upper": {
+     "reference": 1.528571040494134,
+     "nominal": 1.5293811595990006,
+     "stressed": 1.8150990154326307,
+     "common_hull": 1.8150990154326307
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 194540506.10341763,
+    "median": 352083433.86579597,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.9304640848095038,
+    "measure_upper": {
+     "reference": 0.797560870877912,
+     "nominal": 0.8021456653890091,
+     "stressed": 0.9304640848095038,
+     "common_hull": 0.9304640848095038
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 140029523.7805209,
+    "median": 215422038.28479904,
+    "funded": 1.0,
+    "turnover_mean": 29659782532155.273
+   },
+   "threshold_10": {
+    "terminal_ru": 0.6886281865544177,
+    "measure_upper": {
+     "reference": 0.5557211896590895,
+     "nominal": 0.5676957193911086,
+     "stressed": 0.6886281865544177,
+     "common_hull": 0.6886281865544177
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 139112431.67183965,
+    "median": 213475559.86006296,
+    "funded": 1.0,
+    "turnover_mean": 6465861902529.81
+   },
+   "glide_annual": {
+    "terminal_ru": 0.3880203087545326,
+    "measure_upper": {
+     "reference": 0.2691893526226598,
+     "nominal": 0.270581902363271,
+     "stressed": 0.3880203087545326,
+     "common_hull": 0.3880203087545326
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 129924629.37562034,
+    "median": 184510203.91144726,
+    "funded": 1.0,
+    "turnover_mean": 9169650336723.223
+   },
+   "seconds": 1.6363355749999755
+  }
+ },
+ "current_quotes": {
+  "10y": {
+   "years": 10,
+   "view": "current_quotes",
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.1,
+    0.1
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": -0.2791164430010384,
+    "measure_upper": {
+     "reference": -0.2926787315260283,
+     "nominal": -0.2791164430010384,
+     "stressed": -0.30374804335894406,
+     "common_hull": -0.30374804335894406
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 153335118.89157084,
+    "median": 200381427.00778812
+   },
+   "cash_first": {
+    "terminal_ru": 0.09719497940056702,
+    "measure_upper": {
+     "reference": 0.07660421461716485,
+     "nominal": 0.09719497940056702,
+     "stressed": 0.08406688984522964,
+     "common_hull": 0.08406688984522964
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 114109488.68813154,
+    "median": 156891077.5217921,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.16625124725529078,
+    "measure_upper": {
+     "reference": 0.16157480656837914,
+     "nominal": 0.16625124725529078,
+     "stressed": 0.1185055422112968,
+     "common_hull": 0.1185055422112968
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 113263907.12241086,
+    "median": 154778493.69996515,
+    "funded": 1.0,
+    "turnover_mean": 52718661.70567073
+   },
+   "threshold_10": {
+    "terminal_ru": 0.09387881691909603,
+    "measure_upper": {
+     "reference": 0.09387881691909603,
+     "nominal": 0.07020421818471509,
+     "stressed": 0.0906341232746187,
+     "common_hull": 0.0906341232746187
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 113959467.98540312,
+    "median": 154567447.97716627,
+    "funded": 1.0,
+    "turnover_mean": 165060776.4885038
+   },
+   "glide_annual": {
+    "terminal_ru": 0.169515261672814,
+    "measure_upper": {
+     "reference": 0.1647952904953178,
+     "nominal": 0.169515261672814,
+     "stressed": 0.12124420398056106,
+     "common_hull": 0.12124420398056106
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 113193603.74664293,
+    "median": 155323554.06602532,
+    "funded": 1.0,
+    "turnover_mean": 54220236.99661198
+   },
+   "seconds": 0.6527564570001232
+  },
+  "20y": {
+   "years": 20,
+   "view": "current_quotes",
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.45,
+    0.1
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 1.140150993883414,
+    "measure_upper": {
+     "reference": 0.4914648882904365,
+     "nominal": 0.5291498778635972,
+     "stressed": 1.140150993883414,
+     "common_hull": 1.140150993883414
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 305702855.01630753,
+    "median": 422547273.93640876
+   },
+   "cash_first": {
+    "terminal_ru": 1.6323345134782485,
+    "measure_upper": {
+     "reference": 1.1213473360847823,
+     "nominal": 1.1565940348057433,
+     "stressed": 1.6323345134782485,
+     "common_hull": 1.6323345134782485
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 186756937.09731048,
+    "median": 283021615.51266694,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 0.8549491588127347,
+    "measure_upper": {
+     "reference": 0.4725631996018052,
+     "nominal": 0.4914379421075529,
+     "stressed": 0.8549491588127347,
+     "common_hull": 0.8549491588127347
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 176454812.79685724,
+    "median": 255505956.53444487,
+    "funded": 1.0,
+    "turnover_mean": 15833852110903.887
+   },
+   "threshold_10": {
+    "terminal_ru": 0.7059171033071101,
+    "measure_upper": {
+     "reference": 0.5121569987608252,
+     "nominal": 0.5179126281708363,
+     "stressed": 0.7059171033071101,
+     "common_hull": 0.7059171033071101
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 176838360.38611677,
+    "median": 255306154.81819096,
+    "funded": 1.0,
+    "turnover_mean": 348864235969889.75
+   },
+   "glide_annual": {
+    "terminal_ru": 0.5370589639676164,
+    "measure_upper": {
+     "reference": 0.29433580197474085,
+     "nominal": 0.3053381077803102,
+     "stressed": 0.5370589639676164,
+     "common_hull": 0.5370589639676164
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 169328493.97275388,
+    "median": 224962969.68905866,
+    "funded": 1.0,
+    "turnover_mean": 4286696502250.6533
+   },
+   "seconds": 1.1101908179998645
+  },
+  "30y": {
+   "years": 30,
+   "view": "current_quotes",
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.0999,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "glide": [
+    0.425,
+    0.1
+   ],
+   "buy_hold_mark": {
+    "terminal_ru": 1.4389910178750442,
+    "measure_upper": {
+     "reference": 0.17243875158359684,
+     "nominal": 0.23453942177322068,
+     "stressed": 1.4389910178750442,
+     "common_hull": 1.4389910178750442
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 626193464.0789386,
+    "median": 944825024.011336
+   },
+   "cash_first": {
+    "terminal_ru": 2.1750193512727183,
+    "measure_upper": {
+     "reference": 1.5126621628346282,
+     "nominal": 1.5428325358415125,
+     "stressed": 2.1750193512727183,
+     "common_hull": 2.1750193512727183
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 329280608.3777205,
+    "median": 581007935.0400636,
+    "funded": 1.0,
+    "turnover_mean": 0.0
+   },
+   "annual_rebal": {
+    "terminal_ru": 1.4643130688525403,
+    "measure_upper": {
+     "reference": 1.0613383644175471,
+     "nominal": 1.0697497949923558,
+     "stressed": 1.4643130688525403,
+     "common_hull": 1.4643130688525403
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 278266223.29997087,
+    "median": 457240249.72693044,
+    "funded": 1.0,
+    "turnover_mean": 1075091318308046.4
+   },
+   "threshold_10": {
+    "terminal_ru": 0.8120033371655575,
+    "measure_upper": {
+     "reference": 0.5571100631913126,
+     "nominal": 0.5702654517353518,
+     "stressed": 0.8120033371655575,
+     "common_hull": 0.8120033371655575
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 282892133.1895891,
+    "median": 454138043.7879261,
+    "funded": 1.0,
+    "turnover_mean": 1.3564262224340242e+16
+   },
+   "glide_annual": {
+    "terminal_ru": 0.48640909702506946,
+    "measure_upper": {
+     "reference": 0.25057184159875795,
+     "nominal": 0.24899501177490785,
+     "stressed": 0.48640909702506946,
+     "common_hull": 0.48640909702506946
+    },
+    "buffer": 0.0003999999999999997,
+    "q05": 260488437.48248935,
+    "median": 377444492.02914464,
+    "funded": 1.0,
+    "turnover_mean": 186682968320474.2
+   },
+   "seconds": 1.7003335869999319
+  }
+ }
+}

@@ -4,6 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from report6_data import assemble  # noqa: E402
+from content_sens import build_sens  # noqa: E402
 
 YEARS = [5, 10, 15, 20, 30]
 KEYS = [f'{y}y' for y in YEARS]
@@ -37,7 +38,8 @@ def build_content(d):
     ]
 
     CONTENTS = ("Inside: 1. Utility models - 2. Rebalancing frequency - 3. Investment horizon - "
-                "4. The in-period limit - 5. Clever vs simple - 6. What is most worth telling the group - "
+                "4. The in-period limit - 5. Clever vs simple - 6. Sensitivity and trade-offs - "
+                "7. What is most worth telling the group - "
                 "Appendix: evidence and provenance")
 
     B = []
@@ -219,10 +221,12 @@ def build_content(d):
             "say is narrower and stronger: nothing implementable that we tested beat the simple mix.",
         ]),
     ]
+    # ---------- sensitivity chapter ----------
+    B += build_sens(d)
     # ---------- extras ----------
     real = d['real']['real_repricing']
     B += [
-        ('h1', '6. Most worth telling the group'),
+        ('h1', '7. Most worth telling the group'),
         ('bullets', [
             f"The inflation illusion: the recommended mix scores {M(rec['common_cara_ledger_ce'])} nominal "
             f"but {M(real['current_quotes']['common_cara_ledger_ce'])} in today's dollars. No fixed mix "
