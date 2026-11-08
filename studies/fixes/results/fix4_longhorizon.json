@@ -1,0 +1,73 @@
+{
+ "meta": {
+  "label": "LABELED STUDY (owner ask 8 Nov 11:05, open point 4): true 10y optimization. Same solver, budgets and draws family as the 1y sleeve; only the horizon changes.",
+  "solve_size_note": "n=400 not run: exceeds sandbox compute and the engine solver time caps; n=100 vs n=200 used as the scenario-noise check."
+ },
+ "solves": {
+  "100": {
+   "n": 100,
+   "seconds": 8.694186527999989,
+   "status": "optimized",
+   "weights": {
+    "us_equity": 0.1341940293376817,
+    "em_equity": 1.540504993608897e-10,
+    "gold": 0.10797658801832598,
+    "treasury": 0.657829278914435,
+    "tips": 2.678801613839579e-09,
+    "tbill": 9.948874434262462e-08,
+    "cash": 5.699087834577918e-10,
+    "sg_property": 0.09999999990689457
+   }
+  },
+  "200": {
+   "n": 200,
+   "seconds": 75.73379121900001,
+   "status": "optimized",
+   "weights": {
+    "us_equity": 0.225354836900187,
+    "em_equity": -1.1369189664910472e-08,
+    "gold": 0.16694985624192485,
+    "treasury": 0.5076954776179714,
+    "tips": -1.3205580654926399e-08,
+    "tbill": -1.0860825950490944e-08,
+    "cash": -1.0426341053804542e-07,
+    "sg_property": 0.09999998680350061
+   }
+  }
+ },
+ "sleeve_10y": {
+  "proportions": {
+   "us_equity": 0.2503942157142776,
+   "gold": 0.18549980507329186,
+   "treasury": 0.5641059792124304
+  },
+  "safe_share_raw": -1.0860825950490944e-08,
+  "source_n": 200
+ },
+ "mix_10y_sleeve": {
+  "chosen_safe": 0.175,
+  "validation_selected_safe": 0.175,
+  "weights": {
+   "us_equity": 0.1815,
+   "em_equity": 0.0,
+   "gold": 0.1345,
+   "treasury": 0.409,
+   "tips": 0.0,
+   "tbill": 0.175,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "10y-solve sleeve proportions (fix 4), frozen validation discipline",
+  "common_cara_ledger_ce": 112706208.78271645,
+  "terminal_median": 142782403.00143674,
+  "terminal_q05": 97422017.61352593,
+  "terminal_q95": 226563388.29319936,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0,
+  "seconds": 1.0872888100000182
+ }
+}
