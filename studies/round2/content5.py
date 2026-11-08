@@ -260,7 +260,7 @@ def build_content(d):
             f"{fresh['solves']['200']['seconds']:.0f}s"
             + (f", n=400 in {n400['seconds']:.0f}s" if n400.get('status') == 'optimized' else
                f"; n=400 did not produce a solution ({n400.get('status', 'still running')}) - labeled, as before"),
-            f"Sleeve instability: the risky-sleeve proportions move by {st.get('200_vs_fix4_n200', 0):.2f} "
+            f"Sleeve instability: the risky-sleeve proportions move by {st.get('fix4_n200_vs_200', 0):.2f} "
             f"(L1) between the old and fresh seed at n=200 - the solver reallocates most of the risky part "
             f"between runs while the score moves by about a million dollars.",
             (f"Put through the five-law discipline anyway, the fresh 10y sleeve validates at "
@@ -329,8 +329,10 @@ def build_content(d):
             "payments, set the safe share.",
             "Execution audit: the cash-first ledger pays every payment in the validated configurations; "
             "the strict 99% all-payments check remains a separate, stronger line.",
-            "368-test regression and the installed-wheel smoke test: re-run green for this edition's engine "
-            "changes (second view, fifth law).",
+            "Regression: 380 tests pass against this edition's engine changes (second view, fifth law, review-"
+            "brief fixes). Two pre-existing failures are unchanged from the base commit - hardcoded "
+            "paths in two committed study configs and one solver accuracy flag in this sandbox; neither "
+            "touches the engine.",
         ]),
     ]
     # ---------- 11. open ----------
