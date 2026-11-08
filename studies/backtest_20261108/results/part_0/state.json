@@ -1,9 +1,11 @@
 {
- "fold": 2,
+ "fold": 4,
  "mult_index": 0,
  "stage": "select",
  "done": [
   0,
-  1
+  1,
+  2,
+  3
  ]
 }
