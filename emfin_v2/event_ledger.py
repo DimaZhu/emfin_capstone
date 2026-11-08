@@ -199,12 +199,16 @@ def run_event_ledger(c, draw, allocation, spec):
             paid_carry *= ratio
         cash += pending[:, t]
         pending[:, t] = 0.
-        property_cash = funding[:, t, properties] @ a[properties] if properties else np.zeros(n)
-        received = property_cash - last_property_cash * ratio
-        if (received < -1e-5).any():
-            raise ValueError('property funding path removes previously settled cash')
-        cash += np.maximum(received, 0.)
-        last_property_cash = property_cash
+        # Property receipts are a cash_first-ledger convention; the dynamic
+        # specs share dynamic_policy.execute semantics (no property receipts).
+        property_cash = np.zeros(n)
+        if not dynamic:
+            property_cash = funding[:, t, properties] @ a[properties] if properties else np.zeros(n)
+            received = property_cash - last_property_cash * ratio
+            if (received < -1e-5).any():
+                raise ValueError('property funding path removes previously settled cash')
+            cash += np.maximum(received, 0.)
+            last_property_cash = property_cash
         if dynamic:
             # One declared trade per decision week; payments then paid from
             # cash in due order, unpaid persisting as arrears.

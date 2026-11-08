@@ -2,6 +2,12 @@
 import numpy as np
 from scipy.special import softmax,logsumexp
 
+from emfin_v2.event_ledger import LedgerSpec, run_event_ledger
+
+_SCOPE = ('Executed policy; shadow wealth adds actually-paid withdrawals accrued at cash. '
+          'Pending fixed receivables count in marked wealth but cannot pay before settlement. '
+          'Weekly timing assumptions, not broker evidence.')
+
 
 def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=True,rebalance_months=None):
     prices,amounts,steps,bases,growth=draw;n,h,d=prices.shape;a=np.asarray(initial,float);cash_ix=c['cash_index'];prop=c.get('asset_layout',{}).get('property_indices',[]);risky=[i for i in range(d) if i!=cash_ix and i not in prop];liquid=[cash_ix,*risky]
@@ -15,6 +21,18 @@ def execute(c,draw,initial,theta=None,mode='feedback',fee=.0005,delay=1,record=T
     if c['real_estate'].get('sale_week',0) or c['real_estate'].get('annual_rent_yield',0) or c['real_estate'].get('net_rental_yield',0):raise ValueError('dynamic study requires unsold property and zero rent')
     if mode in ('feedback','feedback_initial_only','feedback_static_target') and theta is None:raise ValueError('feedback parameters required')
     if theta is not None and (np.asarray(theta).shape!=(8,) or not np.isfinite(theta).all()):raise ValueError('eight finite feedback parameters required')
+    if mode in ('cash_first','pro_rata'):
+        # Retired twin: these modes run on the shared event engine (Phase 3).
+        # Equivalence with the former inline loop is pinned bit-for-bit by
+        # tests/test_event_ledger.py on the Phase 0 golden scenarios.
+        factory = LedgerSpec.dynamic_cash_first if mode == 'cash_first' else LedgerSpec.dynamic_pro_rata
+        r = run_event_ledger(c, draw, initial, factory(fee_bps=fee * 1e4, settlement_lag_weeks=delay))
+        return dict(terminal_net=r['terminal_net'], net_wealth_paths=r['net_wealth_paths'],
+                    shadow_wealth_paths=r['shadow_wealth_paths'], shortfalls=r['payment_shortfalls'],
+                    funded=r['funded'], cost=r['cost'], turnover=r['turnover'], trades=r['trades'],
+                    cash_paths=r['cash_paths'] if record else None,
+                    pending_terminal=r['pending_terminal'], units_terminal=r['terminal_units'],
+                    scope=_SCOPE)
     units=np.broadcast_to(np.maximum(a,0),(n,d)).copy();units[:,cash_ix]=0.;cash=np.full(n,max(a[cash_ix],0));pending=np.zeros((n,h+delay+2));arrears=np.zeros(n);paid_carry=np.zeros(n);short=np.zeros_like(amounts);cost=np.zeros(n);turnover=np.zeros(n);netpath=np.zeros((n,h));shadow=np.zeros((n,h));cashpath=np.zeros((n,h)) if record else None;decisions=sorted(set([0,*[max(0,int(t)-delay) for t in steps if int(t)-delay<h]]));base_liquid=float(a[liquid].sum());weights=a[liquid]/base_liquid;running=np.ones(n);numtrades=np.zeros(n,int);initial_prices=np.ones((n,d))
     rebalance_dates=set([0,*[max(0,int(steps[k-1])-delay) for k in range(1,len(steps)) if rebalance_months and k%rebalance_months==0]])
     for t in range(h+1):
