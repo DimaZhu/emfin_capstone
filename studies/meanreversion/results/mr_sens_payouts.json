@@ -695,6 +695,144 @@
     }
    },
    "seconds": 38.35723032999999
+  },
+  "30y_p50k": {
+   "years": 30,
+   "monthly": 50000.0,
+   "total_paid": 18000000.0,
+   "search": {
+    "chosen_safe": 0.475,
+    "validation_selected_safe": 0.475,
+    "weights": {
+     "us_equity": 0.0951,
+     "em_equity": 0.0,
+     "gold": 0.102,
+     "treasury": 0.2278,
+     "tips": 0.0,
+     "tbill": 0.475,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR central current_quotes, 30y, $50k/month",
+    "common_cara_ledger_ce": 332975349.7475683,
+    "terminal_median": 650139763.9810175,
+    "terminal_q05": 373862800.0846991,
+    "terminal_q95": 1442780698.4911308,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 2.1827872842550278e-11,
+    "total_paid": 18000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 323324683.36003065,
+     "terminal_median": 607872080.6685364,
+     "terminal_q05": 440470405.1583684,
+     "terminal_q95": 1020459727.8090346,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 2.1827872842550278e-11,
+     "total_paid": 18000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 30y under MR, $50k",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 333713055.47320044,
+    "terminal_median": 944148589.9488266,
+    "terminal_q05": 449687352.81117564,
+    "terminal_q95": 2442205994.6303735,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 2.1827872842550278e-11,
+    "total_paid": 18000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 288296387.71861565,
+     "terminal_median": 871497761.6662874,
+     "terminal_q05": 566860627.0062557,
+     "terminal_q95": 1623684133.8110797,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 2.1827872842550278e-11,
+     "total_paid": 18000000.0
+    }
+   },
+   "seconds": 64.544169021
+  },
+  "30y_p100k": {
+   "years": 30,
+   "monthly": 100000.0,
+   "total_paid": 36000000.0,
+   "search": {
+    "chosen_safe": 0.475,
+    "validation_selected_safe": 0.475,
+    "weights": {
+     "us_equity": 0.0951,
+     "em_equity": 0.0,
+     "gold": 0.102,
+     "treasury": 0.2278,
+     "tips": 0.0,
+     "tbill": 0.475,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR central current_quotes, 30y, $100k/month",
+    "common_cara_ledger_ce": 298085203.79100746,
+    "terminal_median": 589984591.6654279,
+    "terminal_q05": 332522719.25658405,
+    "terminal_q95": 1327896839.8791993,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 4.3655745685100555e-11,
+    "total_paid": 36000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 290117186.8286761,
+     "terminal_median": 551033346.3515333,
+     "terminal_q05": 392623975.6372631,
+     "terminal_q95": 943184228.8656434,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 4.3655745685100555e-11,
+     "total_paid": 36000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 current_quotes mix at 30y under MR, $100k",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 298904715.7639858,
+    "terminal_median": 865918863.0838982,
+    "terminal_q05": 402902765.8072983,
+    "terminal_q95": 2276953013.4231095,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 4.3655745685100555e-11,
+    "total_paid": 36000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 253952522.32587898,
+     "terminal_median": 797821151.2643521,
+     "terminal_q05": 507584658.1944476,
+     "terminal_q95": 1533217738.0864084,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 4.3655745685100555e-11,
+     "total_paid": 36000000.0
+    }
+   },
+   "seconds": 43.823702342000004
   }
  }
 }

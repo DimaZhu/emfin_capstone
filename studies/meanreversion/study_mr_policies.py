@@ -34,7 +34,7 @@ def main():
     for view in ('fitted', 'current_quotes'):
         vent = r.setdefault(view, {})
         h = mr_h[f'{view}_s20261109']
-        static = {int(y): h[f'{y}y']['search'].get('chosen_safe') for y in (20, 30)}
+        static = {int(y): h[f'{y}y']['search'].get('chosen_safe') for y in YEARS}
         s10 = h['10y']['search'].get('chosen_safe')
         for years in YEARS:
             key = f'{years}y'
