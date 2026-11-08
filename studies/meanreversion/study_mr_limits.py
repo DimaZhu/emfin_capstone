@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common_mr
 from common_mr import f5_fit, dual_mix_search, judge_frozen, mr_config, mr_draws, save_mr, load_mr
 
-YEARS = [5, 10, 15, 20, 30]
+YEARS = [10, 30]   # owner default + long end; 5/15/20y dials exist for the fitted view only (partial, kept as extra data)
 TERMINAL_LOSSES = [0.05, 0.35, 0.50]
 CMLS = [0.05, 0.15, 0.25]
 R2 = Path('studies/round2/results/round2_dual_law.json')
@@ -44,8 +44,9 @@ def main():
     r = load_mr(RESULT)
     r.setdefault('meta', dict(
         label=('MR scenario: terminal loss limit and any-point cap swept per horizon under '
-               'the MR law (central), both views, seed 20261109. 15%/40% base cells live in '
-               'mr_horizon.json. Comparison base: final5_sens_limits.json.'),
+               'the MR law (central), both views, seed 20261109, mirrored at 10y (owner default) '
+               'and 30y only - the base study swept all five horizons. 15%/40% base cells '
+               'live in mr_horizon.json. Comparison base: final5_sens_limits.json.'),
         years=YEARS, terminal_losses=TERMINAL_LOSSES, cmls=CMLS))
     r2 = json.loads(R2.read_text())
     for view in ('fitted', 'current_quotes'):
