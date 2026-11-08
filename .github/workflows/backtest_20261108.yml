@@ -1,0 +1,56 @@
+name: capstone-backtest-20261108
+
+# One-off study runner (owner-approved 8 Nov 2026): the walk-forward backtest
+# needs ~100-150s of solver time per fold x 78 folds, which exceeds the local
+# sandbox's per-call process limit. Runs the checkpointed study on this branch
+# and commits results back. GITHUB_TOKEN pushes do not retrigger workflows.
+
+on:
+  push:
+    branches: [paper-prep-20261108]
+    paths:
+      - 'studies/backtest_20261108/**'
+      - '.github/workflows/backtest_20261108.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: backtest-paper-prep-20261108
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: paper-prep-20261108
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned runtime deps
+        run: pip install numpy==2.2.6 pandas==2.3.3 scipy==1.15.3 cvxpy==1.7.5 clarabel
+      - name: Run backtest in committed chunks
+        run: |
+          set -x
+          git config user.name "capstone-actions"
+          git config user.email "actions@localhost"
+          for i in $(seq 1 12); do
+            python studies/backtest_20261108/backtest.py --max-seconds 1500 || true
+            git pull --rebase origin paper-prep-20261108 || true
+            if git status --porcelain studies/backtest_20261108/results | grep .; then
+              git add studies/backtest_20261108/results
+              git commit -m "backtest progress chunk $i ($(date -u +%Y-%m-%dT%H:%MZ))"
+              for attempt in 1 2 3; do git push && break || git pull --rebase origin paper-prep-20261108; done
+            fi
+            if grep -q '"fold": 78' studies/backtest_20261108/results/state.json 2>/dev/null; then
+              echo "all folds complete"; break
+            fi
+          done
+      - name: Final status
+        run: |
+          cat studies/backtest_20261108/results/state.json
+          ls studies/backtest_20261108/results/fold_*.json | wc -l
