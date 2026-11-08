@@ -16,7 +16,7 @@ OUT = Path('/downloads/ballast-final-sensitivity-20261108.pdf')
 def main():
     d = assemble()
     short, contents, blocks = build_content(d)
-    build_report4.EDITION = 'final, sensitivity chapter added'
+    build_report4.EDITION = 'final, sensitivity chapter added, visuals revised'
     build_report4.build(OUT, short, contents, blocks, HERE / 'figs6')
     print('written', OUT, OUT.stat().st_size, 'bytes')
 

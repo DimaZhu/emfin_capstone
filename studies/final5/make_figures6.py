@@ -27,10 +27,10 @@ KEYS = [f'{y}y' for y in YEARS]
 
 def fig_horizon(d):
     h5, old = d['h5'], d['charts']['horizon']
-    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10.2, 4.2))
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10.2, 3.7))
 
-    for view, col, lab in (('fitted', TEAL, 'fitted carry, five laws (fresh)'),
-                           ('current_quotes', NAVY, 'current quotes, five laws (fresh)')):
+    for view, col, lab in (('fitted', TEAL, 'using shrunk history (fresh paths)'),
+                           ('current_quotes', NAVY, "using today's T-bill yields (fresh paths)")):
         safe = [h5[view][k]['search'].get('chosen_safe') for k in KEYS]
         safe = [s * 100 if s is not None else np.nan for s in safe]
         ax.plot(YEARS, safe, 'o-', color=col, lw=2, ms=5, label=lab)
@@ -43,7 +43,7 @@ def fig_horizon(d):
     ax.legend(fontsize=8.2, frameon=False, loc='upper left')
     ax.set_title('Longer horizon => more bills, but the exact\nminimum wiggles across seed families', fontsize=10)
 
-    for view, col, lab in (('fitted', TEAL, 'fitted view'), ('current_quotes', NAVY, 'current-quotes view')):
+    for view, col, lab in (('fitted', TEAL, 'shrunk history'), ('current_quotes', NAVY, "today's yields")):
         ok, bad = [], []
         for x, k in zip(YEARS, KEYS):
             hd = h5[view][k]['hold_10y_mix']
@@ -61,7 +61,8 @@ def fig_horizon(d):
     h, l = ax2.get_legend_handles_labels()
     ax2.legend(h[:2] + [plt.Line2D([], [], marker='o', ls='', color=GRAY),
                         plt.Line2D([], [], marker='x', ls='', color=GRAY)],
-               ['passes both laws', 'fails the regime law', 'teal=fitted view, navy=current quotes'],
+               ['passes both market tests', 'fails the regime-law test',
+                "teal = shrunk history, navy = today's yields"],
                fontsize=8.2, frameon=False, loc='upper left')
     fig.tight_layout()
     fig.savefig(FIGS / 'fig_horizon.png', dpi=190, bbox_inches='tight')
@@ -69,12 +70,14 @@ def fig_horizon(d):
 
 def fig_inperiod(d):
     q4 = d['q4']
-    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10.2, 4.0))
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10.2, 3.6))
     cmls = [0.05, 0.10, 0.15, 0.25, 0.40, 0.60]
     xs = [c * 100 for c in cmls]
-    for view, col, lab in (('fitted', TEAL, 'fitted view'), ('current_quotes', NAVY, 'current-quotes view')):
+    for view, col, lab in (('fitted', TEAL, 'using shrunk history'), ('current_quotes', NAVY, "using today's yields")):
         ce = [q4[view][f'{c:.2f}']['common_cara_ledger_ce'] / 1e6 for c in cmls]
         ax.plot(xs, ce, 'o-', color=col, lw=2, ms=5, label=lab)
+    ax.text(0.99, 0.03, 'axis starts at \\$88M - the zoomed span is ~\\$35M', transform=ax.transAxes,
+            fontsize=8.2, color=GRAY, ha='right')
     ax.axvline(40, color=AMBER, lw=1.2, ls=':')
     ax.text(40.8, ax.get_ylim()[0] + 0.4, 'your 40%', color=AMBER, fontsize=8.6, rotation=90, va='bottom')
     ax.set_xlabel('Any-point (in-period) loss cap (%)')
@@ -110,36 +113,50 @@ def fig_inperiod(d):
 
 
 def fig_utility(d):
+    """Q1 chart: the four objectives alone (one idea per figure)."""
     u = d['charts']['utilities']
     names = [('cara', 'CARA\n(surplus)'), ('crra_gross', 'CRRA\n(gross wealth)'),
              ('hara_payment_floor', 'HARA\n(payment floor)'), ('kinked_shortfall', 'Kinked\nshortfall')]
-    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10.2, 3.8), gridspec_kw={'width_ratios': [1.25, 1]})
+    fig, ax = plt.subplots(figsize=(10.2, 3.0))
     ce = [u[k]['common_cara_ledger_ce'] / 1e6 for k, _ in names]
     safe = [u[k]['chosen_safe'] * 100 for k, _ in names]
     cols = [TEAL, NAVY, NAVY, AMBER]
-    ax.bar(range(4), ce, color=cols, width=0.62)
+    ax.bar(range(4), ce, color=cols, width=0.5)
     for i, (v, s) in enumerate(zip(ce, safe)):
-        ax.text(i, v + 0.15, f'${v:.1f}M\n{s:.0f}% bills', ha='center', fontsize=8.8, color=NAVY)
-    ax.set_xticks(range(4), [n for _, n in names], fontsize=9)
-    ax.set_ylim(109.5, 111.8)
-    ax.set_ylabel('Score ($M, common CARA ledger)')
-    ax.set_title('Same universe, same limits, 10y:\nthe utility flavor moves the answer by ~0.5%', fontsize=10)
-    # Q2 panel: rebalancing, 1y with fees (frozen numbers from the dynamic study)
-    laws = ['IID', 'Bounded', 'Drift -2pp', 'Drift -2pp\n+ vol x1.2']
+        ax.text(i, v + 0.15, f'${v:.1f}M\n{s:.0f}% bills', ha='center', fontsize=9, color=NAVY)
+    ax.set_xticks(range(4), [n for _, n in names], fontsize=9.5)
+    ax.set_xlim(-0.6, 3.6)
+    ax.set_ylim(109.5, 113.2)
+    ax.set_ylabel('Score (\\$M, one common ruler)')
+    ax.text(0.01, 0.985, 'bars start at \\$109.5M - the zoomed span is ~\\$2M on a \\$110M score',
+            transform=ax.transAxes, fontsize=8.2, color=GRAY, va='top')
+    ax.set_title('Same universe, same limits, 10 years:\nthe utility flavour moves the answer by only ~0.5%',
+                 fontsize=10.5)
+    fig.tight_layout()
+    fig.savefig(FIGS / 'fig_utility.png', dpi=190, bbox_inches='tight')
+
+
+def fig_rebal(d):
+    """Q2 chart: rebalancing frequency alone (split from the utility chart)."""
+    laws = ['independent\nweekly draws', 'bounded\nswings', 'stocks drift\n-2pp/yr', 'drift -2pp/yr\n+ vol x1.2']
     monthly = [98.217254, 98.209127, 97.945954, 97.949082]
     annual = [98.246273, 98.241122, 97.961745, 97.964012]
+    fig, ax = plt.subplots(figsize=(10.2, 2.8))
     x = np.arange(4)
-    ax2.bar(x - 0.18, monthly, width=0.36, color=GRAY, label='monthly')
-    ax2.bar(x + 0.18, annual, width=0.36, color=TEAL, label='annual / hold')
+    ax.bar(x - 0.18, monthly, width=0.36, color=GRAY, label='rebalance monthly')
+    ax.bar(x + 0.18, annual, width=0.36, color=TEAL, label='rebalance yearly / hold')
     for xi, (m, a) in enumerate(zip(monthly, annual)):
-        ax2.text(xi + 0.18, a + 0.004, f'+{(a - m) * 1000:.0f}k', ha='center', fontsize=8, color=TEAL)
-    ax2.set_xticks(x, laws, fontsize=8.2)
-    ax2.set_ylim(97.88, 98.30)
-    ax2.set_ylabel('Score ($M)')
-    ax2.set_title('Rebalancing, 1y with 5bp fees:\nannual wins, by ~15-32k on a 98M score', fontsize=10)
-    ax2.legend(fontsize=8.4, frameon=False, loc='upper center', bbox_to_anchor=(0.5, -0.14), ncol=2)
+        ax.text(xi + 0.18, a + 0.004, f'+\\${(a - m) * 1000:.0f}k', ha='center', fontsize=8.6, color=TEAL)
+    ax.set_xticks(x, laws, fontsize=9)
+    ax.set_ylim(97.88, 98.47)
+    ax.set_ylabel('Score (\\$M, 1-year window)')
+    ax.text(0.99, 0.985, 'bars start at \\$97.88M - the zoomed span is ~\\$0.4M on a \\$98M score',
+            transform=ax.transAxes, fontsize=8.2, color=GRAY, va='top', ha='right')
+    ax.set_title('Rebalancing at 1 year with 5bp fees, under four market behaviours:\n'
+                 'yearly wins, by ~\\$15-32k on a \\$98M score', fontsize=10.5)
+    ax.legend(fontsize=9, frameon=False, loc='upper left')
     fig.tight_layout()
-    fig.savefig(FIGS / 'fig_utility_freq.png', dpi=190, bbox_inches='tight')
+    fig.savefig(FIGS / 'fig_rebal.png', dpi=190, bbox_inches='tight')
 
 
 def fig_benchmarks(d):
@@ -149,7 +166,7 @@ def fig_benchmarks(d):
             ('equal weight (1/N)', 'equal weight\n(1/N)'),
             ('all T-bills + property', 'all T-bills\n+ property'),
             ('60/40-style (60% stocks, 30% bills)', '60/40-style')]
-    fig, ax = plt.subplots(figsize=(9.6, 4.0))
+    fig, ax = plt.subplots(figsize=(9.6, 3.7))
     ce = [b[k]['common_cara_ledger_ce'] / 1e6 for k, _ in rows]
     ok = [b[k]['validation_pass'] and b[k]['final_pass'] for k, _ in rows]
     cols = [TEAL if o else RED for o in ok]
@@ -160,6 +177,8 @@ def fig_benchmarks(d):
                 color='white', fontweight='bold')
     ax.set_xticks(range(len(rows)), [n for _, n in rows], fontsize=9)
     ax.set_ylim(85, 115)
+    ax.text(0.99, 0.97, 'bars start at \\$85M', transform=ax.transAxes, fontsize=8.2,
+            color=GRAY, ha='right', va='top')
     ax.set_ylabel('Score ($M, shared final paths)')
     ax.set_title('Clever vs simple, 10y new model: simple mixes can score higher -\nbut they do not pass the same safety judge', fontsize=10.5)
     fig.tight_layout()
@@ -171,6 +190,7 @@ def main():
     fig_horizon(d)
     fig_inperiod(d)
     fig_utility(d)
+    fig_rebal(d)
     fig_benchmarks(d)
     print('figures written to', FIGS)
 

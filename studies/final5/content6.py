@@ -74,10 +74,10 @@ def build_content(d):
             "Payout size moves the safe share far more than the utility does: at $50k/$100k/$250k per "
             "month the validated mix is nearly unchanged because the loss caps, not the payments, bind.",
         ]),
-        ('fig', 'fig_utility_freq.png',
-         'Left: four objectives, same universe and limits, 10y - the scores sit within ~0.5% and the safe '
-         'shares within 2.5 points. Right: rebalancing at 1y with fees, per market law; annual leads by a '
-         'few tens of thousands of dollars.'),
+        ('fig', 'fig_utility.png',
+         'Four objectives, same universe and limits, 10 years - the scores sit within ~0.5% and the safe '
+         'shares within 2.5 points. The bars start at $109.5M: the visible gap IS the whole gap, about '
+         'half a million on $110M.'),
     ]
     # ---------- Q2 ----------
     B += [
@@ -92,6 +92,10 @@ def build_content(d):
           ['Equity drift -2pp/yr', '97.946', '97.950', '97.953', '97.962'],
           ['Drift -2pp, vol x1.2', '97.949', '97.953', '97.956', '97.964']],
          [0.34, 0.165, 0.165, 0.165, 0.165]),
+        ('fig', 'fig_rebal.png',
+         'Monthly vs annual rebalancing at 1y with fees, per market law - the same numbers as the table, '
+         'drawn. Annual leads by a few tens of thousands of dollars on a $98M score; the bars start at '
+         '$97.88M.'),
         ('bullets', [
             "Scores are certainty equivalents in $M over the one-year test window; all 16 rows pass every "
             "risk and funding check. Annual wins in all four laws - by $15-32k, i.e. hundredths of a "
@@ -131,9 +135,9 @@ def build_content(d):
          hrows,
          [0.11, 0.20, 0.16, 0.17, 0.19, 0.17]),
         ('fig', 'fig_horizon.png',
-         'Left: minimum validated T-bill share by horizon - the trend is steeply up, the wiggles are seed '
-         'noise at a flat frontier. Right: the frozen 10-year mix simply held to other horizons - fine to '
-         'about 15 years, rejected by the regime law at 20+.'),
+         'Left: minimum T-bill share the judge requires, by horizon - the trend is steeply up, the '
+         'wiggles are seed noise at a flat frontier. Right: the frozen 10-year mix simply held to other '
+         'horizons - fine to about 15 years, rejected by the regime-law test at 20+.'),
         ('bullets', [
             "The trend is the answer: the longer the money must last, the larger the safe share the judge "
             "demands - from ~10-25% bills at 5 years to ~45-68% at 20-30 years. More time is more chances "
@@ -222,6 +226,7 @@ def build_content(d):
         ]),
     ]
     # ---------- sensitivity chapter ----------
+    B += [('pagebreak',)]
     B += build_sens(d)
     # ---------- extras ----------
     real = d['real']['real_repricing']
