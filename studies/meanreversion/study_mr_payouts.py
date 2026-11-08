@@ -45,11 +45,15 @@ def main():
                     continue
                 t0 = time.perf_counter()
                 scale = monthly / 250000.0
+                # draw with the base 250k config so the shared cache always holds
+                # unscaled amounts; judge with the payout config (radius scaled)
+                c_draw = mr_config(view=view, seed=20261109, weeks=52 * years,
+                                   months=12 * years)
                 c = mr_config(view=view, seed=20261109, weeks=52 * years, months=12 * years,
                               payout=monthly, radius_scale=scale)
                 fit = f5_fit(c)
                 tag = f'mr09_h{52 * years}_{view}'
-                primary, fifth = mr_draws(c, fit, tag)
+                primary, fifth = mr_draws(c_draw, fit, tag)
                 primary, fifth = scaled(primary, scale), scaled(fifth, scale)
                 search = dual_mix_search(c, primary, fifth, prop,
                                          label=f'MR central {view}, {years}y, ${monthly / 1000:.0f}k/month')

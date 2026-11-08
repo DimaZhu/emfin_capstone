@@ -70,10 +70,14 @@ def mr_draws(c, fit, tag):
     """Primary (MR law) validation/final splits cached by tag; fifth law shared
     with the base final-5 studies through their original tags."""
     f = DRAW_DIR / f'{tag}.npz'
+    val = fin = None
     if f.exists():
-        z = np.load(f, allow_pickle=False)
-        val, fin = common5._unpack(z, 'v', 4), common5._unpack(z, 'f', 4)
-    else:
+        try:
+            z = np.load(f, allow_pickle=False)
+            val, fin = common5._unpack(z, 'v', 4), common5._unpack(z, 'f', 4)
+        except Exception:
+            f.unlink()  # interrupted write; regenerate below
+    if val is None:
         val = [S.draw_paths(c, fit, 200, c['seed'] + 1000 + j) for j in range(4)]
         fin = [S.draw_paths(c, fit, 400, c['seed'] + 10000 + j) for j in range(4)]
         blob = {}
