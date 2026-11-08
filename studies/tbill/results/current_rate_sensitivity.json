@@ -1,0 +1,48 @@
+{
+ "label": "LABELED SENSITIVITY: tbill carry at current H.15 3M CMT 4.17% (5 Nov 2026) instead of fitted 1.81%/yr",
+ "trials": [
+  {
+   "fraction": 1.0,
+   "passed": false,
+   "breaches": [
+    "Held-out path-loss tail"
+   ]
+  },
+  {
+   "fraction": 0.75,
+   "passed": false,
+   "breaches": [
+    "Held-out path-loss tail"
+   ]
+  },
+  {
+   "fraction": 0.5,
+   "passed": true,
+   "breaches": []
+  },
+  {
+   "fraction": 0.25,
+   "passed": true,
+   "breaches": []
+  },
+  {
+   "fraction": 0.0,
+   "passed": true,
+   "breaches": []
+  }
+ ],
+ "selected": {
+  "fraction": 0.5,
+  "weights": [
+   0.09550332796214063,
+   1.4466996351730131e-11,
+   0.029167118581821735,
+   6.388270368789444e-11,
+   0.7753295533325645,
+   1.848049880500204e-11,
+   0.09999999999704255
+  ],
+  "common_cara_ledger_ce": 101855532.14127333,
+  "final_pass": true
+ }
+}

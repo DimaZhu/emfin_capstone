@@ -1,0 +1,1273 @@
+The Ballast funding-risk engine
+One balance sheet, one question: can every payment always be made?
+Unified scientific report: methods, evidence, rebalancing, the cash question, payout
+and view sensitivities, failures and verdict
+
+8 November 2026, third edition. Compiled from eleven frozen studies run 7 November, plus three
+sensitivity studies run the next day, plus an overnight inside-out model audit (sections 13, 16, 17). Private
+research for Tijs de Boer. Not investment advice. Nothing here changes any holding, account or default.
+All underlying studies, code and evidence live in the private repository
+github.com/TijsdeBoer/emfin_capstone (branch engine-v2), each with pinned seeds, data hashes and
+selection locks. This report reorganizes their findings into one story.
+
+The short version
+1. The engine is careful and honest. Every candidate is checked on fresh simulated futures it
+never saw, under four different market assumption sets, and failures stay visible instead of being
+tuned away.
+2. At your confirmed $250k/month, the safe answer is boring. Every objective formula lands on
+roughly the same mix: about 76% cash, 9% Treasuries, 5% US stocks, 10% property. The risk limits
+make that choice, not the math of the objective.
+3. Clever has not beaten simple. Across 19 years of real history and thousands of simulated
+futures, no utility formula, trading rule or resampling scheme has a proven edge. Simple fixed mixes
+pass every check that the learned trading rules fail.
+4. Rebalance rarely. Annual rebalancing scores best of the four frequencies tested at 1, 3 and 5
+years. But the margin is small, and past one year no frequency passes all safety checks, so "annual"
+is the best of what was tested, not a proven optimum.
+5. "Passed" never meant "every payment guaranteed". The setup knowingly tolerates a small
+shortfall risk on each payment. A stricter 99% all-payments check now exists and is reported
+separately.
+6. The real open risks are the market model, not the objectives. Markets cluster calm and stormy
+weeks; the default model does not. And the honest margin for "the model itself is wrong" comes out
+larger than the whole balance sheet. Both are documented, neither is hidden.
+7. The 76% cash is really "76% in T-bills". The model's cash earns a placeholder 0%, and the only
+bond fund it can buy lost 18% in its worst real year. With a realistic 4% on the cash, the score rises
+$3.6M and the bond fund disappears. A real deposit or bill asset is the highest-value open fix.
+8. The model survived an inside-out audit. Every module was re-read, eleven independent
+numerical tests match the engine to hand-computed answers, and every modeling dial was
+perturbed one at a time. No errors found; the validated answer sits in a wide, flat safe region (usually
+69-78% cash across fresh seeds) rather than at a tuned point, and the market model - not the math remains the real risk.
+
+Inside: 1. The question - 2. How it works - 3-4. Does the market model fit - 5. Benchmarking - 6. Backtest 7. Utility comparison - 8. Model-wrongness margin - 9. Dynamic trading - 10. Rebalancing frequency - 11.
+Why so much cash - 12. Payout sensitivities - 13. Portfolios at $50k/$100k/$250k - 14. View sensitivities 15. "Passed" vs "paid" - 16. Inside-out checks - 17. Every dial - 18. Outside literature - 19. Open items - 20.
+Verdict - Appendices A-C
+
+1. The question
+You want to pay out $250,000 every month from a large investment balance sheet, without being forced to
+sell investments at a bad time. The engine answers one question: which mix of assets gives the best
+risk-adjusted outcome while keeping the chance of missing a payment small?
+Everything was tested on one working example. Only the monthly amount is confirmed by you; the rest is a
+clearly labelled research assumption, not your real balance sheet.
+Input
+
+Value used
+
+Status
+
+Total wealth
+
+$100M
+
+illustrative
+
+Payments
+
+$250k per month, 12 months ($3M, 3% of wealth)
+
+confirmed by you
+
+Property
+
+10% of wealth, Singapore residential (URA index), not sold, no
+rent assumed
+
+assumption
+
+Liquid assets
+
+VTI (US stocks), VWO (emerging markets), GLD (gold), IEF
+(7-10y US Treasuries), 0% cash account
+
+real funds, real
+histories
+
+Reporting
+
+US dollars, with SGD/USD currency risk modeled
+
+assumption
+
+Safety limits
+
+per-payment tail shortfall at most 20% of the payment at 95%
+confidence; limits on final loss and worst-path loss; no
+borrowing; long only
+
+chosen limits,
+editable
+
+The one-year working example. Three- and five-year versions ($9M and $15M of payments) were tested as sensitivities, not
+because longer obligations are confirmed.
+
+Two terms used throughout: the score of a plan is its certainty equivalent: the guaranteed dollar amount,
+after making all planned payments, that the model considers exactly as good as running the risky plan.
+Higher is better. A market law is one complete set of assumptions about how prices move; final checks run
+under four different laws so that no answer depends on a single guess about the future.
+
+2. How the engine works, in plain words
+
+The six parts. Data in, verdict out. The optimizer never sees the paths it is judged on.
+
+- Inputs. Wealth, the payment calendar, risk limits and current holdings, including the property that stays
+unsold.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 3
+
+- Estimation. Real weekly total-return histories for the four funds (2005-2026), the quarterly URA property
+index and the Fed's SGD/USD series. Averages and correlations are shrunk toward safe values because
+raw estimates are noisy.
+- Scenarios. Thousands of simulated 52-week futures for all assets at once, including occasional bad
+weeks (a two-state Gaussian mixture, 90/10 probability, variance 0.75x/3.25x).
+- Optimizer. Picks the long-only mix with the best score subject to every funding and loss limit, using
+cumulative provisioning for the payments.
+- Independent judge. The frozen mix is re-checked on entirely fresh paths, under four market laws,
+against every limit: each payment, final loss, worst-path loss, holdings. A fail is reported, never repaired
+by retuning.
+- Execution audit. A separate cash-first ledger simulates actually paying: cash first, then proportional
+sales, with arrears tracked. It answers the only question that matters in practice: was every payment
+actually made?
+
+The four market laws used for final checks
+Law
+
+What it assumes
+
+Plain meaning
+
+A. Baseline
+
+Gaussian weekly mixture fitted to history; weeks
+independent
+
+the model as designed
+
+B. Capped-vol
+
+Like A, but volatility follows recent data, capped at 3x
+normal
+
+calm and stormy regimes exist
+
+C. Lower returns
+
+Like A, with expected returns 2 percentage points
+lower per year
+
+the future is worse than the fit
+
+D. Lower +
+jumpier
+
+Law C plus 20% larger covariance
+
+worse and wilder
+
+A candidate that only passes the law it was designed on is not accepted. These four are fixed diagnostics, not a complete map of
+everything that could happen.
+
+368 automated tests pass, including independent re-implementations of the math. The dashboard is a
+coarse preview (100-300 paths); every number in this report comes from the larger frozen studies.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 4
+
+3. Does the market model match reality?
+Your copy of Meucci's Risk and Asset Allocation (2005) was used as the audit standard. The audit fixed four
+concrete errors in the engine (an interpolated-quantile bug, a crash with a single stochastic asset, stale
+documentation, and an overclaimed formula). More importantly, it exposed that the basic checks the book
+demands before assuming independent weeks had never been run. This section is those checks.
+Weekly returns have no memory of direction, but volatility has memory. Last week's return tells you
+almost nothing about this week's direction (correlations between -0.07 and +0.02). But last week's squared
+return does predict this week's squared return (correlations up to 0.34): calm weeks follow calm weeks,
+storms follow storms. The default law treats every week as independent, so it cannot produce clusters of
+bad weeks.
+
+Correlation of each series with its own previous week, 2005-2026 (1,129 weeks). Left bars: returns. Right bars: squared returns.
+The tall right bars are volatility clustering, which the default model omits.
+
+- Equities are also left-skewed and fat-tailed in the data (VTI sample skewness -0.99, excess kurtosis 9.1).
+The default mixture is symmetric with excess kurtosis 1.69: milder tails than history.
+- A history-bootstrap variant (EWMA-FHS) reduces the clustering in its residuals to about 0.10-0.12, but
+that is not zero and not proof it is better.
+- These are descriptive facts about 21 years, not guarantees about the next one.
+
+4. The forecast-model contest
+If the default law misses volatility clustering, would a conditional-volatility model do better? Four models
+were committed in advance, fit on the past only, and scored on one-week-ahead distribution forecasts for
+2019-2025. The selection was locked on 2014-2018 data before the final scoring. This is a forecasting
+contest, not a portfolio result.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 5
+
+Left: forecast error 2019-2025 (lower is better). The GARCH-based model, selected in advance, wins by 1.8% and wins every
+calendar year. Right: how often reality landed in each model's worst-5% zone. In calm years the models are roughly calibrated; in
+2008 every model was surprised far more than promised.
+
+- The GARCH-variance model beats the current one on the final period (error 0.6633 vs 0.6756), in each
+of the seven years, and its residuals lose the volatility clustering (squared-return correlation drops from
+~0.37 to ~0.03-0.10).
+- But in the 2008 stress slice every model was caught out far more than its promised 5%: current model
+21.5%, GARCH 13.9%, history bootstrap 8.9%. No candidate handled a real crisis as advertised.
+- A mathematical catch blocks ordinary GARCH for annual paths: its unbounded recursion can produce
+infinite price moments beyond a few weeks. A capped variant (volatility limited to 3x baseline) was built
+to fix exactly this, and its finite moments are proved.
+- The capped model improves weekly forecasts by about 1.4%, but on full-year evidence it shows no
+proven benefit: 52-week forecasts score 0.20% better, 26-week worse, and the judge accepted no
+historical blend of it. It stays research-only; you have not approved promoting it.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 6
+
+5. Benchmarking: clever vs simple
+Three portfolio recipes were compared on identical inputs: equal weights (1/N, the simplest possible),
+shrunk mean-variance (the classic textbook optimizer with noise control) and the funding-aware
+optimizer (the engine's own, maximizing the after-payments score under every risk limit). A fourth row is
+the cash-heavy blend that validation actually selected. All were frozen, then judged on 1,600 fresh final
+paths.
+Recipe
+
+Score ($M)
+
+Every payment funded?
+
+Passes ALL risk
+checks?
+
+Equal weights (1/N)
+
+100.13
+
+Yes (1,600/1,600 paths)
+
+No - worst-path loss
+
+Shrunk mean-variance
+
+101.81
+
+Yes
+
+No - worst-path loss
+
+Funding-aware optimizer (raw)
+
+100.11
+
+Yes
+
+No - worst-path loss
+
+Validated cash-heavy blend
+
+97.46
+
+Yes
+
+Yes
+
+Strict-funding study, baseline law, 1,600 fresh final paths. The highest score belongs to a portfolio that fails the declared safety
+checks. The blend that passes gives up about $2.6-4.4M of score: that gap is the price of the safety limits.
+
+The confirmed plan's validated blend (25% of the optimizer's mix, 75% of the cash/property anchor) looks
+like this:
+
+The validated mix for the $250k/month plan. At a 3% annual payout, the cash does the work.
+
+- The funding-aware optimizer does not beat shrunk mean-variance on raw score. Its value is that it
+optimizes under the funding constraints directly, not that it found a higher-return mix.
+- Every raw (fully invested) candidate fails the final worst-path-loss check. Only blends with a large cash
+anchor pass. Safety, not score, is the binding constraint at these limits.
+- Mean-variance and CARA scores are close on average, but a constructed test case proves they can
+rank plans differently; closeness on these studies is not a proof they are the same preference.
+
+6. The historical backtest: 19 real years
+The only historical evidence in the project: 19 non-overlapping one-year episodes, 2007-2025, on the real
+fund, currency and property histories, including 2008, 2020 and 2022. Parameters were refit 152 times
+using only data available at each refit date; all 152 refits succeeded. Everything else in this report uses
+simulated futures, which are model-driven and are not historical out-of-sample proof.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 7
+
+Comparison over the 19 episodes
+
+Avg difference in final
+wealth
+
+Honest reading
+
+Matched mean-variance vs the CARA
+engine
+
++0.20 percentage points per
+year
+
+uncertainty interval touches
+zero: not significant
+
+History bootstrap (FHS) vs the default
+mixture
+
+-0.02 pp
+
+nothing there
+
+Refit-and-average (bagging)
+
+-0.12 pp
+
+but a milder worst episode
+
+Capped-vol model vs default (same
+episodes)
+
+mixed: 52-week score 0.20%
+better, 26-week worse
+
+no demonstrated benefit
+
+All final-wealth changes include the 3% scheduled withdrawals. No method beats another in a way that survives scrutiny.
+
+- 19 episodes is thin evidence; estimation windows overlap; property uses the latest published index, not
+point-in-time vintages; and the calendar was known when the protocol was designed, so this is past-only,
+not a blind preregistered test.
+- The bundled older history is only 151 weeks because of a credit-spread series, one reason the
+ETF-based 2005-2026 rebuild happened.
+- What the backtest does establish: the pipeline runs end-to-end on real data, refits are numerically stable,
+and no hidden failure was rerun away.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 8
+
+7. Four ways to define "a good outcome"
+"Risk-adjusted outcome" needs a precise meaning. Four standard definitions were compared fairly: same
+simulated paths, same constraints, same judge, parameters fixed before any results. The study is frozen;
+the dashboard shows it side by side without recomputing.
+Objective
+
+What it cares about
+
+Quirk
+
+CARA surplus
+(current)
+
+dollars left after all payments; equally nervous about
+every dollar
+
+none special
+
+CRRA gross
+
+percentage growth of total wealth; payments enter only
+through constraints
+
+ignores the floor shape
+
+HARA payment floor
+
+wealth above the payment floor, in percentage terms
+
+mathematically
+undefined below the
+floor
+
+Kinked shortfall
+
+dollars, but falling below target hurts 5x more than
+gains please
+
+kinked, not smooth
+
+HARA-with-a-floor is the same family as CRRA-on-surplus; they were not double-counted. Scores are compared on one common
+dollar scale.
+
+Result: the choice of objective barely matters here. All four select the same validated blend, all pass
+every final check, and all fund 1,600/1,600 fresh paths (99.81% lower bound). The hard risk limits and the
+fixed validation grid decide; the utility formula gets almost no vote.
+
+Left: the four objectives pick statistically identical plans for the confirmed $250k/month schedule (score spread under $6k on
+$98M). Right: the score falls by roughly the payments themselves as the monthly amount grows to 2x/4x/10x the confirmed level.
+Every tested size still passes all checks and funds every path.
+
+- Stress fixtures (deliberately extreme, not your plan): with $90M of calls every objective collapses to the
+90% cash anchor; with a $95M final call, nothing is acceptable at all and even 90% cash misses $5M on
+every path.
+- HARA's floor is a real limitation: in the stress fixtures, 2-30 of 1,600 paths end below the floor, where the
+objective is undefined. Those failures are recorded, not clipped away.
+- No "best utility" is established. The current CARA objective stays, by your earlier choice, not by a result
+of this study.
+
+8. How wrong could the model itself be?
+On top of simulating market risk, the engine can charge each portfolio a safety margin for model risk:
+pretend the fitted law could be off by some radius, and price the worst case inside it (a Wasserstein, or W1,
+margin). This is where the most uncomfortable finding of the whole project sits.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 9
+
+The assumed model-wrongness margin implies a $40k buffer. The margin actually measured from 21 years of history implies
+$813M: more than eight times the balance sheet, against a per-payment budget of $50k. Log scale.
+
+- The working radius (0.00002) was always a placeholder. Measured from 21 complete years of history,
+year-to-year model drift implies a radius of about 0.41 (range 0.39-0.63 across 2013-2024).
+- At that honest radius, the unavoidable safety buffer is about $813M on a $100M balance sheet: no
+long-only portfolio can be certified against a $50k per-payment budget. The calibration therefore returns
+no candidate at all.
+- Nothing was tuned to hide this: the placeholder stays, labelled uncalibrated, and the conflict is shown in
+the dashboard. Shrinking the radius until something passes would be exactly the kind of quiet repair this
+project refuses to do.
+- Part of the gap is a crude metric: the current measure gives no credit for diversification and allows
+economically impossible perturbed scenarios. Redesigning it is an open research item, not a number to
+quietly adjust.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 10
+
+9. Can month-by-month trading beat a fixed plan?
+You asked for a mathematical optimization, not a bucket playbook. So a feedback rule was trained: eight
+learned parameters that map only what is knowable at the time (current wealth, remaining payments,
+drawdown, recent returns) into target weights, with realistic frictions (0.05% per trade, one-week
+settlement). Selection was frozen before final judging; simple fixed mixes were compared on identical paths
+and costs.
+
+Scores after costs. The learned feedback rule beats the original static mix, but a rule that makes the same first trade and then
+does nothing beats the feedback rule. Both learned variants fail when expected returns are 2pp lower; the simple static mixes
+pass all four laws.
+
+- On the two laws it was designed for, the feedback rule beats the static start by about $0.56-0.59M on a
+~$98M score, after roughly $9k of fees.
+- Attribution shows all of that gain is the first trade (a better starting mix). The month-to-month reactions
+themselves subtract about $20-28k relative to doing nothing after day one.
+- The feedback rule and its first-trade-only variant both fail the two lower-return laws. Three simple
+fixed-mix baselines pass all four laws.
+- A robust redesign (trained to do well under the worst of all four laws) found no acceptable rule: 360
+candidates evaluated, none of the top 12 passed validation everywhere.
+- How far from optimal is anything? A cheating bound (a clairvoyant with no costs reaches a $197-241M
+score vs the ~$98M achieved) is far too loose to say. There is no near-optimality certificate, and no
+proven better sell rule. The search failing does not prove a good rule cannot exist.
+
+10. How often should you rebalance?
+Monthly, quarterly, semiannual and annual rebalancing of the same fixed target mix were compared on
+shared paths, with the same 0.05% costs, one-week settlement and monthly payments. Frequencies were
+judged on fresh paths under all four laws; ties under $100k count as ties.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 11
+
+Score by rebalancing frequency (baseline law). Annual wins at every horizon, but look at the axes: the gaps are 0.03-0.18%. At 3
+and 5 years no frequency passes all safety checks, so the ranking is a score ranking, not an accepted answer.
+
+Horizon
+
+Best score
+
+Annual minus monthly
+
+Safety checks
+
+1 year ($3M)
+
+annual, $98.246M
+
++$29k (bounded law +$32k;
+lower-return laws +$15-16k)
+
+all four frequencies pass all
+four laws
+
+3 years ($9M)
+
+annual, $94.552M
+
++$95k
+
+none passes all four laws (all
+pass only under the
+capped-vol law)
+
+5 years ($15M)
+
+annual, $90.866M
+
++$161k
+
+none passes under any law
+
+Scores are the baseline-law certainty equivalents; payments were fully funded on every final path in every row. Some pairwise
+differences are within simulation noise after multiple-comparison adjustment; the ordering is stable, the exact gaps are not
+precise.
+
+- Why annual wins here: the starting mix is 76% cash, so there is little to rebalance, and every rebalance
+costs 0.05%. "Less trading is slightly cheaper" is the honest summary.
+- At one year, "annual" literally means "never trade after day one". The 3- and 5-year runs (where annual
+does trade between years) still score best but fail the loss checks: drift between rebalances eventually
+hurts.
+- Not tested: tolerance bands (trade only when weights drift far from target), which the practitioner
+literature prefers over any calendar schedule. That is a fair next experiment.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 12
+
+11. Why is so much in cash?
+You asked this directly: why does the answer hold 76% cash, when a Treasury bond is low-risk and pays a
+decent yield, especially over one year? Fair question, and the model has a precise answer in three parts.
+1. The model has no Treasury bill. The only bond it can buy is IEF, a fund holding 7-10 year Treasuries. A
+one-year bill held to the end is nearly riskless: you know exactly what you get back. A 7-10 year bond fund
+is different: when interest rates rise its price falls, and no maturity date pulls it back inside your one-year
+window. In the fitted model the fund carries 6.4% yearly risk for about 3.5-4% expected return; in real history
+its worst year was -17.9% (in 2022, the year rates jumped, it lost 15.2%). Over a one-year horizon the
+model is right to treat it as a risky asset, not as a safe 5%.
+2. The 76% is forced by the safety rules, not chosen for its return. Left to itself, the optimizer picks only
+35.5% cash and scores $100.1M, but that mix fails the held-out path-loss check. The engine then blends
+toward a 90%-cash anchor until every check holds, landing at 76%. Passing the checks costs about $1.9M
+of score per year. The binding constraints are the twelve payment tests (each $250k payment may lose at
+most $50k in its 5% tail, with the family-wide bar tightened for having twelve tests), the 15% worst-path loss
+limit, and a fixed model-miss buffer. The model's cash earns a placeholder 0%, so it is the one asset that
+can never fail any of these checks.
+3. Read "cash" as "T-bills" and the puzzle flips. Rerun with the cash earning a real deposit rate: at 2%
+the score rises $2.1M; at 4% (roughly a current bill yield) it rises $3.6M, and the model drops the Treasury
+fund entirely - why hold a 3.6% fund with real price risk when bills pay 4% with none? So the practical
+reading is not "76% idle" but "76% in bills or money-market at about 4-5%, because the rules demand
+something that cannot fall, and the only bond fund on offer can fall".
+
+Left: yearly risk assumed by the model versus the worst real one-year loss, 2005-2026. The "safe" 7-10 year Treasury fund is
+much safer than stocks but far from riskless over one year. Right: giving the cash a real yield raises the score and pushes the
+Treasury fund out of the mix.
+
+Making the cash realistic is the single most valuable open fix measured in this report: worth more than every
+other change tested (sections 13 and 16).
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 13
+
+12. What if the payout changes?
+Your confirmed payout is $250k a month ($3M a year). Everything larger or different below is a sensitivity:
+same engine, same safety checks, one change at a time, on the frozen data and seeds.
+Change tested
+
+Recommended mix
+
+Score
+
+Reading
+
+$500k / month
+
+unchanged: 76% cash, 9%
+Treasuries, 5% stocks, 10%
+property
+
+$95.3M
+
+each extra $1 out costs
+$1 of score
+
+$1M / month
+
+unchanged
+
+$89.3M
+
+same slope
+
+$2.5M / month
+
+unchanged
+
+$71.3M
+
+still passes every
+check
+
+one-off surprise call of
++$2M / +$5M / +$10M
+mid-year
+
+unchanged
+
+$96.3M / $93.3M /
+$88.3M
+
+dollar-for-dollar, on top
+of the planned $3M
+
+same $3M paid quarterly,
+semiannually, or once at
+year-end
+
+63% cash (a riskier blend
+passes)
+
+$99.0M
+
++$0.7M vs monthly
+
+$125k / month
+
+engine refuses to run
+
+-
+
+guardrail, not
+infeasibility (see below)
+
+The mix is identical for every larger payout because the cash earns 0%: the payout comes out of a pile that does not grow, so a
+dollar out is a dollar of score lost. With a real yield on cash, larger payouts would also start moving the mix.
+
+- Why monthly is the hardest pattern: each of the twelve payments gets its own tail test with its own
+$50k allowance, and the family-wide confidence bar tightens with every extra test. Twelve small checks
+bind harder than one big one, so smaller-but-more-frequent payments demand more safety cash, not
+less.
+- Why $125k/month refuses: the fixed model-miss buffer ($40k) is larger than the smaller per-payment
+allowance ($25k), and the engine declines to run with contradictory settings. A guardrail, not infeasibility
+- section 13 gives the full portfolio at $50k, $100k and $250k under a clearly labeled scaled-buffer
+sensitivity.
+- Extremes from the frozen studies: a $60M early call plus a $30M final call forces the 90%-cash
+anchor, and a $95M final call has no feasible plan at all (section 15).
+And if the amounts themselves are uncertain? The engine needs a fixed schedule, so the honest test
+keeps the recommended fixed plan and lets reality deviate: payments drawn randomly plus or minus 50%
+month to month, doubled payments, and lumpy patterns. The plan makes every payment on 100% of
+futures up to $5.5M a month - twenty-two times your actual payout. The first rare misses appear at $6M a
+month (0.06% of futures), and the plan truly breaks at $7M (16% of futures, worst single miss $16M). At
+$250k a month, payout uncertainty is a non-issue: the cash alone covers roughly 25 years of payments.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 14
+
+Left: the score falls exactly dollar-for-dollar as the year's total payout grows, whether the growth is planned (circles) or a surprise
+one-off call (squares). Right: the fixed plan stress-run with noisy payments only bends near $6M a month, far above the actual
+$0.25M.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 15
+
+13. The portfolio at $50k, $100k and $250k a month
+What does the safe portfolio actually look like at each payout level? Section 12 traced the score across
+payout sizes; this section lays out the validated portfolio itself at $50k, $100k and $250k a month, with
+$125k added because it sits exactly at the engine's refusal boundary.
+Why the engine refuses below $200k a month, in plain words. Two safety settings collide there. The
+first is a fixed model-miss buffer: every payment must survive an extra margin for the chance the market
+model itself is wrong, and that margin is a fixed $40k per payment. The second is a per-payment allowance:
+the tail-risk budget for each payment is 20% of that payment. At $250k a month the allowance is $50k and
+comfortably covers the $40k buffer. At $125k the allowance is $25k - smaller than the buffer - and the
+settings contradict each other. The engine then declines to run instead of silently weakening either setting.
+That is a guardrail doing its job, not a claim that smaller payouts are infeasible.
+A clearly labeled sensitivity, not a changed default. To show the portfolios anyway, one number is
+scaled: the model-miss buffer is shrunk in proportion to the payment, keeping it at 80% of the allowance the same ratio it has at the confirmed $250k level. No budget, limit or check is loosened; every safety test
+still runs and still passes with margin. The default configuration is untouched, and the refusal itself is
+reported above, not hidden.
+Monthly
+payout
+
+As-is outcome
+
+VTI
+
+Treasuries
+
+Cash
+
+Property
+
+Score
+
+Safety
+checks
+
+$50k
+
+passes
+
+4.6%
+
+9.1%
+
+76.3%
+
+10%
+
+$100.66M
+
+all pass
+
+$100k
+
+passes
+
+4.6%
+
+9.1%
+
+76.3%
+
+10%
+
+$100.06M
+
+all pass
+
+$125k
+
+passes
+
+4.6%
+
+9.1%
+
+76.3%
+
+10%
+
+$99.76M
+
+all pass
+
+$250k
+
+passes
+
+4.6%
+
+9.0%
+
+76.4%
+
+10%
+
+$98.25M
+
+all pass
+
+Validated portfolio per payout level under the scaled-buffer sensitivity (buffer kept at 80% of the per-payment allowance, its ratio at
+the confirmed $250k level). Weights are percent of wealth; the score is the certainty equivalent in $M. At $250k the sensitivity
+coincides with the confirmed baseline.
+
+Left: the validated mix at each payout level - cash moves by a tenth of a point across a fivefold payout range. Right: the score falls
+by about $1 for each $1 less paid out, the same dollar-for-dollar mechanics as section 12, because the cash pile earns a
+placeholder 0%.
+
+What drives the differences: almost nothing in the mix. The binding forces are the per-payment tail
+checks, and they scale with the payment, so the same cash-heavy portfolio passes at every level. What
+changes is only the score: less paid out leaves more in the pile, dollar for dollar. Smaller payouts are not
+harder to fund - at $50k a month the year's $0.6M is covered by the cash alone for over a century - the
+refusal below $200k is purely the two fixed safety settings colliding.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 16
+
+14. What if the views are wrong?
+Every recommendation so far leans on fitted views: expected returns, volatilities, correlations and property
+growth. Two experiments test how much those views matter.
+Experiment one: change a view, re-solve. One input at a time: stock and Treasury expected returns plus
+or minus two points, all volatilities up or down a quarter, Treasuries that no longer hedge stocks, property
+growth of 0% or 8%, and cash that earns 2% or 4%. Everything else, including every safety check, stays
+fixed.
+
+Top: the validated portfolio under each changed view. Cash stays between 62% and 82%, property stays at its fixed 10%,
+emerging markets are never bought. Bottom: the score moves less than plus or minus $1.2M under every view except the cash
+rate, which is worth +$3.6M at 4%.
+
+Two honest mechanics notes. The raw optimizer does respond to views in the direction you would expect (a
+better Treasury view cuts raw cash from 36% to 18%); the validated blend moves less, partly because the
+blend grid is coarse - quarters of the way from anchor to optimizer. And when the optimizer's own mix gets
+safer, the checks let more of it through, which is why a worse stock view can end at a similar cash share
+with more stocks inside it. The direction of the raw response is the cleaner signal; the bars above are the
+answer the checks actually accept.
+Experiment two: keep the plan, worsen the world. Take the 76%-cash plan as fixed, then re-check it in
+worlds worse than fitted: stocks two points weaker, Treasuries two points weaker, everything risky two
+points weaker, all volatilities a quarter higher, Treasuries falling together with stocks, property flat. The plan
+passes every safety check in every one of those worlds, makes every payment, and scores $97.9-98.4M
+against $98.3M in the fitted world.
+- Bottom line: within everything tested, wrong views cost at most about $1M of score and never break a
+payment. The binding safety rules, not the views, drive the allocation.
+- The exception is the cash rate. It is a placeholder, not a fitted view, and it is the only input that moves
+the value by millions. It is also the easiest input to fix with real data.
+- All paths are synthetic futures from one fitted model vintage (7 November 2026); these are model-only
+statements about robustness, not historical proof.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 17
+
+15. "Passed" does not mean "paid"
+This distinction caused real confusion during the project, so it gets its own section. The declared funding
+limit allows each payment a 20% tail-shortfall allowance at 95% confidence. That is not a promise to
+make every payment. Counterfactual stress fixtures make the gap concrete:
+
+A deliberately extreme $95M final call: the share of validation paths paying every call collapses as the mix is made safer, because
+the obligation is simply too large. Even 90% cash misses $5M on every path. Not your plan; a stress test.
+
+- With a $60M early call plus a $30M final call, a validation-calibrated portfolio passes every declared
+model limit while making every payment on only about 84% of paths.
+- With your actual $3M schedule the risk is remote (the cash alone covers years of payments), which is
+exactly why the passing label is weak evidence there.
+- Two fixes are now built in: a strict 99% all-payments check (at least 99% of fresh paths must make
+every payment, with an exact binomial lower bound) and a separate execution audit that counts actual
+unpaid calls in the cash-first ledger.
+- Sample honesty: proving a 99% all-paid rate with zero observed misses takes at least 299 independent
+paths; the studies use 1,600.
+- Both verdicts are shown side by side, and the strict check and the all-risk check can disagree. When
+they do, both are reported.
+
+16. How the model was checked, inside out
+On the night of 7-8 November the whole computation path was audited from scratch: roughly thirty modules
+read line by line - scenario generation, the forecast mixture, entropy pooling, the optimizer, the tail-risk
+accounting, the cash ledger, property, currency and the strict funding check - and eleven independent
+numerical tests were written from scratch to compare the engine against hand-computed answers on cases
+where the truth is known.
+Check
+
+Result
+
+Simulated weekly means and covariances match
+the fitted moments
+
+PASS - max mean err 6.65e-05, max cov err 5.80e-06
+(seed 20261107 train draw, n=4000 unless stated)
+
+Crash-mixture tail shape matches its closed form
+
+PASS - sample 1.742 vs formula 1.688 (MC noise at
+n=208k)
+
+Property paths match their calibrated drift and
+volatility
+
+PASS - drift 0.0400 vs 0.0400, vol 0.1584 vs 0.1593
+
+Property-equity co-movement matches the
+user-set correlation
+
+PASS - sample corr 0.301 vs rho 0.30 (mixture state
+shared, MC noise)
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 18
+
+Payment provisioning arithmetic is exact
+
+PASS - max err $0.00e+00; terminal_net = value sum(payments) exactly when growth=1
+
+Cash ledger conserves wealth in a flat world
+
+PASS - terminal net 98,000,000 vs expected
+98,000,000, funded all True
+
+Ledger shortfall arithmetic is exact when money
+runs out
+
+PASS - unpaid 20,000,000 vs expected 20,000,000;
+net -20,000,000
+
+Weighted tail loss equals the direct worst-5%
+mean
+
+PASS - cml_of_paths 0.221648 vs direct tail mean
+0.221648
+
+The tail-risk solver matches a brute-force
+minimizer
+
+PASS - common_tail 2.46326346 vs brute
+2.46326346
+
+Entropy pooling hits a requested view exactly
+
+PASS - achieved 0.1000 vs requested 0.10; q sums to
+1.000000000000, min q 1.45e-04
+
+Currency conversion matches a manual
+recomputation
+
+PASS - max err 0.00e+00 on 1129 weeks
+
+Eleven identity tests, each comparing the engine to an independent recomputation or a known closed form. All pass; the largest
+discrepancy anywhere is Monte Carlo sampling noise.
+
+- Code audit: no new errors found in any module on the computation path. The one real bug ever found
+by an earlier audit - a payment-netting error in an old commit - is confirmed fixed in the current engine,
+and the netting now matches between the optimizer and the independent ledger.
+- Consequence: no corrections were needed, so every frozen number in this report stands unchanged.
+The audit changed the evidence, not the results.
+
+17. Every dial, and what it moves
+Every modeling decision that could move the answer was perturbed one at a time on the frozen machinery nineteen variants - and the validated portfolio was re-derived from scratch each time. The chart shows how
+far the cash share moves; the table says why each setting is what it is.
+
+Cash share of the validated plan as each decision is perturbed across a wide range. The cash share stays in a broad safe band
+no matter which dial is turned; the binding safety rules, not any single modeling choice, set the level.
+
+Decision
+
+Setting
+
+Grounding and test
+
+Crash-mixture law (90%
+calm / 10% storm weeks)
+
+kept
+
+Matches realized weekly crash frequency (below); a plain
+Gaussian under-reserves by $3M; Student-t(5) lands
+within 0.7 points
+
+Mean shrinkage strength
+
+156 weeks
+
+Jorion/Ledoit-Wolf classics; the selected plan is identical at
+50, 156 and 400 - the decision does not bind
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 19
+
+Risk tolerance
+
+$10M
+
+Your setting; at $5M and $20M the selected plan barely
+moves and every check passes
+
+Per-payment tail allowance
+
+20%
+
+Your setting; identical plan at 30%; at 10% the engine
+refuses rather than loosen
+
+Model-miss buffer
+
+$40k/payment
+
+Honest placeholder (section 8); removing it moves cash by
+0.1 points; at 5x the engine refuses. Cost and boundary
+now measured
+
+Property-equity correlation
+
+0.3
+
+Your setting; at 0 the plan is unchanged within 1 point; at
+0.6 the marginal blend point slips (below)
+
+Stress worsening of views
+
++1% path loss
+
+Committee-style margin; at 0% the plan is unchanged
+within 1 point; at 2% the marginal blend point slips
+
+Cash yield
+
+0% placeholder
+
+No investable cash asset in the model yet; the only dial
+worth millions (section 11)
+
+Random seeds
+
+frozen
+
+Twelve fresh master seeds re-run the whole selection:
+usually the quarter blend (69-78% cash); every selected
+mix passes every check
+
+One decision at a time on the frozen engine. No perturbation changed the character of the answer.
+
+Does the crash model match reality? Two direct tests. Weekly: the mixture predicts how often real
+markets move more than two, two-and-a-half and three standard deviations in a week, and it tracks 21
+years of realized history closely, while a plain Gaussian misses three-sigma weeks by a factor of four.
+Yearly: the model's simulated one-year losses for the chosen mix are harsher than anything in 84 rolling
+years of realized history - so even though independent weekly draws cannot manufacture multi-year storms,
+the annual risk of this plan is not understated.
+And the missing volatility clustering? It is real: squared weekly returns are strongly autocorrelated in
+every asset (Ljung-Box p ~ 0), so calm and storm weeks genuinely cluster. But a clustering-preserving
+stationary bootstrap of the realized quarters (Politis-Romano, crisis quarters kept adjacent) gives annual
+tails for the selected mix - q5 -1.1%, worst -5.3% over 20,000 synthetic years - that match rolling history and
+are no harsher than the model's independent-week years (q5 -2.2%, worst -5.4%). Independent weeks do
+not understate this mix at one year. Clustering stays an open risk for riskier mixes and for multi-year
+horizons, where the bootstrap cannot reach.
+
+Left: how often markets crash past 2, 2.5 and 3 standard deviations in a week - realized history, the mixture the engine uses, and
+a plain Gaussian (log scale). Right: one-year outcomes of the selected mix, simulated versus realized history.
+
+- One honest caveat the audit surfaced: the blend between the anchor and the optimizer moves in
+quarters, and the half-way point sits near the path-loss budget boundary, so small Monte Carlo noise can
+move the winner by one grid point. Across twelve fresh simulation seeds the engine picks the quarter
+blend (69-78% cash) seven times, the half blend (62-65% cash) four times - two of those then fail the
+independent final check - and once the all-cash mix (90% cash, score $97.4M). A finer eighth-step blend
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 20
+
+grid was tried at four seeds and does not stabilize the choice, so granularity is not the cause; the
+optimum is simply flat. What is stable: every selected mix passes every check, and the score stays within
+$97.4-99.0M (1.6% of wealth) across all twelve seeds. The published 76% is the default-seed
+representative of that region, not a sharply tuned optimum - which is exactly how a safety-first answer
+should look.
+- What this means for trust: no single dial secretly carries the result. The answer is what the safety
+checks allow, and they allow roughly the same mix everywhere nearby.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 21
+
+18. What outside research and practice say
+Thirteen sources (academic papers and family-office practice) were fetched and read. The short version:
+the engine's core frame is the endorsed one, and practice adds a liquidity playbook on top of it.
+- Secure the liability first, take risk with what is left. The surplus/LDI literature (Sharpe/Scott/Watson
+2008; Ashton 2011) endorses exactly the engine's frame: optimize wealth after obligations, not raw
+returns.
+- Selling at a bad time has a name: sequence-of-returns risk. With withdrawals, the order of returns
+matters more than the average (Pfau). Selling a bit of everything every month is the textbook thing to
+avoid.
+- A cash reserve of 1-2 years of payouts, refilled only from winners and never by selling what is down,
+improved 30-year plan survival by up to 6 points in one study (Pfeiffer/Salter/Evensky 2013). For you that
+is $3-6M, cheap insurance at a 3% payout.
+- But buckets are mostly relabeling: a cash bucket is financially near-equivalent to a static mix with the
+same overall allocation (Tomlinson 2020). The benefit is behavior and costs, not magic return.
+- Rebalance with tolerance bands (~20% of target weight), not a calendar (Kitces 2015; Daryanani
+2007). In a drawdown, fund spending by selling the most overweight or most appreciated asset first.
+- Family offices typically hold 0-2 (up to 3) years of spending in cash or near-cash, and use a post-stress
+liquidity ratio of 3x annual needs as a safety gauge (Cambridge Associates 2023; RBC/Campden 2025).
+- Property crowds out equity in optimal household portfolios (Cocco 2005): the fixed 10% property
+correctly pushes the liquid sleeve more conservative.
+Where this meets the engine's results: the annual-rebalancing win and the cash-heavy validated mix agree
+with practice. The open tension is bands versus calendar: the engine tested calendar schedules only, and
+the literature suggests bands are the better rule. The liquidity-tier suggestion is the literature brief author's
+judgment, flagged as judgment, not engine evidence.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 22
+
+19. Everything that is still open
+Consolidated from all eleven studies. None of these is hidden in the underlying reports; they are gathered
+here so one page holds the full list.
+Area
+
+What is not solved
+
+Market model
+
+Volatility clustering is absent from the default law (Ljung-Box p ~ 0 confirms it is real),
+but a clustering-preserving bootstrap shows the selected mix's annual risk is not
+understated (section 17); crisis tails (2008) break every candidate; joint
+property/fund/currency dependence is assumed, not fitted
+
+Model-wrongness
+margin
+
+The W1 radius is an uncalibrated placeholder; the honest empirical calibration
+conflicts with the budgets by orders of magnitude; the metric itself is crude (no
+diversification credit)
+
+Data
+
+Cash earns an assumed 0%; property is a quarterly price index (no rent, no sale,
+latest vintage, assumed 45-day publication lag, SGD economics on a USD balance
+sheet); fees (0.05%) and one-week settlement are assumptions, not broker quotes;
+Yahoo history is private-use only
+
+Accounting
+
+The optimizer still thinks in provisioning while the audit ledger thinks in cash-first
+selling; unifying them is parked work; stochastic liabilities are disabled until a causal
+calibrated model exists
+
+Evidence
+
+19 historical episodes is thin; simulated futures are model-driven, not historical proof;
+the weekly model approximates calendar months; no near-optimality certificate exists
+for any policy
+
+Scope
+
+Only the $250k/month amount is confirmed by you. Wealth level, property share, risk
+limits, horizons and the four laws are research settings, and 3/5-year durations are
+sensitivities, not obligations
+
+Selection
+granularity
+
+The anchor-optimizer blend moves in quarters near a flat optimum: across twelve
+seeds the engine selects 62-90% cash (usually 69-78%); a finer eighth-step grid
+does not stabilize the choice. Every selected mix passes every check and scores
+within 1.6% of wealth; the region is stable, the point inside it is Monte Carlo noise
+
+Engineering
+
+Solver time is flaky (0.6-60s for identical inputs); closing the dashboard does not
+cancel a running solve; 18 dependency alerts on the repo's default branch are being
+audited separately
+
+Grouped from SCIENTIFIC_STATUS.md, the book audit, the model-adequacy, bounded-volatility, strict-funding, utility,
+dynamic-policy and frequency studies.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 23
+
+20. The verdict
+On the confirmed plan, the defensible answer is a boring one. A cash-heavy mix (about 76% cash, 9%
+Treasuries, 5% US stocks, 10% property) passes every check under every market law tested, funds every
+payment on all 1,600 fresh paths, and no cleverer alternative proved itself better. At a 3% annual payout,
+safety is cheap and the payout is the tail risk that matters least; the model is the tail risk that matters most.
+- Objective: keep CARA-on-surplus. The four-way comparison shows the choice does not drive the
+answer at these limits.
+- Trading: one good allocation, then cash-first. Learned monthly feedback adds nothing after its first trade
+and breaks when returns disappoint; no robust rule was found.
+- Rebalancing: annual is the best of the four tested, at every horizon, on score. At one year it also passes
+every check. Past one year, nothing passes everything, so treat annual as "best tested", not "proven".
+- Safety labels: read the strict 99% all-payments line and the execution audit when asking "will every
+payment be made?", not the 20% allowance line.
+- Biggest open risks: crisis tails in the market model and the uncalibrated model-wrongness margin, with
+volatility clustering real but shown not to understate this plan at one year (section 17). All are
+documented; none was tuned away.
+What would change the answer: a real deposit or T-bill asset for the cash (worth about +$3.6M a year in
+the model, section 11); promoting the capped conditional-volatility model after a real annual validation (your
+decision, currently unapproved); actual property, rent, settlement and cost data; a redesigned, calibrated
+model-risk margin; tolerance-band rebalancing tests; and real client constraints beyond the monthly
+amount.
+What the overnight audit changed: the evidence, not the answer. A full re-read of the engine, eleven
+independent numerical tests, nineteen one-decision perturbations and direct weekly and yearly tail checks
+against realized history found no errors and no hidden load-bearing choice. The crash-mixture law is now
+backed by data rather than judgment alone, and the one soft spot the audit surfaced - the flat blend
+optimum (62-90% cash across seeds, usually 69-78%) - is reported openly in section 17.
+What this report is not: investment advice, a client calibration, or a proof about the future. It is a record of
+what fourteen careful experiments and a full inside-out audit found, and of exactly where they stop.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 24
+
+Appendix A. Data and rights
+Data
+
+Source
+
+Terms
+
+VTI, VWO, GLD, IEF weekly
+total returns, 2005-2026
+
+issuer downloads (Vanguard, iShares,
+SPDR) plus an existing private Yahoo
+snapshot
+
+private use only; raw histories kept
+out of git; nothing derived shared
+without asking
+
+Singapore residential
+property
+
+URA All Residential price index,
+quarterly
+
+open license; attribution bundled
+
+SGD/USD
+
+Federal Reserve official series
+
+public data
+
+Meucci, Risk and Asset
+Allocation (2005)
+
+your own copy
+
+reviewed; no pages copied or
+redistributed
+
+Code
+
+original, in your private repo
+
+no GPL components; nothing
+publicly hosted
+
+You accepted the Yahoo terms risk for private research only (WhatsApp, 7 Nov, 18:23). Do not make the repository public as it
+stands: the bundled snapshot has no redistribution clearance.
+
+Appendix B. Reproduction and verification
+- Everything lives in the private repo github.com/TijsdeBoer/emfin_capstone, branch engine-v2 (head
+6bb8047), with the dynamic-policy work merged from its feature branch.
+- 368 automated tests pass, including independent re-implementations of the quantile, CVaR,
+certainty-equivalent, W1 and funding-bound math. The wheel builds, installs and runs outside the
+checkout.
+- Every study was frozen before its final paths were drawn: seeds, code and data hashes and selection
+locks are archived with it, and failed runs are preserved rather than deleted. No failing final judge was
+retuned.
+- Studies used 100 training / 200 validation / 400 final paths per batch, four final batches (1,600 final
+paths), with disjoint seeds for the dynamic, robust and frequency follow-ups.
+- Measured compute: dynamic study 6.8s; robust variant 12.8s; frequency 2.0s (1 year) and 14.7s
+(multi-year); utility comparison 6.8s; strict funding 3.4s. No long grid runs were launched.
+- Overnight audit (third edition): ~30 modules re-read; 11 identity tests (audit_identities.py, all pass); 19
+one-decision perturbations (study_decisions.py); weekly and annual tail calibration against realized
+history (audit_tails.py); a clustering-preserving stationary bootstrap (audit_clustering.py); payout-level
+portfolios (study_variants4.py). All on the same frozen data, code and seeds.
+- The dashboard (emfin-explore, local only) is a coarse preview tier; it is not the source of any number in
+this report.
+
+Appendix C. Sources
+All external sources were fetched and read. Methods grounding only; no source code copied.
+- Meucci, Risk and Asset Allocation, Springer 2005 (audit standard, your copy)
+- Gneiting & Raftery 2007, proper scoring rules (CRPS) - sites.stat.washington.edu/raftery
+- Patton 2011, QLIKE and volatility proxies - public.econ.duke.edu/~ap172
+- Bollerslev 1986, GARCH - public.econ.duke.edu/~boller
+- Esfahani & Kuhn 2018, Wasserstein distributionally robust optimization - link.springer.com
+- Politis & Romano 1994, the stationary bootstrap - tandfonline.com
+- Federal Reserve FEDS 2001-27, The Hidden Dangers of Historical Simulation - federalreserve.gov
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 25
+
+- Michaud & Michaud 2007, Estimation Error and Portfolio Optimization - newfrontieradvisors.com
+- Shiraishi & Taniguchi 2010, portfolio estimation resampling - jstage.jst.go.jp
+- Jacquier 2010, Simulation-based Estimation in Portfolio Selection - people.bu.edu/jacquier
+- Boyd et al., dynamic portfolio optimization papers - stanford.edu/~boyd (3 papers)
+- Pfau, sequence-of-returns risk - retirementresearcher.com
+- Pfeiffer, Salter & Evensky 2013, cash-reserve strategies - financialplanningassociation.org
+- Tomlinson 2020, bucket strategies re-tested - advisorperspectives.com
+- Sharpe, Scott & Watson 2008, efficient retirement spending - web.stanford.edu/~wfsharpe
+- Ashton 2011, LDI for individuals - soa.org
+- Kitces 2015 / Daryanani 2007, rebalancing tolerance bands - kitces.com
+- Cambridge Associates 2023, Liquidity Hazard planning - publishedresearch.cambridgeassociates.com
+- Cocco 2005, housing in household portfolios - academic.oup.com
+- RBC/Campden 2025 family-office survey; Canadian Family Offices 2026; TIFF Spend Policy 101
+- Data terms: investor.vanguard.com/terms-conditions, spdrgoldshares.com/terms-and-conditions,
+ishares.com, legal.yahoo.com, ura.gov.sg
+
+Prepared 7 November 2026 as a consolidation of the day's frozen studies; second edition 8 November added the cash, payout
+and view sensitivity studies; third edition the same night adds the payout-level portfolios (section 13), the inside-out audit (section
+16) and the decision-by-decision evidence (section 17), all on the same frozen data, code and seeds. The individual study
+documents remain the authoritative record; this report simplifies them and does not override them.
+
+Ballast funding-risk engine - unified scientific report - 8 November 2026, 3rd ed.
+
+Private research, not investment advice - page 26
+
+
