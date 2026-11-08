@@ -90,3 +90,13 @@ not a lockfile, so future resolutions and platforms need fresh scans.
 ## Final reproducibility check, 7 November 2026
 
 The newest CI run at viewer commit 387641a returned a verified cash fallback on the multithreaded hosted linear-algebra stack. Three pre-existing tests assumed the default was always an optimized/non-cash allocation. Local single-threaded rerun passed all 224 tests in 52.42 seconds. The test bootstrap now fixes OPENBLAS_NUM_THREADS, OMP_NUM_THREADS and MKL_NUM_THREADS to 1, matching the grid execution environment; no risk tolerances or solver feasibility checks were weakened. A verified fallback remains a supported, explicitly reported outcome, not an optimized allocation. A new CI result is still required after this change.
+
+## Resolution - 8 November 2026
+
+`legacy/original/poetry.lock` was deleted (owner decision, 8 Nov 2026), removing
+the source of all 18 GitHub Dependabot alerts. The deleted file's SHA-256 is
+recorded in `legacy/original-provenance.json` under `removed_files`. The legacy
+workflow documentation already instructed regenerating the lock with
+`poetry lock`; `pyproject.toml` stays because it is that workflow's manifest,
+carries no alerts, and resolving from it pulls current patched versions.
+Alerts close on GitHub's side once this lands on the default branch.
