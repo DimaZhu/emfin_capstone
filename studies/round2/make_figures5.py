@@ -34,8 +34,8 @@ def weights_of(entry):
 
 
 def fig_mixes(d):
-    rows = [('Previous default\n(fitted law, old judge)', d['base']['weights'])]
-    for view, lab in (('fitted', 'Fitted carry\n(five laws)'), ('current_quotes', 'Current quotes\n(five laws)')):
+    rows = [('Previous default\n(shrunk history, old judge)', d['base']['weights'])]
+    for view, lab in (('fitted', 'Using shrunk history\n(five laws)'), ('current_quotes', 'Using today\'s bill yields\n(five laws)')):
         e = d['dual'][view]['dual']
         if e.get('weights'):
             rows.append((lab, e['weights']))
@@ -63,7 +63,7 @@ def fig_mixes(d):
 
 def fig_nominal_vs_real(d):
     labs, nom, real = [], [], []
-    for view, lab in (('fitted', 'Fitted carry'), ('current_quotes', 'Current quotes')):
+    for view, lab in (('fitted', 'Using shrunk history'), ('current_quotes', "Using today's bill yields")):
         e = d['dual'][view]['dual']
         if not e.get('weights'):
             continue
@@ -72,13 +72,13 @@ def fig_nominal_vs_real(d):
         real.append(d['real']['real_repricing'][view]['common_cara_ledger_ce'] / 1e6)
     x = np.arange(len(labs))
     fig, ax = plt.subplots(figsize=(6.4, 3.9))
-    b1 = ax.bar(x - 0.19, nom, width=0.36, color=NAVY, label='Nominal score (today\'s judge)')
-    b2 = ax.bar(x + 0.19, real, width=0.36, color=AMBER, label='Real score (CPI-deflated)')
+    b1 = ax.bar(x - 0.19, nom, width=0.36, color=NAVY, label='Nominal score (dollars as they arrive)')
+    b2 = ax.bar(x + 0.19, real, width=0.36, color=AMBER, label='Real score (in today\'s dollars)')
     for b in list(b1) + list(b2):
         ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 1, f'${b.get_height():.0f}M',
                 ha='center', fontsize=9.5)
     ax.set_xticks(x, labs)
-    ax.set_ylabel('Certainty equivalent, $M')
+    ax.set_ylabel('Score, $M (certainty equivalent)')
     ax.set_ylim(0, max(nom) * 1.18)
     ax.legend(frameon=False, fontsize=9)
     fig.tight_layout()
@@ -89,7 +89,7 @@ def fig_nominal_vs_real(d):
 def fig_stability(d):
     solves = d['fresh']['solves']
     fix4prop = d['fix4']['sleeve_10y']['proportions']
-    props = [('old seed, n=200\n(fix 4)', fix4prop)]
+    props = [('old random draws\n(n=200, fix 4)', fix4prop)]
     for n in ('100', '200', '400'):
         s = solves.get(n)
         if s and s.get('weights'):
@@ -99,7 +99,7 @@ def fig_stability(d):
             risky = {a: w.get(a, 0) for a in ids}
             tot = sum(v for v in risky.values() if v > 1e-6)
             risky = {a: (v if v > 1e-6 else 0) / tot for a, v in risky.items()}
-            props.append((f'fresh, n={n}', risky))
+            props.append((f'fresh draws, n={n}', risky))
     fig, ax = plt.subplots(figsize=(8.6, 3.9))
     x = np.arange(len(props))
     width = 0.15
@@ -132,10 +132,10 @@ def fig_limit_cost(d):
     ax.plot(xs, ys, '-o', color=NAVY)
     for xv, yv in rows:
         ax.text(xv, yv + 0.35, f'${yv:.1f}M', ha='center', fontsize=8.6)
-    ax.set_xlabel('Terminal loss limit (%)')
+    ax.set_xlabel('Worst end-of-plan loss allowed (%)')
     ax.set_ylabel('Score at 10 years, $M')
     ax.axvline(15, color=AMBER, lw=1, ls='--')
-    ax.text(15.3, min(ys), 'current\nlimit', color=AMBER, fontsize=8.6)
+    ax.text(15.6, min(ys), 'your current\n15% limit', color=AMBER, fontsize=8.6)
     fig.tight_layout()
     fig.savefig(FIGS / 'fig_limit_cost.png', dpi=190, bbox_inches='tight')
     plt.close(fig)

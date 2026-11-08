@@ -42,7 +42,12 @@ rows = [
     ('long_treasury', '20+yr Treasuries (TLT)', 'control'),
     ('reits', 'US REITs (VNQ)', 'control'),
 ]
-tbl = [['Asset added', 'Fit window', '1y opt. sleeve share', '6% cap: bills, CE (delta)', '40% cap: bills, CE (delta)']]
+HD = ParagraphStyle('hd', fontName='Helvetica-Bold', fontSize=7.8, leading=9.4,
+                    textColor=HexColor('#ffffff'))
+tbl = [[Paragraph('Asset added', HD), Paragraph('Fit window', HD),
+        Paragraph('Sleeve share (1y optimizer)', HD),
+        Paragraph('6% cap: T-bills, CE (delta)', HD),
+        Paragraph('40% cap: T-bills, CE (delta)', HD)]]
 for key, label, ctrl in rows:
     d = R[key]
     if key == 'control':
@@ -77,7 +82,8 @@ story = [
               '$250k/month x120 (labeled beyond the confirmed year), 10-year horizon, property fixed 10%. '
               'Each row: the candidate added to the current universe, sleeve share from the frozen 1-year optimizer '
               '("tilt" = exploratory 10% sleeve allocation where the optimizer declined it), then the validated 10-year '
-              'mix at the 6% cap (current) and the 40% cap (owner default, 8 Nov). CE = certainty equivalent per year. '
+              'mix at the 6% cap (current) and the 40% cap (owner default, 8 Nov). '
+              'CE = certainty equivalent per year - the judge\'s safe-spending number. '
               'Deltas are vs the control on the SAME fit window.', S['sub']),
     Spacer(1, 4), t,
     Paragraph('* Managed futures only has history from May 2019, so its whole universe is fitted on 2019-2026 - no 2008, '
