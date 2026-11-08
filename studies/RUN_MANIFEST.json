@@ -1,14 +1,11 @@
 {
  "generator": "run_manifest 1.0 (8 Nov 2026)",
  "code": {
-  "commit": "78c9478f35c2687a7ef050b8d36ff8d6a282ee37",
+  "commit": "92dce724349223bfe5fbe0f412eff8ebe7fc0896",
   "branch": "engine-round2-20261108",
-  "clean": false,
+  "clean": true,
   "worktree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "untracked_files": [
-   "docs/REFACTOR_PLAN_SHARED_ACCOUNTING.md",
-   "scripts/run_manifest.py"
-  ]
+  "untracked_files": []
  },
  "environment": {
   "platform": "3.10.12",
@@ -33,6 +30,10 @@
   "emfin_v2/resources/configs/synthetic_re_import.json": {
    "sha256": "25e08c1aac8223be0c085192e02c872a43b144ee4ad060afbf1ef26151295fc8",
    "bytes": 4792
+  },
+  "studies/RUN_MANIFEST.json": {
+   "sha256": "318cd823158a61098f665fb2985440b94da9993044f1d201a934c905737ebf52",
+   "bytes": 34735
   },
   "studies/tbill/config_baseline.json": {
    "sha256": "b0e8d45463f9213391392e89d87449d2a4a09d008ff84a4273832bbad78d8fda",
@@ -722,9 +723,25 @@
    "sha256": "1b9b87f8683a0ec730d50eef448ba65ff7df6730d852e002693e07f36e921d16",
    "bytes": 3125
   },
+  "studies/final5/build_report6.py": {
+   "sha256": "caff3934a4831ec71b7b31f7aae5de4a53e9c60d73642de8c205d4920be893ba",
+   "bytes": 651
+  },
   "studies/final5/common5.py": {
    "sha256": "172a109d97bc53d4103313e44eb9c2325ddaf05618fbf3c9e7771b367fd9329b",
    "bytes": 6594
+  },
+  "studies/final5/content6.py": {
+   "sha256": "07baaba7e3208306d237163514d35b2ad5a813bac44735c89902531b100f9eec",
+   "bytes": 18031
+  },
+  "studies/final5/make_figures6.py": {
+   "sha256": "c53318d441ec15434ca4a3eb93ab5f2301a3ee5fa77f8217ac72a4e790c6d1b7",
+   "bytes": 9086
+  },
+  "studies/final5/report6_data.py": {
+   "sha256": "7430925d1da172aeffba329525989320e00c9d0bd064023bb53602417f3414e3",
+   "bytes": 875
   },
   "studies/final5/study_q3_horizon.py": {
    "sha256": "8264619e2136f7cb21fb6aae7419bd45dfa34fd7b2c038dd0563ab72d1e25669",

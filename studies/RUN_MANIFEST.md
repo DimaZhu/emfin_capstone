@@ -2,9 +2,9 @@
 
 Generator: run_manifest 1.0 (8 Nov 2026)
 
-- code: `78c9478f35c2687a7ef050b8d36ff8d6a282ee37` on `engine-round2-20261108` (clean: False; worktree diff sha256 `e3b0c44298fc1c14...`)
+- code: `92dce724349223bfe5fbe0f412eff8ebe7fc0896` on `engine-round2-20261108` (clean: True; worktree diff sha256 `e3b0c44298fc1c14...`)
 - python 3.10.12, numpy 2.2.6, scipy 1.15.3, pandas 2.3.3, cvxpy 1.7.5
-- 63 config files, 55 data files, 91 study/engine scripts hashed (SHA-256)
+- 64 config files, 55 data files, 95 study/engine scripts hashed (SHA-256)
 
 ## Evidence bundles (SHA-256 per results file)
 
