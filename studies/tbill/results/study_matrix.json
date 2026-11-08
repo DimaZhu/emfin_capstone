@@ -1,0 +1,6968 @@
+{
+ "seconds": 97.127981525,
+ "assets": [
+  "US equity",
+  "Emerging-market equity",
+  "Gold",
+  "US Treasuries",
+  "US Treasury bills (3-month roll)",
+  "Cash / money market",
+  "Singapore URA All Residential"
+ ],
+ "expected_annual_return_by_asset": {
+  "US equity": 0.1218309825181838,
+  "Emerging-market equity": 0.09108482823212705,
+  "Gold": 0.11370203913797816,
+  "US Treasuries": 0.040360944597282344,
+  "US Treasury bills (3-month roll)": 0.01822670550057981,
+  "Cash / money market": 0.0,
+  "Singapore URA All Residential": 0.05731414227716369
+ },
+ "safe_grid": [
+  0.1,
+  0.125,
+  0.15,
+  0.175,
+  0.2,
+  0.225,
+  0.25,
+  0.275,
+  0.3,
+  0.325,
+  0.35,
+  0.375,
+  0.4,
+  0.425,
+  0.45,
+  0.475,
+  0.5,
+  0.525,
+  0.55,
+  0.575,
+  0.6,
+  0.625,
+  0.65,
+  0.675,
+  0.7,
+  0.725,
+  0.75,
+  0.775,
+  0.8,
+  0.825,
+  0.85,
+  0.875,
+  0.9
+ ],
+ "cells": {
+  "cml6_loss15": {
+   "cml_budget": 0.06,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.75,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.775,
+   "validation_selected_safe": 0.775,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0327,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0294,
+    "US Treasuries": 0.0629,
+    "US Treasury bills (3-month roll)": 0.775,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.02972638662998098,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 96955258.05405304,
+   "terminal_median": 101338571.0467169,
+   "terminal_q05": 85673502.03224112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.401909854000024
+  },
+  "cml6_loss20": {
+   "cml_budget": 0.06,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.75,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.775,
+   "validation_selected_safe": 0.775,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0327,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0294,
+    "US Treasuries": 0.0629,
+    "US Treasury bills (3-month roll)": 0.775,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.02972638662998098,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 96955258.05405304,
+   "terminal_median": 101338571.0467169,
+   "terminal_q05": 85673502.03224112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.532068643999992
+  },
+  "cml6_loss25": {
+   "cml_budget": 0.06,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.75,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.775,
+   "validation_selected_safe": 0.775,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0327,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0294,
+    "US Treasuries": 0.0629,
+    "US Treasury bills (3-month roll)": 0.775,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.02972638662998098,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 96955258.05405304,
+   "terminal_median": 101338571.0467169,
+   "terminal_q05": 85673502.03224112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.373417492000016
+  },
+  "cml6_loss30": {
+   "cml_budget": 0.06,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.75,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.775,
+   "validation_selected_safe": 0.775,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0327,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0294,
+    "US Treasuries": 0.0629,
+    "US Treasury bills (3-month roll)": 0.775,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.02972638662998098,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 96955258.05405304,
+   "terminal_median": 101338571.0467169,
+   "terminal_q05": 85673502.03224112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.48557304900001
+  },
+  "cml6_loss40": {
+   "cml_budget": 0.06,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.75,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.775,
+   "validation_selected_safe": 0.775,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0327,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0294,
+    "US Treasuries": 0.0629,
+    "US Treasury bills (3-month roll)": 0.775,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.02972638662998098,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 96955258.05405304,
+   "terminal_median": 101338571.0467169,
+   "terminal_q05": 85673502.03224112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.382752089999997
+  },
+  "cml8_loss15": {
+   "cml_budget": 0.08,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.725,
+   "validation_selected_safe": 0.725,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0458,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0412,
+    "US Treasuries": 0.088,
+    "US Treasury bills (3-month roll)": 0.725,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03276276161067809,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 99391779.98117313,
+   "terminal_median": 105467345.51066494,
+   "terminal_q05": 86956006.4112112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.46825183499999
+  },
+  "cml8_loss20": {
+   "cml_budget": 0.08,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.725,
+   "validation_selected_safe": 0.725,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0458,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0412,
+    "US Treasuries": 0.088,
+    "US Treasury bills (3-month roll)": 0.725,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03276276161067809,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 99391779.98117313,
+   "terminal_median": 105467345.51066494,
+   "terminal_q05": 86956006.4112112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.554212110999998
+  },
+  "cml8_loss25": {
+   "cml_budget": 0.08,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.725,
+   "validation_selected_safe": 0.725,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0458,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0412,
+    "US Treasuries": 0.088,
+    "US Treasury bills (3-month roll)": 0.725,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03276276161067809,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 99391779.98117313,
+   "terminal_median": 105467345.51066494,
+   "terminal_q05": 86956006.4112112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.578764120000017
+  },
+  "cml8_loss30": {
+   "cml_budget": 0.08,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.725,
+   "validation_selected_safe": 0.725,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0458,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0412,
+    "US Treasuries": 0.088,
+    "US Treasury bills (3-month roll)": 0.725,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03276276161067809,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 99391779.98117313,
+   "terminal_median": 105467345.51066494,
+   "terminal_q05": 86956006.4112112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.503571072
+  },
+  "cml8_loss40": {
+   "cml_budget": 0.08,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.675,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.7,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.725,
+   "validation_selected_safe": 0.725,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0458,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0412,
+    "US Treasuries": 0.088,
+    "US Treasury bills (3-month roll)": 0.725,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03276276161067809,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 99391779.98117313,
+   "terminal_median": 105467345.51066494,
+   "terminal_q05": 86956006.4112112,
+   "funded": 1.0,
+   "largest_unpaid": 5.820766091346741e-11,
+   "seconds": 6.470587696999985
+  },
+  "cml10_loss15": {
+   "cml_budget": 0.1,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.65,
+   "validation_selected_safe": 0.65,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0655,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0588,
+    "US Treasuries": 0.1257,
+    "US Treasury bills (3-month roll)": 0.65,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03731732408172376,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 102509384.04846543,
+   "terminal_median": 111507972.84849602,
+   "terminal_q05": 88312651.86711827,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.4568802660000415
+  },
+  "cml10_loss20": {
+   "cml_budget": 0.1,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.65,
+   "validation_selected_safe": 0.65,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0655,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0588,
+    "US Treasuries": 0.1257,
+    "US Treasury bills (3-month roll)": 0.65,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03731732408172376,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 102509384.04846543,
+   "terminal_median": 111507972.84849602,
+   "terminal_q05": 88312651.86711827,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.512225569000009
+  },
+  "cml10_loss25": {
+   "cml_budget": 0.1,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.65,
+   "validation_selected_safe": 0.65,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0655,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0588,
+    "US Treasuries": 0.1257,
+    "US Treasury bills (3-month roll)": 0.65,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03731732408172376,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 102509384.04846543,
+   "terminal_median": 111507972.84849602,
+   "terminal_q05": 88312651.86711827,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.876962999999989
+  },
+  "cml10_loss30": {
+   "cml_budget": 0.1,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.65,
+   "validation_selected_safe": 0.65,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0655,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0588,
+    "US Treasuries": 0.1257,
+    "US Treasury bills (3-month roll)": 0.65,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03731732408172376,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 102509384.04846543,
+   "terminal_median": 111507972.84849602,
+   "terminal_q05": 88312651.86711827,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.558892954999976
+  },
+  "cml10_loss40": {
+   "cml_budget": 0.1,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.525,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.55,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.575,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.6,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.625,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.65,
+   "validation_selected_safe": 0.65,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.0655,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0588,
+    "US Treasuries": 0.1257,
+    "US Treasury bills (3-month roll)": 0.65,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.03731732408172376,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 102509384.04846543,
+   "terminal_median": 111507972.84849602,
+   "terminal_q05": 88312651.86711827,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.49053389200003
+  },
+  "cml15_loss15": {
+   "cml_budget": 0.15,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.5,
+   "validation_selected_safe": 0.5,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1048,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0941,
+    "US Treasuries": 0.2011,
+    "US Treasury bills (3-month roll)": 0.5,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.046426449023815104,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 107249064.01916115,
+   "terminal_median": 123255720.20037653,
+   "terminal_q05": 91654003.6138403,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.4227549199999885
+  },
+  "cml15_loss20": {
+   "cml_budget": 0.15,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.5,
+   "validation_selected_safe": 0.5,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1048,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0941,
+    "US Treasuries": 0.2011,
+    "US Treasury bills (3-month roll)": 0.5,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.046426449023815104,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 107249064.01916115,
+   "terminal_median": 123255720.20037653,
+   "terminal_q05": 91654003.6138403,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.500417760000005
+  },
+  "cml15_loss25": {
+   "cml_budget": 0.15,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.5,
+   "validation_selected_safe": 0.5,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1048,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0941,
+    "US Treasuries": 0.2011,
+    "US Treasury bills (3-month roll)": 0.5,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.046426449023815104,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 107249064.01916115,
+   "terminal_median": 123255720.20037653,
+   "terminal_q05": 91654003.6138403,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.480391833999988
+  },
+  "cml15_loss30": {
+   "cml_budget": 0.15,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.5,
+   "validation_selected_safe": 0.5,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1048,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0941,
+    "US Treasuries": 0.2011,
+    "US Treasury bills (3-month roll)": 0.5,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.046426449023815104,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 107249064.01916115,
+   "terminal_median": 123255720.20037653,
+   "terminal_q05": 91654003.6138403,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.457551536999972
+  },
+  "cml15_loss40": {
+   "cml_budget": 0.15,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.425,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.45,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.475,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.5,
+   "validation_selected_safe": 0.5,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1048,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.0941,
+    "US Treasuries": 0.2011,
+    "US Treasury bills (3-month roll)": 0.5,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.046426449023815104,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 107249064.01916115,
+   "terminal_median": 123255720.20037653,
+   "terminal_q05": 91654003.6138403,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.447823169999992
+  },
+  "cml20_loss15": {
+   "cml_budget": 0.2,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.4,
+   "validation_selected_safe": 0.4,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.131,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1176,
+    "US Treasuries": 0.2514,
+    "US Treasury bills (3-month roll)": 0.4,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.05249919898520933,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 109554127.51832338,
+   "terminal_median": 131471250.84359685,
+   "terminal_q05": 93387416.0236912,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.432046447000005
+  },
+  "cml20_loss20": {
+   "cml_budget": 0.2,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.4,
+   "validation_selected_safe": 0.4,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.131,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1176,
+    "US Treasuries": 0.2514,
+    "US Treasury bills (3-month roll)": 0.4,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.05249919898520933,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 109554127.51832338,
+   "terminal_median": 131471250.84359685,
+   "terminal_q05": 93387416.0236912,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.438267412000016
+  },
+  "cml20_loss25": {
+   "cml_budget": 0.2,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.4,
+   "validation_selected_safe": 0.4,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.131,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1176,
+    "US Treasuries": 0.2514,
+    "US Treasury bills (3-month roll)": 0.4,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.05249919898520933,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 109554127.51832338,
+   "terminal_median": 131471250.84359685,
+   "terminal_q05": 93387416.0236912,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.474143319000007
+  },
+  "cml20_loss30": {
+   "cml_budget": 0.2,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.4,
+   "validation_selected_safe": 0.4,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.131,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1176,
+    "US Treasuries": 0.2514,
+    "US Treasury bills (3-month roll)": 0.4,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.05249919898520933,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 109554127.51832338,
+   "terminal_median": 131471250.84359685,
+   "terminal_q05": 93387416.0236912,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.394773107999981
+  },
+  "cml20_loss40": {
+   "cml_budget": 0.2,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.225,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.25,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.275,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.3,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.325,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.35,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.375,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.4,
+   "validation_selected_safe": 0.4,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.131,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1176,
+    "US Treasuries": 0.2514,
+    "US Treasury bills (3-month roll)": 0.4,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.05249919898520933,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 109554127.51832338,
+   "terminal_median": 131471250.84359685,
+   "terminal_q05": 93387416.0236912,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.464701271999957
+  },
+  "cml30_loss15": {
+   "cml_budget": 0.3,
+   "loss_budget": 0.15,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.225,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.25,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.275,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.3,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.325,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.35,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.375,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1834,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1647,
+    "US Treasuries": 0.352,
+    "US Treasury bills (3-month roll)": 0.2,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.06464469890799777,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 112657571.03039376,
+   "terminal_median": 147390566.65588903,
+   "terminal_q05": 96950204.10130595,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.440391884000007
+  },
+  "cml30_loss20": {
+   "cml_budget": 0.3,
+   "loss_budget": 0.2,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.225,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.25,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.275,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.3,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.325,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.35,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.375,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1834,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1647,
+    "US Treasuries": 0.352,
+    "US Treasury bills (3-month roll)": 0.2,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.06464469890799777,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 112657571.03039376,
+   "terminal_median": 147390566.65588903,
+   "terminal_q05": 96950204.10130595,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.477796651999995
+  },
+  "cml30_loss25": {
+   "cml_budget": 0.3,
+   "loss_budget": 0.25,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.225,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.25,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.275,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.3,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.325,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.35,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.375,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1834,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1647,
+    "US Treasuries": 0.352,
+    "US Treasury bills (3-month roll)": 0.2,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.06464469890799777,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 112657571.03039376,
+   "terminal_median": 147390566.65588903,
+   "terminal_q05": 96950204.10130595,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.463025100999971
+  },
+  "cml30_loss30": {
+   "cml_budget": 0.3,
+   "loss_budget": 0.3,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.225,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.25,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.275,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.3,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.325,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.35,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.375,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1834,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1647,
+    "US Treasuries": 0.352,
+    "US Treasury bills (3-month roll)": 0.2,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.06464469890799777,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 112657571.03039376,
+   "terminal_median": 147390566.65588903,
+   "terminal_q05": 96950204.10130595,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.422540120000008
+  },
+  "cml30_loss40": {
+   "cml_budget": 0.3,
+   "loss_budget": 0.4,
+   "trials": [
+    {
+     "safe": 0.1,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.125,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.15,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.175,
+     "passed": false,
+     "breaches": [
+      "Held-out path-loss tail"
+     ]
+    },
+    {
+     "safe": 0.2,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.225,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.25,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.275,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.3,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.325,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.35,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.375,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.4,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.425,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.45,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.475,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.5,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.525,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.55,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.575,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.6,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.625,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.65,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.675,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.7,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.725,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.75,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.775,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.8,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.825,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.85,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.875,
+     "passed": true,
+     "breaches": []
+    },
+    {
+     "safe": 0.9,
+     "passed": true,
+     "breaches": []
+    }
+   ],
+   "chosen_safe": 0.2,
+   "validation_selected_safe": 0.2,
+   "final_walk_steps": 0,
+   "weights": {
+    "US equity": 0.1834,
+    "Emerging-market equity": 0.0,
+    "Gold": 0.1647,
+    "US Treasuries": 0.352,
+    "US Treasury bills (3-month roll)": 0.2,
+    "Cash / money market": 0.0,
+    "Singapore URA All Residential": 0.1
+   },
+   "expected_annual_return": 0.06464469890799777,
+   "final_pass": true,
+   "final_breaches": [],
+   "binding_check_next_riskier": [
+    "Held-out path-loss tail"
+   ],
+   "common_cara_ledger_ce": 112657571.03039376,
+   "terminal_median": 147390566.65588903,
+   "terminal_q05": 96950204.10130595,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "seconds": 6.380870968000011
+  }
+ }
+}
