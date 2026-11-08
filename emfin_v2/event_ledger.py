@@ -131,6 +131,53 @@ def run_event_ledger(c, draw, allocation, spec):
     units[:, cash_index] = 0.
     cash = np.full(n, a[cash_index])
     arrears = np.zeros(n)
+    dynamic = spec.decision_rule == 'before_settlement'
+    if dynamic:
+        # dynamic_policy.execute decision calendar, in execute weeks: the
+        # initial trade plus one decision (payment week - settlement lag) per
+        # payment. Execute week tau is engine week tau - 1; the initial trade
+        # (tau = 0, at initial prices) runs before the loop.
+        decisions = sorted(set([0, *[max(0, int(w) - lag)
+                                     for w in steps if int(w) - lag < h]]))
+        decision_weeks = set(tau - 1 for tau in decisions if tau >= 1)
+        paid_carry = np.zeros(n)
+        shadow = np.zeros((n, h))
+        cost = np.zeros(n)
+        turnover = np.zeros(n)
+        trades = np.zeros(n, int)
+
+        def windowed_need(tau):
+            later = [z for z in decisions if z > tau]
+            next_decision = min(later) if later else h + 1
+            mask = (steps >= tau + lag) & (steps < next_decision + lag)
+            return amounts[:, mask].sum(1) + arrears
+
+        def declared_trade(px, tau):
+            # dynamic_policy.execute's sell block, float op order preserved.
+            nonlocal cash, cost, turnover, trades
+            val = units[:, liquid] * px[:, liquid]
+            spendable = cash + val.sum(1)
+            need = windowed_need(tau)
+            if spec.sale_rule == 'cash_first':
+                sale = np.minimum(np.maximum(need - cash, 0) / (1 - fee), val.sum(1))
+            else:
+                sale = np.minimum(need * np.divide(val.sum(1), spendable, out=np.zeros(n),
+                                                   where=spendable > 0) / (1 - fee), val.sum(1))
+            fraction = np.divide(sale, val.sum(1), out=np.zeros(n), where=val.sum(1) > 0)
+            target = np.c_[cash + sale, val * (1 - fraction[:, None])]
+            sell = np.maximum(val - target[:, 1:], 0)
+            sell = np.minimum(sell, val)
+            units[:, liquid] -= np.divide(sell, px[:, liquid], out=np.zeros_like(sell),
+                                          where=px[:, liquid] > 0)
+            proceeds = sell.sum(1) * (1 - fee)
+            cost += sell.sum(1) * fee
+            turnover += sell.sum(1)
+            trades += (sell > 1e-6).sum(1)
+            if lag:
+                pending[:, tau + lag - 1] += proceeds
+            else:
+                cash += proceeds
+
     values = np.zeros((n, h))
     cash_path = np.zeros((n, h))
     shortfalls = np.zeros_like(amounts)
@@ -141,10 +188,15 @@ def run_event_ledger(c, draw, allocation, spec):
     fee_burned = np.zeros(n)
     last_property_cash = np.zeros(n)
     funding = funding_paths(draw)
+    if dynamic:
+        # execute-week-0 trade: the initial-price rebalance.
+        declared_trade(np.ones((n, d)), 0)
     for t in range(h):
         ratio = growth[:, t] / (growth[:, t - 1] if t else 1.)
         cash *= ratio
         arrears *= ratio
+        if dynamic and spec.shadow_carry:
+            paid_carry *= ratio
         cash += pending[:, t]
         pending[:, t] = 0.
         property_cash = funding[:, t, properties] @ a[properties] if properties else np.zeros(n)
@@ -153,38 +205,65 @@ def run_event_ledger(c, draw, allocation, spec):
             raise ValueError('property funding path removes previously settled cash')
         cash += np.maximum(received, 0.)
         last_property_cash = property_cash
-        for k in np.flatnonzero(steps == t + 1):
-            due = amounts[:, k] + arrears
-            # cash first, then one common fraction of all liquid units.
-            need = np.maximum(due - cash, 0.)
-            available = prices[:, t, liquid] * units[:, liquid]
-            total = available.sum(1)
-            gross_need = need / (1. - fee)
-            fraction = np.minimum(1., np.divide(gross_need, total, out=np.zeros(n), where=total > 0))
-            liquidation = available * fraction[:, None]
-            proceeds = liquidation * (1. - fee)
-            sold[:, t, liquid] += liquidation
-            fee_burned += (liquidation - proceeds).sum(1)
-            units[:, liquid] *= 1 - fraction[:, None]
-            if lag == 0:
-                cash += proceeds.sum(1)
-            else:
-                pending[:, t + lag] += proceeds.sum(1)
-            payment = np.minimum(cash, due)
-            cash -= payment
-            arrears = due - payment
-            paid[:, k] = payment
-            shortfalls[:, k] = arrears
-        # Property cash is now held in cash, not marked a second time.
-        property_mark = prices[:, t, properties] @ a[properties] - property_cash if properties \
-            else np.zeros(n)
-        values[:, t] = cash + (prices[:, t, liquid] * units[:, liquid]).sum(1) + property_mark \
-            + pending[:, t + 1:].sum(1) - arrears
+        if dynamic:
+            # One declared trade per decision week; payments then paid from
+            # cash in due order, unpaid persisting as arrears.
+            if t in decision_weeks:
+                declared_trade(prices[:, t, :], t + 1)
+            for k in np.flatnonzero(steps == t + 1):
+                required = amounts[:, k] + arrears
+                payment = np.minimum(np.maximum(cash, 0), required)
+                cash -= payment
+                arrears = required - payment
+                paid_carry += payment
+                paid[:, k] = payment
+                shortfalls[:, k] = arrears
+        else:
+            for k in np.flatnonzero(steps == t + 1):
+                due = amounts[:, k] + arrears
+                # cash first, then one common fraction of all liquid units.
+                need = np.maximum(due - cash, 0.)
+                available = prices[:, t, liquid] * units[:, liquid]
+                total = available.sum(1)
+                gross_need = need / (1. - fee)
+                fraction = np.minimum(1., np.divide(gross_need, total, out=np.zeros(n), where=total > 0))
+                liquidation = available * fraction[:, None]
+                proceeds = liquidation * (1. - fee)
+                sold[:, t, liquid] += liquidation
+                fee_burned += (liquidation - proceeds).sum(1)
+                units[:, liquid] *= 1 - fraction[:, None]
+                if lag == 0:
+                    cash += proceeds.sum(1)
+                else:
+                    pending[:, t + lag] += proceeds.sum(1)
+                payment = np.minimum(cash, due)
+                cash -= payment
+                arrears = due - payment
+                paid[:, k] = payment
+                shortfalls[:, k] = arrears
+        if dynamic:
+            # dynamic_policy.execute marking: property units never trade and
+            # carry no receipts under its validation, so all units mark at
+            # price; settled pending entries are exactly zero.
+            net = cash + (units * prices[:, t, :]).sum(1) + pending.sum(1) - arrears
+            values[:, t] = net
+            if spec.shadow_carry:
+                shadow[:, t] = net + paid_carry
+        else:
+            # Property cash is now held in cash, not marked a second time.
+            property_mark = prices[:, t, properties] @ a[properties] - property_cash if properties \
+                else np.zeros(n)
+            values[:, t] = cash + (prices[:, t, liquid] * units[:, liquid]).sum(1) + property_mark \
+                + pending[:, t + 1:].sum(1) - arrears
         cash_path[:, t] = cash
         units_path[:, t] = units
-    return dict(numerical_negative_holdings_clipped=negative_roundoff,
-                net_wealth_paths=values, cash_paths=cash_path, units_paths=units_path,
-                sold_value_paths=sold, payment_shortfalls=shortfalls, payments=paid,
-                terminal_unpaid=arrears, terminal_net=values[:, -1],
-                funded=np.all(shortfalls <= 1e-6, axis=1),
-                fee_burned=fee_burned, pending_terminal=pending.sum(1), spec=spec)
+    result = dict(numerical_negative_holdings_clipped=negative_roundoff,
+                  net_wealth_paths=values, cash_paths=cash_path, units_paths=units_path,
+                  sold_value_paths=sold, payment_shortfalls=shortfalls, payments=paid,
+                  terminal_unpaid=arrears, terminal_net=values[:, -1],
+                  funded=np.all(shortfalls <= 1e-6, axis=1),
+                  fee_burned=fee_burned, pending_terminal=pending.sum(1), spec=spec)
+    if dynamic:
+        result.update(shadow_wealth_paths=shadow, cost=cost, turnover=turnover,
+                      trades=trades, terminal_units=units.copy())
+    return result

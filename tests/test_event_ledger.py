@@ -105,3 +105,33 @@ def test_spec_validation():
         LedgerSpec(settlement_lag_weeks=-1).validate()
     with pytest.raises(ValueError):
         LedgerSpec(rebalance_calendar=(4,)).validate()
+
+
+# --- Phase 3 (part 2): dynamic execute modes on the shared engine ---------
+
+def test_dynamic_specs_match_legacy_execute():
+    """run_event_ledger with the dynamic specs reproduces
+    dynamic_policy.execute(modes cash_first and pro_rata) bit-for-bit on the
+    Phase 0 golden scenarios (same tolerance as the golden fixtures)."""
+    from emfin_v2.dynamic_policy import execute
+    from tests.test_golden_ledgers import scenarios, CONFIG, ALLOC, TOL, _draw
+    calm, stress = scenarios()
+    for name, spec_d in (('calm', calm), ('stress', stress)):
+        draw = _draw(spec_d)
+        for mode, factory in (('cash_first', LedgerSpec.dynamic_cash_first),
+                              ('pro_rata', LedgerSpec.dynamic_pro_rata)):
+            legacy = execute(CONFIG, draw, ALLOC, mode=mode, fee=.0005, delay=1)
+            r = run_event_ledger(CONFIG, draw, ALLOC, factory(fee_bps=5.0, settlement_lag_weeks=1))
+            pairs = [('net_wealth_paths', 'net_wealth_paths'),
+                     ('shadow_wealth_paths', 'shadow_wealth_paths'),
+                     ('shortfalls', 'payment_shortfalls'),
+                     ('terminal_net', 'terminal_net'),
+                     ('cost', 'cost'), ('turnover', 'turnover'),
+                     ('trades', 'trades'), ('cash_paths', 'cash_paths'),
+                     ('pending_terminal', 'pending_terminal'),
+                     ('units_terminal', 'terminal_units')]
+            for lk, rk in pairs:
+                np.testing.assert_allclose(np.asarray(r[rk], float),
+                                           np.asarray(legacy[lk], float),
+                                           err_msg=f'{name}/{mode}/{lk}', **TOL)
+            np.testing.assert_array_equal(r['funded'], legacy['funded'])
