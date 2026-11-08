@@ -1,7 +1,8 @@
 """Aggregate walk-forward folds into summary tables, figures and REPORT.md.
 
 Run after backtest.py completes (or any time for partial results). Reads
-results/fold_*.json, writes results/summary.json, figs/*.png and REPORT.md.
+results/part_*/fold_*.json (partitioned runner), writes results/summary.json,
+figs/*.png and REPORT.md.
 
 Reporting discipline (docs/NEXT_RESEARCH_PLAN.md): realized funding deficits,
 tail loss with sample counts, terminal surplus, turnover, and paired
@@ -21,7 +22,7 @@ METHODS = ['proposed', 'cash', '1/N', 'min_var', 'shrunk_MV']
 
 def load_folds():
     folds = []
-    for p in sorted(RESULTS.glob('fold_*.json')):
+    for p in sorted(RESULTS.glob('part_*/fold_*.json')):
         folds.append(json.loads(p.read_text()))
     return folds
 
@@ -70,7 +71,7 @@ def aggregate(folds):
         diffs = []
         for rb, rm in zip(base, per[m]):
             if rb and rm:
-                diffs.append(rm['realized_window_return'] - rb['realized_window_return'])
+                diffs.append(rb['realized_window_return'] - rm['realized_window_return'])
         if diffs:
             d = np.array(diffs)
             paired[m] = dict(n=len(d), mean_diff_window_return=float(d.mean()),
@@ -90,6 +91,19 @@ def aggregate(folds):
                          mults_used=sorted({s.get('mult') for s in solves}))
     unavailable = [f['fold'] for f in folds if not f['methods'].get('proposed', {}).get('available')]
     out['proposed_unavailable_folds'] = unavailable
+    # Sensitivity: count abstention folds as earning the cash-account window
+    # return (what a declined client would plausibly hold) instead of skipping.
+    if unavailable and out['methods'].get('cash', {}).get('available'):
+        cash_rets = {f['fold']: f['methods']['cash']['realized_window_return'] for f in folds
+                     if f['methods'].get('cash', {}).get('available')}
+        w = 1.0
+        for f in folds:
+            rec = f['methods'].get('proposed', {})
+            if rec.get('available'):
+                w *= 1 + rec['realized_window_return']
+            else:
+                w *= 1 + cash_rets.get(f['fold'], 0.0)
+        out['proposed_wealth_relative_abstention_as_cash'] = float(w)
     return out, per
 
 
@@ -101,20 +115,34 @@ def make_figures(folds, per):
     dates = [f['decision_date'] for f in folds]
     x = np.arange(len(folds))
 
-    # 1. chained wealth relative per method
+    # 1. chained wealth relative per method. The proposed model has folds
+    # where calibration declined every candidate; compound those as cash
+    # (the abstention-as-cash sensitivity in REPORT.md) so its line shows.
+    cash_rets = {f['fold']: f['methods']['cash']['realized_window_return'] for f in folds
+                 if f['methods'].get('cash', {}).get('available')}
     fig, ax = plt.subplots(figsize=(10, 5))
+    abst_pts = []
     for m in METHODS:
         vals = per[m]
         w, wi = 1.0, []
         ok = True
-        for v in vals:
+        for i, v in enumerate(vals):
             if not v:
+                if m == 'proposed':
+                    w *= 1 + cash_rets.get(folds[i]['fold'], 0.0)
+                    wi.append(w)
+                    abst_pts.append((i, w))
+                    continue
                 ok = False
                 break
             w *= 1 + v['realized_window_return']
             wi.append(w)
         if ok:
-            ax.plot(x, wi, label=m, linewidth=2 if m == 'proposed' else 1)
+            label = m if m != 'proposed' else 'proposed (abstentions as cash)'
+            ax.plot(x, wi, label=label, linewidth=2 if m == 'proposed' else 1)
+    if abst_pts:
+        ax.scatter([p[0] for p in abst_pts], [p[1] for p in abst_pts],
+                   marker='x', color='black', zorder=5, label='proposed abstention fold')
     ax.set_title('Walk-forward chained wealth relative (reference-wealth folds, compounded offline)')
     ax.set_xlabel('fold (13-week steps, 2007-03 to 2026-08)')
     ax.set_ylabel('wealth relative')
@@ -191,6 +219,10 @@ def write_report(folds, summary, figs):
              f"median {sv['solve_seconds_median']}s, multipliers used {sv['mults_used']}")
     if summary['proposed_unavailable_folds']:
         L.append(f"Folds where no proposed allocation passed: {summary['proposed_unavailable_folds']}")
+        if 'proposed_wealth_relative_abstention_as_cash' in summary:
+            L.append(f"Proposed wealth relative counting abstention folds as cash: "
+                     f"{summary['proposed_wealth_relative_abstention_as_cash']:.3f} "
+                     f"(headline {summary['methods']['proposed']['wealth_relative_over_backtest']:.3f} skips those folds).")
     L.append('')
     L.append('## Caveats')
     L.append('')
