@@ -310,6 +310,18 @@ def run(c,output='artifacts/default'):
     if c.get('asset_registry'):
         from emfin_v2.registry_runtime import configure
         c=configure(c,c['asset_registry'])
+    # De-risking anchor for the calibration mix grid: the cash account by
+    # default; an explicit anchor_asset_id (e.g. 'tbill') selects another
+    # listed asset. The anchor is never presumed safe: it must satisfy the
+    # stronger pointwise training budgets below before any mixing.
+    anchor_index=c['cash_index']
+    anchor_id=c.get('anchor_asset_id')
+    if anchor_id is not None:
+        ids=c.get('asset_layout',{}).get('ids',[])
+        if anchor_id not in ids:raise ValueError('anchor_asset_id must name an active registry asset')
+        candidate=ids.index(anchor_id)
+        if candidate in c['asset_layout'].get('property_indices',[]):raise ValueError('anchor_asset_id must be a listed liquid asset, not property')
+        anchor_index=candidate
     archive=c.get('scenario_archives')
     fit=None if archive else setup(c)
     if c['radius_calibration_mode']=='past_empirical':
@@ -353,7 +365,8 @@ def run(c,output='artifacts/default'):
         # A finite calibration grid may damp the risky allocation with cash.
         # This is disclosed as portfolio calibration, not an optimality claim.
         # Cash must satisfy stronger pointwise training budgets before mixing.
-        cash=np.zeros(d);cash[c['cash_index']]=c['wealth']
+        # Anchor vector (cash account by default; anchor_asset_id override).
+        cash=np.zeros(d);cash[anchor_index]=c['wealth']
         cash_safe=True
         for k,step in enumerate(draw[2]):
             need=draw[1][:,k].copy()
@@ -366,7 +379,7 @@ def run(c,output='artifacts/default'):
             # Fixed-property anchor honors holdings, but is NOT presumed safe.
             cash=mins*c['wealth']
             for i,v in fixed.items():cash[i]=v*c['wealth']
-            cash[c['cash_index']]+=c['wealth']-cash.sum()
+            cash[anchor_index]+=c['wealth']-cash.sum()
             grid=[1.,.75,.5,.25,0.]
         else:grid=c.get('cash_mix_grid',[1.,.75,.5,.25,0.]) if cash_safe else [1.]
         for risky_fraction in grid:
@@ -404,8 +417,8 @@ def run(c,output='artifacts/default'):
         if c['funding_mode']=='pay_all_99':
             cash=mins*c['wealth']
             for i,v in fixed.items():cash[i]=v*c['wealth']
-            cash[c['cash_index']]+=c['wealth']-cash.sum()
-        else:cash=np.zeros(d);cash[c['cash_index']]=c['wealth']
+            cash[anchor_index]+=c['wealth']-cash.sum()
+        else:cash=np.zeros(d);cash[anchor_index]=c['wealth']
         nominal=alpha*nominal+(1-alpha)*cash
     if nominal is not None:allocations['without posterior stress']=nominal
     # Persist frozen selection before any independent final draw.

@@ -1,0 +1,163 @@
+{
+ "schema_version": 1,
+ "status": "target universe + explicit T-bill roll (study config; bundled default registry unchanged)",
+ "assets": [
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "etf_total_return",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": true,
+   "factors": [
+    "equity"
+   ],
+   "cash": false,
+   "id": "us_equity",
+   "ticker": "VTI",
+   "name": "US equity",
+   "asset_class": "equity",
+   "haircut": 0.001,
+   "source": {
+    "kind": "issuer_nav_and_distributions",
+    "url": "https://www.vanguardoffshore.com/en/product/etf/equity/0970/vanguard-total-stock-market-etf",
+    "status": "download_and_adjustment_check_pending",
+    "redistribution": "not_cleared"
+   }
+  },
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "etf_total_return",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": true,
+   "factors": [
+    "equity"
+   ],
+   "cash": false,
+   "id": "em_equity",
+   "ticker": "VWO",
+   "name": "Emerging-market equity",
+   "asset_class": "equity",
+   "haircut": 0.002,
+   "source": {
+    "kind": "issuer_nav_and_distributions",
+    "url": "https://workplace.vanguard.com/investments/product-details/fund/0964",
+    "status": "download_and_adjustment_check_pending",
+    "redistribution": "not_cleared"
+   }
+  },
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "etf_total_return",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": true,
+   "factors": [],
+   "cash": false,
+   "id": "gold",
+   "ticker": "GLD",
+   "name": "Gold",
+   "asset_class": "gold",
+   "haircut": 0.001,
+   "source": {
+    "kind": "issuer_nav_and_distributions",
+    "url": "https://www.spdrgoldshares.com/usa/gld/",
+    "status": "download_and_adjustment_check_pending",
+    "redistribution": "not_cleared"
+   }
+  },
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "etf_total_return",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": true,
+   "factors": [],
+   "cash": false,
+   "id": "treasury",
+   "ticker": "IEF",
+   "name": "US Treasuries",
+   "asset_class": "treasury",
+   "haircut": 0.0005,
+   "source": {
+    "kind": "issuer_nav_and_distributions",
+    "url": "https://www.ishares.com/us/products/etf-investments",
+    "status": "download_and_adjustment_check_pending",
+    "redistribution": "not_cleared"
+   },
+   "limitations": "IEF candidate for the requested Treasury sleeve, not the former synthetic ten-year bond. Historical total-return data are still required."
+  },
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "etf_total_return",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": false,
+   "factors": [],
+   "cash": false,
+   "carry_structural": true,
+   "id": "tbill",
+   "ticker": "DGS3MO",
+   "name": "US Treasury bills (3-month roll)",
+   "asset_class": "treasury_bill",
+   "haircut": 0.0005,
+   "source": {
+    "kind": "fred_constant_maturity_index",
+    "url": "https://fred.stlouisfed.org/series/DGS3MO",
+    "status": "constructed total-return index from FRED DGS3MO (H.15), formula in manifest; validated vs BIL ETF",
+    "redistribution": "private research only"
+   },
+   "limitations": "Constant-maturity 13-week bill roll built from the H.15 rate (carry r/52 minus 0.25y x weekly rate change). A real bill fund (BIL/SGOV) costs a fee and tracks closely; haircut kept at the IEF level (5bp), deliberately not better."
+  },
+  {
+   "enabled": true,
+   "currency": "USD",
+   "return_model": "cash_account",
+   "liquidity": "listed",
+   "minimum_weight": 0.0,
+   "mean_view": false,
+   "factors": [],
+   "cash": true,
+   "id": "cash",
+   "ticker": null,
+   "name": "Cash / money market",
+   "asset_class": "cash_like",
+   "haircut": 0.0,
+   "source": {
+    "kind": "explicit_cash_rate",
+    "annual_rate": 0.0,
+    "status": "zero-rate uncalibrated placeholder"
+   },
+   "limitations": "Cash-account model, not SHV or guaranteed investable yield. Set explicit rate/currency and validate account terms before client use."
+  },
+  {
+   "enabled": true,
+   "currency": "SGD",
+   "return_model": "quarterly_property",
+   "liquidity": "planned_sale_only",
+   "minimum_weight": 0.0,
+   "mean_view": false,
+   "factors": [],
+   "cash": false,
+   "id": "sg_property",
+   "ticker": null,
+   "name": "Singapore URA All Residential",
+   "asset_class": "real_estate",
+   "haircut": 0.1,
+   "source": {
+    "kind": "ura_quarterly_index",
+    "url": "https://data.gov.sg/datasets/d_97f8a2e995022d311c6c68cfda6d034c/view",
+    "property_type": "All Residential",
+    "redistribution": "Singapore Open Data Licence with attribution"
+   },
+   "limitations": "Price index only, not rent/total return. Registry adapter converts SGD marks/rent/sale proceeds using the explicit SGD/USD factor. Legacy default is separately labelled if no FX model runs."
+  }
+ ],
+ "relative_mean_view": null,
+ "reporting_currency": "USD"
+}

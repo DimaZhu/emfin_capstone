@@ -62,7 +62,13 @@ def fit_frame(c,frame):
         c.setdefault('fx_evidence',dict(scope='Past-only moment refit; source evidence held in study manifest.'))['model_annual_log_vol']=float(np.sqrt(cov[-1,-1]*52))
         c['fx_evidence']['model_correlations']={frame.columns[i]:float(cov[i,-1]/np.sqrt(cov[i,i]*cov[-1,-1])) for i in stochastic if i!=len(mu)-1 and cov[i,i]>0}
     # Shrink listed risky means toward a cross-asset mean, leaving stated cash carry unchanged.
-    target=mu.copy();cash=c['cash_index'];risky=[i for i in range(len(mu)-(1 if c['fx']['enabled'] else 0)) if i!=cash]
+    # Assets flagged carry_structural (e.g. a T-bill roll) are exempt too: their
+    # mean is lockable short-rate carry, a structural input rather than an
+    # estimated risk premium - same treatment the legacy pipeline documented
+    # for its money-market sleeve ('money market unshrunk').
+    target=mu.copy();cash=c['cash_index']
+    carry_ids={a['id'] for a in active_assets(c['asset_registry']) if a.get('carry_structural')}
+    risky=[i for i in range(len(mu)-(1 if c['fx']['enabled'] else 0)) if i!=cash and ids[i] not in carry_ids]
     if risky:target[risky]=mu[risky].mean()
     mu,_=shrinkage.shrink_mean(mu,target,len(x),156.)
     if c['fx']['enabled']:
