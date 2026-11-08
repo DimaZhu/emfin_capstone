@@ -1,0 +1,340 @@
+{
+ "meta": {
+  "label": "LABELED STUDY (owner ask 8 Nov 11:05, open point 1): bootstrap/regime market model (fhs_ewma) vs iid mixture."
+ },
+ "diag": {
+  "history": {
+   "1": 0.3243401752024112,
+   "2": 0.20058231910023444,
+   "4": 0.16557760646508696,
+   "8": 0.059901204015760746,
+   "13": 0.03178029491350681
+  },
+  "mixture": {
+   "1": -0.0009874676749515358,
+   "2": -0.003780297282327009,
+   "4": -0.0030656941553052976,
+   "8": -0.0029127897774731625,
+   "13": -0.0016154858870526215
+  },
+  "fhs": {
+   "1": 0.1501847725483338,
+   "2": 0.14969495044448963,
+   "4": 0.14207952782692584,
+   "8": 0.13591932940469045,
+   "13": 0.12382227409646142
+  },
+  "us_equity_ann_vol": {
+   "history": 0.18030228158806402,
+   "mixture": 0.18044457922734586,
+   "fhs": 0.09558348927175842
+  },
+  "per_asset_ann_vol": {
+   "us_equity": {
+    "mixture": 0.18044457922734586,
+    "fhs": 0.09558348927175842
+   },
+   "em_equity": {
+    "mixture": 0.22399990931545438,
+    "fhs": 0.15941419400637039
+   },
+   "gold": {
+    "mixture": 0.17332988470041719,
+    "fhs": 0.2322279935309621
+   },
+   "treasury": {
+    "mixture": 0.06399322831237389,
+    "fhs": 0.04957607109770363
+   },
+   "tips": {
+    "mixture": 0.05961138398767762,
+    "fhs": 0.03300061067428107
+   },
+   "tbill": {
+    "mixture": 0.003179542409179099,
+    "fhs": 0.0015246097016361005
+   },
+   "cash": {
+    "mixture": 0.0,
+    "fhs": 0.0
+   },
+   "sg_property": {
+    "mixture": 0.1744832148826,
+    "fhs": 0.16054156440814735
+   }
+  },
+  "note": "squared weekly log-return autocorrelation, us_equity; history is one long series, models averaged over 1600 final paths"
+ },
+ "fhs_frozen_sleeve": {
+  "chosen_safe": 0.1,
+  "validation_selected_safe": 0.1,
+  "weights": {
+   "us_equity": 0.2665,
+   "em_equity": 0.0,
+   "gold": 0.1616,
+   "treasury": 0.3225,
+   "tips": 0.0494,
+   "tbill": 0.1,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "FHS law, base CARA sleeve frozen (fix 1)",
+  "common_cara_ledger_ce": 123291211.10820727,
+  "terminal_median": 154983577.72885498,
+  "terminal_q05": 114430447.87585829,
+  "terminal_q95": 224171542.75174487,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0,
+  "seconds": 0.5041056090000211
+ },
+ "fhs_own_sleeve": {
+  "chosen_safe": 0.375,
+  "validation_selected_safe": 0.375,
+  "weights": {
+   "us_equity": 0.1771,
+   "em_equity": 0.0,
+   "gold": 0.029,
+   "treasury": 0.2106,
+   "tips": 0.1083,
+   "tbill": 0.375,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "FHS law, sleeve re-solved on 1y FHS draws (fix 1)",
+  "common_cara_ledger_ce": 115343079.76774624,
+  "terminal_median": 125125989.11841512,
+  "terminal_q05": 103474837.90774794,
+  "terminal_q95": 157858278.20388576,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0,
+  "seconds": 2.5638757599999735,
+  "sleeve_proportions": {
+   "us_equity": 0.3373531119350713,
+   "gold": 0.05526505784182871,
+   "treasury": 0.4010993245780589,
+   "tips": 0.206282505645041
+  },
+  "sleeve_safe_share_1y": 2.378571358318963e-10,
+  "sleeve_status": "optimized"
+ },
+ "cross_base_on_fhs": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 117796954.02210534,
+  "terminal_median": 132579365.84401521,
+  "terminal_q05": 104626058.85786383,
+  "terminal_q95": 179979509.45124274,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "cross_fhs_on_mix": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 107552894.06287365,
+  "terminal_median": 124911472.61377352,
+  "terminal_q05": 92536511.53436802,
+  "terminal_q95": 193126773.6835728,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0
+ },
+ "fhs_ewma_frozen_sleeve": {
+  "chosen_safe": 0.1,
+  "validation_selected_safe": 0.1,
+  "weights": {
+   "us_equity": 0.2665,
+   "em_equity": 0.0,
+   "gold": 0.1616,
+   "treasury": 0.3225,
+   "tips": 0.0494,
+   "tbill": 0.1,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "fhs_ewma law, base CARA sleeve frozen (fix 1)",
+  "common_cara_ledger_ce": 123291211.10820727,
+  "terminal_median": 154983577.72885498,
+  "terminal_q05": 114430447.87585829,
+  "terminal_q95": 224171542.75174487,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0,
+  "seconds": 0.522685029999991
+ },
+ "fhs_ewma_own_sleeve": {
+  "chosen_safe": 0.375,
+  "validation_selected_safe": 0.375,
+  "weights": {
+   "us_equity": 0.1771,
+   "em_equity": 0.0,
+   "gold": 0.029,
+   "treasury": 0.2106,
+   "tips": 0.1083,
+   "tbill": 0.375,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "fhs_ewma law, sleeve re-solved on 1y fhs_ewma draws (fix 1)",
+  "common_cara_ledger_ce": 115343079.76774624,
+  "terminal_median": 125125989.11841512,
+  "terminal_q05": 103474837.90774794,
+  "terminal_q95": 157858278.20388576,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0,
+  "seconds": 2.692204349000008,
+  "sleeve_proportions": {
+   "us_equity": 0.3373531119350713,
+   "gold": 0.05526505784182871,
+   "treasury": 0.4010993245780589,
+   "tips": 0.206282505645041
+  },
+  "sleeve_safe_share_1y": 2.378571358318963e-10,
+  "sleeve_status": "optimized"
+ },
+ "cross_base_on_fhs_ewma": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 117796954.02210534,
+  "terminal_median": 132579365.84401521,
+  "terminal_q05": 104626058.85786383,
+  "terminal_q95": 179979509.45124274,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "diag_fhs_ewma": {
+  "sq_acf": {
+   "1": 0.1501847725483338,
+   "2": 0.14969495044448963,
+   "4": 0.14207952782692584,
+   "8": 0.13591932940469045,
+   "13": 0.12382227409646142
+  },
+  "us_equity_ann_vol": 0.09558348927175842
+ },
+ "bounded_ewma_mixture_frozen_sleeve": {
+  "chosen_safe": 0.375,
+  "validation_selected_safe": 0.375,
+  "weights": {
+   "us_equity": 0.1749,
+   "em_equity": 0.0,
+   "gold": 0.1061,
+   "treasury": 0.2116,
+   "tips": 0.0324,
+   "tbill": 0.375,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "bounded_ewma_mixture law, base CARA sleeve frozen (fix 1)",
+  "common_cara_ledger_ce": 116645831.69269852,
+  "terminal_median": 131475577.32840559,
+  "terminal_q05": 103976512.04749988,
+  "terminal_q95": 182618580.68775466,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0,
+  "seconds": 2.6569879689999993
+ },
+ "bounded_ewma_mixture_own_sleeve": {
+  "chosen_safe": 0.6,
+  "validation_selected_safe": 0.1,
+  "weights": {
+   "us_equity": 0.1433,
+   "em_equity": 0.0,
+   "gold": 0.0352,
+   "treasury": 0.0828,
+   "tips": 0.0388,
+   "tbill": 0.6,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "bounded_ewma_mixture law, sleeve re-solved on 1y bounded_ewma_mixture draws (fix 1)",
+  "common_cara_ledger_ce": 108876799.11244984,
+  "terminal_median": 115890964.96838102,
+  "terminal_q05": 96303019.0572231,
+  "terminal_q95": 150239524.5669602,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0,
+  "seconds": 5.187561508000044,
+  "sleeve_proportions": {
+   "us_equity": 0.4775067723576798,
+   "gold": 0.11727144750902284,
+   "treasury": 0.2759660968692247,
+   "tips": 0.12925568326407263
+  },
+  "sleeve_safe_share_1y": 7.891630432960903e-10,
+  "sleeve_status": "optimized"
+ },
+ "cross_base_on_bounded_ewma_mixture": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 116646206.45275754,
+  "terminal_median": 131476575.56185435,
+  "terminal_q05": 103975966.9813994,
+  "terminal_q95": 182622115.71518973,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "diag_bounded_ewma_mixture": {
+  "sq_acf": {
+   "1": 0.10858025809073737,
+   "2": 0.10309495468687718,
+   "4": 0.10014765737010471,
+   "8": 0.09382264412329608,
+   "13": 0.08678607891226452
+  },
+  "us_equity_ann_vol": 0.10333513626928635
+ },
+ "cross_fhs_ewma_on_mix": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 107553907.0009536,
+  "terminal_median": 124916217.25147828,
+  "terminal_q05": 92538940.41319382,
+  "terminal_q95": 193136750.97848356,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0
+ },
+ "cross_bounded_ewma_mixture_on_mix": {
+  "final_pass": true,
+  "final_breaches": [],
+  "common_cara_ledger_ce": 104469170.59941852,
+  "terminal_median": 116906547.82485875,
+  "terminal_q05": 89708053.45177074,
+  "terminal_q95": 174085982.18705308,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0
+ }
+}
