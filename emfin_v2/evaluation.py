@@ -59,9 +59,10 @@ budget. Holdings residuals have explicit absolute weight tolerances only.
         measures=np.array([np.full(len(paths),1/len(paths)),q,qs]);values=paths@a/wealth;spendable=funding_paths(draw)@a
         losses=[]
         for i,step in enumerate(steps):
-            required=amounts[:,i].copy()
-            for j,prior in enumerate(steps):
-                if prior<step or (prior==step and j<i):required+=amounts[:,j]*growth[:,step-1]/growth[:,prior-1]
+            # Phase 4: the judge's per-due-week arrears requirement is the
+            # shared money-market provisioning primitive, op order unchanged.
+            from emfin_v2.contracts import accumulated_requirement
+            required=accumulated_requirement(amounts,steps,growth,i)
             losses.append(np.maximum(required-spendable[:,step-1],0)/wealth)
         losses.extend([np.maximum(0,1-values).max(1),1-values[:,-1]])
         batch=[]

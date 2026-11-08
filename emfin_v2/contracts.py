@@ -21,6 +21,42 @@ def _arr(x, name):
     return a
 
 
+def money_market_provision(amounts, steps, growth, week):
+    """Declared money-market valuation of a fixed liability schedule at a
+    week: each due amount moved to `week` by the money-market ratio,
+    (amount * growth[week-1]) / growth[due-1], accumulated in schedule
+    order. This is the one provisioning primitive (Phase 4): the
+    optimizer's native utility values the schedule at the horizon; the
+    judge's per-due-week requirements accumulate it payment by payment.
+    The accumulation order is part of the contract (legacy float op
+    order), so callers keep their exact legacy numbers."""
+    amounts = np.asarray(amounts, float)
+    steps = np.asarray(steps)
+    growth = np.asarray(growth, float)
+    out = 0.0
+    gw = growth[:, week - 1]
+    for i, due in enumerate(steps):
+        out = out + amounts[:, i] * gw / growth[:, due - 1]
+    return out
+
+
+def accumulated_requirement(amounts, steps, growth, index):
+    """The judge's per-due-week requirement: the payment at `index` plus
+    every earlier-due payment (and same-week payments earlier in schedule
+    order) escalated to that due week at the money-market ratio - the
+    arrears convention of the provisioning judge. Legacy float op order
+    preserved."""
+    amounts = np.asarray(amounts, float)
+    steps = np.asarray(steps)
+    growth = np.asarray(growth, float)
+    step = steps[index]
+    required = amounts[:, index].copy()
+    for j, prior in enumerate(steps):
+        if prior < step or (prior == step and j < index):
+            required += amounts[:, j] * growth[:, step - 1] / growth[:, prior - 1]
+    return required
+
+
 @dataclass(frozen=True)
 class LiabilitySchedule:
     """The declared fixed liability calendar: payment weeks and base amounts."""

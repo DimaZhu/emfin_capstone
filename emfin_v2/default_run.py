@@ -437,7 +437,8 @@ def run(c,output='artifacts/default'):
             rows[-1]['execution_audit']=dict(available=False,error=str(error),scope='Execution audit unavailable, not passed.')
         if c.get('objective_kind','cara')!='mean_variance':
             from emfin_v2.utilities import native_ce
-            gross=np.concatenate([v[0][:,-1]@a for v in evaluation]);provision=np.concatenate([sum(v[1][:,i]*v[4][:,-1]/v[4][:,step-1] for i,step in enumerate(v[2])) for v in evaluation]);p_native=np.concatenate([p/len(evaluation) for p in evaluation_nominal])
+            from emfin_v2.contracts import money_market_provision
+            gross=np.concatenate([v[0][:,-1]@a for v in evaluation]);provision=np.concatenate([money_market_provision(v[1],v[2],v[4],v[4].shape[1]) for v in evaluation]);p_native=np.concatenate([p/len(evaluation) for p in evaluation_nominal])
             rows[-1]['native_utility']=native_ce(c.get('objective_kind','cara'),gross,gross-provision,p_native,c['wealth'],c['risk_tolerance'],provision,c.get('utility_settings'))
         # Before/after payout fan, cash provision convention, fixed planned liabilities.
         v=evaluation[0];values=v[0]@a

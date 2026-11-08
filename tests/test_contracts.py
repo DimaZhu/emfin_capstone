@@ -113,3 +113,25 @@ def test_judge_and_engine_end_to_end_on_contracts():
     assert r['terminal_net'].shape == (4,)
     with pytest.raises(TypeError):
         evaluate_batches(c, [batches[0].to_draw()] * 2, a, [q, q], [q, q])
+
+
+def test_money_market_provision_matches_legacy_op_order():
+    """Phase 4: the shared primitive reproduces the optimizer's inline
+    horizon provisioning and the judge's per-due-week requirement
+    bit-for-bit (same float op order, not just approx)."""
+    from emfin_v2.contracts import money_market_provision, accumulated_requirement
+    rng = np.random.default_rng(7)
+    n, h, k = 5, 12, 4
+    amounts = rng.uniform(100., 500., (n, k))
+    steps = np.array([2, 5, 5, 11])
+    growth = np.cumprod(1 + rng.uniform(-.001, .003, (n, h)), axis=1)
+    legacy_opt = sum(amounts[:, i] * growth[:, -1] / growth[:, step - 1]
+                     for i, step in enumerate(steps))
+    got = money_market_provision(amounts, steps, growth, h)
+    assert np.array_equal(got, legacy_opt)  # bit-identical, not allclose
+    for i, step in enumerate(steps):
+        required = amounts[:, i].copy()
+        for j, prior in enumerate(steps):
+            if prior < step or (prior == step and j < i):
+                required += amounts[:, j] * growth[:, step - 1] / growth[:, prior - 1]
+        assert np.array_equal(accumulated_requirement(amounts, steps, growth, i), required)
