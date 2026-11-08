@@ -1,0 +1,6 @@
+{
+ "fold": 39,
+ "stage": "realized",
+ "mult_index": 0,
+ "error": "ValueError('finite nonnegative aligned holdings and prices required')"
+}
