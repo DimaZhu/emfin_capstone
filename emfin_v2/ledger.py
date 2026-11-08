@@ -6,60 +6,41 @@ current value. This is a declared trading rule, not an optimal trading policy.
 Input unit values already include configured liquidation haircuts; do not
 charge them a second time. Property spendable value is credited when received
 and removed from the marked holding to prevent double counting.
+
+Phase 1 of the shared-accounting refactor: cash_first is a thin wrapper over
+the shared event engine (emfin_v2/event_ledger.py) with LedgerSpec.cash_first()
+- zero fees, immediate within-week settlement, arrears at the cash rate,
+property receipts credited as the weekly delta of the funding path. The
+Phase 0 golden fixtures (tests/test_golden_ledgers.py) pin its outputs
+bit-for-bit against the pre-refactor implementation.
 """
 import numpy as np
-from emfin_v2.real_estate import funding_paths
+from emfin_v2.event_ledger import LedgerSpec, run_event_ledger
 
 
-def cash_first(c,draw,allocation):
-    paths,amounts,steps,bases,growth=draw;prices=np.asarray(paths,float);a=np.asarray(allocation,float);n,h,d=prices.shape;cash_index=c['cash_index']
-    # Match the final holdings judge's explicit absolute weight tolerance.
-    # Numerical near-zero negatives are clipped for this long-only execution
-    # audit only, disclosed in dollars, never used to repair optimizer risk.
-    tolerance=1e-7*float(c.get('wealth',max(float(np.abs(a).sum()),1.)))
-    if a.shape!=(d,) or not np.isfinite(a).all() or (a < -tolerance).any() or not np.isfinite(prices).all() or (prices<0).any():raise ValueError('finite nonnegative aligned holdings and prices required')
-    negative_roundoff=float(np.maximum(-a,0).sum());a=np.maximum(a,0)
-    if not np.isfinite(amounts).all() or (amounts<0).any():raise ValueError('finite nonnegative liabilities required')
-    properties=c.get('asset_layout',{}).get('property_indices',[6] if c['real_estate']['enabled'] and d==7 else [])
-    liquid=[i for i in range(d) if i!=cash_index and i not in properties]
-    units=np.broadcast_to(a,(n,d)).copy();units[:,cash_index]=0.;cash=np.full(n,a[cash_index]);arrears=np.zeros(n);values=np.zeros((n,h));cash_path=np.zeros((n,h));shortfalls=np.zeros_like(amounts);paid=np.zeros_like(amounts);units_path=np.zeros((n,h,d));sold=np.zeros((n,h,d));last_property_cash=np.zeros(n)
-    funding=funding_paths(draw)
-    for t in range(h):
-        ratio=growth[:,t]/(growth[:,t-1] if t else 1.)
-        cash*=ratio;arrears*=ratio
-        property_cash=funding[:,t,properties]@a[properties] if properties else np.zeros(n)
-        received=property_cash-last_property_cash*ratio
-        if (received < -1e-5).any():raise ValueError('property funding path removes previously settled cash')
-        cash+=np.maximum(received,0.);last_property_cash=property_cash
-        for k in np.flatnonzero(steps==t+1):
-            due=amounts[:,k]+arrears
-            # cash first, then one common fraction of all liquid units.
-            need=np.maximum(due-cash,0.)
-            available=prices[:,t,liquid]*units[:,liquid]
-            total=available.sum(1);fraction=np.minimum(1.,np.divide(need,total,out=np.zeros(n),where=total>0))
-            liquidation=available*fraction[:,None]
-            sold[:,t,liquid]+=liquidation
-            units[:,liquid]*=1-fraction[:,None];cash+=liquidation.sum(1)
-            payment=np.minimum(cash,due);cash-=payment;arrears=due-payment
-            paid[:,k]=payment;shortfalls[:,k]=arrears
-        # Property cash is now held in cash, not marked a second time.
-        property_mark=prices[:,t,properties]@a[properties]-property_cash if properties else np.zeros(n)
-        values[:,t]=cash+(prices[:,t,liquid]*units[:,liquid]).sum(1)+property_mark-arrears
-        cash_path[:,t]=cash;units_path[:,t]=units
-    return dict(numerical_negative_holdings_clipped=negative_roundoff,net_wealth_paths=values,cash_paths=cash_path,units_paths=units_path,sold_value_paths=sold,payment_shortfalls=shortfalls,payments=paid,terminal_unpaid=arrears,terminal_net=values[:,-1],funded=np.all(shortfalls<=1e-6,axis=1),policy='Cash first, then proportional liquidation of liquid sleeves at configured net unit values, assumed immediately spendable within the modeled week; no rebalance/borrowing; property only scheduled rent/sale receipts.',scope='Independent executable policy audit. Optimizer still uses money-market provisioning, not this policy. Unit values already include configured liquidity haircuts.')
+def cash_first(c, draw, allocation):
+    r = run_event_ledger(c, draw, allocation, LedgerSpec.cash_first())
+    return dict(numerical_negative_holdings_clipped=r['numerical_negative_holdings_clipped'],
+                net_wealth_paths=r['net_wealth_paths'], cash_paths=r['cash_paths'],
+                units_paths=r['units_paths'], sold_value_paths=r['sold_value_paths'],
+                payment_shortfalls=r['payment_shortfalls'], payments=r['payments'],
+                terminal_unpaid=r['terminal_unpaid'], terminal_net=r['terminal_net'],
+                funded=r['funded'],
+                policy='Cash first, then proportional liquidation of liquid sleeves at configured net unit values, assumed immediately spendable within the modeled week; no rebalance/borrowing; property only scheduled rent/sale receipts.',
+                scope='Independent executable policy audit. Optimizer still uses money-market provisioning, not this policy. Unit values already include configured liquidity haircuts.')
 
 
-def summarize_execution(c,draws,allocation):
+def summarize_execution(c, draws, allocation):
     """Reference-scenario outcomes, never a statistical/full-funding certificate.
 
     Keep the paid-in-full outcome separate from the declared allowed-gap rule.
     The per-date unpaid amount includes arrears at that date. Zero observations
     of unpaid calls is not proof that the policy funds all future obligations.
     """
-    if not draws:raise ValueError('execution audit requires evaluation draws')
-    audits=[cash_first(c,draw,allocation) for draw in draws]
-    steps=draws[0][2]
-    if any(not np.array_equal(d[2],steps) or not np.array_equal(d[3],draws[0][3]) for d in draws):raise ValueError('execution audit schedules must align')
-    funded=np.concatenate([r['funded'] for r in audits]);unpaid=np.concatenate([r['payment_shortfalls'] for r in audits]);terminal=np.concatenate([r['terminal_net'] for r in audits]);count=len(funded);missed=int(np.count_nonzero(~funded))
-    dates=[dict(payout_index=i,week=int(step),paid_in_full_fraction=float(np.mean(unpaid[:,i]<=1e-6)),largest_observed_unpaid=float(unpaid[:,i].max())) for i,step in enumerate(steps)]
-    return dict(numerical_negative_holdings_clipped=max(r['numerical_negative_holdings_clipped'] for r in audits),available=True,funded_fraction=float(np.mean(funded)),paths=count,paths_with_unpaid_calls=missed,observed_unpaid_calls=bool(missed),outcome='Unpaid calls observed' if missed else 'No unpaid calls observed',largest_observed_unpaid=float(unpaid.max()),payment_outcomes=dates,terminal_net_quantiles=np.quantile(terminal,[.05,.5,.95]).tolist(),policy=audits[0]['policy'],scope=audits[0]['scope'],wasserstein_certified=False,full_funding_guarantee=False,interpretation='Reference-scenario execution outcome only, not a probability guarantee. Budget pass may permit shortfalls; zero unpaid observations does not bound unseen tails.')
+    if not draws: raise ValueError('execution audit requires evaluation draws')
+    audits = [cash_first(c, draw, allocation) for draw in draws]
+    steps = draws[0][2]
+    if any(not np.array_equal(d[2], steps) or not np.array_equal(d[3], draws[0][3]) for d in draws): raise ValueError('execution audit schedules must align')
+    funded = np.concatenate([r['funded'] for r in audits]); unpaid = np.concatenate([r['payment_shortfalls'] for r in audits]); terminal = np.concatenate([r['terminal_net'] for r in audits]); count = len(funded); missed = int(np.count_nonzero(~funded))
+    dates = [dict(payout_index=i, week=int(step), paid_in_full_fraction=float(np.mean(unpaid[:, i] <= 1e-6)), largest_observed_unpaid=float(unpaid[:, i].max())) for i, step in enumerate(steps)]
+    return dict(numerical_negative_holdings_clipped=max(r['numerical_negative_holdings_clipped'] for r in audits), available=True, funded_fraction=float(np.mean(funded)), paths=count, paths_with_unpaid_calls=missed, observed_unpaid_calls=bool(missed), outcome='Unpaid calls observed' if missed else 'No unpaid calls observed', largest_observed_unpaid=float(unpaid.max()), payment_outcomes=dates, terminal_net_quantiles=np.quantile(terminal, [.05, .5, .95]).tolist(), policy=audits[0]['policy'], scope=audits[0]['scope'], wasserstein_certified=False, full_funding_guarantee=False, interpretation='Reference-scenario execution outcome only, not a probability guarantee. Budget pass may permit shortfalls; zero unpaid observations does not bound unseen tails.')

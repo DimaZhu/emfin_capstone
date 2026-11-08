@@ -268,10 +268,11 @@ def multiperiod_gap_metrics(
     for i, step in enumerate(steps):
         # Earlier payouts have already left the portfolio. Their accumulated
         # opportunity cost must be deducted before funding today's payout.
-        required = liabilities[:, i].copy()
-        for j, previous_step in enumerate(steps):
-            if previous_step < step or (previous_step == step and j < i):
-                required += liabilities[:, j] * growth[:, step-1] / growth[:, previous_step-1]
+        # Shared provisioning primitive (Phase 4): the judge's arrears
+        # convention, op order unchanged. The terminal decrement below
+        # applies money_market_provision payment by payment.
+        from emfin_v2.contracts import accumulated_requirement
+        required = accumulated_requirement(liabilities, steps, growth, i)
         gap = np.maximum(0.0, required - values[:, step - 1])
         probs.append(float((gap > 0).mean()))
         cvars.append(risk_stats.empirical_cvar(gap, confidence_level))

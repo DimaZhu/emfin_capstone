@@ -59,9 +59,10 @@ budget. Holdings residuals have explicit absolute weight tolerances only.
         measures=np.array([np.full(len(paths),1/len(paths)),q,qs]);values=paths@a/wealth;spendable=funding_paths(draw)@a
         losses=[]
         for i,step in enumerate(steps):
-            required=amounts[:,i].copy()
-            for j,prior in enumerate(steps):
-                if prior<step or (prior==step and j<i):required+=amounts[:,j]*growth[:,step-1]/growth[:,prior-1]
+            # Phase 4: the judge's per-due-week arrears requirement is the
+            # shared money-market provisioning primitive, op order unchanged.
+            from emfin_v2.contracts import accumulated_requirement
+            required=accumulated_requirement(amounts,steps,growth,i)
             losses.append(np.maximum(required-spendable[:,step-1],0)/wealth)
         losses.extend([np.maximum(0,1-values).max(1),1-values[:,-1]])
         batch=[]
@@ -87,3 +88,15 @@ budget. Holdings residuals have explicit absolute weight tolerances only.
     funding_pass=all(z['passed'] for z in checks if z['kind']=='funding');overall=funding_pass and all(z['passed'] for z in checks) and all(z['passed'] for z in holding_checks)
     funding=[z for z in checks if z['kind']=='funding'];worst=max(funding,key=lambda z:z['upper']/z['limit'] if z['limit']>0 else (float('inf') if z['upper']>0 else 0))
     return dict(strict_funding=strict,funding_mode=c.get('funding_mode','tail_allowance'),funding_rule_pass=bool(funding_pass and (strict is None or strict['passed'])),funding_pass=funding_pass,overall_pass=bool(overall),checks=checks,holdings=holding_checks,breaches=[z['name'] for z in checks+holding_checks if not z['passed']],worst_funding_week=worst['week'],worst_funding_index=worst['payout_index'],batch_estimates=x.tolist(),measure_names=keys,interval=dict(confidence=.95,adjustment='Bonferroni one-sided conditional batch Student-t bounds',comparisons=familysize,batches=len(draws),scope='Conditional Monte Carlo diagnostic across listed checks and measures. No economic/model coverage; zero-width intervals do not bound unseen tails.'),scope='Frozen holdings; independent final draws; no repair or selection on final results. Common-threshold bound covers reference/nominal/stressed finite convex hull. Current provisioning convention, not a trading ledger.')
+
+
+def evaluate_batches(c,batches,allocation,nominal,stressed):
+    """Contract-facing judge (Phase 2 adapter): ScenarioBatch list and an
+    Allocation in, a Verdict out. Pure adapter over evaluate(); the legacy
+    tuple/vector interface and every number it returns are unchanged.
+    Provenance fields on the batches are carried, not re-derived."""
+    from emfin_v2.contracts import Allocation,ScenarioBatch,Verdict
+    if not isinstance(allocation,Allocation):raise TypeError('evaluate_batches takes an Allocation contract')
+    if not batches or any(not isinstance(b,ScenarioBatch) for b in batches):raise TypeError('evaluate_batches takes ScenarioBatch contracts')
+    r=evaluate(c,[b.to_draw() for b in batches],allocation.as_vector(),nominal,stressed)
+    return Verdict(overall_pass=r['overall_pass'],funding_pass=r['funding_pass'],breaches=tuple(r['breaches']),scope=r['scope'])

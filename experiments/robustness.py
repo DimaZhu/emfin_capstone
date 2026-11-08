@@ -164,7 +164,13 @@ def empirical_radius_diagnostics(c,fitted):
     return dict(available=True,distance=distance,blocks=len(b),nonoverlap_horizon=h,earlier_blocks=n,later_blocks=n,metric='max_path empirical equal-mass assignment on listed/FX paths only',configured_radius=c.get('wasserstein_radius',0),scope='Historical distribution-shift diagnostic, not a statistically justified W1 radius or property/liability calibration. Early versus recent regimes need not be stationary; no confidence coverage inferred.')
 
 
-def save(result,path):
+def save(result,path,config=None):
+    # Phase 5: every results JSON saved through the harness carries a
+    # manifest block (code SHA, config/data SHAs, seed family, versions),
+    # written here automatically, never by hand. Callers that already set
+    # provenance fields keep them; the block is additive under 'manifest'.
+    from scripts.run_manifest import manifest
+    result=dict(result);result.setdefault('manifest',manifest(config))
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(result,indent=2,default=lambda x:x.tolist() if isinstance(x,np.ndarray) else float(x),allow_nan=False)+'\n')
 
 
