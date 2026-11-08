@@ -37,7 +37,8 @@ DRAW_DIR.mkdir(exist_ok=True)
 CALIBRATIONS = dict(
     weak=dict(half_life_years=3.0, variance_share=0.20),
     central=dict(MR_DEFAULT),                      # half-life 2.0y, share 0.40
-    strong=dict(half_life_years=1.5, variance_share=0.60))
+    # 0.60 violates the permanent-covariance PSD guard on the fitted universe; 0.50 is the edge
+    strong=dict(half_life_years=1.5, variance_share=0.50))
 
 # seed family -> final-5 draw tag prefix (fifth-law draws shared with base studies)
 FIFTH_TAG = {20261109: 'f5', 20261111: 'f5s11'}

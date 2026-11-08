@@ -1,0 +1,313 @@
+{
+ "meta": {
+  "label": "MR scenario: calibration strength (weak/central/strong) at 10/30y, fitted view, seed 20261109, dual-law. Central cells mirrored from mr_horizon.json.",
+  "calibrations": {
+   "weak": {
+    "half_life_years": 3.0,
+    "variance_share": 0.2
+   },
+   "central": {
+    "half_life_years": 2.0,
+    "variance_share": 0.4
+   },
+   "strong": {
+    "half_life_years": 1.5,
+    "variance_share": 0.6
+   }
+  }
+ },
+ "variance_ratio": {
+  "weak": {
+   "1y": 0.979,
+   "3y": 0.9446,
+   "5y": 0.9189,
+   "8y": 0.8914,
+   "15y": 0.856,
+   "30y": 0.8289
+  },
+  "central": {
+   "1y": 0.9392,
+   "3y": 0.8495,
+   "5y": 0.7907,
+   "8y": 0.7357,
+   "15y": 0.6768,
+   "30y": 0.6386
+  },
+  "strong": {
+   "1y": 0.8826,
+   "3y": 0.7261,
+   "5y": 0.635,
+   "8y": 0.559,
+   "15y": 0.4869,
+   "30y": 0.4435
+  }
+ },
+ "weak": {
+  "10y": {
+   "years": 10,
+   "search": {
+    "chosen_safe": 0.175,
+    "validation_selected_safe": 0.175,
+    "weights": {
+     "us_equity": 0.1357,
+     "em_equity": 0.0,
+     "gold": 0.1684,
+     "treasury": 0.4209,
+     "tips": 0.0,
+     "tbill": 0.175,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR weak fitted, 10y, dual-law",
+    "common_cara_ledger_ce": 112511650.85942008,
+    "terminal_median": 141274585.14969206,
+    "terminal_q05": 97299452.27035657,
+    "terminal_q95": 220686317.65409282,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 115011382.9176714,
+     "terminal_median": 138469603.06737858,
+     "terminal_q05": 101415061.65070437,
+     "terminal_q95": 208807016.4357519,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 10y under MR weak",
+    "validation_pass": true,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 110122575.08023097,
+    "terminal_median": 131247118.63651246,
+    "terminal_q05": 94789160.26355265,
+    "terminal_q95": 195163158.79454064,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112463228.2750915,
+     "terminal_median": 128622503.05685946,
+     "terminal_q05": 98361320.09307753,
+     "terminal_q95": 186986372.36115086,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 4.954866428000059
+  },
+  "30y": {
+   "years": 30,
+   "search": {
+    "chosen_safe": 0.675,
+    "validation_selected_safe": 0.675,
+    "weights": {
+     "us_equity": 0.0421,
+     "em_equity": 0.0,
+     "gold": 0.0523,
+     "treasury": 0.1306,
+     "tips": 0.0,
+     "tbill": 0.675,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR weak fitted, 30y, dual-law",
+    "common_cara_ledger_ce": 98922330.79670998,
+    "terminal_median": 187914758.21085057,
+    "terminal_q05": 85555821.50982323,
+    "terminal_q95": 508366576.6020043,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 109830510.26611564,
+     "terminal_median": 171510635.57835945,
+     "terminal_q05": 104948889.36975324,
+     "terminal_q95": 367204492.3468376,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 30y under MR weak",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 126013312.03933516,
+    "terminal_median": 396537062.4183891,
+    "terminal_q05": 148097604.82427865,
+    "terminal_q95": 1191433602.5226278,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 1.1641532182693481e-10,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 124131446.92518826,
+     "terminal_median": 352083433.86579597,
+     "terminal_q05": 194540506.10341763,
+     "terminal_q95": 765971500.9006363,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 57.970216488000005
+  }
+ },
+ "strong": {
+  "10y": {
+   "years": 10,
+   "search": {
+    "chosen_safe": 0.35,
+    "validation_selected_safe": 0.35,
+    "weights": {
+     "us_equity": 0.1029,
+     "em_equity": 0.0,
+     "gold": 0.1277,
+     "treasury": 0.3193,
+     "tips": 0.0,
+     "tbill": 0.35,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR strong fitted, 10y, dual-law",
+    "common_cara_ledger_ce": 109858534.10114236,
+    "terminal_median": 127821403.72998251,
+    "terminal_q05": 94643444.79927365,
+    "terminal_q95": 187671138.35523129,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 111917947.75537992,
+     "terminal_median": 127084384.7458235,
+     "terminal_q05": 97848000.24344751,
+     "terminal_q95": 183269042.66857123,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 10y under MR strong",
+    "validation_pass": false,
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "common_cara_ledger_ce": 110354882.08901072,
+    "terminal_median": 129473002.3487644,
+    "terminal_q05": 95158283.7928327,
+    "terminal_q95": 191234066.40545008,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 112463228.2750915,
+     "terminal_median": 128622503.05685946,
+     "terminal_q05": 98361320.09307753,
+     "terminal_q95": 186986372.36115086,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 30000000.0
+    }
+   },
+   "seconds": 7.85359119199984
+  },
+  "30y": {
+   "years": 30,
+   "search": {
+    "chosen_safe": 0.775,
+    "validation_selected_safe": 0.775,
+    "weights": {
+     "us_equity": 0.0234,
+     "em_equity": 0.0,
+     "gold": 0.029,
+     "treasury": 0.0726,
+     "tips": 0.0,
+     "tbill": 0.775,
+     "cash": 0.0,
+     "sg_property": 0.1
+    },
+    "final_pass": true,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [],
+    "label": "MR strong fitted, 30y, dual-law",
+    "common_cara_ledger_ce": 86285433.66246994,
+    "terminal_median": 130043561.49957597,
+    "terminal_q05": 68515824.3655368,
+    "terminal_q95": 320923893.7231701,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 93824447.09863675,
+     "terminal_median": 123695635.85732526,
+     "terminal_q05": 78665875.7870561,
+     "terminal_q95": 274188687.5953778,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 8.731149137020111e-11,
+     "total_paid": 90000000.0
+    }
+   },
+   "hold_10y_mix": {
+    "label": "frozen round-2 fitted mix at 30y under MR strong",
+    "validation_pass": false,
+    "final_pass": false,
+    "final_breaches": [],
+    "fifth_law_final_breaches": [
+     "Held-out terminal-loss tail"
+    ],
+    "common_cara_ledger_ce": 127624620.65206224,
+    "terminal_median": 376163744.4689573,
+    "terminal_q05": 151084810.8827249,
+    "terminal_q95": 1063460059.6220473,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 90000000.0,
+    "fifth_law_score": {
+     "common_cara_ledger_ce": 124131446.92518826,
+     "terminal_median": 352083433.86579597,
+     "terminal_q05": 194540506.10341763,
+     "terminal_q95": 765971500.9006363,
+     "prob_end_below_start": 0.0,
+     "funded": 1.0,
+     "largest_unpaid": 1.1641532182693481e-10,
+     "total_paid": 90000000.0
+    }
+   },
+   "seconds": 65.183072691
+  }
+ }
+}
