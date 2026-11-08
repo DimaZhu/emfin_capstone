@@ -16,5 +16,10 @@ needs an explicit adapted information process, amount versus timing semantics,
 finite moments and user evidence/calibration. This is narrower and safer than
 pretending the option was validated because today's default set vol to zero.
 
-Typed frozen config records and a unified optimizer/ledger accounting model
-remain staged refactors; this boundary does not claim those are already done.
+Typed frozen config records landed as emfin_v2/contracts.py (Phase 2), and the
+unified optimizer/ledger accounting model landed on
+refactor-shared-accounting-20261108: one event engine with declared specs
+(Phases 1-3) and one provisioning primitive shared by optimizer and judge
+(Phase 4). The candidate_scoring='executable_ledger' config key opts into the
+EXPERIMENTAL executable-ledger scorer; anything else keeps the provisioning
+scoring unchanged. This boundary file otherwise reads as before.
