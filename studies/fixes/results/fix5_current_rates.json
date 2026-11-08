@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "label": "SECOND DEFAULT VIEW (owner ask 8 Nov 11:05, open point 5): safe-asset carry at current market quotes 2026-11-05 - 3M bill 0.0417, 10y 0.0484, 10y TIPS real 0.026 - replacing the fitted-window carry. Labeled simplifications: IEF/TIP expected log return set to current yield (no roll/term-premium model); vols, correlations, risky means unchanged from full-history fit.",
+  "rates": {
+   "dgs3mo": 0.0417,
+   "dgs10": 0.0484,
+   "dfii10": 0.026,
+   "asof": "2026-11-05",
+   "source": "FRED H.15 daily (DGS3MO/DGS10/DFII10), fetched 8 Nov 2026"
+  }
+ },
+ "current_rates": {
+  "chosen_safe": 0.3,
+  "validation_selected_safe": 0.3,
+  "weights": {
+   "us_equity": 0.2481,
+   "em_equity": 0.0,
+   "gold": 0.2032,
+   "treasury": 0.1487,
+   "tips": 0.0,
+   "tbill": 0.3,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "SECOND DEFAULT VIEW (owner ask 8 Nov 11:05, open point 5): safe-asset carry at current market quotes 2026-11-05 - 3M bill 0.0417, 10y 0.0484, 10y TIPS real 0.026 - replacing the fitted-window carry. Labeled simplifications: IEF/TIP expected log return set to current yield (no roll/term-premium model); vols, correlations, risky means unchanged from full-history fit.",
+  "common_cara_ledger_ce": 123053802.21340455,
+  "terminal_median": 165017326.8374501,
+  "terminal_q05": 107420317.99959192,
+  "terminal_q95": 279375364.57653326,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0,
+  "sleeve_proportions": {
+   "us_equity": 0.4135375067867953,
+   "gold": 0.3386990696821531,
+   "treasury": 0.24776342353105163
+  },
+  "sleeve_safe_share_1y": 0.3323126457901426,
+  "sleeve_status": "optimized",
+  "seconds_total": 2.7098406599999976,
+  "rates": {
+   "dgs3mo": 0.0417,
+   "dgs10": 0.0484,
+   "dfii10": 0.026,
+   "asof": "2026-11-05",
+   "source": "FRED H.15 daily (DGS3MO/DGS10/DFII10), fetched 8 Nov 2026"
+  }
+ }
+}
