@@ -43,25 +43,59 @@ class LedgerSpec:
     arrears_rate: str = 'cash'
     property_receipts: str = 'credit_delta'
     rebalance_calendar: tuple = ()
+    # Phase 3 mechanics (defaults preserve the Phase 1 cash_first behavior):
+    need_rule: str = 'due_now'        # 'due_now' | 'windowed' (window to next decision)
+    decision_rule: str = 'payment_weeks'  # 'payment_weeks' | 'before_settlement'
+    sale_rule: str = 'cash_first'     # 'cash_first' | 'pro_rata'
+    shadow_carry: bool = False        # track paid Carry shadow wealth (dynamic_policy)
+    proceeds_rounding: str = 'elementwise'  # 'elementwise' | 'aggregate' (legacy execute op order)
 
     @staticmethod
     def cash_first():
         """The spec that reproduces emfin_v2.ledger.cash_first exactly."""
         return LedgerSpec()
 
+    @staticmethod
+    def dynamic_cash_first(fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='cash_first') mechanics."""
+        return LedgerSpec(fee_bps=fee_bps, settlement_lag_weeks=settlement_lag_weeks,
+                          need_rule='windowed', decision_rule='before_settlement',
+                          sale_rule='cash_first', shadow_carry=True,
+                          proceeds_rounding='aggregate')
+
+    @staticmethod
+    def dynamic_pro_rata(fee_bps=5.0, settlement_lag_weeks=1):
+        """dynamic_policy.execute(mode='pro_rata') mechanics."""
+        return LedgerSpec(fee_bps=fee_bps, settlement_lag_weeks=settlement_lag_weeks,
+                          need_rule='windowed', decision_rule='before_settlement',
+                          sale_rule='pro_rata', shadow_carry=True,
+                          proceeds_rounding='aggregate')
+
     def validate(self):
         if self.liquidation != 'cash_first_pro_rata':
-            raise ValueError('Phase 1 supports only cash_first_pro_rata liquidation')
+            raise ValueError('only cash_first_pro_rata liquidation is supported')
         if not np.isfinite(self.fee_bps) or not 0 <= self.fee_bps < 10000:
             raise ValueError('fee_bps must be in [0, 10000)')
         if type(self.settlement_lag_weeks) is not int or self.settlement_lag_weeks < 0:
             raise ValueError('settlement_lag_weeks must be a nonnegative int')
         if self.arrears_rate != 'cash':
-            raise ValueError('Phase 1 supports only the cash arrears rate')
+            raise ValueError('only the cash arrears rate is supported')
         if self.property_receipts != 'credit_delta':
-            raise ValueError('Phase 1 supports only the credit_delta property convention')
+            raise ValueError('only the credit_delta property convention is supported')
         if self.rebalance_calendar:
-            raise ValueError('rebalancing arrives with Phase 3')
+            raise ValueError('rebalancing arrives with Phase 3 target rules')
+        if self.need_rule not in ('due_now', 'windowed'):
+            raise ValueError('unknown need rule')
+        if self.decision_rule not in ('payment_weeks', 'before_settlement'):
+            raise ValueError('unknown decision rule')
+        if self.sale_rule not in ('cash_first', 'pro_rata'):
+            raise ValueError('unknown sale rule')
+        if self.proceeds_rounding not in ('elementwise', 'aggregate'):
+            raise ValueError('unknown proceeds rounding convention')
+        if self.need_rule == 'windowed' and self.decision_rule != 'before_settlement':
+            raise ValueError('windowed needs require the before_settlement decision rule')
+        if self.sale_rule == 'pro_rata' and self.need_rule != 'windowed':
+            raise ValueError('the pro_rata sale rule requires windowed needs')
 
 
 def run_event_ledger(c, draw, allocation, spec):
