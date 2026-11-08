@@ -71,8 +71,8 @@ def make_figure(path):
                     fontsize=8, color=color)
     ax.set_xticks(range(len(LOSS)), [f'{c}%' for c in LOSS], fontsize=9)
     ax.set_yticks(range(len(CML)), [f'{r}%' for r in CML], fontsize=9)
-    ax.set_xlabel('loss_budget - worst allowed loss at the 10-year mark (loosening ->)', fontsize=9)
-    ax.set_ylabel('cml_budget - any-point loss cap', fontsize=9)
+    ax.set_xlabel('Worst allowed loss at the 10-year mark (loosening ->)', fontsize=9)
+    ax.set_ylabel('Any-point loss cap along the way', fontsize=9)
     ax.set_title('Best 10-year certainty equivalent that does not break the limits\n'
                  '(score in \\$M over 10 years, after \\$30M of payouts; safe share below)',
                  fontsize=10.5, color='#0d1b2e', pad=10)
@@ -115,8 +115,8 @@ def build(out_path, fig_path):
 
     story.append(Paragraph('The headline in one line', S['h1']))
     story.append(Paragraph(
-        'At 10 years, only the any-point drawdown cap (cml_budget) matters. The year-10 loss cap '
-        '(loss_budget) never binds anywhere in the 15-40% band: after a decade of growth, even a '
+        'At 10 years, only the any-point drawdown cap matters. The year-10 loss cap '
+        'never binds anywhere in the 15-40% band: after a decade of growth, even a '
         '90%-risky mix ends below the starting $100M in at most an 8% tail bound, far inside every '
         'column. So every row of the matrix is one number, and the column choice is free within this '
         'range. Loosening the drawdown cap from 6% to 30% lifts the 10-year certainty equivalent '

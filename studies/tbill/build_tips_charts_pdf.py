@@ -124,7 +124,8 @@ fig, ax = plt.subplots(figsize=(8.6, 3.6))
 x = np.arange(5)
 ax.bar(x, safe, color=NAVY, width=0.54)
 for xi, v in zip(x, safe):
-    ax.text(xi, v + 1, f'{v:.0f}%', ha='center', fontsize=11, color=NAVY)
+    # inside the bar top: clears the twin-axis lines above short bars
+    ax.text(xi, v - 3.5, f'{v:.0f}%', ha='center', fontsize=11, color='white')
 ax.set_xticks(x, [f'{y} years' for y in years])
 ax.set_ylabel('T-bill share the checks require (%)')
 ax.set_ylim(0, 60)
@@ -133,8 +134,10 @@ ax2.spines['right'].set_visible(True)
 ax2.plot(x, med, 'o-', color=TEAL, label='median leftover')
 ax2.plot(x, q05h, 's--', color=AMBER, label='5% bad case')
 for xi, v in zip(x, med):
-    ax2.annotate(f"${v:.0f}M", (xi, v), textcoords='offset points', xytext=(0, 8),
-                 fontsize=9, color=TEAL, ha='center',
+    # first point: label below the marker so it clears the bar's % label
+    off = (26, -3) if xi == 0 else (0, 8)
+    ax2.annotate(f"${v:.0f}M", (xi, v), textcoords='offset points', xytext=off,
+                 fontsize=9, color=TEAL, ha='left' if xi == 0 else 'center',
                  bbox=dict(boxstyle='round,pad=0.15', fc='white', ec='none', alpha=0.85))
 ax2.set_ylabel('Leftover after all payments ($M)')
 ax2.set_ylim(0, 460)
