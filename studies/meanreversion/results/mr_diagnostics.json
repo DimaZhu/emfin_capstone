@@ -1,0 +1,44 @@
+{
+ "meta": {
+  "label": "MR scenario diagnostics: analytic vs simulated variance ratios, weekly autocorrelation, unconditional weekly moment match. Central calibration, fitted view, seed 20261109."
+ },
+ "analytic_variance_ratio": {
+  "weak": {
+   "1y": 0.979,
+   "3y": 0.9446,
+   "5y": 0.9189,
+   "8y": 0.8914,
+   "15y": 0.856,
+   "30y": 0.8289
+  },
+  "central": {
+   "1y": 0.9392,
+   "3y": 0.8495,
+   "5y": 0.7907,
+   "8y": 0.7357,
+   "15y": 0.6768,
+   "30y": 0.6386
+  },
+  "strong": {
+   "1y": 0.8826,
+   "3y": 0.7261,
+   "5y": 0.635,
+   "8y": 0.559,
+   "15y": 0.4869,
+   "30y": 0.4435
+  }
+ },
+ "weekly": {
+  "mean": 0.0018881922275190944,
+  "fitted_mean": 0.001890707765745369,
+  "variance": 0.0006272455407537506,
+  "fitted_variance": 0.0006257256289224915,
+  "lag1_autocorr": -0.0003930573090051242,
+  "iid_lag1_autocorr": 0.0007409274267706962
+ },
+ "simulated_variance_ratio_8y": {
+  "value": 0.7267164614640617,
+  "analytic": 0.7357,
+  "note": "Monte Carlo ratio of 8y equity log-return variances (MR / iid), 2000 paths each."
+ }
+}

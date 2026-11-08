@@ -82,13 +82,28 @@ def draw(c,fitted,n,seed):
     frame,mu,cov=fitted;h=c['horizon_weeks'];d=len(mu)
     if d!=len(c['liquidity_haircuts'])+int(c['fx']['enabled']):raise ValueError('listed asset plus FX factor dimensions differ')
     rng=np.random.default_rng(seed)
-    eig,vec=np.linalg.eigh(cov);root=vec@np.diag(np.sqrt(np.maximum(eig,0)))
+    mr=None;mr_diagnostics=None
+    if c.get('scenario_model')=='mixture_mean_reverting':
+        from emfin_v2 import mean_reversion as mrmod
+        mr=mrmod.settings(c)
+    draw_cov=cov
+    if mr is not None:
+        members0=c['asset_layout']['factor_indices']['equity']
+        draw_cov=mrmod.permanent_covariance(cov,members0,mr)
+    eig,vec=np.linalg.eigh(draw_cov);root=vec@np.diag(np.sqrt(np.maximum(eig,0)))
     gaussian=rng.normal(size=(n,h,d))@root.T
     members=c['asset_layout']['factor_indices']['equity'];variance=cov[np.ix_(members,members)].sum()/len(members)**2
     factor=gaussian[:,:,members].mean(2)/max(np.sqrt(variance),1e-12)
     from emfin_v2.innovations import divisor
     scale=divisor(c,rng,n,h)
     innovation=gaussian/scale
+    if mr is not None:
+        from emfin_v2 import mean_reversion as mrmod
+        w=mrmod.loadings(cov,members,mr)
+        fr=mrmod.fad_returns(rng,n,h,mr)
+        innovation=innovation+fr[:,:,None]*w[None,None,:]
+        factor=innovation[:,:,members].mean(2)/max(np.sqrt(variance),1e-12)
+        mr_diagnostics=dict(mrmod.describe(c),permanent_covariance_note='cov minus share*sigma sigma-transpose on the equity block; unconditional weekly mean/covariance identical to the iid base by construction')
     if c.get('scenario_model')=='fhs_ewma':
         from emfin_v2.historical_simulation import fhs_innovations
         innovation=fhs_innovations(frame.to_numpy(),n,h,seed,c.get('fhs_decay',.94))
@@ -103,7 +118,8 @@ def draw(c,fitted,n,seed):
     funding=paths;re_log=None
     if c['real_estate']['enabled']:
         re=c['real_estate'];cal=calibration(re);rho=re['equity_correlation']
-        shock=(rho*factor+np.sqrt(1-rho*rho)*rng.normal(size=(n,h)))/scale[:,:,0]
+        re_scale=scale[:,:,0] if mr is None else 1.
+        shock=(rho*factor+np.sqrt(1-rho*rho)*rng.normal(size=(n,h)))/re_scale
         re_log=np.cumsum(cal['annual_log_drift']/52+cal['annual_vol']/np.sqrt(52)*shock,axis=1)
         mark,spendable=cash_and_mark(np.exp(re_log),growth,re,fx_paths=fx)
         paths=np.concatenate([paths,mark[:,:,None]],axis=2);funding=np.concatenate([funding,spendable[:,:,None]],axis=2)
@@ -113,4 +129,5 @@ def draw(c,fitted,n,seed):
     if not np.isfinite(paths).all() or not np.isfinite(funding).all():raise ValueError('scenario price arithmetic overflow; finite mathematical moments do not guarantee finite floating-point paths')
     result=ScenarioDraw((paths,amounts,steps,bases,growth),funding,re_log)
     result.bounded_diagnostics=bounded_diagnostics
+    result.mean_reversion_diagnostics=mr_diagnostics
     return result

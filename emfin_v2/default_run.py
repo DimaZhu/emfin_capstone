@@ -105,6 +105,7 @@ def validate_config(config):
         from emfin_v2.registry_runtime import configure
         c=configure(c,c['asset_registry']);allowed=c['asset_layout']['view_indices']
     if c['scenario_model'] in ('fhs_ewma','bounded_ewma_mixture') and not c.get('asset_registry'):raise ValueError('Conditional volatility requires the actual-instrument registry adapter, not legacy yield repricing')
+    if c['scenario_model']=='mixture_mean_reverting' and not c.get('asset_registry'):raise ValueError('Mean reversion requires the actual-instrument registry adapter, not legacy yield repricing')
     validate_views(c.get('market_return_views',{}),allowed)
     if not 0<=c['stress_mean_path_loss_increment']<=.1:raise ValueError('stress view increment must be 0-10 percentage points')
     validate(re)

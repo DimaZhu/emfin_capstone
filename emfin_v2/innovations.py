@@ -2,7 +2,9 @@
 import numpy as np
 from scipy.special import logsumexp
 
-MODELS=('gaussian','gaussian_scale_mixture','legacy_student_t','fhs_ewma','bounded_ewma_mixture')
+from emfin_v2.mean_reversion import MODEL as MR_MODEL
+
+MODELS=('gaussian','gaussian_scale_mixture','legacy_student_t','fhs_ewma','bounded_ewma_mixture',MR_MODEL)
 DEFAULT_MIXTURE=dict(probabilities=[.9,.1],variance_scales=[.75,3.25])
 
 
@@ -10,7 +12,7 @@ def validate(c):
     model=c.get('scenario_model','legacy_student_t' if c.get('student_nu') is not None else 'gaussian')
     if model not in MODELS:raise ValueError('unsupported scenario_model')
     c['scenario_model']=model
-    if model in ('gaussian_scale_mixture','bounded_ewma_mixture'):
+    if model in ('gaussian_scale_mixture','bounded_ewma_mixture',MR_MODEL):
         mix=c.setdefault('innovation_mixture',dict(DEFAULT_MIXTURE));p=np.asarray(mix.get('probabilities'),float);v=np.asarray(mix.get('variance_scales'),float)
         if p.ndim!=1 or len(p)<2 or p.shape!=v.shape or not np.isfinite(p).all() or not np.isfinite(v).all() or (p<=0).any() or (v<=0).any() or abs(p.sum()-1)>1e-12 or abs(p@v-1)>1e-12:
             raise ValueError('mixture needs positive probabilities summing to1 and positive variance scales with weighted mean1')
@@ -18,6 +20,9 @@ def validate(c):
     if model=='bounded_ewma_mixture':
         from emfin_v2.bounded_volatility import settings
         c['bounded_volatility']=settings(c)
+    if model==MR_MODEL:
+        from emfin_v2.mean_reversion import settings as mr_settings
+        c['mean_reversion']=mr_settings(c)
     return model
 
 
@@ -43,6 +48,7 @@ arithmetic return target. Legacy t has no nonzero exponential moment.
 """
     model=validate(c)
     if model in ('fhs_ewma','bounded_ewma_mixture'):raise ValueError('analytic iid mixture moments do not apply to recursive conditional variance')
+    if model==MR_MODEL:raise ValueError('analytic iid mixture moments do not apply to path-dependent mean reversion')
     b=np.asarray(exposure,float);mu=np.asarray(mean,float);cov=np.asarray(cov,float)
     if b.shape!=mu.shape or cov.shape!=(len(mu),len(mu)) or not np.isfinite(b).all() or not np.isfinite(mu).all() or not np.isfinite(cov).all() or type(weeks) is not int or weeks<1:raise ValueError('finite aligned moment inputs and positive whole weeks required')
     variance=float(b@cov@b)
@@ -55,6 +61,9 @@ arithmetic return target. Legacy t has no nonzero exponential moment.
 
 def describe(c):
     model=validate(c)
+    if model==MR_MODEL:
+        from emfin_v2.mean_reversion import describe as mr_describe
+        return mr_describe(c)
     if model=='bounded_ewma_mixture':return dict(model=model,price_exponential_moments='finite at every finite order/horizon by uniform conditional-MGF bound, not iid exact formula',settings=c['bounded_volatility'],scope='Research-only explicitly capped EWMA variance. Gaussian-mixture returns unbounded; floor/cap relative to past covariance diagonal. Cap changes extreme variance propagation and is not calibrated.')
     if model=='fhs_ewma':return dict(model=model,price_exponential_moments='finite at fixed finite horizons under bounded empirical standardized shocks and finite EWMA recursion, with Gaussian property residuals',scope='Past-only EWMA FHS variant; joint standardized residual rows, development decay0.94, simulated volatility recursion. Not fitted GARCH or a replication of published FHS parameters.')
     if model=='gaussian_scale_mixture':return dict(model=model,price_exponential_moments='finite at all finite orders for linear Gaussian-mixture log paths',mixture=c['innovation_mixture'],scope='Development-selected iid weekly variance mixture, not fitted regimes, not Student-t and not FHS. Log covariance preserved. A common state couples listed assets, FX and property shocks.')
