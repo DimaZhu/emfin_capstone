@@ -43,8 +43,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 RESULTS = Path(__file__).resolve().parent / 'results'
-STATE = RESULTS / 'state.json'
-TMP = RESULTS / 'tmp'
+STATE = None  # set in main() from --part
+TMP = None
 
 FOLD = 13
 TRAIN_MIN = 104
@@ -86,10 +86,10 @@ def fold_starts(n_weeks):
     return out
 
 
-def load_state():
+def load_state(fold_from=0):
     if STATE.exists():
         return json.loads(STATE.read_text())
-    return {'fold': 0, 'mult_index': 0, 'stage': 'solve', 'done': []}
+    return {'fold': fold_from, 'mult_index': 0, 'stage': 'solve', 'done': []}
 
 
 def save_state(s):
@@ -369,21 +369,35 @@ def stage_realized(c, frame, starts):
 
 
 def main():
+    global RESULTS, STATE, TMP
     ap = argparse.ArgumentParser()
     ap.add_argument('--max-seconds', type=float, default=1500)
+    ap.add_argument('--fold-from', type=int, default=0)
+    ap.add_argument('--fold-to', type=int, default=None)
+    ap.add_argument('--part', type=str, default=None,
+                    help='partition label; state/results go under results/part_<part>/')
     args = ap.parse_args()
+    if args.part is not None:
+        RESULTS = RESULTS / f'part_{args.part}'
+    STATE = RESULTS / 'state.json'
+    TMP = RESULTS / 'tmp'
     RESULTS.mkdir(parents=True, exist_ok=True)
     TMP.mkdir(parents=True, exist_ok=True)
     t_start = time.perf_counter()
     c = build_config()
     frame = full_frame(c)
-    starts = fold_starts(len(frame))
-    print(f'{len(starts)} folds over {len(frame)} weeks', flush=True)
+    all_starts = fold_starts(len(frame))
+    fold_to = len(all_starts) if args.fold_to is None else min(args.fold_to, len(all_starts))
+    starts = all_starts[args.fold_from:fold_to]
+    print(f'partition {args.fold_from}:{fold_to} = {len(starts)} folds of {len(all_starts)} over {len(frame)} weeks', flush=True)
+    # fold indices in state are absolute (0..77); map through this partition
     while True:
-        s = load_state()
-        if s['fold'] >= len(starts):
-            print('ALL FOLDS COMPLETE')
+        s = load_state(args.fold_from)
+        if s['fold'] >= fold_to:
+            print('PARTITION COMPLETE')
             return
+        s['fold'] = max(s['fold'], args.fold_from)
+        save_state(s)  # stage helpers re-read from disk; persist the partition clamp
         stage = s['stage']
         need = 300 if stage == 'solve' else 120
         if time.perf_counter() - t_start + need > args.max_seconds:
@@ -391,11 +405,11 @@ def main():
             return
         try:
             if stage == 'solve':
-                msg = stage_solve(c, frame, starts)
+                msg = stage_solve(c, frame, all_starts)
             elif stage == 'select':
-                msg = stage_select(c, frame, starts)
+                msg = stage_select(c, frame, all_starts)
             else:
-                msg = stage_realized(c, frame, starts)
+                msg = stage_realized(c, frame, all_starts)
         except Exception as err:
             # Record the failure with its fold and keep the stage for retry/inspection.
             RESULTS.mkdir(parents=True, exist_ok=True)

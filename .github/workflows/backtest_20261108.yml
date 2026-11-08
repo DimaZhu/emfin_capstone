@@ -1,9 +1,17 @@
 name: capstone-backtest-20261108
 
-# One-off study runner (owner-approved 8 Nov 2026): the walk-forward backtest
-# needs ~100-150s of solver time per fold x 78 folds, which exceeds the local
-# sandbox's per-call process limit. Runs the checkpointed study on this branch
-# and commits results back. GITHUB_TOKEN pushes do not retrigger workflows.
+# One-off study runner (owner approval traced to user channel 8 Nov 2026 19:06+08
+# "Yes, a and b" + Actions go-ahead 19:20+08, relayed by the coordinating agent):
+# the walk-forward backtest needs ~100-900s of solver time per fold x 78 folds,
+# which exceeds the local sandbox's per-call process limit. Runs the checkpointed
+# study on this branch and commits results back. GITHUB_TOKEN pushes do not
+# retrigger workflows.
+#
+# v3: fold-partitioned matrix. Observed pace was ~200-860s solver + ~200-400s
+# selection per fold (~12.5 min/fold -> ~16h sequential). Six partition jobs x
+# 13 folds run in parallel; each owns results/part_<i>/ (disjoint paths, so the
+# rebase-retry push loop merges cleanly). Part 0 resumes from the committed
+# checkpoint (fold 2, stage select).
 
 on:
   push:
@@ -24,6 +32,10 @@ jobs:
   backtest:
     runs-on: ubuntu-latest
     timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [0, 1, 2, 3, 4, 5]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,24 +45,35 @@ jobs:
           python-version: '3.10'
       - name: Install pinned runtime deps
         run: pip install numpy==2.2.6 pandas==2.3.3 scipy==1.15.3 cvxpy==1.7.5 clarabel
-      - name: Run backtest in committed chunks
+      - name: Run backtest partition in committed chunks
+        env:
+          PART: ${{ matrix.part }}
         run: |
           set -x
+          FOLD_FROM=$((PART * 13))
+          FOLD_TO=$((FOLD_FROM + 13))
           git config user.name "capstone-actions"
           git config user.email "actions@localhost"
+          RES=studies/backtest_20261108/results/part_${PART}
+          mkdir -p "$RES"
           for i in $(seq 1 12); do
-            python studies/backtest_20261108/backtest.py --max-seconds 1500 || true
+            python studies/backtest_20261108/backtest.py \
+              --part "$PART" --fold-from "$FOLD_FROM" --fold-to "$FOLD_TO" \
+              --max-seconds 1500 || true
             git pull --rebase origin paper-prep-20261108 || true
             if git status --porcelain studies/backtest_20261108/results | grep .; then
               git add studies/backtest_20261108/results
-              git commit -m "backtest progress chunk $i ($(date -u +%Y-%m-%dT%H:%MZ))"
-              for attempt in 1 2 3; do git push && break || git pull --rebase origin paper-prep-20261108; done
+              git commit -m "backtest part $PART chunk $i ($(date -u +%Y-%m-%dT%H:%MZ))"
+              for attempt in 1 2 3 4; do git push && break || { sleep 15; git pull --rebase origin paper-prep-20261108; }; done
             fi
-            if grep -q '"fold": 78' studies/backtest_20261108/results/state.json 2>/dev/null; then
-              echo "all folds complete"; break
+            if grep -q "\"fold\": $FOLD_TO" "$RES/state.json" 2>/dev/null; then
+              echo "partition complete"; break
             fi
           done
       - name: Final status
+        env:
+          PART: ${{ matrix.part }}
         run: |
-          cat studies/backtest_20261108/results/state.json
-          ls studies/backtest_20261108/results/fold_*.json | wc -l
+          RES=studies/backtest_20261108/results/part_${PART}
+          cat "$RES/state.json"
+          ls "$RES"/fold_*.json | wc -l
