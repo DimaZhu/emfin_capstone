@@ -85,3 +85,31 @@ def test_modelspec_and_verdict():
         ModelSpec(law='x', view='y', cml_budget=-0.1, loss_budget=0.15, wasserstein_radius=0.)
     v = Verdict(overall_pass=True, funding_pass=True, breaches=[])
     assert v.breaches == ()
+
+
+def test_judge_and_engine_end_to_end_on_contracts():
+    """Study-style flow on contracts only: provenance-tagged batches judged
+    via evaluate_batches and executed via the engine, no legacy dicts."""
+    from emfin_v2.evaluation import evaluate_batches
+    c = dict(wealth=100., confidence=.5, cml_budget=.1, loss_budget=.15,
+             funding_budget_fraction=.2, cash_index=0,
+             real_estate=dict(enabled=False), minimum_weights=[0., 0.],
+             fixed_weights={}, wasserstein_radius=0.)
+    paths = np.tile(np.array([[[.8, 1.], [1., 1.]]]), (4, 1, 1))
+    steps = np.array([1, 2])
+    base = np.array([10., 10.])
+    amounts = np.tile(base, (4, 1))
+    growth = np.ones((4, 2))
+    batches = [ScenarioBatch(paths, amounts, steps, base, growth, seed=11,
+                             law='gaussian_scale_mixture', draw_tag='unit'),
+               ScenarioBatch(paths, amounts, steps, base, growth, seed=12,
+                             law='gaussian_scale_mixture', draw_tag='unit')]
+    a = Allocation([50., 50.], ('cash', 'risky'), wealth=100.)
+    q = np.full(4, .25)
+    v = evaluate_batches(c, batches, a, [q, q], [q, q])
+    assert isinstance(v.breaches, tuple)
+    assert v.funding_pass
+    r = run_event_ledger(c, batches[0], a.as_vector(), LedgerSpec.cash_first())
+    assert r['terminal_net'].shape == (4,)
+    with pytest.raises(TypeError):
+        evaluate_batches(c, [batches[0].to_draw()] * 2, a, [q, q], [q, q])
