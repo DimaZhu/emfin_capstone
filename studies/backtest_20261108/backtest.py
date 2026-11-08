@@ -319,6 +319,17 @@ def stage_realized(c, frame, starts):
         if a is None:
             per_method[name] = {'available': False}
             continue
+        a = np.asarray(a, float)
+        # Solver roundoff: the ledger audits reject negatives past 1e-7*wealth,
+        # while full-scale solves can return small negative holdings (observed
+        # -$79 on $100M, fold 28). Clip and disclose the amount in dollars,
+        # the same convention as the engine's execution audit. A negative mass
+        # past 1e-4*wealth is a real model failure: mark the method unavailable.
+        neg = float(np.maximum(-a, 0).sum())
+        if neg > 1e-4 * wealth:
+            per_method[name] = {'available': False, 'negative_holdings_dollars': neg}
+            continue
+        a = np.maximum(a, 0)
         r = cash_first(cf, rd, a)
         wf = a / wealth
         port = marks @ wf  # asset-value path, ratio to reference wealth
@@ -330,6 +341,7 @@ def stage_realized(c, frame, starts):
             turnover = float(np.abs(wf - np.asarray(prev[name])).sum())
         per_method[name] = {
             'available': True,
+            'negative_roundoff_dollars': neg,
             'weights': (a / wealth).tolist(),
             'funded': bool(r['funded'][0]),
             'payment_shortfalls_dollars': r['payment_shortfalls'][0].tolist(),
