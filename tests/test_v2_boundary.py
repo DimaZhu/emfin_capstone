@@ -27,3 +27,18 @@ def test_compatibility_launcher_is_v2_only():
     text=(root/'emfin_capstone/__main__.py').read_text()
     assert 'emfin_v2.default_run' in text
     assert 'legacy.' not in text
+
+
+def test_owner_defaults_10y_cml40():
+    """Owner-set defaults (Tijs, WhatsApp 8 Nov 2026 09:54): cml 40%, 10y horizon.
+
+    Pins the owner-chosen defaults on branch owner-defaults-10y-cml40.
+    Before this change: cml_budget 0.06, horizon_weeks 52, payout months 12.
+    """
+    import json as _json
+    from emfin_v2.default_run import DEFAULT_CONFIG
+    c=_json.loads(DEFAULT_CONFIG.read_text())
+    assert c['cml_budget']==0.40
+    assert c['horizon_weeks']==520
+    assert c['recurring_payout']['months']==120
+    assert c['loss_budget']==0.15

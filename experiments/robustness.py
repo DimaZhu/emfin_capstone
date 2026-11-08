@@ -29,7 +29,12 @@ def digest(obj):return hashlib.sha256(json.dumps(obj,sort_keys=True,default=str)
 
 
 def config(train=200,validation=400,evaluation=800,seeds=4,seed=20261107):
-    c=load_config();c.update(train_scenarios=train,validation_scenarios=validation,evaluation_scenarios=evaluation,validation_seeds=seeds,evaluation_seeds=seeds,seed=seed,scenario_tier='bounded research pilot',multiplier_grid=[1.],cash_mix_grid=[1.,.75,.5,.25,0.])
+    # Deliberate pin (8 Nov 2026): these robustness diagnostics were built and
+    # tuned at the original 1-year default (52 weeks, 12 monthly payouts, 6%
+    # cml cap). The owner moved the bundled default to 10 years / 40% cap;
+    # the held-out actual-history and radius diagnostics below only have ~5
+    # years of genuine future rows, so they keep the original scale.
+    c=load_config();c.update(horizon_weeks=52,cml_budget=0.06);c['recurring_payout']['months']=12;c.update(train_scenarios=train,validation_scenarios=validation,evaluation_scenarios=evaluation,validation_seeds=seeds,evaluation_seeds=seeds,seed=seed,scenario_tier='bounded research pilot',multiplier_grid=[1.],cash_mix_grid=[1.,.75,.5,.25,0.])
     return validate_config(c)
 
 

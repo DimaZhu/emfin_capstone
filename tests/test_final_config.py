@@ -7,8 +7,10 @@ def test_final_boundary_is_identical_and_does_not_mutate_source(tmp_path):
     c=load_config();before=copy.deepcopy(c);direct=validate_config(c)
     p=tmp_path/'config.json';p.write_text(json.dumps(c));loaded=load_config(p)
     assert direct==loaded and c==before
-    assert len(direct['liabilities'])==12
-    assert len(validate_config(direct)['liabilities'])==12
+    # Owner default change (8 Nov 2026): default horizon 10y with $250k/month x120
+    # (was 1y x12); the expansion count pin moves 12 -> 120 with it.
+    assert len(direct['liabilities'])==120
+    assert len(validate_config(direct)['liabilities'])==120
 
 
 def test_invalid_post_ui_mutation_rejected_before_setup(tmp_path,monkeypatch):

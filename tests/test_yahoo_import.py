@@ -23,5 +23,6 @@ def test_default_is_new_offline_universe_with_fx_and_actual_sources():
     assert 'PRIVATE RESEARCH' in c['history_evidence']['label']
     assert 'not an actual-history backtest' in c['history_evidence']['label']
     assert c['cash_index']==4 and not cov[4].any()
+    c['horizon_weeks']=52  # deliberate pin (8 Nov 2026): universe/FX wiring check stays at the original 1y scale after the owner's 10y default change
     d=draw_paths(c,(frame,mu,cov),20,3);assert d[0].shape==(20,52,6)
     assert not d.funding_paths[:,:,5].any()

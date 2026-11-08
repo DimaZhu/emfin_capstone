@@ -31,7 +31,12 @@ def test_presolve_certificate_uses_whole_holdings_domain_not_current_solution():
 def test_new_universe_clarabel_regression_and_original_guardrails():
     from emfin_v2.default_run import load_config,setup,draw_paths,probabilities,solve,metrics,dro_buffer
     from emfin_v2.toolbox.mpep import cml_of_paths
-    c=load_config();c.update(scenario_model='legacy_student_t',student_nu=8.,wasserstein_metric='legacy_l1');d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
+    # Deliberate pin (8 Nov 2026): regression case stays at the original 1y/6%
+    # scale (before the owner's 10y/40% default change); at 520 weeks the same
+    # solve certifies 'optimal_inaccurate' instead of 'optimal'.
+    c=load_config();c.update(horizon_weeks=52,cml_budget=0.06);c['recurring_payout']['months']=12
+    c=__import__('emfin_v2.default_run',fromlist=['validate_config']).validate_config(c)
+    c.update(scenario_model='legacy_student_t',student_nu=8.,wasserstein_metric='legacy_l1');d=draw_paths(c,setup(c),100,c['seed']);q,qs=probabilities(c,d[0],d.re_price_logs)
     a,status=solve(c,d,q,qs,1.)
     assert status['kind']=='optimized' and status['solver']=='CLARABEL'
     assert status['status']=='optimal'

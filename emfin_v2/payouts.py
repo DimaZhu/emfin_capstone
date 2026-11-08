@@ -8,7 +8,7 @@ def expand_recurring(schedule,horizon,one_off=()):
     if schedule is None:return rows
     if not isinstance(schedule,dict):raise ValueError('recurring payout must be a dictionary or null')
     amount=schedule.get('amount');months=schedule.get('months');first=schedule.get('first_week',4);spacing=schedule.get('spacing_weeks',52/12)
-    if type(months) is not int or not 1<=months<=60 or type(first) is not int or first<1:raise ValueError('recurring months1-60 and positive first due week required')
+    if type(months) is not int or not 1<=months<=120 or type(first) is not int or first<1:raise ValueError('recurring months1-120 and positive first due week required')  # bound raised 60->120 for the owner's 10-year default horizon (Tijs, 8 Nov 2026); no test pinned 60
     if isinstance(amount,bool) or not isinstance(amount,(int,float)) or not math.isfinite(amount) or amount<0:raise ValueError('finite nonnegative monthly payment required')
     if isinstance(spacing,bool) or not isinstance(spacing,(int,float)) or not math.isfinite(spacing) or spacing<1:raise ValueError('payment spacing must be at least1 week')
     for i in range(months):
