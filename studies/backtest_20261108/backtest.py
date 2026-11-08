@@ -63,7 +63,7 @@ def build_config():
 def fold_config(c, decision_date):
     """Per-fold config: property calibration sees only data released by the decision date."""
     cf = copy.deepcopy(c)
-    cf['real_estate']['history_end'] = str(decision_date)
+    cf['real_estate']['history_end'] = str(pd.Timestamp(decision_date).date())
     return cf
 
 
@@ -372,6 +372,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--max-seconds', type=float, default=1500)
     args = ap.parse_args()
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    TMP.mkdir(parents=True, exist_ok=True)
     t_start = time.perf_counter()
     c = build_config()
     frame = full_frame(c)
@@ -396,6 +398,7 @@ def main():
                 msg = stage_realized(c, frame, starts)
         except Exception as err:
             # Record the failure with its fold and keep the stage for retry/inspection.
+            RESULTS.mkdir(parents=True, exist_ok=True)
             s = load_state()
             (RESULTS / f'error_fold_{s["fold"]:03d}_{s["stage"]}.json').write_text(json.dumps(
                 {'fold': s['fold'], 'stage': s['stage'], 'mult_index': s['mult_index'],
