@@ -28,6 +28,7 @@ GRAY = HexColor('#5b6b7a')
 LINE = HexColor('#c9d4de')
 PANEL = HexColor('#f2f6f9')
 
+EDITION = '4th'
 FOOTER1 = 'Ballast funding-risk engine - unified scientific report - 8 November 2026, 4th ed.'
 FOOTER2 = 'Private research, not investment advice'
 
@@ -92,7 +93,7 @@ def cover_flow(short_version, contents):
     flow = [Spacer(1, 34 * mm),
             Paragraph('PRIVATE RESEARCH - NOT INVESTMENT ADVICE', COVER_STYLES['kicker']),
             Paragraph('The funding-risk engine,<br/>unified scientific report', COVER_STYLES['title']),
-            Paragraph('4th edition - 8 November 2026 - prepared for Tijs de Boer', COVER_STYLES['subtitle']),
+            Paragraph(f'{EDITION} edition - 8 November 2026 - prepared for Tijs de Boer', COVER_STYLES['subtitle']),
             Paragraph('The short version', COVER_STYLES['svh'])]
     for i, b in enumerate(short_version, 1):
         flow.append(Paragraph(b, COVER_STYLES['sv'], bulletText=f'{i}.'))
@@ -162,10 +163,12 @@ def blocks_to_flow(blocks, figdir):
 
 
 def build(out_path, short_version, contents, blocks, figdir):
+    global FOOTER1
+    FOOTER1 = 'Ballast funding-risk engine - unified scientific report - 8 November 2026, ' + EDITION + ' ed.'
     from reportlab.platypus import NextPageTemplate
     doc = BaseDocTemplate(str(out_path), pagesize=A4,
                           leftMargin=M, rightMargin=M, topMargin=16 * mm, bottomMargin=20 * mm,
-                          title='Ballast funding-risk engine - unified scientific report, 4th edition',
+                          title=f'Ballast funding-risk engine - unified scientific report, {EDITION} edition',
                           author='Instinct research for Tijs de Boer')
     frame = Frame(M, 20 * mm, PAGE_W - 2 * M, PAGE_H - 36 * mm, id='main')
     cover_frame = Frame(18 * mm, 14 * mm, PAGE_W - 36 * mm, PAGE_H - 28 * mm, id='cover',

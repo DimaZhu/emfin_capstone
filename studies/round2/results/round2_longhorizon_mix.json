@@ -1,0 +1,114 @@
+{
+ "meta": {
+  "label": "ROUND 2 STUDY (owner plan 8 Nov 11:37): 10y sleeve mix searches and fresh-path re-validation."
+ },
+ "fresh_sleeve_dual": {
+  "chosen_safe": 0.4,
+  "validation_selected_safe": 0.275,
+  "weights": {
+   "us_equity": 0.1802,
+   "em_equity": 0.0,
+   "gold": 0.1136,
+   "treasury": 0.1491,
+   "tips": 0.057,
+   "tbill": 0.4,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "fifth_law_final_breaches": [],
+  "label": "fresh 10y sleeve (n=400), dual-law (round 2)",
+  "common_cara_ledger_ce": 109624427.7368662,
+  "terminal_median": 134175633.23732734,
+  "terminal_q05": 94005581.82288256,
+  "terminal_q95": 217017679.44657436,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0,
+  "seconds": 39.13555025299979,
+  "fifth_law_score": {
+   "common_cara_ledger_ce": 116295863.83820385,
+   "terminal_median": 132868711.61447519,
+   "terminal_q05": 104535699.66436267,
+   "terminal_q95": 184890290.49482402,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 1.1641532182693481e-10,
+   "total_paid": 30000000.0
+  },
+  "sleeve_proportions": {
+   "us_equity": 0.3604731064967209,
+   "gold": 0.22718120490449006,
+   "treasury": 0.29825130261020405,
+   "tips": 0.11409438598858504
+  }
+ },
+ "fresh_sleeve_single": {
+  "chosen_safe": 0.275,
+  "validation_selected_safe": 0.275,
+  "weights": {
+   "us_equity": 0.2253,
+   "em_equity": 0.0,
+   "gold": 0.142,
+   "treasury": 0.1864,
+   "tips": 0.0713,
+   "tbill": 0.275,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "label": "fresh 10y sleeve, single-law reference",
+  "common_cara_ledger_ce": 111449873.23978782,
+  "terminal_median": 145122627.85648745,
+  "terminal_q05": 96183200.61193769,
+  "terminal_q95": 247276500.64013442,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 1.1641532182693481e-10,
+  "total_paid": 30000000.0
+ },
+ "fix4_sleeve_fresh_dual": {
+  "chosen_safe": 0.15,
+  "validation_selected_safe": 0.1,
+  "weights": {
+   "us_equity": 0.1878,
+   "em_equity": 0.0,
+   "gold": 0.1391,
+   "treasury": 0.4231,
+   "tips": 0.0,
+   "tbill": 0.15,
+   "cash": 0.0,
+   "sg_property": 0.1
+  },
+  "final_pass": true,
+  "final_breaches": [],
+  "fifth_law_final_breaches": [],
+  "label": "fix-4 10y sleeve (old seed) on fresh paths, dual-law (round 2)",
+  "common_cara_ledger_ce": 112165779.45536113,
+  "terminal_median": 144016689.21914756,
+  "terminal_q05": 97221188.49418384,
+  "terminal_q95": 235989186.6808958,
+  "prob_end_below_start": 0.0,
+  "funded": 1.0,
+  "largest_unpaid": 8.731149137020111e-11,
+  "total_paid": 30000000.0,
+  "fifth_law_score": {
+   "common_cara_ledger_ce": 119377263.18634503,
+   "terminal_median": 141604153.05333886,
+   "terminal_q05": 107300427.1218377,
+   "terminal_q95": 203366392.49669734,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "total_paid": 30000000.0
+  },
+  "sleeve_proportions": {
+   "us_equity": 0.2503942157142776,
+   "gold": 0.18549980507329186,
+   "treasury": 0.5641059792124304
+  }
+ }
+}

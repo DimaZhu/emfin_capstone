@@ -1,0 +1,60 @@
+{
+ "meta": {
+  "label": "ROUND 2 STUDY (owner plan 8 Nov 11:37): real-terms repricing of the dual-law recommended mixes on fresh CPI-deflated draws. Fix-3 machinery, fresh seed family.",
+  "fresh_seed": 20261108
+ },
+ "real_repricing": {
+  "fitted": {
+   "view": "fitted",
+   "weights": {
+    "us_equity": 0.107622,
+    "em_equity": 0.0,
+    "gold": 0.133544,
+    "treasury": 0.333834,
+    "tips": 0.0,
+    "tbill": 0.325,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": false,
+   "final_breaches": [
+    "Held-out path-loss tail",
+    "Held-out terminal-loss tail"
+   ],
+   "common_cara_ledger_ce": 70298117.89328179,
+   "terminal_median": 88898251.4862438,
+   "terminal_q05": 54918579.92996582,
+   "terminal_q95": 142801256.8784212,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "total_paid": 30000000.0
+  },
+  "current_quotes": {
+   "view": "current_quotes",
+   "weights": {
+    "us_equity": 0.179057,
+    "em_equity": 0.0,
+    "gold": 0.192057,
+    "treasury": 0.428886,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": false,
+   "final_breaches": [
+    "Held-out path-loss tail",
+    "Held-out terminal-loss tail"
+   ],
+   "common_cara_ledger_ce": 79440156.62771477,
+   "terminal_median": 109424091.84550227,
+   "terminal_q05": 65226708.62812069,
+   "terminal_q95": 187074177.10591617,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "total_paid": 30000000.0
+  }
+ }
+}

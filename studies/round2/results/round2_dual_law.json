@@ -39,6 +39,117 @@
    "largest_unpaid": 8.731149137020111e-11,
    "total_paid": 30000000.0,
    "seconds": 4.034965152999916
+  },
+  "dual": {
+   "chosen_safe": 0.325,
+   "validation_selected_safe": 0.1,
+   "weights": {
+    "us_equity": 0.1076,
+    "em_equity": 0.0,
+    "gold": 0.1335,
+    "treasury": 0.3338,
+    "tips": 0.0,
+    "tbill": 0.325,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": true,
+   "final_breaches": [],
+   "fifth_law_final_breaches": [],
+   "label": "ROUND 2 fitted view, 1y CARA sleeve on fresh seed 20261108 (dual-law: mixture + fhs_ewma)",
+   "common_cara_ledger_ce": 109231069.92786135,
+   "terminal_median": 130698481.95778108,
+   "terminal_q05": 93912966.6800965,
+   "terminal_q95": 200088287.68549317,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "total_paid": 30000000.0,
+   "seconds": 74.40781685499996,
+   "fifth_law_score": {
+    "common_cara_ledger_ce": 113063198.91674922,
+    "terminal_median": 128235574.42059565,
+    "terminal_q05": 99376749.47145006,
+    "terminal_q95": 182071008.33447075,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0
+   }
+  }
+ },
+ "current_quotes": {
+  "sleeve": {
+   "proportions": {
+    "us_equity": 0.223820778566519,
+    "gold": 0.24007146550294386,
+    "treasury": 0.5361077559305372
+   },
+   "raw_safe_share": 0.20453583164927552,
+   "status": "optimized"
+  },
+  "single": {
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": true,
+   "final_breaches": [],
+   "label": "ROUND 2 current_quotes view, 1y CARA sleeve on fresh seed 20261108 (single-law reference)",
+   "common_cara_ledger_ce": 120652112.2454212,
+   "terminal_median": 159195733.86398417,
+   "terminal_q05": 106325858.7416415,
+   "terminal_q95": 261182727.24947402,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 1.1641532182693481e-10,
+   "total_paid": 30000000.0,
+   "seconds": 3.916024718000017
+  },
+  "dual": {
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "weights": {
+    "us_equity": 0.1791,
+    "em_equity": 0.0,
+    "gold": 0.1921,
+    "treasury": 0.4289,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": true,
+   "final_breaches": [],
+   "fifth_law_final_breaches": [],
+   "label": "ROUND 2 current_quotes view, 1y CARA sleeve on fresh seed 20261108 (dual-law: mixture + fhs_ewma)",
+   "common_cara_ledger_ce": 120652112.2454212,
+   "terminal_median": 159195733.86398417,
+   "terminal_q05": 106325858.7416415,
+   "terminal_q95": 261182727.24947402,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 1.1641532182693481e-10,
+   "total_paid": 30000000.0,
+   "seconds": 13.99574816400002,
+   "fifth_law_score": {
+    "common_cara_ledger_ce": 126582145.6122247,
+    "terminal_median": 156462403.83173007,
+    "terminal_q05": 115813941.79556617,
+    "terminal_q95": 232260357.9412109,
+    "prob_end_below_start": 0.0,
+    "funded": 1.0,
+    "largest_unpaid": 8.731149137020111e-11,
+    "total_paid": 30000000.0
+   }
   }
  }
 }
