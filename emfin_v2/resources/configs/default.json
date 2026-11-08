@@ -82,5 +82,10 @@
    3.25
   ]
  },
- "wasserstein_metric": "max_path"
+ "wasserstein_metric": "max_path",
+ "carry_view": "fitted",
+ "secondary_carry_view": "current_quotes",
+ "validation_laws": [
+  "fhs_ewma"
+ ]
 }

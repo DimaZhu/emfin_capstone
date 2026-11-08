@@ -110,6 +110,11 @@ def validate_config(config):
     validate(re)
     if c.get('history_end'):c['real_estate']['history_end']=c['history_end']
     else:c['real_estate'].pop('history_end',None)
+    from emfin_v2.current_rates import validate_carry_view
+    validate_carry_view(c)
+    if c.get('carry_view','fitted')!='fitted' and c.get('scenario_archives'):raise ValueError('current-quotes carry view refits means; incompatible with imported scenario archives')
+    from emfin_v2.multi_law import validate_laws
+    validate_laws(c)
     return c
 
 
@@ -324,6 +329,9 @@ def run(c,output='artifacts/default'):
         anchor_index=candidate
     archive=c.get('scenario_archives')
     fit=None if archive else setup(c)
+    if fit is not None:
+        from emfin_v2.current_rates import apply_carry_view
+        fit=apply_carry_view(c,fit)
     if c['radius_calibration_mode']=='past_empirical':
         if archive:raise ValueError('past empirical radius needs observed chronological histories, not scenario archives')
         from emfin_v2.radius_calibration import calibrate
@@ -356,6 +364,10 @@ def run(c,output='artifacts/default'):
     validation_measures=[probabilities(c,v[0],getattr(v,'re_price_logs',None)) for v in validation]
     validation_nominal=[p[0] for p in validation_measures]
     validation_stress=[p[1] for p in validation_measures]
+    from emfin_v2.multi_law import all_laws,draw_extra_splits,measures as law_measures
+    laws=all_laws(c)
+    extra_validation=draw_extra_splits(c,fit,laws,'validation') if len(laws)>1 and not archive else {}
+    extra_validation_measures={law:law_measures(c,d) for law,d in extra_validation.items()}
     strict_tradeoff=[]
     calibration=[];chosen=None;status={}
     for mult in sorted(c['multiplier_grid'],reverse=True):
@@ -392,11 +404,22 @@ def run(c,output='artifacts/default'):
             if c['funding_mode']=='pay_all_99':
                 from emfin_v2.strict_funding import check
                 strict=check(c,validation,candidate,validation_nominal,validation_stress);passed &= strict['passed']
+            law_pass={}
+            for law,vd in extra_validation.items():
+                vn,vs=extra_validation_measures[law]
+                ci_law=interval([metrics(c,v,candidate)[0] for v in vd])
+                stress_ci_law=interval([metrics(c,v,candidate,ps)[0] for v,ps in zip(vd,vs)])
+                ok_law=bool(np.all(np.maximum(ci_law['high'],stress_ci_law['high'])+dro_buffer(c,candidate)<=budgets))
+                if c['funding_mode']=='pay_all_99':
+                    from emfin_v2.strict_funding import check as law_check
+                    ok_law=bool(ok_law and law_check(c,vd,candidate,vn,vs)['passed'])
+                law_pass[law]=ok_law
+                passed=bool(passed and ok_law)
                 from scipy.special import logsumexp
                 from emfin_v2.ledger import cash_first
                 terminal=np.concatenate([cash_first(c,v,candidate)['terminal_net'] for v in validation]);ce=float(-c['risk_tolerance']*(logsumexp(-terminal/c['risk_tolerance'])-np.log(len(terminal))))
                 strict_tradeoff.append(dict(multiplier=mult,candidate_fraction=risky_fraction,cash_weight=float(candidate[c['cash_index']]/c['wealth']),net_ce=ce,strict_check=strict,validation_budget_passed=bool(np.all(np.maximum(ci['high'],stress_ci['high'])+dro_buffer(c,candidate)<=budgets)),weights=(candidate/c['wealth']).tolist(),selected=False))
-            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,strict_check=strict,passed=passed))
+            calibration.append(dict(multiplier=mult,risky_fraction=risky_fraction,status=diag['kind'],wasserstein_buffer=dro_buffer(c,candidate),gap_cvar=ci,stressed_gap_cvar=stress_ci,strict_check=strict,law_pass=law_pass,passed=passed))
             if passed and chosen is None:
                 chosen=candidate.copy();status=dict(diag)
                 if strict_tradeoff:strict_tradeoff[-1]['selected']=True
@@ -432,16 +455,24 @@ def run(c,output='artifacts/default'):
     evaluation_measures=[probabilities(c,v[0],getattr(v,'re_price_logs',None)) for v in evaluation]
     evaluation_nominal=[p[0] for p in evaluation_measures]
     evaluation_stress=[p[1] for p in evaluation_measures]
+    extra_evaluation=draw_extra_splits(c,fit,laws,'evaluation') if len(laws)>1 and not archive else {}
     from emfin_v2.evaluation import evaluate
     rows=[];fan={}
     for name,a in allocations.items():
         verdict=evaluate(c,evaluation,a,evaluation_nominal,evaluation_stress)
+        law_verdicts=None
+        if extra_evaluation:
+            from emfin_v2.multi_law import evaluate_extra_laws
+            law_verdicts=evaluate_extra_laws(c,extra_evaluation,a)
+        funding_ok=bool(verdict['funding_rule_pass'] and (all(v['funding_rule_pass'] for v in law_verdicts['per_law'].values()) if law_verdicts else True))
+        tail_ok=bool(verdict['funding_pass'] and (all(v['funding_pass'] for v in law_verdicts['per_law'].values()) if law_verdicts else True))
+        overall_ok=bool(verdict['overall_pass'] and (law_verdicts['overall_pass'] if law_verdicts else True))
         scores=[metrics(c,v,a) for v in evaluation]
         gap_ci=interval([s[0] for s in scores]);ce_ci=interval([s[1] for s in scores])
         stress_gap_ci=interval([metrics(c,v,a,ps)[0] for v,ps in zip(evaluation,evaluation_stress)])
         rows.append(dict(method=name,net_ce=ce_ci,gap_cvar=gap_ci,stressed_gap_cvar=stress_gap_ci,training_gap=metrics(c,draw,a)[0].tolist(),wasserstein_buffer=dro_buffer(c,a),wasserstein_gap_upper=(np.maximum(gap_ci['high'],stress_gap_ci['high'])+dro_buffer(c,a)).tolist(),budgets=(draw[3]*c['funding_budget_fraction']).tolist(),
-                         funding_pass=verdict['funding_rule_pass'],tail_budget_pass=verdict['funding_pass'],overall_pass=verdict['overall_pass'],evaluation=verdict,
-                         evaluation_pass=verdict['overall_pass']))
+                         funding_pass=funding_ok,tail_budget_pass=tail_ok,overall_pass=overall_ok,evaluation=verdict,law_verdicts=law_verdicts,
+                         evaluation_pass=overall_ok))
         # Separate executable-policy audit, not a relabel of optimizer accounting.
         from emfin_v2.ledger import summarize_execution
         try:
@@ -463,7 +494,7 @@ def run(c,output='artifacts/default'):
     common_mu=(gross_common-1).mean(0);common_cov=np.cov(gross_common,rowvar=False)
     frontier=efficient_frontier(gross_common,minimum_weights=mins,fixed_weights=fixed)
     points={name:dict(risk=float(np.sqrt((a/c['wealth'])@common_cov@(a/c['wealth']))),mean=float(common_mu@(a/c['wealth']))) for name,a in allocations.items()}
-    result=dict(strict_tradeoff=strict_tradeoff,innovation_evidence=innovation_evidence,frontier=frontier,points=points,label=c['label'],config=c,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
+    result=dict(strict_tradeoff=strict_tradeoff,innovation_evidence=innovation_evidence,frontier=frontier,points=points,label=c['label'],config=c,carry_view=c.get('carry_view','fitted'),validation_laws=laws,snapshot=c.get('valuation_date','user-supplied archive') if archive else str(fit[0].index[-1].date()),seconds=time.perf_counter()-started,
         status=status,calibration=calibration,rows=rows,weights={k:(a/c['wealth']).tolist() for k,a in allocations.items()},
         assets=c.get('asset_names',['DFUS','DFAI','DFAE','UST10','USIG','MMKT']+(['AD apartments (private observed calibration)'] if d==7 and c['real_estate'].get('source')=='abu_dhabi_private' else ['Singapore URA private residential price index'] if d==7 and c['real_estate'].get('source')=='singapore_ura' else ['RE synthetic'] if d==7 else [])),
         net_wealth_fan=fan, supersedes='All earlier multi-period figures before cumulative payout correction.',
@@ -477,6 +508,20 @@ def run(c,output='artifacts/default'):
                  'Cumulative payouts use money-market opportunity costs, not dynamic rebalancing. RE uses an explicit fixed planned sale/settlement schedule; marked value is not available cash.',
                  'Cash mixing is an explicit validation-selected portfolio calibration grid, not a claim of globally optimal robust weights.',
                  '1/N allocates the free budget equally subject to floors and fixed initial holdings; all allocation comparators and the displayed frontier honor those holdings.'])
+    from emfin_v2.current_rates import carry_quotes,SIMPLIFICATION
+    if c.get('carry_view','fitted')!='fitted':
+        quotes=carry_quotes(c)
+        applied=c.get('_carry_applied',{})
+        result['caveats'].append('Carry view: current market quotes as of '+quotes['asof']+' ('+quotes['source']+'). Applied to: '+', '.join('%s %.2f%%/yr'%(k,100*v) for k,v in applied.items())+'. '+SIMPLIFICATION+'.')
+    if len(laws)>1:
+        result['caveats'].append('Multi-law judging: candidates must pass on independent draws of '+', '.join(laws)+'. Extra laws only judge frozen holdings; they never fit, solve, select or repair.')
+    if c.get('secondary_carry_view') and not c.get('_secondary_view_done'):
+        import copy as _copy
+        c2=_copy.deepcopy(c)
+        c2['carry_view']=c2.pop('secondary_carry_view')
+        c2['_secondary_view_done']=True
+        result['secondary_view']=run(c2,str(Path(output)/'secondary_view'))
+        result['caveats'].append('Second default view: the whole run repeated at current market quotes (secondary_view). Same budgets, laws and validation discipline; only safe-asset carry changes.')
     from emfin_v2.dashboard import summarize
     result['dashboard']=summarize(c,draw,q,qs,evaluation,allocations,rows,status,result['assets'])
     def convert(x):

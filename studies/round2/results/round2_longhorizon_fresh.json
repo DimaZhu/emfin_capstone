@@ -1,0 +1,38 @@
+{
+ "meta": {
+  "label": "ROUND 2 STUDY (owner plan 8 Nov 11:37): true 10y sleeve re-validation on fresh paths. Fresh seed family 20261108 for training, validation and final draws. n=400 attempted (fix 4 labeled it out of reach); if infeasible, labeled.",
+  "fresh_seed": 20261108
+ },
+ "solves": {
+  "100": {
+   "n": 100,
+   "seconds": 20.507469438999976,
+   "status": "optimized",
+   "weights": {
+    "us_equity": 0.24698794431700735,
+    "em_equity": 4.8393057058872015e-11,
+    "gold": 0.41739800778974456,
+    "treasury": 0.23561402765835204,
+    "tips": 2.06158876827693e-10,
+    "tbill": 1.9176192171670822e-08,
+    "cash": 7.568599592669481e-10,
+    "sg_property": 0.09999999999474302
+   }
+  },
+  "200": {
+   "n": 200,
+   "seconds": 51.992954596000004,
+   "status": "optimized",
+   "weights": {
+    "us_equity": 0.36859013305745014,
+    "em_equity": 3.3005471604754286e-11,
+    "gold": 0.14310794817635514,
+    "treasury": 0.38830189864037284,
+    "tips": 2.551318602155919e-10,
+    "tbill": 1.8297367504055036e-08,
+    "cash": 1.5340145651187227e-09,
+    "sg_property": 0.09999999999930907
+   }
+  }
+ }
+}

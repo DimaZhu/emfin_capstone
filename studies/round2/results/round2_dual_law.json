@@ -1,0 +1,44 @@
+{
+ "meta": {
+  "label": "ROUND 2 STUDY (owner plan 8 Nov 11:37): fhs_ewma regime/bootstrap variant as a fifth judging law; current-quotes carry as second default view. Fresh seed family.",
+  "fresh_seed": 20261108,
+  "fifth_law": "fhs_ewma"
+ },
+ "fitted": {
+  "sleeve": {
+   "proportions": {
+    "us_equity": 0.18716871484336245,
+    "gold": 0.23225073448197822,
+    "treasury": 0.5805805506746593
+   },
+   "raw_safe_share": 0.23984628434305738,
+   "status": "optimized"
+  },
+  "single": {
+   "chosen_safe": 0.1,
+   "validation_selected_safe": 0.1,
+   "weights": {
+    "us_equity": 0.1497,
+    "em_equity": 0.0,
+    "gold": 0.1858,
+    "treasury": 0.4645,
+    "tips": 0.0,
+    "tbill": 0.1,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": true,
+   "final_breaches": [],
+   "label": "ROUND 2 fitted view, 1y CARA sleeve on fresh seed 20261108 (single-law reference)",
+   "common_cara_ledger_ce": 111707198.3726214,
+   "terminal_median": 145950896.17444563,
+   "terminal_q05": 96951736.30855313,
+   "terminal_q95": 239761854.0053358,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 8.731149137020111e-11,
+   "total_paid": 30000000.0,
+   "seconds": 4.034965152999916
+  }
+ }
+}
