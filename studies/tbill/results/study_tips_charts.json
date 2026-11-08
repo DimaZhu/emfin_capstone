@@ -741,6 +741,33 @@
    "total_paid": 90000000.0,
    "seconds": 13.802949273000195,
    "years": 30
+  },
+  "10y": {
+   "chosen_safe": 0.375,
+   "validation_selected_safe": 0.375,
+   "weights": {
+    "us_equity": 0.1749,
+    "em_equity": 0.0,
+    "gold": 0.1061,
+    "treasury": 0.2116,
+    "tips": 0.0324,
+    "tbill": 0.375,
+    "cash": 0.0,
+    "sg_property": 0.1
+   },
+   "final_pass": true,
+   "final_breaches": [],
+   "label": "10y horizon, 15% terminal loss limit at year 10 (owner 10:23)",
+   "common_cara_ledger_ce": 110840548.23469618,
+   "terminal_median": 133892548.60325426,
+   "terminal_q05": 94866753.36914818,
+   "terminal_q95": 209417868.54448485,
+   "prob_end_below_start": 0.0,
+   "funded": 1.0,
+   "largest_unpaid": 1.1641532182693481e-10,
+   "total_paid": 30000000.0,
+   "seconds": 2.551218177999999,
+   "years": 10
   }
  },
  "payout": {
