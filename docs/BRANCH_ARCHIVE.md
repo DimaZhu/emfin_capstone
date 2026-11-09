@@ -1,9 +1,9 @@
 # Branch archive (9 Nov 2026 integration)
 
 On 9 Nov 2026 the active side branches were merged into `engine-v2` and the
-fully contained ones deleted. Every deleted branch is recoverable from the SHA
-below (the objects stay in the repository; nothing was force-pushed or
-rewritten).
+fully contained ones deleted. Their SHAs are listed below. A separate unreviewed
+branch was later removed at the owner's request; its full SHA is recorded for
+recovery. Nothing was force-pushed or rewritten.
 
 To restore one:
 
@@ -40,12 +40,17 @@ git push origin <name>
 | tbill-asset | fde68ecd6ee91cd765237a8f60c55a83be57dfe8 | T-bill asset |
 | tips-model-10y | 1206801513391ce9e58e035dee58d78ba1680ed5 | TIPS model, 10y |
 
+## Dropped 9 Nov 2026 at owner's request (not merged)
+
+| Branch | Final SHA | Contents |
+|--------|-----------|----------|
+| TijsdeBoer-patch-1 | a420c8845592ddf630277da59a795a66da1be347 | Unreviewed web-uploaded `real_estate` toolbox draft; dropped at the owner's request, not merged. |
+
 ## Kept
 
 | Branch | SHA | Why |
 |--------|-----|-----|
 | engine-v2 | moving | The default branch and integration line. |
 | main | e80e6c33a57d43d22fc93a72940267b9a1142d24 | Historical root from the original fork; kept for provenance. |
-| TijsdeBoer-patch-1 | a420c8845592ddf630277da59a795a66da1be347 | Owner's web-uploaded `real_estate` toolbox draft; not reviewed, not merged. Ask before touching. |
 
 Tags v2.0 and v2.1 are unchanged.
