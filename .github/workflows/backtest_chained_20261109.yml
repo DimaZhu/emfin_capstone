@@ -1,0 +1,54 @@
+name: capstone-backtest-chained-20261109
+
+# Chained-wealth walk-forward backtest (owner ask 9 Nov 2026 09:37 +08).
+# STRICTLY SEQUENTIAL: fold k is solved at the wealth compounded from folds
+# 0..k-1, so no matrix partitioning is possible. One job runs folds until its
+# wall-clock budget (~330 min, inside the 360-min job limit), commits the
+# checkpoint, and exits; the run continues via the next trigger.
+#
+# TRIGGER IS MANUAL-ONLY ON PURPOSE (9 Nov scoping, parent instruction): do not
+# add a push trigger or dispatch before the owner approves the CI-minute spend
+# (~1,500 min estimated vs ~600 left in the current billing cycle). To run:
+# dispatch manually (Actions UI), or add `push` back to `on:` and push an empty
+# commit. GITHUB_TOKEN pushes do not retrigger workflows, so the runner's own
+# result commits are safe.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: backtest-chained-20261109
+  cancel-in-progress: false  # never cancel mid-chain; state is per-fold committed
+
+permissions:
+  contents: write
+
+jobs:
+  backtest-chained:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: paper-chained-20261109
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned runtime deps
+        run: pip install numpy==2.2.6 pandas==2.3.3 scipy==1.15.3 cvxpy==1.7.5 clarabel
+      - name: Run chained folds until budget
+        run: |
+          set -x
+          git config user.name "capstone-actions"
+          git config user.email "actions@localhost"
+          python studies/backtest_chained_20261109/backtest.py --max-seconds 19800 || true
+          git pull --rebase origin paper-chained-20261109 || true
+          if git status --porcelain studies/backtest_chained_20261109/results | grep .; then
+            git add studies/backtest_chained_20261109/results
+            git commit -m "chained backtest progress ($(date -u +%Y-%m-%dT%H:%MZ))"
+            for attempt in 1 2 3; do git push && break || git pull --rebase origin paper-chained-20261109; done
+          fi
+      - name: Final status
+        run: |
+          cat studies/backtest_chained_20261109/results/state.json
+          ls studies/backtest_chained_20261109/results/fold_*.json 2>/dev/null | wc -l
