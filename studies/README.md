@@ -18,5 +18,6 @@ hashes for the 8 Nov runs.
 | [meanreversion](meanreversion/) | Mean-reversion carry scenario. | Complete, 8 Nov |
 
 Headline across studies: hard limits, not utility choice, set the portfolio;
-horizon is the biggest lever; the engine is insurance, not outperformance
-(claim 4 in docs/paper/CLAIMS_EVIDENCE_MAP.md).
+horizon is the biggest lever; estimation uncertainty is the headline (claim 5), and
+the engine delivers a funding guarantee at a cost in growth (claim 4), see
+docs/paper/CLAIMS_EVIDENCE_MAP.md.
