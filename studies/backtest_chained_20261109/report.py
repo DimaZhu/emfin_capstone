@@ -131,7 +131,7 @@ def make_figures(folds, per):
         if any(v is None for v in wi):
             continue
         wi = [v / 1e8 for v in wi]
-        label = m if m != 'proposed' else 'proposed (abstentions held cash)'
+        label = m if m != 'proposed' else 'proposed (abstentions held T-bills)'
         ax.plot(x, [1.0] + wi[:-1], label=label, linewidth=2 if m == 'proposed' else 1)
     abst_pts = [(i, folds[i]['wealth_before']['proposed'] / 1e8) for i, f in enumerate(folds)
                 if f['methods'].get('proposed', {}).get('abstained')]
