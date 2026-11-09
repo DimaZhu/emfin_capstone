@@ -13,12 +13,10 @@ name: capstone-backtest-20261108
 # rebase-retry push loop merges cleanly). Part 0 resumes from the committed
 # checkpoint (fold 2, stage select).
 
+# Manual only. The study is complete (78/78 folds, 8-9 Nov 2026); the former
+# push trigger on the paper-prep-20261108 branch was removed during the 9 Nov
+# branch cleanup so no push can ever launch a solver run.
 on:
-  push:
-    branches: [paper-prep-20261108]
-    paths:
-      - 'studies/backtest_20261108/**'
-      - '.github/workflows/backtest_20261108.yml'
   workflow_dispatch:
 
 concurrency:
