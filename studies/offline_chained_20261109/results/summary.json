@@ -1,0 +1,159 @@
+{
+ "design": "Motivation (design review, 9 Nov 2026; owner approval \"Ok. Go!\" 10:30 +08):\nthe full chained-wealth re-solve (studies/backtest_chained_20261109) re-solves\nevery fold at the method's compounded wealth. That state-dependence only\nmatters if wealth moves far from the $100M reference. This study answers the\nchained question from the reference-wealth study's OWN fold records\n(studies/backtest_20261108/results/part_*/fold_*.json), at zero solver cost:",
+ "payout_per_fold_dollars": 750000.0,
+ "reference_wealth_dollars": 100000000.0,
+ "abstention_folds": [
+  7,
+  9,
+  41,
+  43,
+  49,
+  62,
+  63,
+  68,
+  69
+ ],
+ "abstention_decision_dates": [
+  "2008-12-12",
+  "2009-06-12",
+  "2017-06-02",
+  "2017-12-01",
+  "2019-05-31",
+  "2022-08-26",
+  "2022-11-25",
+  "2024-02-23",
+  "2024-05-24"
+ ],
+ "abstention_treatment": "proposed earns the 0% registry cash account (conservative)",
+ "methods_mean_return_in_abstention_folds": {
+  "cash": -0.007499999999999951,
+  "1/N": 0.017103803370207685,
+  "min_var": -0.006672330020343249,
+  "shrunk_MV": 0.0028851379700336587
+ },
+ "offline_chained": {
+  "proposed": {
+   "terminal_wealth_dollars": 112173250.9639445,
+   "terminal_relative": 1.121732509639445,
+   "min_wealth_dollars": 98968857.17223905,
+   "max_payout_ratio_per_fold": 0.00757814146216469
+  },
+  "cash": {
+   "terminal_wealth_dollars": 41500000.0,
+   "terminal_relative": 0.415,
+   "min_wealth_dollars": 41500000.0,
+   "max_payout_ratio_per_fold": 0.018072289156626505
+  },
+  "1/N": {
+   "terminal_wealth_dollars": 215398689.93522236,
+   "terminal_relative": 2.1539868993522235,
+   "min_wealth_dollars": 89622620.2325894,
+   "max_payout_ratio_per_fold": 0.008368423039335311
+  },
+  "min_var": {
+   "terminal_wealth_dollars": 51648903.16728255,
+   "terminal_relative": 0.5164890316728256,
+   "min_wealth_dollars": 51648903.16728255,
+   "max_payout_ratio_per_fold": 0.014521121534195406
+  },
+  "shrunk_MV": {
+   "terminal_wealth_dollars": 121683477.17280692,
+   "terminal_relative": 1.2168347717280692,
+   "min_wealth_dollars": 98565856.90702017,
+   "max_payout_ratio_per_fold": 0.007609125751399851
+  }
+ },
+ "paired_vs_proposed": {
+  "cash": {
+   "excluding_abstentions": {
+    "n": 69,
+    "mean_diff": 0.009827701563499129,
+    "se": 0.0030546444511396816
+   },
+   "including_abstentions_as_cash": {
+    "n": 78,
+    "mean_diff": 0.008693735998479992,
+    "se": 0.0027235029878932113
+   }
+  },
+  "1/N": {
+   "excluding_abstentions": {
+    "n": 69,
+    "mean_diff": -0.005279574898835371,
+    "se": 0.004876185468031962
+   },
+   "including_abstentions_as_cash": {
+    "n": 78,
+    "mean_diff": -0.007509293568609101,
+    "se": 0.004487761570619412
+   }
+  },
+  "min_var": {
+   "excluding_abstentions": {
+    "n": 69,
+    "mean_diff": 0.008157056237060986,
+    "se": 0.0027384508238998797
+   },
+   "including_abstentions_as_cash": {
+    "n": 78,
+    "mean_diff": 0.007120357058208939,
+    "se": 0.0024463570952161368
+   }
+  },
+  "shrunk_MV": {
+   "excluding_abstentions": {
+    "n": 69,
+    "mean_diff": 0.0009608438809689776,
+    "se": 0.00162200969589492
+   },
+   "including_abstentions_as_cash": {
+    "n": 78,
+    "mean_diff": -0.0003483078710697882,
+    "se": 0.0018226581670596432
+   }
+  }
+ },
+ "bootstrap": {
+  "seed": 20261109,
+  "n_replications": 5000,
+  "mean_block_folds": 4,
+  "per_method": {
+   "proposed": {
+    "terminal_q05": 0.6488507875851908,
+    "terminal_q50": 1.0963599952485645,
+    "terminal_q95": 1.7802026290072226,
+    "p_min_wealth_below_075": 0.166
+   },
+   "cash": {
+    "terminal_q05": 0.415,
+    "terminal_q50": 0.415,
+    "terminal_q95": 0.415,
+    "p_min_wealth_below_075": 1.0
+   },
+   "1/N": {
+    "terminal_q05": 0.9728808288198696,
+    "terminal_q50": 2.148067981276821,
+    "terminal_q95": 4.402649757904729,
+    "p_min_wealth_below_075": 0.0892
+   },
+   "min_var": {
+    "terminal_q05": 0.4404599116391508,
+    "terminal_q50": 0.5061251818936969,
+    "terminal_q95": 0.5858365228180847,
+    "p_min_wealth_below_075": 1.0
+   },
+   "shrunk_MV": {
+    "terminal_q05": 0.6601502820918888,
+    "terminal_q50": 1.1518185510697945,
+    "terminal_q95": 1.8301258853939015,
+    "p_min_wealth_below_075": 0.1418
+   }
+  },
+  "p_proposed_terminal_exceeds": {
+   "cash": 0.9982,
+   "1/N": 0.0358,
+   "min_var": 0.9958,
+   "shrunk_MV": 0.417
+  }
+ }
+}

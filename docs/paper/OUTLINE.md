@@ -50,7 +50,9 @@ the Sobol/antithetic experiments. Anything not supporting claims 1–6.
 5. Policy-by-model matrix heatmap — exists as table.
 6. Estimation-uncertainty band chart (promote from UIF study to main text).
 7. NEW: walk-forward realized funding deficits and paired terminal-wealth
-   differences vs benchmarks — from studies/backtest_20261108 (running).
+   differences vs benchmarks — from studies/backtest_20261108 (done 9 Nov);
+   plus offline chained wealth paths + stationary-bootstrap panel from
+   studies/offline_chained_20261109/figs/offline_chained.png.
 8. NEW: empirical radius vs placeholder with heldout coverage — from
    studies/radius_20261108 (first results in).
 

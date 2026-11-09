@@ -21,10 +21,17 @@ Folds completed: 78 of 78.
 
 ## Paired differences vs proposed (per-fold realized window return)
 
-- proposed minus cash: +0.0098 per fold +/- 0.0031 (descriptive SE), n=69
-- proposed minus 1/N: -0.0053 per fold +/- 0.0049 (descriptive SE), n=69
-- proposed minus min_var: +0.0082 per fold +/- 0.0027 (descriptive SE), n=69
-- proposed minus shrunk_MV: +0.0010 per fold +/- 0.0016 (descriptive SE), n=69
+Both abstention treatments (numbers verified by
+studies/offline_chained_20261109/analysis.py). Excluding the 9 abstention
+folds (n=69) flatters the proposed method: in those quarters 1/N averaged
++1.71% while proposed-as-cash earns -0.75%.
+
+| comparison | excluding abstentions (n=69) | including abstentions as cash (n=78) |
+|---|---|---|
+| proposed - cash | +0.0098 +/- 0.0031 | +0.0087 +/- 0.0027 |
+| proposed - 1/N | -0.0053 +/- 0.0049 | -0.0075 +/- 0.0045 |
+| proposed - min_var | +0.0082 +/- 0.0027 | +0.0071 +/- 0.0024 |
+| proposed - shrunk_MV | +0.0010 +/- 0.0016 | -0.0003 +/- 0.0018 |
 
 ## Solver health: 105 solves, kinds {'optimized': 64, 'verified pointwise fixed-holdings fallback': 14, 'incompatible risk settings': 27}, median 878.13s, multipliers used [0.1, 0.25, 0.5, 1.0]
 Folds where no proposed allocation passed: [7, 9, 41, 43, 49, 62, 63, 68, 69]
@@ -33,9 +40,28 @@ Proposed wealth relative counting abstention folds as cash: 1.073 (headline 1.14
 ## Caveats
 
 - Folds are solved at stationary reference wealth ($100M / $10M risk tolerance);
-  wealth relatives compound offline. Chained-wealth re-solving is future work.
+  wealth relatives compound offline. The chained-wealth question is answered
+  offline from these fold records in studies/offline_chained_20261109
+  (chaining + stationary bootstrap; the full chained re-solve exists on branch
+  paper-chained-20261109 but is deferred: proposed wealth stays within
+  [99.0, 112.2]M offline, so its wealth-scaled risk tolerance barely moves
+  and decisions would barely change).
+- The registry cash account is a 0%-yield uncalibrated placeholder
+  (configs/assets.json). "Beats cash" is therefore near-trivial (real T-bills
+  paid 0-5% over the sample; a committed DGS3MO-based bill roll exists at
+  resources/data/actual_etfs/tbill-total-return.csv), and min_var loads on
+  that same 0% cash (terminal 0.628x vs cash 0.556x), so the cash and min_var
+  comparisons are nearly the same comparison, not two independent wins.
+- min_var and shrunk_MV are computed on the proposed model's fitted scenario
+  moments (same past-only information set), not on sample moments of past
+  returns; min_var is not the classic sample-covariance benchmark.
+- Realized marks apply liquidity haircuts to the full notional every fold
+  (gross*(1-haircut)), not per unit traded: a uniform cost convention equal
+  across methods, but harsher on low-turnover baselines (1/N turnover 0.05)
+  relative to a turnover-based cost model than on the proposed method (0.65).
 - 78 folds bound what can be said: paired differences are descriptive, no
-  significance claims. Early folds have ~2 years of training data.
+  significance claims. Early folds have ~2 years of training data; the first
+  abstention (2008-12-12) is plausibly an artifact of that.
 - Property marks: quarterly URA index, 45-day release lag; engine rent/sale
   conventions. No weekly property tails are observed or claimed.
 - Cash account is the registry fixed-rate account in both model and realized
