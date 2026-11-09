@@ -45,7 +45,9 @@ def main():
         for name in ['emfin_v2','emfin_capstone']:
             result=run([python,'-m',name,'--config',config_path,'--output',work/name],work,env)
             report=json.loads((work/name/'results.json').read_text())
-            assert report['status']['kind'] in ['optimized','calibrated optimizer/cash mixture'],report
+            status=report['status']
+            kind=status['kind'] if isinstance(status,dict) else status
+            assert kind in ['optimized','calibrated optimizer/cash mixture'],report
             assert (work/name/'report.html').is_file()
             print(name,result.stdout.strip())
         cmd=bindir/('emfin-run.exe' if os.name=='nt' else 'emfin-run')
