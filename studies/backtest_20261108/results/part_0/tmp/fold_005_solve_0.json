@@ -1,0 +1,11 @@
+{
+ "stage": "solve",
+ "fold": 5,
+ "mult": 1.0,
+ "diag": {
+  "kind": "verified pointwise fixed-holdings fallback",
+  "reason": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 2.78e-05; exact representation retry: equivalent exponential CARA optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 1.67e-05",
+  "optimality_claim": false
+ },
+ "solve_seconds": 1436.35
+}

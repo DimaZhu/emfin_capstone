@@ -1,0 +1,1114 @@
+{
+ "stage": "solve",
+ "fold": 3,
+ "mult": 1.0,
+ "diag": {
+  "kind": "optimized",
+  "status": "optimal",
+  "solver": "CLARABEL",
+  "ce_in_solver": 255896461.186454,
+  "objective_kind": "cara",
+  "objective_formulation": "equivalent_centered_exp_cara",
+  "first_formulation_failure": "multi-period optimization failed validation: CLARABEL: Solver 'CLARABEL' failed. Try another solver, or solve with verbose=True for more information.; SCS: constraint residual 0.0289",
+  "weights": "[1.12857900e-01 2.35396046e-02 4.82627220e-02 7.14934382e-01\n 4.05391051e-04 1.00000000e-01]",
+  "funding_presolve_certificates": [
+   {
+    "payout_index": 0,
+    "week": 4,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 1,
+    "week": 8,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 2,
+    "week": 13,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 3,
+    "week": 17,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 4,
+    "week": 21,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 5,
+    "week": 26,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 6,
+    "week": 30,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 7,
+    "week": 34,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 8,
+    "week": 39,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 9,
+    "week": 43,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 10,
+    "week": 47,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 11,
+    "week": 52,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 12,
+    "week": 56,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 13,
+    "week": 60,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 14,
+    "week": 65,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 15,
+    "week": 69,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 16,
+    "week": 73,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 17,
+    "week": 78,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 18,
+    "week": 82,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 19,
+    "week": 86,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 20,
+    "week": 91,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 21,
+    "week": 95,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 22,
+    "week": 99,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 23,
+    "week": 104,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 24,
+    "week": 108,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 25,
+    "week": 112,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 26,
+    "week": 117,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 27,
+    "week": 121,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 28,
+    "week": 125,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 29,
+    "week": 130,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 30,
+    "week": 134,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 31,
+    "week": 138,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 32,
+    "week": 143,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 33,
+    "week": 147,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 34,
+    "week": 151,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 35,
+    "week": 156,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 36,
+    "week": 160,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 37,
+    "week": 164,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 38,
+    "week": 169,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 39,
+    "week": 173,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 40,
+    "week": 177,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 41,
+    "week": 182,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 42,
+    "week": 186,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 43,
+    "week": 190,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 44,
+    "week": 195,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 45,
+    "week": 199,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 46,
+    "week": 203,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 47,
+    "week": 208,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 48,
+    "week": 212,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 49,
+    "week": 216,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 50,
+    "week": 221,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 51,
+    "week": 225,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 52,
+    "week": 229,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 53,
+    "week": 234,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 54,
+    "week": 238,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 55,
+    "week": 242,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 56,
+    "week": 247,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 57,
+    "week": 251,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 58,
+    "week": 255,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 59,
+    "week": 260,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 60,
+    "week": 264,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 61,
+    "week": 268,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 62,
+    "week": 273,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 63,
+    "week": 277,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 64,
+    "week": 281,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 65,
+    "week": 286,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 66,
+    "week": 290,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 67,
+    "week": 294,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 68,
+    "week": 299,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 69,
+    "week": 303,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 70,
+    "week": 307,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 71,
+    "week": 312,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 72,
+    "week": 316,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 73,
+    "week": 320,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 74,
+    "week": 325,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 75,
+    "week": 329,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 76,
+    "week": 333,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 77,
+    "week": 338,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 78,
+    "week": 342,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 79,
+    "week": 346,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 80,
+    "week": 351,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 81,
+    "week": 355,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 82,
+    "week": 359,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 83,
+    "week": 364,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 84,
+    "week": 368,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 85,
+    "week": 372,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 86,
+    "week": 377,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 87,
+    "week": 381,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 88,
+    "week": 385,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 89,
+    "week": 390,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 90,
+    "week": 394,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 91,
+    "week": 398,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 92,
+    "week": 403,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 93,
+    "week": 407,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 94,
+    "week": 411,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 95,
+    "week": 416,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 96,
+    "week": 420,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 97,
+    "week": 424,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 98,
+    "week": 429,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 99,
+    "week": 433,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 100,
+    "week": 437,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 101,
+    "week": 442,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 102,
+    "week": 446,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 103,
+    "week": 450,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 104,
+    "week": 455,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 105,
+    "week": 459,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 106,
+    "week": 463,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 107,
+    "week": 468,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 108,
+    "week": 472,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 109,
+    "week": 476,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 110,
+    "week": 481,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 111,
+    "week": 485,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 112,
+    "week": 489,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 113,
+    "week": 494,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 114,
+    "week": 498,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 115,
+    "week": 502,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 116,
+    "week": 507,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 117,
+    "week": 511,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 118,
+    "week": 515,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   },
+   {
+    "payout_index": 119,
+    "week": 520,
+    "pointwise_gap_bound": 0.0,
+    "worst_holdings_w1": 0.0003999999999999997,
+    "budget": 0.0005,
+    "upper_bound": 0.0003999999999999997,
+    "scope": "Every admissible long-only holding and every scenario weighting, by pointwise lower portfolio bound."
+   }
+  ],
+  "native_utility": {
+   "available": true,
+   "ce": 255896461.18645397,
+   "domain_violations": 0,
+   "kind": "cara",
+   "gamma": null,
+   "shortfall_penalty": 4.0,
+   "domain_margin": 1e-08,
+   "terminal_payment_floor": 30000000.0,
+   "initial_surplus": 70000000.0,
+   "argument": "terminal surplus after payments",
+   "scale": 100000000,
+   "local_absolute_aversion": 1e-07,
+   "scope": "Engineering preference comparison, not client-calibrated. HARA(gross minus floor) is CRRA on surplus at the same gamma. Native CEs with gross/net arguments are not cross-family rankings."
+  },
+  "cara_ce_at_solution": 255896461.186454
+ },
+ "solve_seconds": 890.38
+}

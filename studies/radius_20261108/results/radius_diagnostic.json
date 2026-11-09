@@ -1,0 +1,167 @@
+{
+ "blocks": 21,
+ "block_weeks": 52,
+ "dates": [
+  {
+   "first": "2005-03-18",
+   "last": "2006-03-10"
+  },
+  {
+   "first": "2006-03-17",
+   "last": "2007-03-09"
+  },
+  {
+   "first": "2007-03-16",
+   "last": "2008-03-07"
+  },
+  {
+   "first": "2008-03-14",
+   "last": "2009-03-06"
+  },
+  {
+   "first": "2009-03-13",
+   "last": "2010-03-05"
+  },
+  {
+   "first": "2010-03-12",
+   "last": "2011-03-04"
+  },
+  {
+   "first": "2011-03-11",
+   "last": "2012-03-02"
+  },
+  {
+   "first": "2012-03-09",
+   "last": "2013-03-01"
+  },
+  {
+   "first": "2013-03-08",
+   "last": "2014-02-28"
+  },
+  {
+   "first": "2014-03-07",
+   "last": "2015-02-27"
+  },
+  {
+   "first": "2015-03-06",
+   "last": "2016-02-26"
+  },
+  {
+   "first": "2016-03-04",
+   "last": "2017-02-24"
+  },
+  {
+   "first": "2017-03-03",
+   "last": "2018-02-23"
+  },
+  {
+   "first": "2018-03-02",
+   "last": "2019-02-22"
+  },
+  {
+   "first": "2019-03-01",
+   "last": "2020-02-21"
+  },
+  {
+   "first": "2020-02-28",
+   "last": "2021-02-19"
+  },
+  {
+   "first": "2021-02-26",
+   "last": "2022-02-18"
+  },
+  {
+   "first": "2022-02-25",
+   "last": "2023-02-17"
+  },
+  {
+   "first": "2023-02-24",
+   "last": "2024-02-16"
+  },
+  {
+   "first": "2024-02-23",
+   "last": "2025-02-14"
+  },
+  {
+   "first": "2025-02-21",
+   "last": "2026-02-13"
+  }
+ ],
+ "metric": "chebyshev (max) on concatenated per-dollar path+funding blocks, engine max_path price term",
+ "train_blocks": 14,
+ "heldout_blocks": 7,
+ "full_sample_radius_q90": 0.4067441129520647,
+ "train_radii": {
+  "0.5": 0.41045551612277187,
+  "0.75": 0.43930419921939035,
+  "0.9": 0.46222596261916726,
+  "0.95": 0.4737128600221003
+ },
+ "default_config_radius": 2e-05,
+ "radius_vs_default": {
+  "0.5": 20522.77580613859,
+  "0.75": 21965.209960969514,
+  "0.9": 23111.298130958363,
+  "0.95": 23685.64300110501
+ },
+ "bootstrap_q90": {
+  "n": 200,
+  "block_run": 3,
+  "mean": 0.4137073621409968,
+  "std": 0.10106835990099705,
+  "quantiles": [
+   0.2487308341457007,
+   0.41824669786748236,
+   0.573082734942653
+  ]
+ },
+ "heldout_nearest_train_distance": [
+  0.2374257764812533,
+  0.3061538882147291,
+  0.1856757612781521,
+  0.21661934858733056,
+  0.17561228207641721,
+  0.2352466916039868,
+  0.355877588594826
+ ],
+ "heldout_coverage": {
+  "0.5": {
+   "radius": 0.41045551612277187,
+   "covered": 7,
+   "of": 7,
+   "uncovered_dates": []
+  },
+  "0.75": {
+   "radius": 0.43930419921939035,
+   "covered": 7,
+   "of": 7,
+   "uncovered_dates": []
+  },
+  "0.9": {
+   "radius": 0.46222596261916726,
+   "covered": 7,
+   "of": 7,
+   "uncovered_dates": []
+  },
+  "0.95": {
+   "radius": 0.4737128600221003,
+   "covered": 7,
+   "of": 7,
+   "uncovered_dates": []
+  }
+ },
+ "train_to_heldout_assignment_distance": 0.25055415196575237,
+ "sample_size_sensitivity_q90": {
+  "8": 0.6078921671244271,
+  "11": 0.5522192608313338,
+  "14": 0.46222596261916726
+ },
+ "seed_sensitivity_q90": [
+  0.46705030082935206,
+  0.46974945578568494,
+  0.459672311791326,
+  0.4625413797867572,
+  0.4510648834638215
+ ],
+ "scope": "Empirical finite-sample diagnostic conditional on data and resampling choices. Not a theorem-backed out-of-sample or familywise guarantee. 95th-percentile radius does not imply 95% coverage. Property marks at quarterly URA index granularity."
+}

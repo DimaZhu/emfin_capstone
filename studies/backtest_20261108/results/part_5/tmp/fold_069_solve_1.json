@@ -1,0 +1,11 @@
+{
+ "stage": "solve",
+ "fold": 69,
+ "mult": 0.5,
+ "diag": {
+  "kind": "incompatible risk settings",
+  "reason": "W1 buffer is at least $40,000, above the smallest payment budget $25,000; adjust radius or budget explicitly, not solver tolerances",
+  "cash_fallback_rejected": true
+ },
+ "solve_seconds": 0.0
+}
