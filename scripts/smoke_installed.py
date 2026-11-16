@@ -29,7 +29,8 @@ def main():
         bindir=venv_dir/('Scripts' if os.name=='nt' else 'bin')
         python=bindir/('python.exe' if os.name=='nt' else 'python')
         run([python,'-m','pip','install','--upgrade','pip>=26.2','setuptools>=84.1','wheel>=0.48'],root,env)
-        run([python,'-m','pip','install',wheel],root,env)
+        run([python,'-m','pip','install',wheel,'scs==3.3.1'],root,env)
+        print(run([python,'-m','pip','freeze'],root,env).stdout)
         work=root/'outside-clone';work.mkdir()
         probe=run([python,'-c',"import emfin_v2,json; from emfin_v2.default_run import DEFAULT_CONFIG; from emfin_v2.toolbox.raw_data import series_file; print(json.dumps(dict(version=emfin_v2.__version__,module=emfin_v2.__file__,config=str(DEFAULT_CONFIG),data=str(series_file('DGS3MO')))))"],work,env)
         info=json.loads(probe.stdout)
@@ -45,7 +46,9 @@ def main():
         for name in ['emfin_v2','emfin_capstone']:
             result=run([python,'-m',name,'--config',config_path,'--output',work/name],work,env)
             report=json.loads((work/name/'results.json').read_text())
-            assert report['status']['kind'] in ['optimized','calibrated optimizer/cash mixture'],report
+            status=report['status']
+            kind=status['kind'] if isinstance(status,dict) else status
+            assert kind in ['optimized','calibrated optimizer/cash mixture'],report
             assert (work/name/'report.html').is_file()
             print(name,result.stdout.strip())
         cmd=bindir/('emfin-run.exe' if os.name=='nt' else 'emfin-run')

@@ -83,8 +83,10 @@ python -m pytest tests/ -q
 - Empirical Wasserstein-radius diagnostic: `studies/radius_20261108/REPORT.md`.
 - Claims and what supports them: `docs/paper/CLAIMS_EVIDENCE_MAP.md`.
 
-Headline: the engine is insurance, not outperformance - it funds every payout
-with controlled drawdowns and is not expected to beat 1/N on compounded wealth.
+Headline: estimation uncertainty sets the limit - the validated safe share spans
+10-67.5% across refits, and the walk-forward backtest could certify no portfolio
+in 9 of 78 quarters. The engine delivers a certified funding guarantee at a cost
+in growth: it matches shrunk mean-variance and is not expected to beat 1/N.
 
 ## Model limits
 
